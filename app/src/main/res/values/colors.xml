@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF6D2A</color>
+    <color name="colorPrimaryDark">#FF6D2A</color>
+    <color name="colorAccent">#FF6D2A</color>
+    
+    <color name="dark_gray_6000">#66000000</color>
+    <color name="color_dfdfdf">#DFDFDF</color>
+
+    <color name="text_dark_black">#222</color>
+    <color name="text_light_black">#BEC3CC</color>
+    <color name="c_f6f6f6">#F6F6F6</color>
+    <color name="orange">#FF7F00</color>
+
+    <!--金黄色-->
+    <color name="golden_yellow">#FFD2B152</color>
+    <color name="smart_blue">#00b7ee</color>
+    <color name="smart_pink">#eeb7ee</color>
+    <color name="smart_green">#00eeb7</color>
+    <color name="smart_yellow">#FFFACD</color>
+
+</resources>
