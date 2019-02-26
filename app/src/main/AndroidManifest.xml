@@ -2,19 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="net.treebear.kwifimanager">
-    <!--联网权限-->
+    <!-- 联网权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--存储权限-->
+    <!-- 存储权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--读取手机状态-->
+    <!-- 读取手机状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- WIFI控制及相关权限 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 浮动通知权限 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
@@ -34,13 +34,19 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity
+            android:name=".activity.account.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.account.SignInActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SignAccountActivity"
-            android:theme="@style/LaunchTheme"
-            android:screenOrientation="portrait">
+            android:name=".activity.account.launchAccountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,7 +74,9 @@
 
         <service android:name=".service.ODownloadService" />
 
-        <activity android:name=".activity.WebsiteActivity"/>
+        <activity
+            android:name=".activity.WebsiteActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

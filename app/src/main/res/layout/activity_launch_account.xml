@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="net.treebear.kwifimanager.activity.account.launchAccountActivity">
+
+    <TextView
+        android:id="@+id/btn_signup"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal_btn_height"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/btn_recf_h54_r27_main"
+        android:gravity="center"
+        android:text="@string/signup"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_signin" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_logo"
+
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="8dp"
+        android:src="@mipmap/ic_home_sign_default_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/btn_signin"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/normal_btn_height"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/btn_rectf_h53_r26_white"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@color/text_color_5c"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/civ_logo" />
+
+
+</android.support.constraint.ConstraintLayout>
