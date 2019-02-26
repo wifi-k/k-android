@@ -5,9 +5,8 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 
-import net.treebear.kwifimanager.activity.LauncherActivity;
+import net.treebear.kwifimanager.activity.SignAccountActivity;
 import net.treebear.kwifimanager.receiver.NetWorkReceiver;
 import net.treebear.kwifimanager.receiver.OpenFileReceiver;
 
@@ -43,7 +42,7 @@ public class MyApplication extends Application {
 
     private void dealUncaughtException() {
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-            Intent intent = new Intent(mContext, LauncherActivity.class);
+            Intent intent = new Intent(mContext, SignAccountActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
             android.os.Process.killProcess(android.os.Process.myPid());

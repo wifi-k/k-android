@@ -11,6 +11,17 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/white</item>
     </style>
+    <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@mipmap/bg_launch_login</item>
+    </style>
+
 
     <style name="bottomBarStyle">
         <item name="android:layout_width">0dp</item>

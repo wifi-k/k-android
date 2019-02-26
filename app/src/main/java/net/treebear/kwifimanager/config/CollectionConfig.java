@@ -12,12 +12,4 @@ import java.util.ArrayList;
 
 public interface CollectionConfig {
 
-    ArrayList<Integer> GUIDE_IMAGES =
-            new ArrayList<Integer>() {
-                {
-                    add(R.drawable.ic_guide_1);
-                    add(R.drawable.ic_guide_2);
-                    add(R.drawable.ic_guide_3);
-                }
-            };
 }

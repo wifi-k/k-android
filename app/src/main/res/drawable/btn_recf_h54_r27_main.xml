@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <size android:height="@dimen/normal_btn_height" />
+
+    <corners android:radius="@dimen/btn_login_radius" />
+
+    <solid android:color="#1FEAE7" />
+</shape>
