@@ -20,7 +20,7 @@
             android:id="@+id/iv_back"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="7dp"
+            android:layout_marginStart="8dp"
             android:scaleType="centerInside" />
 
         <TextView
@@ -54,6 +54,7 @@
             android:visibility="gone" />
     </RelativeLayout>
     <View
+        android:visibility="gone"
         android:background="@color/color_dfdfdf"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"/>

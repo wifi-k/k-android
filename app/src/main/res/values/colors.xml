@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3DA4F2</color>
-    <color name="colorPrimaryDark">#3DA4F2</color>
-    <color name="colorAccent">#3DA4F2</color>
+    <color name="colorPrimary">#26DCBC</color>
+    <color name="colorPrimaryDark">#26DCBC</color>
+    <color name="colorAccent">#26DCBC</color>
     
     <color name="dark_gray_6000">#66000000</color>
     <color name="color_dfdfdf">#DFDFDF</color>
@@ -20,5 +20,10 @@
     <color name="smart_yellow">#FFFACD</color>
     <color name="whitep85">#d9ffffff</color>
     <color name="text_color_5c">#5C5C5C</color>
+    <color name="text_deep_black_33">#333333</color>
+    <color name="text_hint_cf">#CFCFCF</color>
+    <color name="line_f2">#F2F2F2</color>
+    <color name="light_text_9b">#9B9B9B</color>
+    <color name="white50">#80FFFFFF</color>
 
 </resources>

@@ -6,4 +6,122 @@
     android:layout_height="match_parent"
     tools:context=".activity.account.SignUpActivity">
 
+    <EditText
+        android:id="@+id/et_sign_up_verify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:background="@null"
+        android:maxLength="6"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/input_verify_code_please"
+        android:inputType="number"
+        android:singleLine="true"
+        android:textColorHint="@color/text_hint_cf"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_get_code"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/line_phone_number" />
+
+    <TextView
+        android:id="@+id/line_password"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_f2"
+        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_phone"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_sign_up_phone"
+        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_verify" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/where_come_kwifimanager"
+        android:textColor="@color/text_deep_black_33"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <EditText
+        android:id="@+id/et_sign_up_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="36dp"
+        android:background="@null"
+        android:maxLength="11"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/input_phone_number_please"
+        android:inputType="number"
+        android:singleLine="true"
+        android:textColorHint="@color/text_hint_cf"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="TextFields" />
+
+    <TextView
+        android:id="@+id/line_phone_number"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_f2"
+        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_phone"
+        app:layout_constraintStart_toStartOf="@+id/et_sign_up_phone"
+        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_phone" />
+
+    <ImageView
+        android:id="@+id/iv_edit_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/et_sign_up_phone"
+        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_phone"
+        app:layout_constraintTop_toTopOf="@+id/et_sign_up_phone"
+        app:srcCompat="@mipmap/ic_edit_close" />
+
+    <TextView
+        android:id="@+id/tv_get_code"
+        android:layout_width="wrap_content"
+        android:layout_height="29dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/rect_h29_r2_line_f2_trans"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/get_code"
+        android:textColor="@color/light_text_9b"
+        app:layout_constraintEnd_toEndOf="@+id/line_phone_number"
+        app:layout_constraintTop_toBottomOf="@+id/line_phone_number" />
+
+    <TextView
+        android:id="@+id/tv_sign_next"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/btn_green_to_cyan"
+        android:gravity="center"
+        android:text="@string/next_step"
+        android:textColor="@color/white50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line_password" />
+
 </android.support.constraint.ConstraintLayout>

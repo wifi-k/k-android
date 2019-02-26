@@ -1,6 +1,7 @@
 package net.treebear.kwifimanager.activity.account;
 
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.mvp.contract.AdvertisementContract;
 import net.treebear.kwifimanager.mvp.presenter.AdvertisementPresenter;
@@ -28,7 +29,8 @@ public class launchAccountActivity extends BaseActivity {
 
     @OnClick(R.id.btn_signin)
     public void onSignInClick() {
-        startActivity(SignInActivity.class);
+//        startActivity(SignInActivity.class);
+        startActivity(MainActivity.class);
     }
 
     @OnClick(R.id.btn_signup)

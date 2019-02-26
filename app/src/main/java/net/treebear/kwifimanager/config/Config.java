@@ -1,6 +1,8 @@
 package net.treebear.kwifimanager.config;
 
+import android.graphics.Color;
 import android.os.Environment;
+import android.support.annotation.ColorInt;
 
 import net.treebear.kwifimanager.BuildConfig;
 
@@ -15,6 +17,12 @@ public interface Config {
         String BASE_URL = "https://www.tinlone.com/api/";
     }
 
+    interface Colors{
+       @ColorInt
+       int MAIN = Color.parseColor("#26DCBC");
+        @ColorInt
+       int LINE = Color.parseColor("#F2F2F2");
+    }
     /**
      * 数字常量
      */

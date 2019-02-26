@@ -227,14 +227,14 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * 左侧进入
      */
     protected void leftStart() {
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_right_out);
     }
 
     /**
      * 右侧进入
      */
     protected void rightStart() {
-        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_left_out);
     }
 
     /**

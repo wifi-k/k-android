@@ -29,20 +29,20 @@
 
         <com.chaychan.library.BottomBarItem
             style="@style/bottomBarStyle"
-            app:iconNormal="@drawable/ic_main_home_normal"
-            app:iconSelected="@drawable/ic_main_home_checked"
+            app:iconNormal="@mipmap/tab_home_gray"
+            app:iconSelected="@mipmap/tab_home_selected"
             app:itemText="@string/homepage" />
 
         <com.chaychan.library.BottomBarItem
             style="@style/bottomBarStyle"
-            app:iconNormal="@drawable/ic_main_investment_normal"
-            app:iconSelected="@drawable/ic_main_investment_checked"
+            app:iconNormal="@mipmap/tab_gallary_gray"
+            app:iconSelected="@mipmap/tab_gallary_selected"
             app:itemText="@string/info" />
 
         <com.chaychan.library.BottomBarItem
             style="@style/bottomBarStyle"
-            app:iconNormal="@drawable/ic_main_me_normal"
-            app:iconSelected="@drawable/ic_main_me_checked"
+            app:iconNormal="@mipmap/tab_mine_gray"
+            app:iconSelected="@mipmap/tab_mine_selected"
             app:itemText="@string/mine" />
 
     </com.chaychan.library.BottomBarLayout>

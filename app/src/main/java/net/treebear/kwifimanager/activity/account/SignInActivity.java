@@ -10,4 +10,14 @@ public class SignInActivity extends BaseActivity {
     public int layoutId() {
         return R.layout.activity_sign_in;
     }
+
+    @Override
+    protected void initView() {
+        setTitleBack("");
+        listenFocus();
+    }
+
+    private void listenFocus() {
+
+    }
 }
