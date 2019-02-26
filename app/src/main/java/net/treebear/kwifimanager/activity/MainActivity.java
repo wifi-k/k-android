@@ -3,7 +3,6 @@ package net.treebear.kwifimanager.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chaychan.library.BottomBarLayout;
 import net.treebear.kwifimanager.R;
 
@@ -68,7 +67,7 @@ public class MainActivity extends BaseActivity {
                     msg = "白底状态栏黑字";
                     break;
             }
-            ToastUtils.showShort(msg);
+//            Tips.toastBottom(this,msg, Toast.LENGTH_SHORT);
         });
     }
 

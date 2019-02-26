@@ -4,8 +4,11 @@ package net.treebear.kwifimanager;
 import android.app.Application;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 
 import net.treebear.kwifimanager.activity.LauncherActivity;
+import net.treebear.kwifimanager.receiver.NetWorkReceiver;
 import net.treebear.kwifimanager.receiver.OpenFileReceiver;
 
 /**
@@ -27,6 +30,15 @@ public class MyApplication extends Application {
         mContext = this;
         dealUncaughtException();
         registerReceiver(new OpenFileReceiver(), new IntentFilter(BuildConfig.APPLICATION_ID + ".open_file"));
+        registerNetReceiver();
+    }
+
+    private void registerNetReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//        intentFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
+        NetWorkReceiver mNetWorkReceiver = new NetWorkReceiver();
+        registerReceiver(mNetWorkReceiver, intentFilter);
     }
 
     private void dealUncaughtException() {

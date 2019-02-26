@@ -382,4 +382,11 @@ public class FileUtils {
         return intent;
     }
 
+    public static String getFileDisk(){
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+            return Environment.getExternalStorageDirectory().getAbsolutePath();
+        }
+        return Environment.getRootDirectory().getAbsolutePath()+"/files/";
+    }
+
 }

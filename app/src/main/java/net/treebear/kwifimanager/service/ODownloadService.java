@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.util.ArrayMap;
 
 import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
@@ -46,6 +47,7 @@ public class ODownloadService extends Service {
     private NotificationManager notificationManager;
     private Notification.Builder builder;
     private OkHttpClient okHttpClient;
+    private ArrayMap<String, Call> tasks = new ArrayMap<>();
 
     @Nullable
     @Override
@@ -56,27 +58,29 @@ public class ODownloadService extends Service {
 
     //初始化通知
     private void initNotification() {
-        notificationManager = (NotificationManager) MyApplication.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        builder = new Notification.Builder(MyApplication.getAppContext());
-        if (Build.VERSION.SDK_INT >= 26 && notificationManager != null) {
-            //第三个参数设置通知的优先级别
-            NotificationChannel channel =
-                    new NotificationChannel(BuildConfig.APPLICATION_ID, "下载及更新", NotificationManager.IMPORTANCE_DEFAULT);
-            channel.canBypassDnd();//是否可以绕过请勿打扰模式
-            channel.canShowBadge();//是否可以显示icon角标
-            channel.enableLights(true);//是否显示通知闪灯
-            channel.setBypassDnd(true);//设置绕过免打扰
-            channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_SECRET);
-            channel.setLightColor(Color.GREEN);//设置闪光灯颜色
-            notificationManager.createNotificationChannel(channel);
-            builder.setChannelId(BuildConfig.APPLICATION_ID);//这个id参数要与上面channel构建的第一个参数对应
+        if (notificationManager == null && builder == null) {
+            notificationManager = (NotificationManager) MyApplication.getAppContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            builder = new Notification.Builder(MyApplication.getAppContext());
+            if (Build.VERSION.SDK_INT >= 26 && notificationManager != null) {
+                //第三个参数设置通知的优先级别
+                NotificationChannel channel =
+                        new NotificationChannel(BuildConfig.APPLICATION_ID, "下载及更新", NotificationManager.IMPORTANCE_DEFAULT);
+                channel.canBypassDnd();//是否可以绕过请勿打扰模式
+                channel.canShowBadge();//是否可以显示icon角标
+                channel.enableLights(true);//是否显示通知闪灯
+                channel.setBypassDnd(true);//设置绕过免打扰
+                channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_SECRET);
+                channel.setLightColor(Color.GREEN);//设置闪光灯颜色
+                notificationManager.createNotificationChannel(channel);
+                builder.setChannelId(BuildConfig.APPLICATION_ID);//这个id参数要与上面channel构建的第一个参数对应
+            }
+            builder.setContentTitle("正在下载...") //设置通知标题
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setPriority(Notification.PRIORITY_MAX) //设置通知的优先级：最大
+                    .setAutoCancel(false)//设置通知被点击一次是否自动取消
+                    .setContentText("下载进度:" + "0%")
+                    .setProgress(100, 0, false);
         }
-        builder.setContentTitle("正在下载...") //设置通知标题
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setPriority(Notification.PRIORITY_MAX) //设置通知的优先级：最大
-                .setAutoCancel(false)//设置通知被点击一次是否自动取消
-                .setContentText("下载进度:" + "0%")
-                .setProgress(100, 0, false);
         Notification notification = builder.build();
         notificationManager.notify(1, notification);
     }
@@ -89,7 +93,9 @@ public class ODownloadService extends Service {
     public void download(final String url, final String saveDir, final OnDownloadListener listener) {
         initNotification();
         Request request = new Request.Builder().url(url).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        Call call = okHttpClient.newCall(request);
+        tasks.put(url, call);
+        call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 // 下载失败
@@ -142,16 +148,18 @@ public class ODownloadService extends Service {
                     Intent clickIntent = new Intent(MyApplication.getAppContext(), OpenFileReceiver.class);
                     clickIntent.putExtra("path", file.getAbsolutePath());
                     //点击通知之后要发送的广播
-                    int id = (int) (System.currentTimeMillis() / 1000);
+                    int id = (int) (System.currentTimeMillis() / 100000);
                     PendingIntent contentIntent = PendingIntent.getBroadcast(getApplicationContext(), id, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(contentIntent)
                             .setContentTitle("下载完成")
                             .setContentText("点击安装/查看")
                             .setAutoCancel(true);//设置通知被点击一次是否自动取消
                     notificationManager.notify(1, builder.build());
+                    tasks.remove(url);
                     // 下载完成
                     listener.onDownloadSuccess(file);
                 } catch (Exception e) {
+                    tasks.remove(url);
                     listener.onDownloadFailed(call, e);
                 } finally {
                     FileUtils.closeStream(is, fos);
@@ -182,6 +190,21 @@ public class ODownloadService extends Service {
             download(url, saveDir, listener);
         }
 
+        public void cancle(String url) {
+            if (url != null && tasks != null) {
+                Call request = tasks.get(url);
+                if (request != null) {
+                    request.cancel();
+                }
+                tasks.remove(url);
+            }
+        }
+
+        public void closeNotification() {
+            if (notificationManager!=null){
+                notificationManager.cancel(1);
+            }
+        }
     }
 
 }

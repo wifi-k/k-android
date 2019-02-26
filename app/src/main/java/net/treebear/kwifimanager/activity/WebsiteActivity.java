@@ -1,9 +1,14 @@
 package net.treebear.kwifimanager.activity;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -21,11 +26,21 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.receiver.OpenFileReceiver;
+import net.treebear.kwifimanager.service.ODownloadService;
+import net.treebear.kwifimanager.service.OnDownloadListener;
+import net.treebear.kwifimanager.util.FileUtils;
+import net.treebear.kwifimanager.widget.TMessageDialog;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 public class WebsiteActivity extends BaseActivity {
     private static final String TAG = "WebsiteActivity";
@@ -39,6 +54,9 @@ public class WebsiteActivity extends BaseActivity {
     private String url;
     private String rightText;
     private boolean isAutoTitle;
+    private TMessageDialog messageDialog;
+    private ODownloadService.DownloadBinder downloadBinder;
+    private ServiceConnection conn;
 
     @Override
     public int layoutId() {
@@ -96,13 +114,78 @@ public class WebsiteActivity extends BaseActivity {
         wvWebsite.setWebViewClient(new MyWebViewClient());
         wvWebsite.setWebChromeClient(new MyChromeClient());
         wvWebsite.addJavascriptInterface(new JavaScriptInterface(), "AppInterface");
-        wvWebsite.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) ->
-                Log.i("aaa", String.format("url = %s\n," +
-                                "userAgent = %s\n," +
-                                "contentDisposition = %s\n," +
-                                "mimetype = %s\n," +
-                                "contentLength = %s",
-                        url, userAgent, contentDisposition, mimetype, contentLength)));
+        preDownLoad();
+        wvWebsite.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
+                    Log.i("aaa", String.format("url = %s\n," +
+                                    "userAgent = %s\n," +
+                                    "contentDisposition = %s\n," +
+                                    "mimetype = %s\n," +
+                                    "contentLength = %s",
+                            url, userAgent, contentDisposition, mimetype, contentLength));
+                    initDialog();
+                    messageDialog.content("确认下载该文件吗？")
+                            .doClick(new TMessageDialog.DoClickListener() {
+                                @Override
+                                public void onClickLeft(View view) {
+                                    messageDialog.dismiss();
+                                }
+
+                                @Override
+                                public void onClickRight(View view) {
+                                    messageDialog.withProgress(100)
+                                            .content("正在下载...")
+                                            .update();
+                                    downloadBinder.backgroundDown(url, FileUtils.getFileDisk(), new OnDownloadListener() {
+
+                                        @Override
+                                        public void onDownloadSuccess(File file) {
+                                            Intent intent = new Intent(WebsiteActivity.this, OpenFileReceiver.class);
+                                            intent.putExtra("path", file.getAbsolutePath());
+                                            sendBroadcast(intent);
+                                            messageDialog.dismiss();
+                                        }
+
+                                        @Override
+                                        public void onDownloading(int progress) {
+                                            messageDialog.progress(progress).update();
+                                        }
+
+                                        @Override
+                                        public void onDownloadFailed(Call call, Exception e) {
+                                            ToastUtils.showShort("下载失败，请稍后再试");
+                                            messageDialog.dismiss();
+                                        }
+                                    });
+                                }
+                            }).show();
+                }
+        );
+    }
+
+    private void preDownLoad() {
+        Intent intent = new Intent(this, ODownloadService.class);
+        conn = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                downloadBinder = (ODownloadService.DownloadBinder) service;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        };
+        bindService(intent, conn, Context.BIND_AUTO_CREATE);
+    }
+
+    private void initDialog() {
+        if (messageDialog == null) {
+            messageDialog = new TMessageDialog(this)
+                    .withoutMid()
+                    .title("下载")
+                    .left("取消")
+                    .right("下载");
+        }
     }
 
     @OnClick(R.id.iv_back)
@@ -195,5 +278,14 @@ public class WebsiteActivity extends BaseActivity {
         public String fromApp() {
             return TAG;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (conn != null) {
+            downloadBinder = null;
+            unbindService(conn);
+        }
+        super.onDestroy();
     }
 }
