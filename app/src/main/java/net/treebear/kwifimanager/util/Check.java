@@ -1,5 +1,7 @@
 package net.treebear.kwifimanager.util;
 
+import android.widget.TextView;
+
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.mvp.IView;
 
@@ -44,7 +46,7 @@ public final class Check {
      * @return 响应实体状态
      */
     public static boolean hasContent(BaseResponse response) {
-        return response != null && response.getResultData() != null;
+        return response != null && response.getData() != null;
     }
 
     /**
@@ -54,7 +56,7 @@ public final class Check {
      * @return 响应实体状态
      */
     public static boolean hasContent(BaseResponse response, IView view) {
-        return response != null && response.getResultData() != null && view != null;
+        return response != null && response.getData() != null && view != null;
     }
 
     /**
@@ -71,6 +73,16 @@ public final class Check {
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(url);
         return m.matches();
+    }
+
+    /**
+     * 比较文字信息
+     * @param v1 文字控件
+     * @param v2 文字控件
+     * @return 类似否
+     */
+    public static boolean equals(TextView v1, TextView v2) {
+        return v1 != null && v2 != null && v1.getText().toString().equals(v2.getText().toString());
     }
 
 }

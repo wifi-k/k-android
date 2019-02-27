@@ -194,7 +194,7 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
      * @param resultCode 失败返回码
      */
     @Override
-    public void onLoadFail(String resultMsg, String resultCode) {
+    public void onLoadFail(String resultMsg, int resultCode) {
         hideLoading();
         ToastUtils.showShort(resultMsg);
     }

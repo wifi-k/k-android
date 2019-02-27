@@ -321,7 +321,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param resultCode 失败返回码
      */
     @Override
-    public void onLoadFail(String resultMsg, String resultCode) {
+    public void onLoadFail(String resultMsg, int resultCode) {
         hideLoading();
         ToastUtils.showShort(resultMsg);
     }

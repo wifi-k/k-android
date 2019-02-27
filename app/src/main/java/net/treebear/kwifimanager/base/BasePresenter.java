@@ -1,12 +1,19 @@
 package net.treebear.kwifimanager.base;
 
-import net.treebear.kwifimanager.BuildConfig;
+import android.util.ArrayMap;
+
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.IView;
 import net.treebear.kwifimanager.util.TLog;
-import net.treebear.kwifimanager.util.UserInfoUtil;
 
-import java.util.HashMap;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @author Tinlone
@@ -17,7 +24,8 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
 
     protected M mModel = null;
     protected V mView = null;
-    private HashMap<String, Object> baseParams;
+    protected JSONObject EMPTY_BODY = new JSONObject();
+    private ArrayMap<String, Object> EMPTY_MAP;
 
     @Override
     public void attachView(V view) {
@@ -25,19 +33,50 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         setModel();
     }
 
-    protected HashMap<String, Object> getBaseParams() {
-        if (baseParams == null) {
-            baseParams = new HashMap<>(16);
+    protected ArrayMap<String, Object> map() {
+        if (EMPTY_MAP == null) {
+            EMPTY_MAP = new ArrayMap<>(16);
         } else {
-            baseParams.clear();
+            EMPTY_MAP.clear();
         }
-        if (UserInfoUtil.isLogin()) {
-            baseParams.put("token", UserInfoUtil.getUserInfo().getToken());
-            baseParams.put("userId", UserInfoUtil.getUserInfo().getUserId());
+        return EMPTY_MAP;
+    }
+
+    protected RequestBody convertRequestBody(JSONObject object) {
+        if (object == null) {
+            return null;
         }
-        baseParams.put("from", "android");
-        baseParams.put("version", BuildConfig.VERSION_CODE);
-        return baseParams;
+        return RequestBody.create(MediaType.parse("application/json;charset=utf-8"), object.toString());
+    }
+
+    protected RequestBody convertRequestBody(ArrayMap<String, Object> params) {
+        if (params == null) {
+            return null;
+        }
+        JSONObject jsonObject = new JSONObject();
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            try {
+                jsonObject.put(entry.getKey(), entry.getValue());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return convertRequestBody(jsonObject);
+    }
+
+    protected JSONObject convertJsonObject(ArrayMap<String, Object> params){
+        if (params == null) {
+            return null;
+        }
+        JSONObject jsonObject = new JSONObject();
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            try {
+                jsonObject.put(entry.getKey(), entry.getValue());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return jsonObject;
     }
 
     public abstract void setModel();
@@ -58,7 +97,7 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         public abstract void onSuccess(Data resultData);
 
         @Override
-        public void onFailed(String resultMsg, String resultCode) {
+        public void onFailed(String resultMsg, int resultCode) {
             if (mView != null) {
                 mView.onLoadFail(resultMsg, resultCode);
             }

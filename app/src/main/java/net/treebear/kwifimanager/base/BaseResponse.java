@@ -9,49 +9,50 @@ import com.google.gson.annotations.SerializedName;
 
 public class BaseResponse<T> {
 
+    private int code;
+    private T data;
+    private String msg;
+    private Object count;
 
-    /**
-     * resultCode : 0
-     * message : 20180326134451
-     * resultData：{}
-     */
-    @SerializedName("resultCode")
-    private String resultCode;
-    @SerializedName("resultData")
-    private T resultData;
-    @SerializedName("message")
-    private String message;
-
-    public String getResultCode() {
-        return resultCode;
+    public int getCode() {
+        return code;
     }
 
-    public void setResultCode(String resultCode) {
-        this.resultCode = resultCode;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public T getResultData() {
-        return resultData;
+    public T getData() {
+        return data;
     }
 
-    public void setResultData(T resultData) {
-        this.resultData = resultData;
+    public void setData(T data) {
+        this.data = data;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getCount() {
+        return count;
+    }
+
+    public void setCount(Object count) {
+        this.count = count;
     }
 
     @Override
     public String toString() {
         return "BaseResponse{" +
-                "resultCode='" + resultCode + '\'' +
-                ", resultData=" + resultData +
-                ", message='" + message + '\'' +
+                "code=" + code +
+                ", data='" + data + '\'' +
+                ", msg='" + msg + '\'' +
+                ", count=" + count +
                 '}';
     }
 }

@@ -15,4 +15,8 @@
     <string name="input_verify_code_please">请输入验证码</string>
     <string name="get_code">获取验证码</string>
     <string name="next_step">下一步</string>
+    <string name="set_new_account_password">请设置新的登录密码</string>
+    <string name="input_password_please">请输入密码</string>
+    <string name="input_password_again">再次输入密码</string>
+    <string name="confirm">确认</string>
 </resources>

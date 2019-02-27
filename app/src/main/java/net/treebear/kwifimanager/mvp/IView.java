@@ -19,6 +19,6 @@ public interface IView<Data> {
      * @param resultMsg  失败返回信息
      * @param resultCode 失败返回码
      */
-    void onLoadFail(String resultMsg, String resultCode);
+    void onLoadFail(String resultMsg, int resultCode);
 
 }

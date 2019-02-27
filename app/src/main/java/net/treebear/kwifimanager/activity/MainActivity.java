@@ -67,7 +67,6 @@ public class MainActivity extends BaseActivity {
                     msg = "白底状态栏黑字";
                     break;
             }
-//            Tips.toastBottom(this,msg, Toast.LENGTH_SHORT);
         });
     }
 
@@ -80,13 +79,4 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    @Override
-    public void onLoadData(Object resultData) {
-        hideLoading();
-    }
-
-    @Override
-    public void onLoadFail(String resultMsg, String resultCode) {
-        hideLoading();
-    }
 }

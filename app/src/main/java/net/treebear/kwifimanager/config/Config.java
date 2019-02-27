@@ -14,7 +14,11 @@ import net.treebear.kwifimanager.BuildConfig;
 public interface Config {
 
     interface BaseUrls {
-        String BASE_URL = "https://www.tinlone.com/api/";
+        String BASE_URL = "http://test.user.famwifi.com/api/";
+    }
+
+    interface Tags{
+        String TAG_SIGN_ACCOUNT = "account.sign_in_up";
     }
 
     interface Colors{
@@ -38,7 +42,7 @@ public interface Config {
         /**
          * 验证码长度
          */
-        int VERIFY_CODE_LENGTH = 6;
+        int VERIFY_CODE_LENGTH = 4;
         /**
          * 时间格式化长度
          */
@@ -77,9 +81,25 @@ public interface Config {
      * 字符常量
      */
     interface Strings {
-        String SERVER_ERROR = "服务器开了小差~";
+        String VERIFY_CODE_FORMAT = "%sS后重新获取";
+        String GET_VERIFY_CODE = "获取验证码";
+        String TIPS = "提示";
+        String HAS_ACCOUNT = "该手机号已注册，请立即登录";
+        String CANCEL = "取消";
+        String SIGN_IN_NOW = "立即登录";
+    }
 
-        String RESPONSE_OK = "0";
+    interface ResponseCode{
+        int RESPONSE_OK = 0;
+        int RESPONSE_ERR_1 = 1;
+        /**
+         * TOKEN异常
+         */
+        int TOKEN_ERROR = 2;
+        /**
+         * 已注册
+         */
+        int HAS_SIGN_UP = 9;
     }
 
     /**

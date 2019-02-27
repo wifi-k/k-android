@@ -27,6 +27,6 @@ public interface IModel {
          * @param resultMsg  信息
          * @param resultCode 错误码
          */
-        void onFailed(String resultMsg, String resultCode);
+        void onFailed(String resultMsg, int resultCode);
     }
 }

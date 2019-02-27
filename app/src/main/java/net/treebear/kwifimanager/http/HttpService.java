@@ -3,11 +3,16 @@ package net.treebear.kwifimanager.http;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.AdvertisementBean;
+import net.treebear.kwifimanager.bean.UserInfoBean;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
 /**
@@ -23,7 +28,12 @@ public interface HttpService {
      * from 	string 	是 	（安卓：android；水果：iOS）
      * type 	string 	是
      */
-    @GET("openscreen/pic")
-    Observable<BaseResponse<AdvertisementBean>> getAdvertisement(@QueryMap() Map<String, Object> params);
+    @POST("user/vcode/getv2")
+    Observable<BaseResponse<String>> getSignUpVerify(@Body RequestBody params);
 
+    @POST("user/signup/vcode")
+    Observable<BaseResponse<UserInfoBean>> signUpByVerifyCode(@Body RequestBody params);
+
+    @POST("user/passwd/reset")
+    Observable<BaseResponse<Object>> setUserPassword(@Body RequestBody params);
 }

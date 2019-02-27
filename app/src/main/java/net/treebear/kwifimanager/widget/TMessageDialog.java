@@ -44,6 +44,11 @@ public class TMessageDialog {
     private LinearLayout llProgress;
     private LinearLayout llButton;
     private TextView tvProgress;
+    private static final String TITLE_DEFAULT_COLOR = "#323232";
+    private static final String CONTENT_DEFAULT_COLOR = "#8D8D8D";
+    private static final String CANCEL_DEFAULT_COLOR = "#212121";
+    private static final String CONFIRM_DEFAULT_COLOR = "#FFFFFF";
+    private float widthPercent = 0.75f;
     private DoClickListener mListener = new DoClickListener() {
         @Override
         public void onClickLeft(View v) {
@@ -79,7 +84,7 @@ public class TMessageDialog {
             window.setContentView(view);
             window.setBackgroundDrawable(new ColorDrawable(0));
             WindowManager.LayoutParams p = window.getAttributes();
-            p.width = (int) (DensityUtil.getScreenWidth(mContext) * 0.8);
+            p.width = (int) (DensityUtil.getScreenWidth(mContext) * widthPercent);
             window.setAttributes(p);
         }
     }
@@ -118,7 +123,7 @@ public class TMessageDialog {
     }
 
     public TMessageDialog title(CharSequence title) {
-        return title(title, "#222222");
+        return title(title, TITLE_DEFAULT_COLOR);
     }
 
     public TMessageDialog title(CharSequence title, @Size(min = 1) String colorStr) {
@@ -139,11 +144,11 @@ public class TMessageDialog {
     }
 
     public TMessageDialog content(@StringRes int textRes) {
-        return content(getString(textRes), "#999999");
+        return content(getString(textRes), CONTENT_DEFAULT_COLOR);
     }
 
     public TMessageDialog content(CharSequence content) {
-        return content(content, "#999999");
+        return content(content, CONTENT_DEFAULT_COLOR);
     }
 
     public TMessageDialog content(CharSequence content, @Size(min = 1) String colorStr) {
@@ -158,11 +163,11 @@ public class TMessageDialog {
     }
 
     public TMessageDialog left(@StringRes int textRes) {
-        return left(getString(textRes), Color.parseColor("#BEC3CC"));
+        return left(getString(textRes), Color.parseColor(CANCEL_DEFAULT_COLOR));
     }
 
     public TMessageDialog left(CharSequence text) {
-        return left(text, Color.parseColor("#BEC3CC"));
+        return left(text, Color.parseColor(CANCEL_DEFAULT_COLOR));
     }
 
     public TMessageDialog left(CharSequence text, @ColorInt int colorInt) {
@@ -180,11 +185,11 @@ public class TMessageDialog {
     }
 
     public TMessageDialog mid(CharSequence text) {
-        return mid(text, Color.parseColor("#999999"));
+        return mid(text, Color.parseColor(CANCEL_DEFAULT_COLOR));
     }
 
     public TMessageDialog mid(@StringRes int textRes) {
-        return mid(getString(textRes), Color.parseColor("#999999"));
+        return mid(getString(textRes), Color.parseColor(CANCEL_DEFAULT_COLOR));
     }
 
     public TMessageDialog mid(CharSequence text, @ColorInt int colorInt) {
@@ -202,7 +207,7 @@ public class TMessageDialog {
     }
 
     public TMessageDialog right(@StringRes int textRes) {
-        return right(getString(textRes), Color.parseColor("#ff6d2a"));
+        return right(getString(textRes), Color.parseColor(CONFIRM_DEFAULT_COLOR));
     }
 
     public TMessageDialog right(@StringRes int textRes, @ColorRes int colorRes) {
@@ -210,7 +215,7 @@ public class TMessageDialog {
     }
 
     public TMessageDialog right(CharSequence text) {
-        return right(text, Color.parseColor("#ff6d2a"));
+        return right(text, Color.parseColor(CONFIRM_DEFAULT_COLOR));
     }
 
     public TMessageDialog right(CharSequence text, @ColorInt int colorInt) {
@@ -279,6 +284,11 @@ public class TMessageDialog {
     public TMessageDialog progressColor(@Size(min = 1) String color) {
         ProgressDrawableHelper.change(progressBar, color);
         tvProgress.setTextColor(Color.parseColor(color));
+        return this;
+    }
+
+    public TMessageDialog widthPercent(float percent){
+        widthPercent = percent;
         return this;
     }
 
