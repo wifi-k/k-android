@@ -25,6 +25,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 
+/**
+ * <h2>忘记密码</h2>
+ * <li>获取验证码界面(本页)</li>
+ * <li>重设密码界面</li>
+ */
 public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.IGetVerifyPresenter, String> implements GetVerifyContract.IGetVerifyView {
 
     @BindView(R.id.et_verify)
@@ -41,7 +46,13 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.IGetVe
     TextView tvGetCode;
     @BindView(R.id.tv_sign_next)
     TextView tvSignNext;
+    /**
+     * 倒计时订阅器
+     */
     private Disposable mCountDisposable;
+    /**
+     * 服务端下发的验证码，用做本地验证
+     */
     private String mVerifyCode;
 
     @Override
@@ -65,7 +76,7 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.IGetVe
 
     @OnClick(R.id.iv_edit_clear)
     public void onIvEditClearClicked() {
-        etPhone.setText("");
+        etPhone.setText(Config.Text.EMPTY);
     }
 
     @OnClick(R.id.tv_get_code)
@@ -78,6 +89,10 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.IGetVe
 
     @OnClick(R.id.tv_sign_next)
     public void onTvSignNextClicked() {
+        if (!etVerify.getText().toString().equals(mVerifyCode)) {
+            ToastUtils.showShort(R.string.verify_code_input_error);
+            return;
+        }
         tvSignNext.setEnabled(true);
         dispose(mCountDisposable);
         Bundle bundle = new Bundle();
@@ -107,7 +122,6 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.IGetVe
             public void afterTextChanged(Editable s) {
                 ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
-                    // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
                     updateConfirmBtnEnable();
                 } else {
@@ -123,6 +137,9 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.IGetVe
         });
     }
 
+    /**
+     * 更新确定按键可点击状态
+     */
     private void updateConfirmBtnEnable() {
         tvSignNext.setEnabled(etPhone.getText().length() == Config.Numbers.PHONE_LENGTH &&
                 etVerify.getText().length() == Config.Numbers.VERIFY_CODE_LENGTH);
@@ -182,5 +199,11 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.IGetVe
                 tvGetCode.setText(R.string.get_code);
             }
         });
+    }
+
+    @Override
+    protected void onTitleLeftClick() {
+        super.onTitleLeftClick();
+        ActivityStackUtils.popActivity(Config.Tags.TAG_FORGET_PASSWORD, this);
     }
 }

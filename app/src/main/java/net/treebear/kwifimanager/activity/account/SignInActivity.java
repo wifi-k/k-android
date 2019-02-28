@@ -24,6 +24,9 @@ import net.treebear.kwifimanager.util.Check;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * <h2>密码登录界面</h2>
+ */
 public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPresenter, UserInfoBean> implements PwdSignInContract.IPwdSignInView {
 
     @BindView(R.id.et_sign_in_verify)
@@ -51,7 +54,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
 
     @Override
     protected void initView() {
-        ActivityStackUtils.pressActivity(Config.Tags.TAG_SIGN_ACCOUNT,this);
+        ActivityStackUtils.pressActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
         setTitleBack(R.string.sign_in_k);
         tvSignNext.setText(R.string.login);
         listenFocus();
@@ -80,6 +83,9 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
         });
     }
 
+    /**
+     * 更新确认按键可点击状态
+     */
     private void updateConfirmBtnEnable() {
         tvSignNext.setEnabled(etSignInPhone.getText().length() == Config.Numbers.PHONE_LENGTH
                 &&
@@ -122,7 +128,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
 
     @OnClick(R.id.tv_sign_next)
     public void onTvSignNextClicked() {
-        mPresenter.signInByPwd(etSignInPhone.getText().toString(),etSignInVerify.getText().toString());
+        mPresenter.signInByPwd(etSignInPhone.getText().toString(), etSignInVerify.getText().toString());
         tvSignNext.setEnabled(false);
     }
 
@@ -132,7 +138,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
     }
 
     @OnClick(R.id.iv_edit_clear)
-    public void onIvClearClick(){
+    public void onIvClearClick() {
         etSignInPhone.setText("");
     }
 
@@ -152,7 +158,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
 
     @Override
     protected void onTitleLeftClick() {
-        ActivityStackUtils.popActivity(Config.Tags.TAG_SIGN_ACCOUNT,this);
+        ActivityStackUtils.popActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
         finish();
     }
 }

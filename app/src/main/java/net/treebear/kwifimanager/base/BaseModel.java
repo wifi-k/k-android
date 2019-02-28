@@ -3,11 +3,10 @@ package net.treebear.kwifimanager.base;
 import android.annotation.SuppressLint;
 import android.util.SparseArray;
 
-import net.treebear.kwifimanager.mvp.IModel;
-
 import net.treebear.kwifimanager.http.HttpClient;
 import net.treebear.kwifimanager.http.HttpObserver;
 import net.treebear.kwifimanager.http.HttpService;
+import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.util.TLog;
 
 import io.reactivex.Observable;
@@ -22,8 +21,13 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class BaseModel implements IModel {
-
+    /**
+     * API service对象
+     */
     protected HttpService mService = HttpClient.getInstance().getApiService();
+    /**
+     * 请求队列
+     */
     private SparseArray<Observable> queue = null;
     private int index = 0;
 
@@ -38,6 +42,13 @@ public class BaseModel implements IModel {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * 自动绑定订阅器
+     *
+     * @param call     可订阅
+     * @param callBack 响应回调
+     * @param <T>      请求响应数据类型
+     */
     protected <T> void bindObservable(@NonNull Observable<BaseResponse<T>> call, @NonNull AsyncCallBack<BaseResponse<T>> callBack) {
         if (queue == null) {
             queue = new SparseArray<>();

@@ -58,7 +58,13 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
      * 定时器订阅者
      */
     private Disposable mCountDisposable;
+    /**
+     * 提示弹窗
+     */
     private TMessageDialog signDialog;
+    /**
+     * 系统下发的验证码，用于本地验证
+     */
     private String mVerifyCode;
 
     @Override
@@ -87,7 +93,6 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
 
     @OnClick(R.id.tv_get_code)
     public void onTvGetCodeClicked() {
-        // TODO: 2019/2/27 考虑：本地验证手机号合法性
         if (etSignUpPhone.getText().length() == 11) {
             mPresenter.getSignUpVerifyCode(etSignUpPhone.getText().toString());
             tvGetCode.setEnabled(false);
@@ -157,7 +162,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
                     // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
                     updateConfirmBtnEnable();
-                }else {
+                } else {
                     tvGetCode.setTextColor(Config.Colors.TEXT_9B);
                 }
             }
@@ -170,6 +175,9 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
         });
     }
 
+    /**
+     * 更新确认按键可点击状态
+     */
     private void updateConfirmBtnEnable() {
         tvSignNext.setEnabled(etSignUpPhone.getText().length() == Config.Numbers.PHONE_LENGTH &&
                 etSignUpCode.getText().length() == Config.Numbers.VERIFY_CODE_LENGTH);

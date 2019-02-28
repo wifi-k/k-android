@@ -12,7 +12,8 @@ import butterknife.OnClick;
 
 /**
  * @author Tinlone
- * 启动登录页
+ * <h2>启动登录页</h2>
+ * 可加入渐显动画
  * Let life be beautiful like summer flowers and death like autumn leaves.
  */
 public class launchAccountActivity extends BaseActivity {
@@ -31,7 +32,6 @@ public class launchAccountActivity extends BaseActivity {
     @OnClick(R.id.btn_signin)
     public void onSignInClick() {
         startActivity(SignInActivity.class);
-//        startActivity(MainActivity.class);
     }
 
     @OnClick(R.id.btn_signup)
@@ -39,14 +39,4 @@ public class launchAccountActivity extends BaseActivity {
         startActivity(SignUpActivity.class);
     }
 
-    @Override
-    public SignUpVerifyContract.ISignUpVerifyPresenter getPresenter() {
-        return new SignUpVerifyPresenter();
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

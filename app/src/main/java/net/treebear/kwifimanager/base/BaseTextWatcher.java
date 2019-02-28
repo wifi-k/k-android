@@ -3,6 +3,9 @@ package net.treebear.kwifimanager.base;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+/**
+ * 输入框监听器
+ */
 public class BaseTextWatcher implements TextWatcher {
 
     @Override

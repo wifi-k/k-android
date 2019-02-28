@@ -9,7 +9,6 @@ import net.treebear.kwifimanager.util.TLog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -33,6 +32,11 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         setModel();
     }
 
+    /**
+     * 获取空map对象
+     *
+     * @return ArrayMap 用于承载参数的map
+     */
     protected ArrayMap<String, Object> map() {
         if (EMPTY_MAP == null) {
             EMPTY_MAP = new ArrayMap<>(16);
@@ -42,6 +46,13 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         return EMPTY_MAP;
     }
 
+    /**
+     * 将Json转换为RequestBody
+     *
+     * @param object JSON对象
+     * @return RequestBody 请求体
+     */
+    @SuppressWarnings("unused")
     protected RequestBody convertRequestBody(JSONObject object) {
         if (object == null) {
             return null;
@@ -49,6 +60,12 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         return RequestBody.create(MediaType.parse("application/json;charset=utf-8"), object.toString());
     }
 
+    /**
+     * 将map对象转换为RequestBody
+     *
+     * @param params 承载参数的map
+     * @return RequestBody 请求体
+     */
     protected RequestBody convertRequestBody(ArrayMap<String, Object> params) {
         if (params == null) {
             return null;
@@ -64,7 +81,12 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         return convertRequestBody(jsonObject);
     }
 
-    protected JSONObject convertJsonObject(ArrayMap<String, Object> params){
+    /**
+     * ArrayMap to JSONObject
+     * @param params 承载参数的map
+     * @return 承载参数的JSONObject
+     */
+    protected JSONObject convertJsonObject(ArrayMap<String, Object> params) {
         if (params == null) {
             return null;
         }
@@ -79,6 +101,9 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         return jsonObject;
     }
 
+    /**
+     * 配置model对象
+     */
     public abstract void setModel();
 
     @Override
@@ -91,6 +116,10 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         TLog.i("(BasePresenter.java:31) -> dettachView");
     }
 
+    /**
+     * 统一处理失败请求的基类回调
+     * @param <Data> data数据
+     */
     protected abstract class BaseAsyncCallback<Data> implements IModel.AsyncCallBack<Data> {
 
         @Override

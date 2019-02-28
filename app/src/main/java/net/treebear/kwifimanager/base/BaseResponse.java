@@ -1,7 +1,5 @@
 package net.treebear.kwifimanager.base;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * @author Tinlone
  * @date 2018/3/26.

@@ -27,7 +27,8 @@ import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 验证码登录界面，登录和验证系列界面尚有很大优化空间
+ * <h2>验证码登录界面</h2>
+ * 登录和验证系列界面尚有很大优化空间
  */
 public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeSignInPresenter, String> implements CodeSignInContract.ICodeSignInView {
 
@@ -46,7 +47,13 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
     TextView tvGetCode;
     @BindView(R.id.tv_sign_next)
     TextView tvSignNext;
+    /**
+     * 系统下发验证码，用于本地验证
+     */
     private String mVerifyCode = "";
+    /**
+     * 计时器订阅器
+     */
     private Disposable mCountDisposable;
 
     @Override
@@ -75,7 +82,6 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
 
     @OnClick(R.id.tv_get_code)
     public void onTvGetCodeClicked() {
-        // TODO: 2019/2/27 考虑：本地验证手机号合法性
         if (etSignInPhone.getText().length() == 11) {
             mPresenter.getSignInVerifyCode(etSignInPhone.getText().toString());
             tvGetCode.setEnabled(false);
@@ -134,6 +140,9 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
         });
     }
 
+    /**
+     * 更新确认按键可点击状态
+     */
     private void updateConfirmBtnEnable() {
         tvSignNext.setEnabled(etSignInPhone.getText().length() == Config.Numbers.PHONE_LENGTH &&
                 etSignInVerify.getText().length() == Config.Numbers.VERIFY_CODE_LENGTH);
@@ -206,7 +215,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
 
     @Override
     protected void onTitleLeftClick() {
-        ActivityStackUtils.popActivity(Config.Tags.TAG_SIGN_ACCOUNT,this);
+        ActivityStackUtils.popActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
         finish();
     }
 

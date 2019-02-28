@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -16,12 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.mvp.IView;
 import com.gyf.barlibrary.ImmersionBar;
 
+import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.WebsiteActivity;
 import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.mvp.IView;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.widget.LoadingProgressDialog;
 
@@ -165,25 +164,61 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
 
     }
 
+    /**
+     * 设置title样式
+     *
+     * @param title title文字
+     */
     protected void setTitleBack(String title) {
         setTitle(R.mipmap.back, title);
     }
+
+    /**
+     * 设置title样式
+     *
+     * @param title title文字
+     */
     protected void setTitleBack(@StringRes int title) {
         setTitle(R.mipmap.back, getString(title));
     }
 
+    /**
+     * 设置title样式
+     *
+     * @param title title文字
+     */
     protected void setTitle(String title) {
         setTitle(0, title, "", 0);
     }
 
+    /**
+     * 设置title样式
+     *
+     * @param title title文字
+     * @param right 右侧文字
+     */
     protected void setTitleBack(String title, String right) {
         setTitle(R.mipmap.back, title, right, 0);
     }
 
+    /**
+     * 设置title样式
+     *
+     * @param leftRes 左侧资源
+     * @param title   title文字
+     */
     protected void setTitle(@DrawableRes int leftRes, String title) {
         setTitle(leftRes, title, "", 0);
     }
 
+    /**
+     * 设置title样式
+     *
+     * @param leftRes    左侧资源
+     * @param title      title文字
+     * @param rightTitle 右侧文字
+     * @param rightRes   右侧资源
+     */
     protected void setTitle(@DrawableRes int leftRes, String title, String rightTitle, @DrawableRes int rightRes) {
         try {
             ImageView ivLeft = findViewById(R.id.iv_back);
@@ -209,6 +244,9 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         }
     }
 
+    /**
+     * 右侧点击事件
+     */
     protected void onTitleRightClick() {
 
     }
@@ -221,6 +259,9 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         finish();
     }
 
+    /**
+     * 关闭软键盘
+     */
     protected void closeSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         View currentFocus = getCurrentFocus();
@@ -240,7 +281,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * 右侧进入
      */
     protected void rightStart() {
-        overridePendingTransition(R.anim.push_right_in,R.anim.push_left_out);
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
     }
 
     /**
@@ -252,6 +293,12 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         startActivity(clazz, null);
     }
 
+    /**
+     * 打开新界面
+     *
+     * @param clazz  界面类
+     * @param bundle bundle数据
+     */
     public void startActivity(@NonNull Class<? extends BaseActivity> clazz, @Nullable Bundle bundle) {
         startActivity(clazz, bundle, true);
     }
@@ -280,26 +327,67 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         }
     }
 
+    /**
+     * 打开网页界面
+     *
+     * @param url URL网址
+     */
     public void openWebsite(String url) {
         openWebsite(url, "", true, "", false);
     }
 
+    /**
+     * 打开网页界面
+     *
+     * @param url   URL网址
+     * @param title 标题文字
+     */
     public void openWebsite(String url, String title) {
         openWebsite(url, title, true, "", false);
     }
 
+    /**
+     * 打开网页界面
+     *
+     * @param url        URL 网址
+     * @param fullScreen 是否全屏
+     */
     public void openWebsite(String url, boolean fullScreen) {
         openWebsite(url, "", true, "", fullScreen);
     }
 
+    /**
+     * 打开网页界面
+     *
+     * @param url        URL 网址
+     * @param title      标题文字
+     * @param fullScreen 是否全屏
+     */
     public void openWebsite(String url, String title, boolean fullScreen) {
         openWebsite(url, title, false, "", fullScreen);
     }
 
+    /**
+     * 打开网页界面
+     *
+     * @param url        URL 网址
+     * @param autoTitle  是否自动获取标题
+     * @param rightText  右侧文字
+     * @param fullScreen 是否全屏
+     */
     public void openWebsite(String url, boolean autoTitle, String rightText, boolean fullScreen) {
         openWebsite(url, "", autoTitle, rightText, fullScreen);
     }
 
+    /**
+     * 打开网页界面
+     *
+     * @param url        URL 网址
+     * @param title      标题文字
+     * @param autoTitle  是否自动获取标题
+     * @param rightText  右侧文字
+     * @param fullScreen 是否全屏
+     */
     public void openWebsite(String url, String title, boolean autoTitle, String rightText, boolean fullScreen) {
         Bundle bundle = new Bundle();
         bundle.putString(URL, url);
@@ -332,10 +420,17 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         ToastUtils.showShort(resultMsg);
     }
 
+    /**
+     * 显示加载框，暂时未使用
+     */
+    @SuppressWarnings("unused")
     public void showLoading() {
         LoadingProgressDialog.showProgressDialog(this);
     }
-
+    /**
+     * 隐藏加载框，暂时未使用
+     */
+    @SuppressWarnings("unused")
     public void hideLoading() {
         LoadingProgressDialog.dismissProgressDialog();
     }

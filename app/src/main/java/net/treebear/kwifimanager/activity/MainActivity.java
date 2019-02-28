@@ -18,7 +18,7 @@ import butterknife.BindView;
 
 /**
  * @author Tinlone
- * <p>
+ * <h2>主界面大框架</h2>
  * We read the world wrong and say that it deceives us.
  */
 public class MainActivity extends BaseActivity {
@@ -27,7 +27,6 @@ public class MainActivity extends BaseActivity {
     ViewPager vpFragments;
     @BindView(R.id.bottom_bar)
     BottomBarLayout bottomBar;
-    String msg = "";
     private List<Fragment> fragments = new ArrayList<Fragment>() {
         {
             add(BlankFragment.newInstance(R.string.homepage, "#00B7EE"));
@@ -56,15 +55,12 @@ public class MainActivity extends BaseActivity {
             switch (i1) {
                 case 0:
                     statusTransparentFontWhite();
-                    msg = "透明状态栏白字";
                     break;
                 case 1:
                     statusTransparentFontBlack();
-                    msg = "透明状态栏黑字";
                     break;
                 case 2:
                     statusWhiteFontBlack();
-                    msg = "白底状态栏黑字";
                     break;
             }
         });

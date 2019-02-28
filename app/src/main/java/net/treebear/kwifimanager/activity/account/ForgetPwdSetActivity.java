@@ -22,9 +22,13 @@ import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * <h2>忘记密码</h2>
+ * <li>获取验证码界面</li>
+ * <li>重设密码界面(本页)</li>
+ */
 public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IForgetPasswordPresenter, Object> implements ForgetPasswordContract.IForgetPasswordView {
 
     @BindView(R.id.et_password_again)
@@ -110,6 +114,9 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
         ToastUtils.showShort(resultMsg);
     }
 
+    /**
+     * 监听输入框文字变化
+     */
     private void listenTextChange() {
         etSignUpPassword.addTextChangedListener(new BaseTextWatcher() {
 
@@ -126,6 +133,9 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
         });
     }
 
+    /**
+     * 更新确认按键点击状态
+     */
     private void updateConfirmBtnEnable() {
         btnConfirm.setEnabled(etSignUpPassword.getText().length() >= Config.Numbers.MIN_PWD_LENGTH &&
                 etPasswordAgain.getText().length() >= Config.Numbers.MIN_PWD_LENGTH);
@@ -157,5 +167,11 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
                 }
             }
         });
+    }
+
+    @Override
+    protected void onTitleLeftClick() {
+        super.onTitleLeftClick();
+        ActivityStackUtils.popActivity(Config.Tags.TAG_FORGET_PASSWORD, this);
     }
 }

@@ -52,7 +52,13 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
      * 目标界面代码
      */
     private int type;
+    /**
+     * 确认按键文字
+     */
     private String confirmText;
+    /**
+     * 服务端下发验证码，用作本地校验
+     */
     private String mVerifyCode;
     private Disposable mCountDisposable;
 
@@ -97,7 +103,6 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
 
     @OnClick(R.id.tv_get_code)
     public void onTvGetCodeClicked() {
-        // TODO: 2019/2/27 考虑：本地验证手机号合法性
         if (etSignUpPhone.getText().length() == 11) {
             mPresenter.getGetVerifyCode(type, etSignUpPhone.getText().toString());
             tvGetCode.setEnabled(false);
@@ -110,6 +115,7 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
             ToastUtils.showShort(Config.Tips.VERIFY_CODE_ERROR);
             return;
         }
+        dispose(mCountDisposable);
         // 考虑将所有获取验证码的功能放到一个类中，考虑到可能过于臃肿，暂不做此项设计
         switch (type) {
             case Config.RequestType.VERIFY_CODE_SIGN_UP:
@@ -212,5 +218,11 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
                 tvGetCode.setText(R.string.get_code);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        dispose(mCountDisposable);
+        super.onDestroy();
     }
 }

@@ -22,6 +22,10 @@ import net.treebear.kwifimanager.util.Check;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * <h2>注册后设置密码</h2>
+ * <p>逻辑上可优化，此项在当前版本(V1.0)可跳过，逻辑上不合理</p>
+ */
 public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPasswordPresenter, Object> implements SetPasswordContract.ISetPasswordView {
 
     @BindView(R.id.et_password_again)
@@ -36,6 +40,9 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
     TextView linePassword;
     @BindView(R.id.line_phone)
     TextView linePhoneNumber;
+    /**
+     * password 明文/密码状态
+     */
     private boolean passwordVisible = false;
 
     @Override
@@ -74,6 +81,9 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
         });
     }
 
+    /**
+     * 更新确认按键可点击状态
+     */
     private void updateConfirmBtnEnable() {
         btnConfirm.setEnabled(etSignUpPassword.getText().length() >= Config.Numbers.MIN_PWD_LENGTH &&
                 etPasswordAgain.getText().length() >= Config.Numbers.MIN_PWD_LENGTH);
@@ -151,8 +161,4 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
         finish();
     }
 
-    @Override
-    public void onBackPressed() {
-        onTitleLeftClick();
-    }
 }

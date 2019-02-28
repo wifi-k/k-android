@@ -42,6 +42,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
 
+/**
+ * <h2>用于加载网页的页面</h2>
+ */
 public class WebsiteActivity extends BaseActivity {
     private static final String TAG = "WebsiteActivity";
 
@@ -113,8 +116,10 @@ public class WebsiteActivity extends BaseActivity {
         settings.setUseWideViewPort(false);
         wvWebsite.setWebViewClient(new MyWebViewClient());
         wvWebsite.setWebChromeClient(new MyChromeClient());
-        wvWebsite.addJavascriptInterface(new JavaScriptInterface(), "AppInterface");
+//        目前没有H5交互需求，暂且注释掉
+//        wvWebsite.addJavascriptInterface(new JavaScriptInterface(), "AppInterface");
         preDownLoad();
+        // 自行实现下载服务
         wvWebsite.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
                     Log.i("aaa", String.format("url = %s\n," +
                                     "userAgent = %s\n," +
@@ -162,6 +167,9 @@ public class WebsiteActivity extends BaseActivity {
         );
     }
 
+    /**
+     * 文件下载准备工作
+     */
     private void preDownLoad() {
         Intent intent = new Intent(this, ODownloadService.class);
         conn = new ServiceConnection() {
@@ -178,6 +186,9 @@ public class WebsiteActivity extends BaseActivity {
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
     }
 
+    /**
+     * 预初始化弹窗
+     */
     private void initDialog() {
         if (messageDialog == null) {
             messageDialog = new TMessageDialog(this)
