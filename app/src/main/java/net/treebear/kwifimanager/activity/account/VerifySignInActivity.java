@@ -2,7 +2,6 @@ package net.treebear.kwifimanager.activity.account;
 
 import android.text.Editable;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,85 +10,74 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.bean.UserInfoBean;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.mvp.contract.SignUpVerifyContract;
-import net.treebear.kwifimanager.mvp.presenter.SignUpVerifyPresenter;
+import net.treebear.kwifimanager.mvp.contract.CodeSignInContract;
+import net.treebear.kwifimanager.mvp.presenter.CodeSignInPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
 import net.treebear.kwifimanager.util.CountUtil;
-import net.treebear.kwifimanager.widget.TMessageDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 
 /**
- * <h2>注册页</h2>
- * <ul>
- * <li>输入手机号</li>
- * <li>获取验证码</li>
- * <li>输入验证码</li>
- * <li>点击注册</li>
- * </ul>
+ * 验证码登录界面，登录和验证系列界面尚有很大优化空间
  */
-public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVerifyPresenter, String> implements SignUpVerifyContract.ISignUpVerifyView {
+public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeSignInPresenter, String> implements CodeSignInContract.ICodeSignInView {
+
 
     @BindView(R.id.et_verify)
-    EditText etSignUpCode;
+    EditText etSignInVerify;
     @BindView(R.id.line_password)
     TextView linePassword;
     @BindView(R.id.et_phone)
-    EditText etSignUpPhone;
+    EditText etSignInPhone;
     @BindView(R.id.line_phone)
-    TextView linePhoneNumber;
+    TextView linePhone;
     @BindView(R.id.iv_edit_clear)
     ImageView ivEditClear;
     @BindView(R.id.tv_get_code)
     TextView tvGetCode;
     @BindView(R.id.tv_sign_next)
     TextView tvSignNext;
-    @BindView(R.id.cb_signup_protocol)
-    CheckBox cbSignupProtocol;
-    /**
-     * 定时器订阅者
-     */
+    private String mVerifyCode = "";
     private Disposable mCountDisposable;
-    private TMessageDialog signDialog;
-    private String mVerifyCode;
 
     @Override
     public int layoutId() {
-        return R.layout.activity_sign_up;
+        return R.layout.activity_get_verify;
     }
 
     @Override
-    public SignUpVerifyContract.ISignUpVerifyPresenter getPresenter() {
-        return new SignUpVerifyPresenter();
+    public CodeSignInContract.ICodeSignInPresenter getPresenter() {
+        return new CodeSignInPresenter();
     }
 
     @Override
     protected void initView() {
         ActivityStackUtils.pressActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
-        statusWhiteFontBlack();
-        setTitleBack(Config.Text.EMPTY);
+        setTitleBack(R.string.sign_in_k);
+        tvSignNext.setText(R.string.sign_in_k);
         listenFocus();
         listenTextChange();
     }
 
     @OnClick(R.id.iv_edit_clear)
     public void onIvEditClearClicked() {
-        etSignUpPhone.setText("");
+        etSignInPhone.setText("");
     }
 
     @OnClick(R.id.tv_get_code)
     public void onTvGetCodeClicked() {
         // TODO: 2019/2/27 考虑：本地验证手机号合法性
-        if (etSignUpPhone.getText().length() == 11) {
-            mPresenter.getSignUpVerifyCode(etSignUpPhone.getText().toString());
+        if (etSignInPhone.getText().length() == 11) {
+            mPresenter.getSignInVerifyCode(etSignInPhone.getText().toString());
             tvGetCode.setEnabled(false);
         }
     }
@@ -103,48 +91,24 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
 
     @Override
     public void onLoadFail(String resultMsg, int resultCode) {
-        switch (resultCode) {
-            case Config.ResponseCode.HAS_SIGN_UP:
-                initSignMessageDialog();
-                signDialog.show();
-                break;
-            default:
-                ToastUtils.showShort(resultMsg);
-                break;
-        }
+        ToastUtils.showShort(resultMsg);
     }
 
     @OnClick(R.id.tv_sign_next)
     public void onTvSignNextClicked() {
-        if (!etSignUpCode.getText().toString().equals(mVerifyCode)) {
+        if (!etSignInVerify.getText().toString().equals(mVerifyCode)) {
             ToastUtils.showShort(Config.Tips.VERIFY_CODE_ERROR);
             return;
         }
-        if (cbSignupProtocol.isChecked()) {
-            mPresenter.signUpByVerifyCode(etSignUpPhone.getText().toString(),
-                    etSignUpCode.getText().toString());
-        } else {
-            ToastUtils.showShort(Config.Tips.READ_AND_AGREE_PROTOCOL);
-        }
-    }
-
-    @OnClick(R.id.tv_user_protocol)
-    public void onTvUserProtocolClicked() {
-        openWebsite(Config.Urls.USER_PROTOCOL);
-        cbSignupProtocol.setChecked(true);
-    }
-
-    @OnClick(R.id.tv_private_protocol)
-    public void onTvPrivateProtocolClicked() {
-        openWebsite(Config.Urls.PRIVATE_PROTOCOL);
-        cbSignupProtocol.setChecked(true);
+        mPresenter.signInByVerifyCode(etSignInPhone.getText().toString(),
+                etSignInVerify.getText().toString());
     }
 
     /**
      * 配置EditText文本变化监听
      */
     private void listenTextChange() {
-        etSignUpPhone.addTextChangedListener(new BaseTextWatcher() {
+        etSignInPhone.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
@@ -157,12 +121,12 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
                     // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
                     updateConfirmBtnEnable();
-                }else {
+                } else {
                     tvGetCode.setTextColor(Config.Colors.TEXT_9B);
                 }
             }
         });
-        etSignUpCode.addTextChangedListener(new BaseTextWatcher() {
+        etSignInVerify.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 updateConfirmBtnEnable();
@@ -171,63 +135,36 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
     }
 
     private void updateConfirmBtnEnable() {
-        tvSignNext.setEnabled(etSignUpPhone.getText().length() == Config.Numbers.PHONE_LENGTH &&
-                etSignUpCode.getText().length() == Config.Numbers.VERIFY_CODE_LENGTH);
+        tvSignNext.setEnabled(etSignInPhone.getText().length() == Config.Numbers.PHONE_LENGTH &&
+                etSignInVerify.getText().length() == Config.Numbers.VERIFY_CODE_LENGTH);
     }
 
     /**
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignUpPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignInPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    etSignUpPhone.setSelection(etSignUpPhone.getText().length());
-                    linePhoneNumber.setBackgroundColor(Config.Colors.MAIN);
+                    etSignInPhone.setSelection(etSignInPhone.getText().length());
+                    linePhone.setBackgroundColor(Config.Colors.MAIN);
                 } else {
-                    linePhoneNumber.setBackgroundColor(Config.Colors.LINE);
+                    linePhone.setBackgroundColor(Config.Colors.LINE);
                 }
             }
         });
-        etSignUpCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignInVerify.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    etSignUpCode.setSelection(etSignUpCode.getText().length());
+                    etSignInVerify.setSelection(etSignInVerify.getText().length());
                     linePassword.setBackgroundColor(Config.Colors.MAIN);
                 } else {
                     linePassword.setBackgroundColor(Config.Colors.LINE);
                 }
             }
         });
-    }
-
-    /**
-     * 使用前初始化弹窗
-     */
-    private void initSignMessageDialog() {
-        if (signDialog == null) {
-            signDialog = new TMessageDialog(this).withoutMid()
-                    .title(Config.Text.TIPS)
-                    .content(Config.Text.HAS_ACCOUNT)
-                    .left(Config.Text.CANCEL)
-                    .right(Config.Text.SIGN_IN_NOW)
-                    .doClick(new TMessageDialog.DoClickListener() {
-                        @Override
-                        public void onClickLeft(View view) {
-                            signDialog.dismiss();
-                        }
-
-                        @Override
-                        public void onClickRight(View view) {
-                            startActivity(SignInActivity.class);
-//                            startActivity(SetPasswordActivity.class);
-                            signDialog.dismiss();
-                            finish();
-                        }
-                    });
-        }
     }
 
     /**
@@ -259,21 +196,17 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
     }
 
     @Override
-    protected void onDestroy() {
+    public void onSignInOk(UserInfoBean bean) {
         dispose(mCountDisposable);
-        super.onDestroy();
-    }
-
-    @Override
-    public void onSignUpOk(UserInfoBean bean) {
+        ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);
         MyApplication.getAppContext().savedUser(bean);
-        dispose(mCountDisposable);
-        startActivity(SetPasswordActivity.class);
+        startActivity(MainActivity.class);
+        ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
     }
 
     @Override
     protected void onTitleLeftClick() {
-        ActivityStackUtils.popActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
+        ActivityStackUtils.popActivity(Config.Tags.TAG_SIGN_ACCOUNT,this);
         finish();
     }
 

@@ -9,28 +9,46 @@ import net.treebear.kwifimanager.BuildConfig;
 /**
  * @author Tinlone
  * @date 2018/3/23.
+ * @important 请不要通过实现本类中接口的方式引入常量
  */
 
-public interface Config {
+public final class Config {
+    private Config() {
+    }
 
-    interface BaseUrls {
+    /**
+     * URL数据
+     */
+    public interface Urls {
         String BASE_URL = "http://test.user.famwifi.com/api/";
+        String USER_PROTOCOL = "http://www.baidu.com";
+        String PRIVATE_PROTOCOL = "http://www.baidu.com";
     }
 
-    interface Tags{
+    /**
+     * 栈标志
+     */
+    public interface Tags {
         String TAG_SIGN_ACCOUNT = "account.sign_in_up";
+        String TAG_FORGET_PASSWORD = "account.forget_password";
     }
 
-    interface Colors{
-       @ColorInt
-       int MAIN = Color.parseColor("#26DCBC");
+    /**
+     * 颜色值
+     */
+    public interface Colors {
         @ColorInt
-       int LINE = Color.parseColor("#F2F2F2");
+        int MAIN = Color.parseColor("#26DCBC");
+        @ColorInt
+        int LINE = Color.parseColor("#F2F2F2");
+        @ColorInt
+        int TEXT_9B = Color.parseColor("#9B9B9B");
     }
+
     /**
      * 数字常量
      */
-    interface Numbers {
+    public interface Numbers {
         /**
          * 单页数据量
          */
@@ -50,7 +68,7 @@ public interface Config {
         /**
          * 密码长度下限
          */
-        int MIN_PWD_LENGTH = 6;
+        int MIN_PWD_LENGTH = 1;
         /**
          * 电话号码长度
          */
@@ -78,19 +96,57 @@ public interface Config {
     }
 
     /**
-     * 字符常量
+     * 界面字符常量
      */
-    interface Strings {
+    public interface Text {
+        String EMPTY = "";
         String VERIFY_CODE_FORMAT = "%sS后重新获取";
-        String GET_VERIFY_CODE = "获取验证码";
         String TIPS = "提示";
         String HAS_ACCOUNT = "该手机号已注册，请立即登录";
         String CANCEL = "取消";
         String SIGN_IN_NOW = "立即登录";
+        String SIGN_IN = "登录";
     }
 
-    interface ResponseCode{
+    /**
+     * Toast提示语
+     */
+    public interface Tips {
+        String READ_AND_AGREE_PROTOCOL = "请先阅读并同意《用户协议》《隐私协议》";
+        String VERIFY_CODE_ERROR = "验证码有误 请重新输入";
+        String VERIFY_SMS_SEND = "验证码发送成功";
+        String SIGN_IN_SUCCESS = "登陆成功";
+    }
+
+    public interface RequestType{
+        /**
+         * 注册验证码
+         */
+        int VERIFY_CODE_SIGN_UP = 1;
+        /**
+         * 忘记密码验证码
+         */
+        int VERIFY_CODE_FORGET_PWD = 2;
+        /**
+         * 修改手机号验证码
+         */
+        int VERIFY_CODE_MODIFY_PHONE = 3;
+        /**
+         * 登录验证码
+         */
+        int VERIFY_CODE_SIGN_IN = 4;
+
+    }
+
+    /**
+     * 响应代码
+     */
+    public interface ResponseCode {
+        /**
+         * 请求成功
+         */
         int RESPONSE_OK = 0;
+
         int RESPONSE_ERR_1 = 1;
         /**
          * TOKEN异常
@@ -105,7 +161,7 @@ public interface Config {
     /**
      * 文件目录
      */
-    interface Path {
+    public interface Path {
         String PRIVATE = String.format("%s/%s", Environment.getExternalStorageState(), BuildConfig.APP_NAME);
         String FILE = PRIVATE + "/files/";
         String CACHE = PRIVATE + "/cache/";

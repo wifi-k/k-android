@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <EditText
+        android:id="@+id/et_verify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:background="@null"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/input_verify_code_please"
+        android:inputType="number"
+        android:maxLength="6"
+        android:singleLine="true"
+        android:textColorHint="@color/text_hint_cf"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_get_code"
+        app:layout_constraintStart_toStartOf="@+id/et_phone"
+        app:layout_constraintTop_toBottomOf="@+id/line_phone" />
+
+    <TextView
+        android:id="@+id/line_password"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_f2"
+        app:layout_constraintEnd_toEndOf="@+id/et_phone"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_phone"
+        app:layout_constraintTop_toBottomOf="@+id/et_verify" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="36dp"
+        android:background="@null"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="@string/input_phone_number_please"
+        android:inputType="number"
+        android:maxLength="11"
+        android:singleLine="true"
+        android:textColorHint="@color/text_hint_cf"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextFields" />
+
+    <TextView
+        android:id="@+id/line_phone"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_f2"
+        app:layout_constraintEnd_toEndOf="@+id/et_phone"
+        app:layout_constraintStart_toStartOf="@+id/et_phone"
+        app:layout_constraintTop_toBottomOf="@+id/et_phone" />
+
+    <ImageView
+        android:id="@+id/iv_edit_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/et_phone"
+        app:layout_constraintEnd_toEndOf="@+id/et_phone"
+        app:layout_constraintTop_toTopOf="@+id/et_phone"
+        app:srcCompat="@mipmap/ic_edit_close" />
+
+    <TextView
+        android:id="@+id/tv_get_code"
+        android:layout_width="wrap_content"
+        android:layout_height="29dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/rect_h29_r2_line_f2_trans"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/get_code"
+        android:textColor="@color/light_text_9b"
+        app:layout_constraintEnd_toEndOf="@+id/line_phone"
+        app:layout_constraintTop_toBottomOf="@+id/line_phone" />
+
+    <TextView
+        android:id="@+id/tv_sign_next"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/btn_green_to_cyan"
+        android:gravity="center"
+        android:text="@string/signup"
+        android:enabled="false"
+        android:textColor="@drawable/btn_text_enable_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line_password" />
+
+
+</android.support.constraint.ConstraintLayout>

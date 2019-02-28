@@ -48,13 +48,18 @@ public class MyApplication extends Application {
         registerReceiver(mNetWorkReceiver, intentFilter);
     }
 
+
     private void dealUncaughtException() {
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-            TLog.e(e);
-//            Intent intent = new Intent(mContext, launchAccountActivity.class);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            mContext.startActivity(intent);
-//            android.os.Process.killProcess(android.os.Process.myPid());
+            //开发期间打印报错日志
+            if (BuildConfig.DEBUG) {
+                TLog.e(e);
+            } else {
+                Intent intent = new Intent(mContext, launchAccountActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
         });
     }
 

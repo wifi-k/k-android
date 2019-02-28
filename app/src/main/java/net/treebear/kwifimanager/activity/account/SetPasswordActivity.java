@@ -1,6 +1,5 @@
 package net.treebear.kwifimanager.activity.account;
 
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.config.Config;
@@ -22,7 +20,6 @@ import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPasswordPresenter, Object> implements SetPasswordContract.ISetPasswordView {
@@ -37,7 +34,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
     TextView btnConfirm;
     @BindView(R.id.line_password)
     TextView linePassword;
-    @BindView(R.id.line_phone_number)
+    @BindView(R.id.line_phone)
     TextView linePhoneNumber;
     private boolean passwordVisible = false;
 
@@ -50,7 +47,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
     protected void initView() {
         ActivityStackUtils.pressActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
         statusWhiteFontBlack();
-        setTitleBack("");
+        setTitleBack(Config.Text.EMPTY);
         listenFocus();
         listenTextChange();
     }
@@ -135,16 +132,16 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
         if (Check.equals(etSignUpPassword, etPasswordAgain)) {
             mPresenter.setPassword(etSignUpPassword.getText().toString());
         } else {
-            ToastUtils.showShort("两次密码不一致");
+            ToastUtils.showShort(R.string.password_not_equal);
         }
         // TEST 测试关闭栈中界面
 //        startActivity(MainActivity.class);
-//        ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
+//        ActivityStackUtils.finishAll(Config.Keys.TAG_SIGN_ACCOUNT);
     }
 
     @Override
     public void onLoadData(Object resultData) {
-        ToastUtils.showShort("设置密码成功");
+        ToastUtils.showShort(R.string.set_password_success);
         ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
     }
 

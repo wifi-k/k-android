@@ -12,18 +12,20 @@ import okhttp3.RequestBody;
  * @author Tinlone
  * @date 2018/3/23.
  */
-public interface SetPasswordContract {
+public interface GetVerifyContract {
 
-    interface ISetPasswordView extends IView<Object> {
+    interface IGetVerifyView extends IView<String> {
 
     }
 
-    interface ISetPasswordPresenter extends IPresenter<ISetPasswordView> {
-        void setPassword(String passwd);
+    interface IGetVerifyPresenter extends IPresenter<IGetVerifyView> {
+
+        void getGetVerifyCode(int type, String mobile);
     }
 
-    interface ISetPasswordModel extends IModel {
+    interface IGetVerifyModel extends IModel {
 
-        void setPassword(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
+        void getGetVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack);
+
     }
 }

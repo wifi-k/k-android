@@ -28,7 +28,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.account.SetPasswordActivity"></activity>
+        <activity android:name=".activity.account.ForgetPwdSetActivity"></activity>
+        <activity android:name=".activity.account.ForgetPwdCodeActivity" />
+        <activity android:name=".activity.account.VerifySignInActivity" />
+        <activity android:name=".activity.account.GetVerifyActivity" />
+        <activity android:name=".activity.account.SetPasswordActivity" />
         <activity
             android:name=".activity.account.SignUpActivity"
             android:screenOrientation="portrait" />

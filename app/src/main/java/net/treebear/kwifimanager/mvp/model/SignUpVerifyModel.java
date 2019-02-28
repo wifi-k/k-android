@@ -17,7 +17,7 @@ public class SignUpVerifyModel extends BaseModel implements SignUpVerifyContract
 
     @Override
     public void getSignUpVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack) {
-        bindObservable(mService.getSignUpVerify(params), callBack);
+        bindObservable(mService.getVerifyByType(params), callBack);
     }
 
     @Override

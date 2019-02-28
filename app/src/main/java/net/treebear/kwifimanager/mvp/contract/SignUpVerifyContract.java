@@ -21,9 +21,7 @@ public interface SignUpVerifyContract {
     }
 
     interface ISignUpVerifyPresenter extends IPresenter<ISignUpVerifyView> {
-        /**
-         * 获取启动页广告
-         */
+
         void getSignUpVerifyCode(String mobile);
 
         void signUpByVerifyCode(String mobile, String code);
@@ -31,12 +29,6 @@ public interface SignUpVerifyContract {
 
     interface ISignUpVerifyModel extends IModel {
 
-        /**
-         * 获取广告
-         *
-         * @param params   参数
-         * @param callBack 回调
-         */
         void getSignUpVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack);
 
         void signUpByVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<UserInfoBean>> callBack);

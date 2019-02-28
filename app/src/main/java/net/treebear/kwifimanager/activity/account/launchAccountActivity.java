@@ -17,7 +17,6 @@ import butterknife.OnClick;
  */
 public class launchAccountActivity extends BaseActivity {
 
-
     @Override
     public int layoutId() {
         return R.layout.activity_launch_account;
@@ -31,8 +30,8 @@ public class launchAccountActivity extends BaseActivity {
 
     @OnClick(R.id.btn_signin)
     public void onSignInClick() {
-//        startActivity(SignInActivity.class);
-        startActivity(MainActivity.class);
+        startActivity(SignInActivity.class);
+//        startActivity(MainActivity.class);
     }
 
     @OnClick(R.id.btn_signup)

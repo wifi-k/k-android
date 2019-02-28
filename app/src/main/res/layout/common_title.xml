@@ -30,7 +30,7 @@
             android:layout_centerInParent="true"
             android:maxLength="20"
             android:textColor="@color/text_dark_black"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_title_right"

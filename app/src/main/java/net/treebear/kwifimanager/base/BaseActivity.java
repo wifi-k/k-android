@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -56,6 +58,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         super.onCreate(savedInstanceState);
         setContentView(layoutId());
         initImmersionBar();
+        statusWhiteFontBlack();
         unbinder = ButterKnife.bind(this);
         initParams(getIntent().getExtras());
         mPresenter = getPresenter();
@@ -164,6 +167,9 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
 
     protected void setTitleBack(String title) {
         setTitle(R.mipmap.back, title);
+    }
+    protected void setTitleBack(@StringRes int title) {
+        setTitle(R.mipmap.back, getString(title));
     }
 
     protected void setTitle(String title) {
@@ -339,6 +345,11 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      */
     protected boolean noDoubleClick() {
         return System.currentTimeMillis() - lastClick >= Config.Numbers.CLICK_LIMIT;
+    }
+
+    @Override
+    public void onBackPressed() {
+        onTitleLeftClick();
     }
 
     /**

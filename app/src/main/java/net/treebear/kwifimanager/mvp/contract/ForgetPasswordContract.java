@@ -2,7 +2,6 @@ package net.treebear.kwifimanager.mvp.contract;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
-import net.treebear.kwifimanager.bean.UserInfoBean;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.IView;
 
@@ -12,17 +11,17 @@ import okhttp3.RequestBody;
  * @author Tinlone
  * @date 2018/3/23.
  */
-public interface SetPasswordContract {
+public interface ForgetPasswordContract {
 
-    interface ISetPasswordView extends IView<Object> {
+    interface IForgetPasswordView extends IView<Object> {
 
     }
 
-    interface ISetPasswordPresenter extends IPresenter<ISetPasswordView> {
-        void setPassword(String passwd);
+    interface IForgetPasswordPresenter extends IPresenter<IForgetPasswordView> {
+        void setPassword(String mobile, String vcode, String passwd);
     }
 
-    interface ISetPasswordModel extends IModel {
+    interface IForgetPasswordModel extends IModel {
 
         void setPassword(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
     }

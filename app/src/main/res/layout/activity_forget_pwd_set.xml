@@ -1,37 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.account.SignInActivity">
-
-    <TextView
-        android:id="@+id/tv_forget_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:text="@string/forget_password"
-        android:textColor="@color/text_dark_2f"
-        app:layout_constraintEnd_toEndOf="@+id/tv_sign_next"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sign_next" />
+    tools:context=".activity.account.ForgetPwdSetActivity">
 
     <EditText
-        android:id="@+id/et_sign_in_verify"
+        android:id="@+id/et_password_again"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:background="@null"
         android:fontFamily="sans-serif-condensed-medium"
-        android:hint="@string/input_password"
+        android:hint="@string/input_password_again"
         android:inputType="textPassword"
         android:maxLength="25"
         android:singleLine="true"
         android:textColorHint="@color/text_hint_cf"
         android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="@+id/et_sign_in_phone"
-        app:layout_constraintStart_toStartOf="@+id/et_sign_in_phone"
+        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
+        app:layout_constraintStart_toStartOf="@+id/line_phone"
         app:layout_constraintTop_toBottomOf="@+id/line_phone" />
 
     <TextView
@@ -40,10 +29,10 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:background="@color/line_f2"
-        app:layout_constraintEnd_toEndOf="@+id/et_sign_in_phone"
+        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/et_sign_in_phone"
-        app:layout_constraintTop_toBottomOf="@+id/et_sign_in_verify" />
+        app:layout_constraintStart_toStartOf="@+id/et_sign_up_password"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_again" />
 
     <include
         android:id="@+id/include"
@@ -55,17 +44,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_sign_in_phone"
+        android:id="@+id/et_sign_up_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="36dp"
         android:background="@null"
         android:fontFamily="sans-serif-condensed-medium"
-        android:hint="@string/input_phone_number_please"
-        android:inputType="number"
-        android:maxLength="11"
+        android:hint="@string/input_password_please"
+        android:inputType="textPassword"
+        android:maxLength="25"
         android:singleLine="true"
         android:textColorHint="@color/text_hint_cf"
         android:textSize="17sp"
@@ -80,46 +69,37 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:background="@color/line_f2"
-        app:layout_constraintEnd_toEndOf="@+id/et_sign_in_phone"
-        app:layout_constraintStart_toStartOf="@+id/et_sign_in_phone"
-        app:layout_constraintTop_toBottomOf="@+id/et_sign_in_phone" />
+        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
+        app:layout_constraintStart_toStartOf="@+id/et_sign_up_password"
+        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_password" />
+
+    <ImageView
+        android:id="@+id/iv_password_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:visibility="visible"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_sign_up_password"
+        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
+        app:layout_constraintTop_toTopOf="@+id/et_sign_up_password"
+        app:srcCompat="@mipmap/ic_edit_eye_close_gray" />
 
     <TextView
-        android:id="@+id/tv_sign_next"
+        android:id="@+id/btn_confirm"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="38dp"
         android:layout_marginEnd="36dp"
         android:background="@drawable/btn_green_to_cyan"
-        android:enabled="false"
         android:gravity="center"
-        android:text="@string/login"
+        android:text="@string/confirm"
+        android:enabled="false"
         android:textColor="@drawable/btn_text_enable_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line_password" />
-
-    <TextView
-        android:id="@+id/tv_sms_sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:text="@string/sms_sign_in"
-        android:textColor="@color/text_dark_2f"
-        app:layout_constraintStart_toStartOf="@+id/tv_sign_next"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sign_next" />
-
-    <ImageView
-        android:id="@+id/iv_edit_clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/et_sign_in_phone"
-        app:layout_constraintEnd_toEndOf="@+id/et_sign_in_phone"
-        app:layout_constraintTop_toTopOf="@+id/et_sign_in_phone"
-        app:srcCompat="@mipmap/ic_edit_close" />
 
 
 </android.support.constraint.ConstraintLayout>

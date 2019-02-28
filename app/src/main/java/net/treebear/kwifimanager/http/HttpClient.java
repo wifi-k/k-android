@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpClient {
     private static HttpClient mRetrofitHttp;
-    private String BASE_URL = Config.BaseUrls.BASE_URL;
+    private String BASE_URL = Config.Urls.BASE_URL;
     private Retrofit retrofit;
     private static String apiToken = "";
 
@@ -124,7 +124,7 @@ public class HttpClient {
     }
 
     private String getBaseUrl() {
-        return BASE_URL == null ? Config.BaseUrls.BASE_URL : BASE_URL;
+        return BASE_URL == null ? Config.Urls.BASE_URL : BASE_URL;
     }
 
     public void setBASE_URL(String BASE_URL) {
