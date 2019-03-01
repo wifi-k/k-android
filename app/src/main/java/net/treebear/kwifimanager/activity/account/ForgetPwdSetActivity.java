@@ -100,11 +100,11 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
 
     @OnClick(R.id.btn_confirm)
     public void onBtnConfirmClicked() {
-        if (!Check.equals(etSignUpPassword,etPasswordAgain)){
+        if (!Check.equals(etSignUpPassword, etPasswordAgain)) {
             ToastUtils.showShort(R.string.password_not_equal);
             return;
         }
-        mPresenter.setPassword(mobile,vcode,etSignUpPassword.getText().toString());
+        mPresenter.setPassword(mobile, vcode, etSignUpPassword.getText().toString());
         btnConfirm.setEnabled(false);
     }
 
@@ -122,7 +122,7 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
 
             @Override
             public void afterTextChanged(Editable s) {
-                    updateConfirmBtnEnable();
+                updateConfirmBtnEnable();
             }
         });
         etPasswordAgain.addTextChangedListener(new BaseTextWatcher() {

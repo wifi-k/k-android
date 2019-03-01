@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
-
 import net.treebear.kwifimanager.base.BaseFragment;
 
 import butterknife.BindView;

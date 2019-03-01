@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
-import net.treebear.kwifimanager.mvp.IView;
 
 import net.treebear.kwifimanager.activity.WebsiteActivity;
 import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.mvp.IView;
 import net.treebear.kwifimanager.widget.LoadingProgressDialog;
 
 import butterknife.ButterKnife;

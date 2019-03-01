@@ -83,6 +83,7 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
 
     /**
      * ArrayMap to JSONObject
+     *
      * @param params 承载参数的map
      * @return 承载参数的JSONObject
      */
@@ -118,6 +119,7 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
 
     /**
      * 统一处理失败请求的基类回调
+     *
      * @param <Data> data数据
      */
     protected abstract class BaseAsyncCallback<Data> implements IModel.AsyncCallBack<Data> {

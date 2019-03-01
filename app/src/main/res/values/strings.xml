@@ -31,4 +31,11 @@
     <string name="find_password_success">找回密码成功</string>
     <string name="password_not_equal">两次密码不一致</string>
     <string name="verify_code_input_error">验证码输入有误</string>
+    <string name="bind_k_wifi_manager">绑定小K管家</string>
+    <string name="join_family_code">加入家庭码</string>
+    <string name="join_family_tips">登录家庭码，立即加入某个家庭</string>
+    <string name="input_family_code">输入家庭码</string>
+    <string name="product_introduce">产品介绍</string>
+    <string name="come_back_home">欢迎回家</string>
+    <string name="my_k_ap">我的小k</string>
 </resources>

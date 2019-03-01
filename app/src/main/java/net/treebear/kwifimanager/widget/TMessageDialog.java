@@ -287,7 +287,7 @@ public class TMessageDialog {
         return this;
     }
 
-    public TMessageDialog widthPercent(float percent){
+    public TMessageDialog widthPercent(float percent) {
         widthPercent = percent;
         return this;
     }

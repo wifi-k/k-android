@@ -1,31 +1,42 @@
 package net.treebear.kwifimanager.bean;
 
-import android.support.annotation.NonNull;
-
-import java.util.Locale;
-
 /**
  * @author Administrator
  * @date 2017/11/22
  */
 
 public class UserInfoBean {
-
+    /**
+     * 用户姓名
+     */
+    private String name;
+    /**
+     * APi-token
+     */
     private String token;
-
-    private String phone;
-
+    /**
+     * 用户手机号
+     */
+    private String mobile;
+    /**
+     * 用户邮箱
+     */
+    private String email;
+    /**
+     * 用户认证状态 :0-未认证 1-认证通过
+     */
+    private int authStatus;
     /**
      * 用户头像路径
      */
     private String avatar;
 
-    public String getPhone() {
-        return phone;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getToken() {
@@ -44,11 +55,38 @@ public class UserInfoBean {
         this.avatar = avatar;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getAuthStatus() {
+        return authStatus;
+    }
+
+    public void setAuthStatus(int authStatus) {
+        this.authStatus = authStatus;
+    }
+
     @Override
     public String toString() {
         return "UserInfoBean{" +
-                "token='" + token + '\'' +
-                ", phone='" + phone + '\'' +
+                "name='" + name + '\'' +
+                ", token='" + token + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", email='" + email + '\'' +
+                ", authStatus=" + authStatus +
                 ", avatar='" + avatar + '\'' +
                 '}';
     }

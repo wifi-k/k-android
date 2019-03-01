@@ -211,6 +211,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
         MyApplication.getAppContext().savedUser(bean);
         startActivity(MainActivity.class);
         ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
+        ActivityStackUtils.finishAll(Config.Tags.TAG_LAUNCH_ROOT);
     }
 
     @Override

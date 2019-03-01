@@ -27,7 +27,7 @@ public class SignUpVerifyPresenter extends BasePresenter<SignUpVerifyContract.IS
     public void getSignUpVerifyCode(String mobile) {
         ArrayMap<String, Object> map = map();
         map.put(Keys.MOBILE, mobile);
-        map.put(Keys.TYPE,1);
+        map.put(Keys.TYPE, 1);
         mModel.getSignUpVerifyCode(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<String>>() {
             @Override
             public void onSuccess(BaseResponse<String> resultData) {

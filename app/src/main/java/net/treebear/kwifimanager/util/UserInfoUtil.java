@@ -1,8 +1,9 @@
 package net.treebear.kwifimanager.util;
 
+import com.google.gson.Gson;
+
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.bean.UserInfoBean;
-import com.google.gson.Gson;
 
 /**
  * Created by Administrator on 2017/11/22.

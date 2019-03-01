@@ -63,6 +63,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
     public SetPasswordContract.ISetPasswordPresenter getPresenter() {
         return new SetPasswordPresenter();
     }
+
     /**
      * 配置EditText文本变化监听
      */
@@ -70,7 +71,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
         etSignUpPassword.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                    updateConfirmBtnEnable();
+                updateConfirmBtnEnable();
             }
         });
         etPasswordAgain.addTextChangedListener(new BaseTextWatcher() {

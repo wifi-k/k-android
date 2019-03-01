@@ -21,7 +21,7 @@ public class NetWorkReceiver extends BroadcastReceiver {
                 hasOnWifi = true;
                 ToastUtils.showShort("您已连接WiFi");
             }
-            if (!isWifi && hasOnWifi){
+            if (!isWifi && hasOnWifi) {
                 ToastUtils.showShort("您已断开WiFi连接");
                 hasOnWifi = false;
             }

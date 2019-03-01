@@ -31,6 +31,7 @@ public final class Config {
     public interface Tags {
         String TAG_SIGN_ACCOUNT = "account.sign_in_up";
         String TAG_FORGET_PASSWORD = "account.forget_password";
+        String TAG_LAUNCH_ROOT = "account.launch_root";
     }
 
     /**
@@ -118,7 +119,7 @@ public final class Config {
         String SIGN_IN_SUCCESS = "登陆成功";
     }
 
-    public interface RequestType{
+    public interface RequestType {
         /**
          * 注册验证码
          */

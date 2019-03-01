@@ -427,6 +427,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
     public void showLoading() {
         LoadingProgressDialog.showProgressDialog(this);
     }
+
     /**
      * 隐藏加载框，暂时未使用
      */

@@ -148,6 +148,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
         ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);
         startActivity(MainActivity.class);
         ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
+        ActivityStackUtils.finishAll(Config.Tags.TAG_LAUNCH_ROOT);
     }
 
     @Override

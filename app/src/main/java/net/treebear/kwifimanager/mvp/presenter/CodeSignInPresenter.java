@@ -21,12 +21,12 @@ public class CodeSignInPresenter extends BasePresenter<CodeSignInContract.ICodeS
     @Override
     public void getSignInVerifyCode(String mobile) {
         ArrayMap<String, Object> map = map();
-        map.put(Keys.MOBILE,mobile);
+        map.put(Keys.MOBILE, mobile);
         map.put(Keys.TYPE, Config.RequestType.VERIFY_CODE_SIGN_IN);
         mModel.getSignInVerifyCode(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<String>>() {
             @Override
             public void onSuccess(BaseResponse<String> resultData) {
-                if (Check.hasContent(resultData,mView)){
+                if (Check.hasContent(resultData, mView)) {
                     mView.onLoadData(resultData.getData());
                 }
             }
@@ -36,12 +36,12 @@ public class CodeSignInPresenter extends BasePresenter<CodeSignInContract.ICodeS
     @Override
     public void signInByVerifyCode(String mobile, String code) {
         ArrayMap<String, Object> map = map();
-        map.put(Keys.MOBILE,mobile);
-        map.put(Keys.VERIFY_CODE,code);
+        map.put(Keys.MOBILE, mobile);
+        map.put(Keys.VERIFY_CODE, code);
         mModel.signInByVerifyCode(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<UserInfoBean>>() {
             @Override
             public void onSuccess(BaseResponse<UserInfoBean> resultData) {
-                if (Check.hasContent(resultData,mView)){
+                if (Check.hasContent(resultData, mView)) {
                     mView.onSignInOk(resultData.getData());
                 }
             }

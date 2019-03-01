@@ -27,28 +27,33 @@ public class ActivityStackUtils {
 
     /**
      * 压入Activity
-     * @param tag       栈标志信息
-     * @param activity  入栈界面
+     *
+     * @param tag      栈标志信息
+     * @param activity 入栈界面
      */
     public static void pressActivity(String tag, Activity activity) {
         requestStack(tag).add(activity);
     }
+
     /**
      * 弹出Activity
-     * @param tag       栈标志信息
-     * @param activity  入栈界面
+     *
+     * @param tag      栈标志信息
+     * @param activity 入栈界面
      */
     public static void popActivity(String tag, Activity activity) {
         requestStack(tag).remove(activity);
     }
+
     /**
      * 结束指定栈所有Activity
-     * @param tag       栈标志信息
+     *
+     * @param tag 栈标志信息
      */
-    public static void finishAll(String tag){
+    public static void finishAll(String tag) {
         ArrayList<Activity> activities = requestStack(tag);
         Iterator<Activity> iterator = activities.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             iterator.next().finish();
             iterator.remove();
         }
@@ -59,7 +64,7 @@ public class ActivityStackUtils {
     /**
      * 释放栈池资源
      */
-    public void release(){
+    public void release() {
         for (Map.Entry<String, ArrayList<Activity>> entry : mStackPool.entrySet()) {
             entry.getValue().clear();
         }

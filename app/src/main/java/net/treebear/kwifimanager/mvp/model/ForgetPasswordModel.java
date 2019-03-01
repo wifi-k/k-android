@@ -9,6 +9,6 @@ import okhttp3.RequestBody;
 public class ForgetPasswordModel extends BaseModel implements ForgetPasswordContract.IForgetPasswordModel {
     @Override
     public void setPassword(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack) {
-        bindObservable(mService.forgetPassword(params),callBack);
+        bindObservable(mService.forgetPassword(params), callBack);
     }
 }

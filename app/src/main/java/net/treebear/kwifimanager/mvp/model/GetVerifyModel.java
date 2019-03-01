@@ -9,6 +9,6 @@ import okhttp3.RequestBody;
 public class GetVerifyModel extends BaseModel implements GetVerifyContract.IGetVerifyModel {
     @Override
     public void getGetVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack) {
-        bindObservable(mService.getVerifyByType(params),callBack);
+        bindObservable(mService.getVerifyByType(params), callBack);
     }
 }

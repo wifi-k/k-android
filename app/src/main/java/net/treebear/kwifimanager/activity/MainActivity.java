@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.chaychan.library.BottomBarLayout;
-import net.treebear.kwifimanager.R;
 
+import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.adapter.PagerFragmentAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.IPresenter;

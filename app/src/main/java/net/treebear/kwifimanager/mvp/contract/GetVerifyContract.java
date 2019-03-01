@@ -2,7 +2,6 @@ package net.treebear.kwifimanager.mvp.contract;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
-import net.treebear.kwifimanager.bean.UserInfoBean;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.IView;
 

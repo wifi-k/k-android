@@ -6,7 +6,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SecurityUtils {
-    private SecurityUtils(){}
+    private SecurityUtils() {
+    }
 
     public static String md5(String string) {
         if (TextUtils.isEmpty(string)) {

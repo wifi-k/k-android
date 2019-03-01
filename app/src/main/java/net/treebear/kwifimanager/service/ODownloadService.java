@@ -201,7 +201,7 @@ public class ODownloadService extends Service {
         }
 
         public void closeNotification() {
-            if (notificationManager!=null){
+            if (notificationManager != null) {
                 notificationManager.cancel(1);
             }
         }

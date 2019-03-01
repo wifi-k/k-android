@@ -16,7 +16,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="80dp"
-        android:background="@drawable/shape_5_line_white"
+        android:background="@drawable/shape_r5_line_white"
         android:gravity="center"
         android:text="@string/toUse"
         android:textColor="@android:color/white"

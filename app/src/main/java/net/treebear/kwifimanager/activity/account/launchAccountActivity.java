@@ -1,11 +1,8 @@
 package net.treebear.kwifimanager.activity.account;
 
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.mvp.contract.SignUpVerifyContract;
-import net.treebear.kwifimanager.mvp.presenter.SignUpVerifyPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 
 import butterknife.OnClick;
@@ -26,7 +23,7 @@ public class launchAccountActivity extends BaseActivity {
     @Override
     protected void initView() {
         statusTransparentFontWhite();
-        ActivityStackUtils.pressActivity(Config.Tags.TAG_SIGN_ACCOUNT,this);
+        ActivityStackUtils.pressActivity(Config.Tags.TAG_LAUNCH_ROOT, this);
     }
 
     @OnClick(R.id.btn_signin)

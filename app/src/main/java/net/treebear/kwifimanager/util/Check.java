@@ -77,6 +77,7 @@ public final class Check {
 
     /**
      * 比较文字信息
+     *
      * @param v1 文字控件
      * @param v2 文字控件
      * @return 类似否
