@@ -47,4 +47,16 @@ public class CodeSignInPresenter extends BasePresenter<CodeSignInContract.ICodeS
             }
         });
     }
+
+    @Override
+    public void getUserInfo() {
+        mModel.getUserInfo(new BaseAsyncCallback<BaseResponse<UserInfoBean>>() {
+            @Override
+            public void onSuccess(BaseResponse<UserInfoBean> resultData) {
+                if (Check.hasContent(resultData,mView)){
+                    mView.onUserInfoLoaded(resultData.getData());
+                }
+            }
+        });
+    }
 }

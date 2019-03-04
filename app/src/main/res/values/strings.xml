@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name" translatable="false">小K管家</string>
 
+    <!--友盟-->
+    <string name="umeng_socialize_sharetosina">分享到新浪微博</string>
+    <string name="umeng_socialize_sharetodouban">分享到豆瓣</string>
+    <string name="umeng_socialize_sharetorenren">分享到人人网</string>
+
+    <string name="umeng_socialize_sharetotencent">分享到腾讯微博</string>
+    <string name="umeng_socialize_sharetotwitter">分享到twitter</string>
+    <string name="umeng_socialize_sharetolinkin">分享到领英</string>
+    <!--友盟-->
+
     <string name="skip" translatable="false">跳过3s</string>
     <string name="toUse" translatable="false">立即体验</string>
     <string name="homepage" translatable="false">首页</string>
@@ -38,4 +48,18 @@
     <string name="product_introduce">产品介绍</string>
     <string name="come_back_home">欢迎回家</string>
     <string name="my_k_ap">我的小k</string>
+    <string name="iam_bear">我是小熊</string>
+    <string name="invite_member">邀请成员</string>
+    <string name="admin">管理员</string>
+    <string name="parent_control">家长控制</string>
+    <string name="healthy_model">健康模式</string>
+    <string name="look_week_report" >查看周报</string>
+    <string name="wifi_setting">WiFi设置</string>
+    <string name="to_back_up">去备份</string>
+    <string name="how_much_picture_backup">您有%s张新的照片未备份,是否现在备份?</string>
+    <string name="education_recommend">教育优选</string>
+    <string name="conn_device">联网设备</string>
+    <string name="network_speed_now">“当前在线%s台/上行网速%s/下行网速%s”</string>
+    <string name="look_all">查看全部</string>
+    <string name="title_take_care_children">儿童上网关爱</string>
 </resources>

@@ -106,6 +106,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
             ToastUtils.showShort(Config.Tips.VERIFY_CODE_ERROR);
             return;
         }
+        showLoading();
         mPresenter.signInByVerifyCode(etSignInPhone.getText().toString(),
                 etSignInVerify.getText().toString());
     }
@@ -206,12 +207,22 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
 
     @Override
     public void onSignInOk(UserInfoBean bean) {
-        dispose(mCountDisposable);
-        ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);
         MyApplication.getAppContext().savedUser(bean);
-        startActivity(MainActivity.class);
-        ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
-        ActivityStackUtils.finishAll(Config.Tags.TAG_LAUNCH_ROOT);
+        mPresenter.getUserInfo();
+    }
+
+    @Override
+    public void onUserInfoLoaded(UserInfoBean bean) {
+        if (bean != null) {
+            bean.setToken(MyApplication.getAppContext().getUser().getToken());
+            MyApplication.getAppContext().savedUser(bean);
+            dispose(mCountDisposable);
+            hideLoading();
+            ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);
+            startActivity(MainActivity.class);
+            ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
+            ActivityStackUtils.finishAll(Config.Tags.TAG_LAUNCH_ROOT);
+        }
     }
 
     @Override

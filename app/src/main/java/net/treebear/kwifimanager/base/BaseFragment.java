@@ -41,6 +41,7 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
      */
     private long lastClick = 0L;
     private Unbinder unbinder;
+    protected boolean hasLoadData = false;
 
     @Override
     public void onAttach(Context context) {

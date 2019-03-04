@@ -12,4 +12,9 @@ public class PwdSignInModel extends BaseModel implements PwdSignInContract.IPwdS
     public void signInByVerifyPwd(RequestBody params, AsyncCallBack<BaseResponse<UserInfoBean>> callBack) {
         bindObservable(mService.SignInByPassword(params), callBack);
     }
+
+    @Override
+    public void getUserInfo(AsyncCallBack<BaseResponse<UserInfoBean>> callBack) {
+        bindObservable(mService.getUserInfo(), callBack);
+    }
 }

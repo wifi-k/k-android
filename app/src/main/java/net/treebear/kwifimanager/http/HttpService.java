@@ -21,7 +21,6 @@ public interface HttpService {
      * @param params 请求体数据包装类
      *               * type*	int	1-注册，2-忘记密码,3-修改手机号 4-登录
      *               * mobile*	str
-     * @return 响应回调
      */
     @POST("user/vcode/getv2")
     Observable<BaseResponse<String>> getVerifyByType(@Body RequestBody params);
@@ -32,7 +31,6 @@ public interface HttpService {
      * @param params 请求体数据包装类
      *               * mobile*	str	手机号
      *               * vcode*	str	手机验证码
-     * @return 响应回调
      */
     @POST("user/signup/vcode")
     Observable<BaseResponse<UserInfoBean>> signUpByVerifyCode(@Body RequestBody params);
@@ -42,7 +40,6 @@ public interface HttpService {
      *
      * @param params 请求体数据包装类
      *               * passwd*	str	新密码
-     * @return 响应回调
      */
     @POST("user/passwd/reset")
     Observable<BaseResponse<Object>> setUserPassword(@Body RequestBody params);
@@ -53,7 +50,6 @@ public interface HttpService {
      * @param params 请求体数据包装类
      *               * mobile*	str	手机号
      *               * vcode*	str	手机验证码
-     * @return 响应回调
      */
     @POST("user/signin/vcode")
     Observable<BaseResponse<UserInfoBean>> signInByCode(@Body RequestBody params);
@@ -66,7 +62,6 @@ public interface HttpService {
      *               * passwd*	str	md5后的值
      *               * imgCodeId*	str	图像验证码临时Id
      *               * imgCode*	str	图像验证码，图片和数字
-     * @return 响应回调
      */
     @POST("user/signin/passwd")
     Observable<BaseResponse<UserInfoBean>> SignInByPassword(@Body RequestBody params);
@@ -78,8 +73,44 @@ public interface HttpService {
      *               * mobile*	str
      *               * vcode*	str	手机验证码
      *               * passwd*	str	新密码
-     * @return 响应回调
      */
     @POST("user/passwd/forget")
     Observable<BaseResponse<Object>> forgetPassword(@Body RequestBody params);
+
+    /**
+     * 获取用户信息
+     * 参数 header中的token
+     */
+    @POST("user/info/get")
+    Observable<BaseResponse<UserInfoBean>> getUserInfo();
+
+    /**
+     * 设置用户信息
+     *
+     * @param params 请求数据包装
+     *               *   name	str
+     *               * avatar	str	头像地址，先不做
+     */
+    @POST("user/info/set")
+    Observable<BaseResponse<Object>> setUserInfo(@Body RequestBody params);
+
+    /**
+     * 更新用户手机号
+     *
+     * @param params 请求数据包装
+     *               * mobile*	str
+     *               * vcode*	str
+     */
+    @POST("user/mobile/verify")
+    Observable<BaseResponse<Object>> modifyUserMobile(@Body RequestBody params);
+
+    /**
+     * 绑定节点
+     *
+     * @param params 请求数据包装
+     *               * nodeId   str
+     */
+    @POST("user/node/bind")
+    Observable<BaseResponse<Object>> bindNode(@Body RequestBody params);
+
 }

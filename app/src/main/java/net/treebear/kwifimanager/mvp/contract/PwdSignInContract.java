@@ -12,15 +12,21 @@ public interface PwdSignInContract {
 
     interface IPwdSignInView extends IView<UserInfoBean> {
 
+        void onnUserInfoLoaded(UserInfoBean bean);
+
     }
 
     interface IPwdSignInPresenter extends IPresenter<IPwdSignInView> {
 
         void signInByPwd(String mobile, String pwd);
+
+        void getUserInfo();
     }
 
     interface IPwdSignInModel extends IModel {
 
         void signInByVerifyPwd(RequestBody params, AsyncCallBack<BaseResponse<UserInfoBean>> callBack);
+
+        void getUserInfo(AsyncCallBack<BaseResponse<UserInfoBean>> callBack);
     }
 }

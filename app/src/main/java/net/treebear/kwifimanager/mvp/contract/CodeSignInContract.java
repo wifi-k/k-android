@@ -14,6 +14,7 @@ public interface CodeSignInContract {
 
         void onSignInOk(UserInfoBean bean);
 
+        void onUserInfoLoaded(UserInfoBean bean);
     }
 
     interface ICodeSignInPresenter extends IPresenter<ICodeSignInView> {
@@ -21,6 +22,8 @@ public interface CodeSignInContract {
         void getSignInVerifyCode(String mobile);
 
         void signInByVerifyCode(String mobile, String code);
+
+        void getUserInfo();
     }
 
     interface ICodeSignInModel extends IModel {
@@ -28,5 +31,7 @@ public interface CodeSignInContract {
         void getSignInVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack);
 
         void signInByVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<UserInfoBean>> callBack);
+
+        void getUserInfo(AsyncCallBack<BaseResponse<UserInfoBean>> callBack);
     }
 }

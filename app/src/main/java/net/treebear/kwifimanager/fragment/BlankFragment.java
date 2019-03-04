@@ -21,8 +21,8 @@ public class BlankFragment extends BaseFragment {
     private static final String COLOR = "color";
     @BindView(R.id.tv_msg)
     TextView textView;
-    private int mTextRes;
-    private String mColor;
+    private int mTextRes = R.string.app_name;
+    private String mColor = "#26DCBC";
 
     public BlankFragment() {
         // Required empty public constructor

@@ -32,4 +32,16 @@ public class PwdSignInPresenter extends BasePresenter<PwdSignInContract.IPwdSign
             }
         });
     }
+
+    @Override
+    public void getUserInfo() {
+        mModel.getUserInfo(new BaseAsyncCallback<BaseResponse<UserInfoBean>>() {
+            @Override
+            public void onSuccess(BaseResponse<UserInfoBean> resultData) {
+                if (Check.hasContent(resultData,mView)){
+                    mView.onnUserInfoLoaded(resultData.getData());
+                }
+            }
+        });
+    }
 }

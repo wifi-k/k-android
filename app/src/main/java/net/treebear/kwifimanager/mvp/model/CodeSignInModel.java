@@ -17,4 +17,9 @@ public class CodeSignInModel extends BaseModel implements CodeSignInContract.ICo
     public void signInByVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<UserInfoBean>> callBack) {
         bindObservable(mService.signInByCode(params), callBack);
     }
+
+    @Override
+    public void getUserInfo(AsyncCallBack<BaseResponse<UserInfoBean>> callBack) {
+        bindObservable(mService.getUserInfo(), callBack);
+    }
 }
