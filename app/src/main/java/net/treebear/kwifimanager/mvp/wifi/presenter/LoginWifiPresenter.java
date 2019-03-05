@@ -1,0 +1,37 @@
+package net.treebear.kwifimanager.mvp.wifi.presenter;
+
+import android.util.ArrayMap;
+
+import net.treebear.kwifimanager.base.BasePresenter;
+import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.WifiUserInfo;
+import net.treebear.kwifimanager.config.Keys;
+import net.treebear.kwifimanager.http.WiFiHttpClient;
+import net.treebear.kwifimanager.mvp.wifi.contract.LoginWifiContract;
+import net.treebear.kwifimanager.mvp.wifi.model.LoginWifiModel;
+
+public class LoginWifiPresenter extends BasePresenter<LoginWifiContract.ILoginView, LoginWifiContract.ILoginModel> implements LoginWifiContract.ILoginPresenter {
+    @Override
+    public void setModel() {
+        mModel = new LoginWifiModel();
+    }
+
+    @Override
+    public void appLogin(String name, String password) {
+        ArrayMap<String, Object> map = map();
+        map.put(Keys.NAME, name);
+        map.put(Keys.PASSWD_WIFI, password);
+        mModel.appLogin(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<WifiUserInfo>>() {
+            @Override
+            public void onSuccess(BaseResponse<WifiUserInfo> resultData) {
+                WifiUserInfo data = resultData.getData();
+                if (data != null) {
+                    if (mView != null) {
+                        mView.onLoadData(data);
+                    }
+                    WiFiHttpClient.updataApiToken(data.getToken());
+                }
+            }
+        });
+    }
+}

@@ -85,17 +85,13 @@
         app:layout_constraintTop_toBottomOf="@+id/et_sign_in_phone" />
 
     <TextView
+        style="@style/confirm_button"
         android:id="@+id/tv_sign_next"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="38dp"
         android:layout_marginEnd="36dp"
-        android:background="@drawable/btn_green_to_cyan"
         android:enabled="false"
-        android:gravity="center"
         android:text="@string/login"
-        android:textColor="@drawable/btn_text_enable_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line_password" />

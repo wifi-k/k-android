@@ -14,10 +14,10 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
-import net.treebear.kwifimanager.bean.UserInfoBean;
+import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.mvp.contract.PwdSignInContract;
-import net.treebear.kwifimanager.mvp.presenter.PwdSignInPresenter;
+import net.treebear.kwifimanager.mvp.server.contract.PwdSignInContract;
+import net.treebear.kwifimanager.mvp.server.presenter.PwdSignInPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 
@@ -27,7 +27,7 @@ import butterknife.OnClick;
 /**
  * <h2>密码登录界面</h2>
  */
-public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPresenter, UserInfoBean> implements PwdSignInContract.IPwdSignInView {
+public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPresenter, ServerUserInfo> implements PwdSignInContract.IPwdSignInView {
 
     @BindView(R.id.et_sign_in_verify)
     EditText etSignInVerify;
@@ -144,7 +144,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
     }
 
     @Override
-    public void onLoadData(UserInfoBean resultData) {
+    public void onLoadData(ServerUserInfo resultData) {
         MyApplication.getAppContext().savedUser(resultData);
         mPresenter.getUserInfo();
     }
@@ -153,6 +153,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
     public void onLoadFail(String resultMsg, int resultCode) {
         tvSignNext.setEnabled(true);
         ToastUtils.showShort(resultMsg);
+        hideLoading();
     }
 
     @Override
@@ -162,7 +163,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
     }
 
     @Override
-    public void onnUserInfoLoaded(UserInfoBean bean) {
+    public void onnUserInfoLoaded(ServerUserInfo bean) {
         if (bean != null) {
             bean.setToken(MyApplication.getAppContext().getUser().getToken());
             MyApplication.getAppContext().savedUser(bean);

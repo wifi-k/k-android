@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +17,8 @@ import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
-import net.treebear.kwifimanager.mvp.contract.ForgetPasswordContract;
-import net.treebear.kwifimanager.mvp.presenter.ForgetPasswordPresenter;
+import net.treebear.kwifimanager.mvp.server.contract.ForgetPasswordContract;
+import net.treebear.kwifimanager.mvp.server.presenter.ForgetPasswordPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 
@@ -42,7 +43,7 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
     @BindView(R.id.iv_password_state)
     ImageView ivPasswordState;
     @BindView(R.id.btn_confirm)
-    TextView btnConfirm;
+    Button btnConfirm;
     private String mobile;
     private String vcode;
     private boolean passwordVisible = false;

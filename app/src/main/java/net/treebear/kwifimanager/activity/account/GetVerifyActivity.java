@@ -14,8 +14,8 @@ import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
-import net.treebear.kwifimanager.mvp.contract.GetVerifyContract;
-import net.treebear.kwifimanager.mvp.presenter.GetVerifyPresenter;
+import net.treebear.kwifimanager.mvp.server.contract.GetVerifyContract;
+import net.treebear.kwifimanager.mvp.server.presenter.GetVerifyPresenter;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
 import net.treebear.kwifimanager.util.CountUtil;
@@ -125,6 +125,8 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
             case Config.RequestType.VERIFY_CODE_MODIFY_PHONE:
                 break;
             case Config.RequestType.VERIFY_CODE_SIGN_IN:
+                break;
+            default:
                 break;
         }
     }

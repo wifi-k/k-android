@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.wifisetting.ChooseNetworkStyleActivity">
+
+    <include layout="@layout/common_title" />
+
+    <TextView
+        style="@style/subtitle_text"
+        android:text="@string/choose_online_type" />
+
+    <RadioGroup
+        android:id="@+id/rg_online_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rb_online_type_dial"
+            style="@style/online_type_radio_button"
+            android:text="@string/online_type_dial_up" />
+
+        <RadioButton
+            android:id="@+id/rb_online_type_static"
+            style="@style/online_type_radio_button"
+            android:text="@string/online_type_static_ip" />
+
+        <RadioButton
+            android:id="@+id/rb_online_type_dynamic"
+            style="@style/online_type_radio_button"
+            android:text="@string/online_type_dynamic_ip" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_online_type_next"
+        style="@style/confirm_button"
+        android:text="@string/next_step" />
+
+</LinearLayout>

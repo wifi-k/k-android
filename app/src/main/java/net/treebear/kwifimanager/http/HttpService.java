@@ -2,7 +2,7 @@ package net.treebear.kwifimanager.http;
 
 
 import net.treebear.kwifimanager.base.BaseResponse;
-import net.treebear.kwifimanager.bean.UserInfoBean;
+import net.treebear.kwifimanager.bean.ServerUserInfo;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -33,7 +33,7 @@ public interface HttpService {
      *               * vcode*	str	手机验证码
      */
     @POST("user/signup/vcode")
-    Observable<BaseResponse<UserInfoBean>> signUpByVerifyCode(@Body RequestBody params);
+    Observable<BaseResponse<ServerUserInfo>> signUpByVerifyCode(@Body RequestBody params);
 
     /**
      * 设置/更改密码
@@ -52,7 +52,7 @@ public interface HttpService {
      *               * vcode*	str	手机验证码
      */
     @POST("user/signin/vcode")
-    Observable<BaseResponse<UserInfoBean>> signInByCode(@Body RequestBody params);
+    Observable<BaseResponse<ServerUserInfo>> signInByCode(@Body RequestBody params);
 
     /**
      * 密码登录
@@ -64,7 +64,7 @@ public interface HttpService {
      *               * imgCode*	str	图像验证码，图片和数字
      */
     @POST("user/signin/passwd")
-    Observable<BaseResponse<UserInfoBean>> SignInByPassword(@Body RequestBody params);
+    Observable<BaseResponse<ServerUserInfo>> signinByPassword(@Body RequestBody params);
 
     /**
      * 忘记密码
@@ -82,7 +82,7 @@ public interface HttpService {
      * 参数 header中的token
      */
     @POST("user/info/get")
-    Observable<BaseResponse<UserInfoBean>> getUserInfo();
+    Observable<BaseResponse<ServerUserInfo>> getUserInfo();
 
     /**
      * 设置用户信息

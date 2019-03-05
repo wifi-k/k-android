@@ -34,7 +34,9 @@ public class FileUtils {
     public static String getNameFromUrl(String url) {
         if (url != null && url.contains("/") && !url.endsWith("/")) {
             return url.substring(url.lastIndexOf("/") + 1);
-        } else return "";
+        } else {
+            return "";
+        }
     }
 
     /**

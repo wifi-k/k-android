@@ -13,10 +13,10 @@ import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
-import net.treebear.kwifimanager.bean.UserInfoBean;
+import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.mvp.contract.SignUpVerifyContract;
-import net.treebear.kwifimanager.mvp.presenter.SignUpVerifyPresenter;
+import net.treebear.kwifimanager.mvp.server.contract.SignUpVerifyContract;
+import net.treebear.kwifimanager.mvp.server.presenter.SignUpVerifyPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
@@ -273,7 +273,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
     }
 
     @Override
-    public void onSignUpOk(UserInfoBean bean) {
+    public void onSignUpOk(ServerUserInfo bean) {
         MyApplication.getAppContext().savedUser(bean);
         dispose(mCountDisposable);
         startActivity(SetPasswordActivity.class);

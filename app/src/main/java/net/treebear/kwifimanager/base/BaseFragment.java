@@ -3,18 +3,24 @@ package net.treebear.kwifimanager.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.WebsiteActivity;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.IView;
+import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.widget.LoadingProgressDialog;
 
 import butterknife.ButterKnife;
@@ -108,6 +114,93 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
      */
     protected void initData() {
     }
+
+    /**
+     * 设置title样式
+     *
+     * @param title title文字
+     */
+    protected void setTitle(String title) {
+        setTitle(0, title, "", 0);
+    }
+
+    /**
+     * 设置title样式
+     *
+     * @param title title文字
+     */
+    protected void setTitle(@StringRes int title) {
+        setTitle(mContext.getResources().getString(title));
+    }
+
+    /**
+     * 设置title样式
+     *
+     * @param title title文字
+     * @param right 右侧文字
+     */
+    protected void setTitleBack(String title, String right) {
+        setTitle(R.mipmap.back, title, right, 0);
+    }
+
+    /**
+     * 设置title样式
+     *
+     * @param leftRes 左侧资源
+     * @param title   title文字
+     */
+    protected void setTitle(@DrawableRes int leftRes, String title) {
+        setTitle(leftRes, title, "", 0);
+    }
+
+    /**
+     * 设置title样式
+     *
+     * @param leftRes    左侧资源
+     * @param title      title文字
+     * @param rightTitle 右侧文字
+     * @param rightRes   右侧资源
+     */
+    protected void setTitle(@DrawableRes int leftRes, String title, String rightTitle, @DrawableRes int rightRes) {
+        try {
+            ImageView ivLeft = mRootView.findViewById(R.id.iv_back);
+            ImageView ivRight = mRootView.findViewById(R.id.iv_title_right);
+            TextView tvTitle = mRootView.findViewById(R.id.tv_title_text);
+            TextView tvRight = mRootView.findViewById(R.id.tv_title_right);
+            if (leftRes != 0) {
+                ivLeft.setImageResource(leftRes);
+            }
+            if (rightRes != 0) {
+                ivRight.setImageResource(rightRes);
+            }
+            ivLeft.setVisibility(leftRes != 0 ? View.VISIBLE : View.GONE);
+            ivRight.setVisibility(rightRes != 0 ? View.VISIBLE : View.GONE);
+            tvTitle.setText(title);
+            tvRight.setText(rightTitle);
+            tvRight.setVisibility(Check.hasContent(rightTitle) ? View.VISIBLE : View.GONE);
+            ivLeft.setOnClickListener(view -> onTitleLeftClick());
+            if (Check.hasContent(rightTitle)) {
+                tvRight.setOnClickListener(view -> onTitleRightClick());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 右侧点击事件
+     */
+    protected void onTitleRightClick() {
+
+    }
+
+    /**
+     * title左图标点击，默认关闭界面，可重写
+     */
+    protected void onTitleLeftClick() {
+
+    }
+
 
     /**
      * 打开新界面

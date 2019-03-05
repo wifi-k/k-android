@@ -237,8 +237,9 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
             tvRight.setText(rightTitle);
             tvRight.setVisibility(Check.hasContent(rightTitle) ? View.VISIBLE : View.GONE);
             ivLeft.setOnClickListener(view -> onTitleLeftClick());
-            if (Check.hasContent(rightTitle))
+            if (Check.hasContent(rightTitle)) {
                 tvRight.setOnClickListener(view -> onTitleRightClick());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpClient {
     private static HttpClient mRetrofitHttp;
-    private String BASE_URL = Config.Urls.BASE_URL;
+    private String baseUrl = Config.Urls.SERVER_BASE_URL;
     private Retrofit retrofit;
     private static String apiToken = "";
 
@@ -71,7 +71,7 @@ public class HttpClient {
                         .addHeader("Api-Token", apiToken)
 //                        .addHeader("Accept", "application/json")
 //                        .addHeader("charset", "utf-8")
-                        .addHeader("Api-Version", "1.0.0");
+                        .addHeader("Api-Version",  BuildConfig.VERSION_NAME);
 
                 String cookies[] = ((String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), "cookies", "")).split("-");
                 for (String cookie : cookies) {
@@ -124,11 +124,11 @@ public class HttpClient {
     }
 
     private String getBaseUrl() {
-        return BASE_URL == null ? Config.Urls.BASE_URL : BASE_URL;
+        return baseUrl == null ? Config.Urls.SERVER_BASE_URL : baseUrl;
     }
 
-    public void setBASE_URL(String BASE_URL) {
-        this.BASE_URL = BASE_URL;
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
         retrofit = null;
     }
 }

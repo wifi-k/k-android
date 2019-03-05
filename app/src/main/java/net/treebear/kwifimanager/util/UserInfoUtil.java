@@ -3,7 +3,7 @@ package net.treebear.kwifimanager.util;
 import com.google.gson.Gson;
 
 import net.treebear.kwifimanager.MyApplication;
-import net.treebear.kwifimanager.bean.UserInfoBean;
+import net.treebear.kwifimanager.bean.ServerUserInfo;
 
 /**
  * Created by Administrator on 2017/11/22.
@@ -12,25 +12,25 @@ import net.treebear.kwifimanager.bean.UserInfoBean;
 
 public class UserInfoUtil {
 
-    static UserInfoBean mUserInfo;
+    static ServerUserInfo mUserInfo;
 
     /**
      * 获取用户信息
      *
      * @return 用户信息
      */
-    public static UserInfoBean getUserInfo() {
+    public static ServerUserInfo getUserInfo() {
         synchronized (UserInfoUtil.class) {
             if (mUserInfo == null) {
                 Gson gson = new Gson();
                 String json = (String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), SharedPreferencesUtil.USER_INFO, "");
                 try {
-                    mUserInfo = gson.fromJson(json, UserInfoBean.class);
+                    mUserInfo = gson.fromJson(json, ServerUserInfo.class);
                 } catch (Exception e) {
-                    mUserInfo = new UserInfoBean();
+                    mUserInfo = new ServerUserInfo();
                 }
                 if (mUserInfo == null) {
-                    mUserInfo = new UserInfoBean();
+                    mUserInfo = new ServerUserInfo();
                 }
             }
         }
@@ -42,7 +42,7 @@ public class UserInfoUtil {
      *
      * @param info info
      */
-    public static void updateUserInfo(UserInfoBean info) {
+    public static void updateUserInfo(ServerUserInfo info) {
         synchronized (UserInfoUtil.class) {
             Gson gson = new Gson();
             String json = gson.toJson(info);

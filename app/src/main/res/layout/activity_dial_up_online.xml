@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.wifisetting.DialUpOnlineActivity">
+
+    <include
+        android:id="@+id/include6"
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_dial_title"
+        style="@style/subtitle_text"
+        android:text="@string/online_type_dial_up"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include6" />
+
+    <EditText
+        android:id="@+id/et_net_account"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="18dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="@string/input_internet_account"
+        android:inputType="text"
+        android:paddingBottom="11dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dial_title" />
+
+    <TextView
+        android:id="@+id/line_account"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/line_f2"
+        app:layout_constraintEnd_toEndOf="@+id/et_net_account"
+        app:layout_constraintStart_toStartOf="@+id/et_net_account"
+        app:layout_constraintTop_toBottomOf="@+id/et_net_account" />
+
+    <EditText
+        android:id="@+id/et_net_passowrd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="@string/input_net_password"
+        android:inputType="textPassword"
+        android:paddingBottom="11dp"
+        app:layout_constraintEnd_toEndOf="@+id/et_net_account"
+        app:layout_constraintStart_toStartOf="@+id/et_net_account"
+        app:layout_constraintTop_toBottomOf="@+id/line_account" />
+
+    <ImageView
+        android:id="@+id/iv_password_ryr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:src="@mipmap/ic_edit_eye_close_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/et_net_passowrd"
+        app:layout_constraintEnd_toEndOf="@+id/et_net_passowrd"
+        app:layout_constraintTop_toTopOf="@+id/et_net_passowrd" />
+
+    <TextView
+        android:id="@+id/line_password"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/line_f2"
+        app:layout_constraintEnd_toEndOf="@+id/iv_password_ryr"
+        app:layout_constraintStart_toStartOf="@+id/et_net_passowrd"
+        app:layout_constraintTop_toBottomOf="@+id/et_net_passowrd" />
+
+    <Button
+        android:id="@+id/btn_dial_up_confirm"
+        style="@style/confirm_button"
+        android:layout_marginTop="42dp"
+        android:text="@string/confirm"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line_password" />
+</android.support.constraint.ConstraintLayout>

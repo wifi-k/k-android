@@ -23,8 +23,8 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
 
     protected M mModel = null;
     protected V mView = null;
-    protected JSONObject EMPTY_BODY = new JSONObject();
-    private ArrayMap<String, Object> EMPTY_MAP;
+    protected JSONObject emptyBody = new JSONObject();
+    private ArrayMap<String, Object> emptyMap;
 
     @Override
     public void attachView(V view) {
@@ -38,12 +38,12 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
      * @return ArrayMap 用于承载参数的map
      */
     protected ArrayMap<String, Object> map() {
-        if (EMPTY_MAP == null) {
-            EMPTY_MAP = new ArrayMap<>(16);
+        if (emptyMap == null) {
+            emptyMap = new ArrayMap<>(16);
         } else {
-            EMPTY_MAP.clear();
+            emptyMap.clear();
         }
-        return EMPTY_MAP;
+        return emptyMap;
     }
 
     /**

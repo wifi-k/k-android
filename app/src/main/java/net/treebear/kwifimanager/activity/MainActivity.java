@@ -2,7 +2,6 @@ package net.treebear.kwifimanager.activity;
 
 import android.support.v4.app.Fragment;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chaychan.library.BottomBarLayout;
 
 import net.treebear.kwifimanager.MyApplication;
@@ -13,6 +12,7 @@ import net.treebear.kwifimanager.base.IPresenter;
 import net.treebear.kwifimanager.fragment.BlankFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
+import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.SlideableViewPager;
 
 import java.util.ArrayList;
@@ -66,13 +66,12 @@ public class MainActivity extends BaseActivity {
         bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> {
             switch (i) {
                 case 0:
-                    statusWhiteFontBlack();
                     break;
                 case 1:
-
                     break;
                 case 2:
-
+                    break;
+                default:
                     break;
             }
         });
@@ -85,13 +84,24 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (fragments.get(0) instanceof HomeBindFragment && !MyApplication.getAppContext().hasAuth()) {
-            fragments.set(0, homeUnbindFragment);
+        //若已认证
+        if (MyApplication.getAppContext().hasAuth()) {
+            // 当前为未绑定界面
+            if (fragments.get(0) instanceof HomeUnbindFragment) {
+                // 切换为已绑定界面
+                fragments.set(0, homeBindFragment);
+            }
+            statusWhiteFontBlack();
         } else {
-            fragments.set(0, homeBindFragment);
+            // 若未认证 且当前为绑定界面
+            if (fragments.get(0) instanceof HomeBindFragment) {
+                // 切换为未绑定界面
+                fragments.set(0, homeUnbindFragment);
+            }
+            statusTransparentFontWhite();
         }
         fragmentAdapter.notifyDataSetChanged();
-        ToastUtils.showLong(MyApplication.getAppContext().getUser().toString());
+        TLog.i(MyApplication.getAppContext().getUser().toString());
     }
 
     @Override

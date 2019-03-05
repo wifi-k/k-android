@@ -20,9 +20,10 @@ public final class Config {
      * URL数据
      */
     public interface Urls {
-        String BASE_URL = "http://test.user.famwifi.com/api/";
-        String USER_PROTOCOL = "http://www.baidu.com";
-        String PRIVATE_PROTOCOL = "http://www.baidu.com";
+        String SERVER_BASE_URL = "http://test.user.famwifi.com/api/";
+        String ROUTER_BASE_URL = "http://192.168.1.1:80/";
+        String USER_PROTOCOL = "http://www.baidu.com/";
+        String PRIVATE_PROTOCOL = "http://www.baidu.com/";
     }
 
     /**
@@ -32,6 +33,7 @@ public final class Config {
         String TAG_SIGN_ACCOUNT = "account.sign_in_up";
         String TAG_FORGET_PASSWORD = "account.forget_password";
         String TAG_LAUNCH_ROOT = "account.launch_root";
+        String TAG_FIRST_BIND_WIFI = "wifi.first_bind";
     }
 
     /**
@@ -107,6 +109,8 @@ public final class Config {
         String CANCEL = "取消";
         String SIGN_IN_NOW = "立即登录";
         String SIGN_IN = "登录";
+//        String AP_NAME_START = "xiaok-";
+        String AP_NAME_START = "Xiaomi";
     }
 
     /**

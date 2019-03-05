@@ -14,8 +14,8 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.mvp.contract.SetPasswordContract;
-import net.treebear.kwifimanager.mvp.presenter.SetPasswordPresenter;
+import net.treebear.kwifimanager.mvp.server.contract.SetPasswordContract;
+import net.treebear.kwifimanager.mvp.server.presenter.SetPasswordPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 

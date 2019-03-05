@@ -156,20 +156,20 @@ public class PhoneStateUtil {
     public static String getOperators(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String operator = null;
-        String IMSI = null;
+        String imsi = null;
         if (tm != null) {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                IMSI = tm.getSubscriberId();
+                imsi = tm.getSubscriberId();
             }
         }
-        if (IMSI == null || IMSI.equals("")) {
+        if (imsi == null || "".equals(imsi)) {
             return null;
         }
-        if (IMSI.startsWith("46000") || IMSI.startsWith("46002")) {
+        if (imsi.startsWith("46000") || imsi.startsWith("46002")) {
             operator = "中国移动";
-        } else if (IMSI.startsWith("46001")) {
+        } else if (imsi.startsWith("46001")) {
             operator = "中国联通";
-        } else if (IMSI.startsWith("46003")) {
+        } else if (imsi.startsWith("46003")) {
             operator = "中国电信";
         }
         return operator;

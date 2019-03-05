@@ -11,6 +11,8 @@ public interface Keys {
     String TYPE = "type";
     String VERIFY_CODE = "vcode";
     String PASSWORD = "passwd";
+    String NAME = "name";
+    String PASSWD_WIFI = "passwd";
 
     //----------------------intent传输key--------------------//
     String TITLE = "title";

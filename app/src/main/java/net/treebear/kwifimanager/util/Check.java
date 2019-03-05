@@ -40,6 +40,13 @@ public final class Check {
     }
 
     /**
+     * 判断是否有输入
+     */
+    public static boolean hasContent(TextView view) {
+        return view != null && hasContent(view.getText());
+    }
+
+    /**
      * 判断响应
      *
      * @param response 响应

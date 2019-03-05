@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/common_title"/>
+
+    <View
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/tv_mid_info"
+        android:layout_weight="5"
+        android:gravity="center_horizontal"
+        android:textColor="#28354C"
+        android:textSize="17sp"
+        android:lineSpacingExtra="8dp"
+        android:paddingStart="36dp"
+        android:paddingEnd="36dp"
+        android:text="@string/online_wifi_bind_xiaok"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    
+    <Button
+        android:id="@+id/btn_bottom"
+        style="@style/confirm_button"
+        android:text="@string/bind_now" />
+
+</LinearLayout>

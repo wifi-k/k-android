@@ -13,10 +13,10 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
-import net.treebear.kwifimanager.bean.UserInfoBean;
+import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.mvp.contract.CodeSignInContract;
-import net.treebear.kwifimanager.mvp.presenter.CodeSignInPresenter;
+import net.treebear.kwifimanager.mvp.server.contract.CodeSignInContract;
+import net.treebear.kwifimanager.mvp.server.presenter.CodeSignInPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
@@ -98,6 +98,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
     @Override
     public void onLoadFail(String resultMsg, int resultCode) {
         ToastUtils.showShort(resultMsg);
+        hideLoading();
     }
 
     @OnClick(R.id.tv_sign_next)
@@ -206,13 +207,13 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
     }
 
     @Override
-    public void onSignInOk(UserInfoBean bean) {
+    public void onSignInOk(ServerUserInfo bean) {
         MyApplication.getAppContext().savedUser(bean);
         mPresenter.getUserInfo();
     }
 
     @Override
-    public void onUserInfoLoaded(UserInfoBean bean) {
+    public void onUserInfoLoaded(ServerUserInfo bean) {
         if (bean != null) {
             bean.setToken(MyApplication.getAppContext().getUser().getToken());
             MyApplication.getAppContext().savedUser(bean);
@@ -227,6 +228,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
 
     @Override
     protected void onTitleLeftClick() {
+        hideLoading();
         ActivityStackUtils.popActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
         finish();
     }

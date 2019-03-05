@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -22,8 +22,43 @@
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@mipmap/bg_launch_login</item>
     </style>
+    <!--子标题样式-->
+    <style name="subtitle_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:textColor">@color/text_28354C</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--确认按钮-->
+    <style name="confirm_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_margin">18dp</item>
+        <item name="android:background">@drawable/btn_green_to_cyan</item>
+        <item name="android:textColor">@drawable/btn_text_enable_white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+    </style>
 
+    <!--上网方式选择-->
+    <style name="online_type_radio_button">
+        <item name="android:button">@null</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:drawableEnd">@drawable/selector_checkbox</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:textColor">@color/text_28354C</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 
+    <!--主页底部导航-->
     <style name="bottomBarStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -82,7 +117,6 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
-
     <style name="Theme.UMDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -91,27 +125,27 @@
     <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar"></style>
 
     <!--<style name="umeng_socialize_divider">-->
-        <!--<item name="android:layout_width">fill_parent</item>-->
-        <!--<item name="android:layout_height">1dp</item>-->
-        <!--<item name="android:background">@color/umeng_socialize_divider</item>-->
+    <!--<item name="android:layout_width">fill_parent</item>-->
+    <!--<item name="android:layout_height">1dp</item>-->
+    <!--<item name="android:background">@color/umeng_socialize_divider</item>-->
     <!--</style>-->
 
     <!--<style name="umeng_socialize_list_item">-->
-        <!--<item name="android:layout_width">fill_parent</item>-->
-        <!--<item name="android:layout_height">55dp</item>-->
-        <!--<item name="android:background">@color/umeng_socialize_list_item_bgcolor</item>-->
-        <!--<item name="android:paddingBottom">5dp</item>-->
-        <!--<item name="android:paddingTop">5dp</item>-->
+    <!--<item name="android:layout_width">fill_parent</item>-->
+    <!--<item name="android:layout_height">55dp</item>-->
+    <!--<item name="android:background">@color/umeng_socialize_list_item_bgcolor</item>-->
+    <!--<item name="android:paddingBottom">5dp</item>-->
+    <!--<item name="android:paddingTop">5dp</item>-->
     <!--</style>-->
 
     <!--<style name="umeng_socialize_edit_padding">-->
-        <!--<item name="android:layout_width">fill_parent</item>-->
-        <!--<item name="android:layout_height">fill_parent</item>-->
-        <!--<item name="android:background">@color/umeng_socialize_list_item_bgcolor</item>-->
-        <!--<item name="android:layout_marginLeft">6dp</item>-->
-        <!--<item name="android:layout_marginRight">6dp</item>-->
-        <!--<item name="android:layout_marginTop">6dp</item>-->
-        <!--<item name="android:layout_marginBottom">6dp</item>-->
+    <!--<item name="android:layout_width">fill_parent</item>-->
+    <!--<item name="android:layout_height">fill_parent</item>-->
+    <!--<item name="android:background">@color/umeng_socialize_list_item_bgcolor</item>-->
+    <!--<item name="android:layout_marginLeft">6dp</item>-->
+    <!--<item name="android:layout_marginRight">6dp</item>-->
+    <!--<item name="android:layout_marginTop">6dp</item>-->
+    <!--<item name="android:layout_marginBottom">6dp</item>-->
     <!--</style>-->
     <!--友盟-->
 

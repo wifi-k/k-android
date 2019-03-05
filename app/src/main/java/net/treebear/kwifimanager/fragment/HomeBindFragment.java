@@ -71,7 +71,7 @@ public class HomeBindFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvTitleText.setText(R.string.app_name);
+        setTitle(R.string.app_name);
     }
 
     @Override
@@ -80,12 +80,6 @@ public class HomeBindFragment extends BaseFragment {
         if (!hasLoadData && isVisibleToUser) {
             // TODO: 2019/3/4 加载数据 加载成功后将hasLoadData改为true
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick(R.id.tv_back_home)

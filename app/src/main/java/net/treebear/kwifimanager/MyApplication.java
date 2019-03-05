@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
 import net.treebear.kwifimanager.activity.account.launchAccountActivity;
-import net.treebear.kwifimanager.bean.UserInfoBean;
+import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.http.HttpClient;
 import net.treebear.kwifimanager.receiver.NetWorkReceiver;
 import net.treebear.kwifimanager.receiver.OpenFileReceiver;
@@ -29,7 +29,7 @@ public class MyApplication extends Application {
     /**
      * 若不保存用户信息情况下，仅单次记录用户信息
      */
-    private UserInfoBean user;
+    private ServerUserInfo user;
 
     @Override
     public void onCreate() {
@@ -63,14 +63,14 @@ public class MyApplication extends Application {
         });
     }
 
-    public void savedUser(UserInfoBean user) {
+    public void savedUser(ServerUserInfo user) {
         this.user = user;
         HttpClient.updataApiToken(user.getToken());
     }
 
-    public UserInfoBean getUser() {
+    public ServerUserInfo getUser() {
         if (user == null) {
-            user = new UserInfoBean();
+            user = new ServerUserInfo();
         }
         return user;
     }
