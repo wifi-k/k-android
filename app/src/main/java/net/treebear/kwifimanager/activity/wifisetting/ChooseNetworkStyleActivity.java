@@ -2,11 +2,16 @@ package net.treebear.kwifimanager.activity.wifisetting;
 
 import android.widget.RadioGroup;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Values;
+import net.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
+import net.treebear.kwifimanager.mvp.wifi.presenter.DynamicIpPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
+import net.treebear.kwifimanager.widget.LoadingProgressDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -14,7 +19,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class ChooseNetworkStyleActivity extends BaseActivity {
+public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.IDynamicIpPresenter, Object> implements DynamicIpContract.IDynamicIpView {
 
     @BindView(R.id.rg_online_type)
     RadioGroup rgOnlineType;
@@ -24,6 +29,11 @@ public class ChooseNetworkStyleActivity extends BaseActivity {
     @Override
     public int layoutId() {
         return R.layout.activity_choose_network_style;
+    }
+
+    @Override
+    public DynamicIpContract.IDynamicIpPresenter getPresenter() {
+        return new DynamicIpPresenter();
     }
 
     @Override
@@ -55,17 +65,37 @@ public class ChooseNetworkStyleActivity extends BaseActivity {
                 startActivity(DialUpOnlineActivity.class);
                 break;
             case Values.ONLINE_TYPE_STATIC_IP:
-                startActivity(StaticIPOnlineActivity.class);
+                startActivity(StaticIpOnlineActivity.class);
                 break;
             default:
-                startActivity(DynamicIPOnlineActivity.class);
+                LoadingProgressDialog.showProgressDialog(this, getString(R.string.try_to_connect_wifi));
+                mPresenter.dynamicIpSet();
+                showLoading();
                 break;
         }
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onLoadData(Object resultData) {
+        hideLoading();
+        ToastUtils.showShort(R.string.connect_success);
+        startActivity(ModifyWifiInfoActivity.class);
+    }
+
+    @Override
+    public void onLoadFail(String resultMsg, int resultCode) {
+        switch (resultCode) {
+            case Config.WifiResponseCode.CONNECT_FAIL:
+                hideLoading();
+                ToastUtils.showShort(R.string.connect_fail);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onTitleLeftClick() {
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 }

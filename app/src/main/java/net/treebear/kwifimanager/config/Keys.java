@@ -13,6 +13,12 @@ public interface Keys {
     String PASSWORD = "passwd";
     String NAME = "name";
     String PASSWD_WIFI = "passwd";
+    String IP = "ip";
+    String NET_MASK = "netmask";
+    String GATEWAY = "gateway";
+    String DNS1 = "dns1";
+    String DNS2 = "dns2";
+    String SSID = "ssid";
 
     //----------------------intent传输key--------------------//
     String TITLE = "title";

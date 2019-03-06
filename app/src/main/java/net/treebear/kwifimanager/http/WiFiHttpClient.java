@@ -1,10 +1,18 @@
 package net.treebear.kwifimanager.http;
 
 
+import android.util.ArrayMap;
+
 import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
+import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.WifiUserInfo;
 import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.mvp.IModel;
+import net.treebear.kwifimanager.mvp.wifi.model.LoginWifiModel;
+import net.treebear.kwifimanager.util.RequestBodyUtils;
 import net.treebear.kwifimanager.util.SharedPreferencesUtil;
+import net.treebear.kwifimanager.util.TLog;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -27,9 +35,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WiFiHttpClient {
     private static WiFiHttpClient mRetrofitHttp;
+    private static LoginWifiModel loginWifiModel;
     private String baseUrl = Config.Urls.ROUTER_BASE_URL;
     private Retrofit retrofit;
     private static String apiToken = "";
+    private static boolean needLogin = true;
 
     private WiFiHttpClient() {
 
@@ -121,8 +131,55 @@ public class WiFiHttpClient {
         return retrofit.create(WiFiApi.class);
     }
 
+    /**
+     * 小K设备下线，再次上线需要重新登录
+     */
+    public static void xiaokOffline() {
+        needLogin = true;
+    }
+
+    /**
+     * 小K设备上线，尝试登录
+     */
+    public static void xiaokOnline() {
+        tryToSignInWifi(null);
+    }
+
+    /**
+     * 便于各个界面调用WiFi登录
+     * 内部处理token更新
+     */
+    public static void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiUserInfo>> callBack) {
+        // 保证全局单次连接wifi只登录一次
+        if (!needLogin) {
+            TLog.keep("Current device has logged in !");
+            return;
+        }
+        if (loginWifiModel == null) {
+            loginWifiModel = new LoginWifiModel();
+        }
+        ArrayMap<String, Object> map = new ArrayMap<>();
+        loginWifiModel.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiUserInfo>>() {
+            @Override
+            public void onSuccess(BaseResponse<WifiUserInfo> resultData) {
+                TLog.keep("WiFi login success !");
+                if (resultData.getData() != null) {
+                    updataApiToken(resultData.getData().getToken());
+                    needLogin = false;
+                    callBack.onSuccess(resultData);
+                }
+            }
+
+            @Override
+            public void onFailed(String resultMsg, int resultCode) {
+                TLog.keep("WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
+                callBack.onFailed(resultMsg, resultCode);
+            }
+        });
+    }
+
     private String getBaseUrl() {
-        return baseUrl == null ? Config.Urls.SERVER_BASE_URL : baseUrl;
+        return baseUrl == null ? Config.Urls.ROUTER_BASE_URL : baseUrl;
     }
 
     public void setBaseUrl(String baseUrl) {

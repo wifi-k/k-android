@@ -8,6 +8,13 @@ import android.net.NetworkInfo;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.http.WiFiHttpClient;
+import net.treebear.kwifimanager.util.NetWorkUtils;
+
+/**
+ * @author Administrator
+ */
 public class NetWorkReceiver extends BroadcastReceiver {
     private boolean hasOnWifi = false;
 
@@ -19,10 +26,16 @@ public class NetWorkReceiver extends BroadcastReceiver {
             boolean isWifi = networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
             if (isWifi && !hasOnWifi) {
                 hasOnWifi = true;
-                ToastUtils.showShort("您已连接WiFi");
+                if (NetWorkUtils.isConnectXiaoK(context)) {
+                    ToastUtils.showShort(R.string.has_xiaok_connected);
+                    WiFiHttpClient.xiaokOnline();
+                } else {
+                    ToastUtils.showShort(R.string.has_wifi_connected);
+                }
             }
             if (!isWifi && hasOnWifi) {
                 ToastUtils.showShort("您已断开WiFi连接");
+                WiFiHttpClient.xiaokOffline();
                 hasOnWifi = false;
             }
         }

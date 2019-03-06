@@ -77,4 +77,32 @@
     <string name="setting">设置</string>
     <string name="goto_online_setting">前往连接小K</string>
     <string name="connect_xiaok_tips1">请在后续流程中保持小K连接状态</string>
+
+    <string name="has_wifi_connected">您已连接WiFi</string>
+    <string name="has_xiaok_connected">您已连接xiaok-WiFi</string>
+    <string name="ip_address">IP地址：</string>
+    <string name="ip_hint">192.168.0.0</string>
+    <string name="subnet_mask">子网掩码：</string>
+    <string name="hint_subnet">0.0.0.0</string>
+    <string name="gateway">网关：</string>
+    <string name="first_dns_server">首选DNS服务器：</string>
+    <string name="second_dns_server">备用DNS服务器：</string>
+    <string name="ip_address_error">IP地址格式错误</string>
+    <string name="subnet_mask_error">子网掩码格式错误</string>
+    <string name="gateway_error">网关格式错误</string>
+    <string name="first_dns_server_error">首选DNS服务器格式错误</string>
+    <string name="second_dns_server_error">备用DNS服务器格式错误</string>
+    <string name="set_wifi_name_pwd">设置Wi-Fi名称密码</string>
+    <string name="input_wifi_name">请输入Wi-Fi名称</string>
+    <string name="input_wifi_pwd">请输入Wi-Fi密码</string>
+    <string name="complete">完成</string>
+
+    <string name="input_wifi_name_please">请输入合法的WiFi名称</string>
+    <string name="input_wifi_passowrd_please">请设置8-20位的WiFi密码</string>
+
+    <string name="modify_wifi_tips">修改WiFi名称或密码会断开当前连接，请更改成功后连接修改后的WiFi!</string>
+    <string name="try_to_connect_wifi">正在连接网络，请稍候</string>
+    <string name="connect_success">网络连接成功</string>
+    <string name="connect_fail">网络连接失败，请检查配置后再试</string>
+    <string name="wifi_info_modify_success">WiFi信息修改成功</string>
 </resources>

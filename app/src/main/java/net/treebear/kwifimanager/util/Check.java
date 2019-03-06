@@ -93,4 +93,14 @@ public final class Check {
         return v1 != null && v2 != null && v1.getText().toString().equals(v2.getText().toString());
     }
 
+    /**
+     * 检测IP和掩码DNS等格式文本
+     */
+    public static boolean ipLike(String text) {
+        String regExp = "^\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}$";
+        Pattern compile = Pattern.compile(regExp);
+        Matcher matcher = compile.matcher(text);
+        return matcher.matches();
+    }
+
 }

@@ -124,12 +124,11 @@ public class TLog {
         return object == null ? "null" : object.toString();
     }
 
+    /**
+     * release强制打印信息
+     */
     public static void keep(Object object) {
         Log.i(TAG, valueOf(object));
-    }
-
-    public static void keep(String tag, Object object) {
-        i(tag, object);
     }
 
     public static String valueOf(String msg, Object... objs) {
@@ -182,12 +181,6 @@ public class TLog {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void info(Object object) {
-        if (showLog) {
-            Log.i("phoneInfo", valueOf(object));
         }
     }
 }

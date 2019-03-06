@@ -24,8 +24,8 @@ public class LoadingProgressDialog {
 
     private static Dialog dialog;
 
-    public static void showProgressDialog(Context context){
-        showProgressDialog(context,"加载中...");
+    public static void showProgressDialog(Context context) {
+        showProgressDialog(context, "加载中...");
     }
 
     /**

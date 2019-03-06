@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.activity.bindap;
 
+import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
+import net.treebear.kwifimanager.http.WiFiHttpClient;
 import net.treebear.kwifimanager.receiver.WiFiStateReceiver;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
@@ -61,8 +63,8 @@ public class BindAction1Activity extends BaseActivity {
     @Override
     protected void initView() {
         setTitleBack(R.string.setting);
-//        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-//        ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
 //        @StringRes int infoTextId;
 //        switch (wifiState) {
 //            case Values.CONNET_WIFI_XIAOK:
@@ -82,6 +84,7 @@ public class BindAction1Activity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (NetWorkUtils.isConnectXiaoK(this)) {
+            WiFiHttpClient.tryToSignInWifi(null);
             // 连接到小K的处理
             tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，点击立即绑定设备", NetWorkUtils.getSSIDWhenWifi(this)));
             btnConfirm.setText(R.string.bind_now);
@@ -101,9 +104,27 @@ public class BindAction1Activity extends BaseActivity {
         }
     }
 
+    @OnClick(R.id.btn_bottom)
+    public void onBtnBottomClicked() {
+        if (NetWorkUtils.isWifiConnected(this)) {
+            String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
+            if (Check.hasContent(wifiSSID)) {
+                if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
+                    startActivity(ChooseNetworkStyleActivity.class);
+                } else {
+                    ToastUtils.showShort(R.string.connect_xiaok_tips1);
+                }
+            }
+        } else {
+            ToastUtils.showShort(R.string.connect_xiaok_tips1);
+        }
+    }
+
     private void scanWifi() {
         TLog.valueOf("-----------------" + NetWorkUtils.isConnectXiaoK(this));
-        wifiManager.startScan();
+        if (wifiManager != null) {
+            wifiManager.startScan();
+        }
         LoadingProgressDialog.showProgressDialog(this, getString(R.string.scanning));
         CountUtil.numberDown(3, new CountObserver() {
             @Override
@@ -178,22 +199,6 @@ public class BindAction1Activity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.btn_bottom)
-    public void onBtnBottomClicked() {
-        if (NetWorkUtils.isWifiConnected(this)) {
-            String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
-            if (Check.hasContent(wifiSSID)) {
-                if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
-                    startActivity(ChooseNetworkStyleActivity.class);
-                } else {
-                    ToastUtils.showShort(R.string.connect_xiaok_tips1);
-                }
-            }
-        }else {
-            ToastUtils.showShort(R.string.connect_xiaok_tips1);
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -201,7 +206,10 @@ public class BindAction1Activity extends BaseActivity {
         if (tMessageDialog != null) {
             tMessageDialog.dismiss();
         }
-        ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 
+    @Override
+    protected void onTitleLeftClick() {
+        ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
+    }
 }

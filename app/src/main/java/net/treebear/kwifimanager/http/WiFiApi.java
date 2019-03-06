@@ -8,6 +8,10 @@ import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
+/**
+ * @author Administrator
+ */
+@SuppressWarnings("unchecked")
 public interface WiFiApi {
     /**
      * App登录
@@ -52,5 +56,5 @@ public interface WiFiApi {
      * 设置wifi参数
      */
     @POST("ssid/set")
-    Observable<BaseResponse<Object>> ssidSet();
+    Observable<BaseResponse<Object>> ssidSet(@Body RequestBody params);
 }

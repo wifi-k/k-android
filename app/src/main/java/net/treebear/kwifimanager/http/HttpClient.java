@@ -71,7 +71,7 @@ public class HttpClient {
                         .addHeader("Api-Token", apiToken)
 //                        .addHeader("Accept", "application/json")
 //                        .addHeader("charset", "utf-8")
-                        .addHeader("Api-Version",  BuildConfig.VERSION_NAME);
+                        .addHeader("Api-Version", BuildConfig.VERSION_NAME);
 
                 String cookies[] = ((String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), "cookies", "")).split("-");
                 for (String cookie : cookies) {

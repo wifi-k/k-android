@@ -8,10 +8,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
+import net.treebear.kwifimanager.mvp.wifi.presenter.DialUpPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 
@@ -21,7 +25,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class DialUpOnlineActivity extends BaseActivity {
+public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPresenter, Object> implements DialUpContract.IDialUpView {
 
     @BindView(R.id.et_net_account)
     EditText etNetAccount;
@@ -40,6 +44,11 @@ public class DialUpOnlineActivity extends BaseActivity {
     @Override
     public int layoutId() {
         return R.layout.activity_dial_up_online;
+    }
+
+    @Override
+    public DialUpContract.IDialUpPresenter getPresenter() {
+        return new DialUpPresenter();
     }
 
     @Override
@@ -82,12 +91,31 @@ public class DialUpOnlineActivity extends BaseActivity {
 
     @OnClick(R.id.btn_dial_up_confirm)
     public void onBtnDialUpConfirmClicked() {
-
+        showLoading();
+        mPresenter.dialUpSet(etNetAccount.getText().toString(), etNetPassowrd.getText().toString());
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onLoadData(Object resultData) {
+        hideLoading();
+        ToastUtils.showShort(R.string.connect_success);
+        startActivity(ModifyWifiInfoActivity.class);
+    }
+
+    @Override
+    public void onLoadFail(String resultMsg, int resultCode) {
+        switch (resultCode) {
+            case Config.WifiResponseCode.CONNECT_FAIL:
+                hideLoading();
+                ToastUtils.showShort(R.string.connect_fail);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onTitleLeftClick() {
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 }

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.wifisetting.ModifyWifiInfoActivity">
+
+    <include
+        android:id="@+id/include8"
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView16"
+        style="@style/subtitle_text"
+        android:layout_marginTop="16dp"
+        android:text="@string/set_wifi_name_pwd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include8" />
+
+    <EditText
+        android:id="@+id/et_wifi_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="18dp"
+        android:background="@null"
+        android:ems="20"
+        android:hint="@string/input_wifi_name"
+        android:inputType="textPersonName"
+        android:paddingBottom="11dp"
+        android:textColorHint="#83889A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/tv_line_name"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/line_f2"
+        app:layout_constraintEnd_toEndOf="@+id/et_wifi_name"
+        app:layout_constraintStart_toStartOf="@+id/et_wifi_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_wifi_name" />
+
+    <EditText
+        android:id="@+id/et_wifi_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:background="@null"
+        android:maxLength="20"
+        android:hint="@string/input_wifi_pwd"
+        android:inputType="textPassword"
+        android:paddingBottom="10dp"
+        android:textColorHint="#83889A"
+        app:layout_constraintEnd_toEndOf="@+id/et_wifi_name"
+        app:layout_constraintStart_toStartOf="@+id/et_wifi_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_line_name" />
+
+    <TextView
+        android:id="@+id/tv_line_password"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/line_f2"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/et_wifi_password"
+        app:layout_constraintStart_toStartOf="@+id/et_wifi_password"
+        app:layout_constraintTop_toBottomOf="@+id/et_wifi_password" />
+
+    <ImageView
+        android:id="@+id/iv_password_eye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_wifi_password"
+        app:layout_constraintEnd_toEndOf="@+id/et_wifi_password"
+        app:layout_constraintTop_toTopOf="@+id/et_wifi_password"
+        app:srcCompat="@mipmap/ic_edit_eye_close_gray" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        style="@style/confirm_button"
+        android:layout_marginTop="42dp"
+        android:text="@string/complete"
+        app:layout_constraintEnd_toEndOf="@+id/iv_password_eye"
+        app:layout_constraintStart_toStartOf="@+id/et_wifi_password"
+        app:layout_constraintTop_toBottomOf="@+id/tv_line_password" />
+</android.support.constraint.ConstraintLayout>

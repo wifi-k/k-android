@@ -62,7 +62,7 @@ public class HomeUnbindFragment extends BaseFragment {
         } else {
             bundle.putInt(Keys.TYPE, Values.CONNECT_WIFI_NONE);
         }
-        startActivity(BindAction1Activity.class,bundle);
+        startActivity(BindAction1Activity.class, bundle);
     }
 
     @OnClick(R.id.tv_input_family_code)

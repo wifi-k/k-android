@@ -4,14 +4,11 @@ import android.util.ArrayMap;
 
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.IView;
+import net.treebear.kwifimanager.util.RequestBodyUtils;
 import net.treebear.kwifimanager.util.TLog;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
-
-import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
@@ -54,10 +51,7 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
      */
     @SuppressWarnings("unused")
     protected RequestBody convertRequestBody(JSONObject object) {
-        if (object == null) {
-            return null;
-        }
-        return RequestBody.create(MediaType.parse("application/json;charset=utf-8"), object.toString());
+        return RequestBodyUtils.convert(object);
     }
 
     /**
@@ -67,18 +61,7 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
      * @return RequestBody 请求体
      */
     protected RequestBody convertRequestBody(ArrayMap<String, Object> params) {
-        if (params == null) {
-            return null;
-        }
-        JSONObject jsonObject = new JSONObject();
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
-            try {
-                jsonObject.put(entry.getKey(), entry.getValue());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return convertRequestBody(jsonObject);
+        return RequestBodyUtils.convert(params);
     }
 
     /**
@@ -88,18 +71,7 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
      * @return 承载参数的JSONObject
      */
     protected JSONObject convertJsonObject(ArrayMap<String, Object> params) {
-        if (params == null) {
-            return null;
-        }
-        JSONObject jsonObject = new JSONObject();
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
-            try {
-                jsonObject.put(entry.getKey(), entry.getValue());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return jsonObject;
+        return RequestBodyUtils.map2JsonObject(params);
     }
 
     /**

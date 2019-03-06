@@ -109,7 +109,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
     @Override
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
-            case Config.ResponseCode.HAS_SIGN_UP:
+            case Config.ServerResponseCode.HAS_SIGN_UP:
                 initSignMessageDialog();
                 signDialog.show();
                 break;

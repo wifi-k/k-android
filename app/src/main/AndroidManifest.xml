@@ -28,8 +28,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.wifisetting.DynamicIPOnlineActivity"></activity>
-        <activity android:name=".activity.wifisetting.StaticIPOnlineActivity" />
+        <activity android:name=".activity.wifisetting.ModifyWifiInfoActivity"></activity>
+        <activity android:name=".activity.wifisetting.StaticIpOnlineActivity" />
         <activity android:name=".activity.wifisetting.DialUpOnlineActivity" />
         <activity android:name=".activity.wifisetting.ChooseNetworkStyleActivity" />
         <activity android:name=".activity.bindap.BindAction1Activity" />

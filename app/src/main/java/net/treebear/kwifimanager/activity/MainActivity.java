@@ -6,12 +6,14 @@ import com.chaychan.library.BottomBarLayout;
 
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.adapter.PagerFragmentAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.base.BaseFragmentPagerAdapter;
 import net.treebear.kwifimanager.base.IPresenter;
 import net.treebear.kwifimanager.fragment.BlankFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
+import net.treebear.kwifimanager.http.WiFiHttpClient;
+import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.SlideableViewPager;
 
@@ -46,7 +48,7 @@ public class MainActivity extends BaseActivity {
             add(2, new BlankFragment());
         }
     };
-    private PagerFragmentAdapter fragmentAdapter;
+    private BaseFragmentPagerAdapter fragmentAdapter;
 
     @Override
     public int layoutId() {
@@ -60,8 +62,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        fragmentAdapter = new PagerFragmentAdapter(getSupportFragmentManager(), fragments);
-        vpFragments.setAdapter(new PagerFragmentAdapter(getSupportFragmentManager(), fragments));
+        fragmentAdapter = new BaseFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        vpFragments.setAdapter(fragmentAdapter);
         bottomBar.setViewPager(vpFragments);
         bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> {
             switch (i) {
@@ -84,19 +86,22 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (NetWorkUtils.isConnectXiaoK(this)) {
+            WiFiHttpClient.tryToSignInWifi(null);
+        }
         //若已认证
         if (MyApplication.getAppContext().hasAuth()) {
             // 当前为未绑定界面
             if (fragments.get(0) instanceof HomeUnbindFragment) {
                 // 切换为已绑定界面
-                fragments.set(0, homeBindFragment);
+                fragmentAdapter.replaceFragment(0, homeBindFragment);
             }
             statusWhiteFontBlack();
         } else {
             // 若未认证 且当前为绑定界面
             if (fragments.get(0) instanceof HomeBindFragment) {
                 // 切换为未绑定界面
-                fragments.set(0, homeUnbindFragment);
+                fragmentAdapter.replaceFragment(0, homeUnbindFragment);
             }
             statusTransparentFontWhite();
         }

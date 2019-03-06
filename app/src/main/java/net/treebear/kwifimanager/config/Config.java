@@ -96,6 +96,14 @@ public final class Config {
          * 连续时间点击限制
          */
         long CLICK_LIMIT = 666L;
+        /**
+         * wifi密码下限
+         */
+        int MIN_WIFI_PASSWORD = 8;
+        /**
+         * wifi密码上限
+         */
+        int MAX_WIFI_PASSWORD = 20;
     }
 
     /**
@@ -109,7 +117,7 @@ public final class Config {
         String CANCEL = "取消";
         String SIGN_IN_NOW = "立即登录";
         String SIGN_IN = "登录";
-//        String AP_NAME_START = "xiaok-";
+        //        String AP_NAME_START = "xiaok-";
         String AP_NAME_START = "Xiaomi";
     }
 
@@ -146,7 +154,7 @@ public final class Config {
     /**
      * 响应代码
      */
-    public interface ResponseCode {
+    public interface ServerResponseCode {
         /**
          * 请求成功
          */
@@ -161,6 +169,13 @@ public final class Config {
          * 已注册
          */
         int HAS_SIGN_UP = 9;
+    }
+
+    public interface WifiResponseCode{
+//        0-连接成功 1-连接失败 2-正在连接
+        int CONNECT_SUCCESS = 0;
+        int CONNECT_FAIL = 1;
+        int CONNECTING = 2;
     }
 
     /**
