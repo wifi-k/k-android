@@ -23,7 +23,7 @@ public class ModifyWifiInfoContract {
          * @param name     宽带账号
          * @param password 账号密码
          */
-        void modifyWifiInfo(String name, String password);
+        void modifyWifiInfo(String bssid,String name, String password);
     }
 
     public interface IModifyWifiInfoModel extends IModel {

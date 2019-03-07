@@ -134,8 +134,8 @@ public final class Config {
         String CANCEL = "取消";
         String SIGN_IN_NOW = "立即登录";
         String SIGN_IN = "登录";
-        //        String AP_NAME_START = "xiaok-";
-        String AP_NAME_START = "Xiaomi";
+                String AP_NAME_START = "xiaok-";
+//        String AP_NAME_START = "Xiaomi";
 
         String XIAO_K_WIFI_PASSOWRD = "xiaok";
     }

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.activity.family.FamilyMemberActivity;
 import net.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import net.treebear.kwifimanager.base.BaseFragment;
@@ -134,6 +135,7 @@ public class HomeBindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_root_name)
     public void onTvRootNameClicked() {
+        startActivity(FamilyMemberActivity.class);
     }
 
     @OnClick(R.id.tv_invite_member)

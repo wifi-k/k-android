@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.bindap.BindAction1Activity;
 import net.treebear.kwifimanager.base.BaseFragment;
@@ -13,10 +15,10 @@ import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.util.NetWorkUtils;
+import net.treebear.kwifimanager.widget.TInputDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * A simple {@link BaseFragment} subclass.
@@ -32,7 +34,7 @@ public class HomeUnbindFragment extends BaseFragment {
     TextView tvBind;
     @BindView(R.id.tv_input_family_code)
     TextView tvInputFamilyCode;
-    Unbinder unbinder;
+    private TInputDialog inputDialog;
 
     public HomeUnbindFragment() {
 
@@ -67,6 +69,28 @@ public class HomeUnbindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_input_family_code)
     public void onFamilyCodeClicked() {
+        initFamilyDialog();
+        inputDialog.show();
+    }
 
+    private void initFamilyDialog() {
+        if (inputDialog == null) {
+            inputDialog = new TInputDialog(mContext);
+            inputDialog.setTitle(R.string.input_family_code_into_family);
+            inputDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
+
+                @Override
+                public void onLeftClick(String s) {
+                    inputDialog.dismiss();
+                }
+
+                @Override
+                public void onRightClick(String s) {
+                    // TODO: 2019/3/7 上传判断家庭码
+                    inputDialog.dismiss();
+                    ToastUtils.showShort(s);
+                }
+            });
+        }
     }
 }

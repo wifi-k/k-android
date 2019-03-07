@@ -110,4 +110,8 @@
     <string name="online">在线</string>
     <string name="offline">离线</string>
     <string name="last_week_active_app">上周活跃应用</string>
+    <string name="input_family_code_please">请输入家庭码</string>
+    <string name="input_family_code_into_family">输入家庭码加入家庭</string>
+
+    <string name="family_member">家庭成员</string>
 </resources>

@@ -71,6 +71,16 @@ public class NetWorkUtils {
         }
         return "";
     }
+    /**
+     * Wifi环境下获取当前Wifi \\ mac// bssid
+     */
+    public static String getBSSIDWhenWifi(Context context) {
+        if (isWifiConnected(context)) {
+            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            return wifiManager.getConnectionInfo().getBSSID();
+        }
+        return "";
+    }
 
     /**
      * 是否连接到小K

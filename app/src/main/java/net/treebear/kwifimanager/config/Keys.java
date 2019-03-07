@@ -19,6 +19,7 @@ public interface Keys {
     String DNS1 = "dns1";
     String DNS2 = "dns2";
     String SSID = "ssid";
+    String BSSID = "bssid";
 
     //----------------------intent传输key--------------------//
     String TITLE = "title";

@@ -17,6 +17,7 @@ import net.treebear.kwifimanager.mvp.wifi.contract.ModifyWifiInfoContract;
 import net.treebear.kwifimanager.mvp.wifi.presenter.ModifyWifiInfoPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
+import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.widget.TMessageDialog;
 
 import butterknife.BindView;
@@ -109,7 +110,8 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
 
                 @Override
                 public void onClickRight(View view) {
-                    mPresenter.modifyWifiInfo(etWifiName.getText().toString(), etWifiPassword.getText().toString());
+                    mPresenter.modifyWifiInfo(NetWorkUtils.getBSSIDWhenWifi(ModifyWifiInfoActivity.this),
+                            etWifiName.getText().toString(), etWifiPassword.getText().toString());
                     tMessageDialog.dismiss();
                 }
             }).show();

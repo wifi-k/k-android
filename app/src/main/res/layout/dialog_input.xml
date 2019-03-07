@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_white_r8"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:lines="1"
+        android:textColor="#323232"
+        android:textSize="17sp"
+        tools:text="输入家庭码加入家庭" />
+
+    <EditText
+        android:id="@+id/et_input"
+        style="@style/edit_text_normal_gray"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:lines="1"
+        android:textSize="14sp"
+        android:textColor="@color/text_333940"
+        android:focusableInTouchMode="true"
+        android:textColorHint="#C5C4C9"
+        android:hint="@string/input_family_code_please" />
+
+    <LinearLayout
+        android:layout_marginTop="34dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:id="@+id/btn_left"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="#212121"
+            android:text="@string/cancel"
+            android:gravity="center"
+            android:background="@drawable/btn_left_lbr8_gray"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/btn_right"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/confirm"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:background="@drawable/btn_right_rbr8_main"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    
+</LinearLayout>
