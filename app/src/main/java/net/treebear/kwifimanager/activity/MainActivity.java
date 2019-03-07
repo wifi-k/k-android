@@ -9,10 +9,12 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseFragmentPagerAdapter;
 import net.treebear.kwifimanager.base.IPresenter;
+import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.fragment.BlankFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import net.treebear.kwifimanager.http.WiFiHttpClient;
+import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.SlideableViewPager;
@@ -49,6 +51,7 @@ public class MainActivity extends BaseActivity {
         }
     };
     private BaseFragmentPagerAdapter fragmentAdapter;
+    private ArrayList<MobilePhoneBean> mobileList;
 
     @Override
     public int layoutId() {
@@ -81,6 +84,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        // 测试手机设备
+        mobileList = BeanTest.getMobilePhoneList(3);
+
     }
 
     @Override

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp">
+
+    <ImageView
+        android:id="@+id/iv_children_phone_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="21dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_device_apple" />
+
+    <TextView
+        android:id="@+id/tv_mobile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:textColor="#2B3852"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_children_phone_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="孩子的手机" />
+
+    <TextView
+        android:id="@+id/tv_average_use_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="#4A5A78"
+        app:layout_constraintStart_toStartOf="@+id/tv_mobile_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mobile_name"
+        tools:text="上周平均每日活跃时长：10小时" />
+
+    <TextView
+        android:id="@+id/tv_use_time_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF5656"
+        app:layout_constraintStart_toStartOf="@+id/tv_average_use_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_average_use_time"
+        tools:text="超过99%同龄人上网时长" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:text="@string/last_week_active_app"
+        android:textColor="#4A5A78"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/iv_children_phone_icon"
+        app:layout_constraintTop_toBottomOf="@+id/iv_children_phone_icon" />
+
+    <TextView
+        android:id="@+id/tv_look_week_report"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="19dp"
+        android:background="@drawable/btn_green_to_cyan14"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/look_week_report"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_use_time_rank" />
+
+    <LinearLayout
+        android:id="@+id/ll_active_app_wrapper"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="21dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"></LinearLayout>
+</android.support.constraint.ConstraintLayout>

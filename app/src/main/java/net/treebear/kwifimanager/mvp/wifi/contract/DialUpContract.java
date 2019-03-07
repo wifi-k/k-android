@@ -24,6 +24,10 @@ public class DialUpContract {
          * @param password 账号密码
          */
         void dialUpSet(String name, String password);
+        /**
+         * 查询网络连通状态
+         */
+        void queryNetStatus();
     }
 
     public interface IDialUpModel extends IModel {

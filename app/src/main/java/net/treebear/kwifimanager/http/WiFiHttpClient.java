@@ -8,9 +8,12 @@ import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.WifiUserInfo;
 import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.wifi.model.LoginWifiModel;
+import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.RequestBodyUtils;
+import net.treebear.kwifimanager.util.SecurityUtils;
 import net.treebear.kwifimanager.util.SharedPreferencesUtil;
 import net.treebear.kwifimanager.util.TLog;
 
@@ -159,6 +162,8 @@ public class WiFiHttpClient {
             loginWifiModel = new LoginWifiModel();
         }
         ArrayMap<String, Object> map = new ArrayMap<>();
+        map.put(Keys.NAME, NetWorkUtils.getSSIDWhenWifi(MyApplication.getAppContext()));
+        map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD));
         loginWifiModel.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiUserInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiUserInfo> resultData) {

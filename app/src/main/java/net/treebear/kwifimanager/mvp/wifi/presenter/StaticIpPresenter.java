@@ -4,6 +4,7 @@ import android.util.ArrayMap;
 
 import net.treebear.kwifimanager.base.BasePresenter;
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.wifi.contract.StaticIpContract;
 import net.treebear.kwifimanager.mvp.wifi.model.StaticIpModel;
@@ -31,11 +32,23 @@ public class StaticIpPresenter extends BasePresenter<StaticIpContract.IStaticIpV
                 mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
                     @Override
                     public void onSuccess(BaseResponse<Object> data) {
-                        if (mView!=null){
+                        if (mView != null) {
                             mView.onLoadData(data);
                         }
                     }
                 });
+            }
+        });
+    }
+
+    @Override
+    public void queryNetStatus() {
+        mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
+            @Override
+            public void onSuccess(BaseResponse<Object> resultData) {
+                if (mView != null) {
+                    mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
+                }
             }
         });
     }

@@ -68,12 +68,13 @@ public class MarqueeTextView extends LinearLayout {
         int i = 0;
         viewFlipper.removeAllViews();
         while (i < textArrays.size()) {
+            final int index = i;
             TextView textView = new TextView(mContext);
             textView.setText(textArrays.get(i));
             textView.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_notice));
             textView.setGravity(Gravity.CENTER_VERTICAL);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
-            textView.setOnClickListener(marqueeTextViewClickListener);
+            textView.setOnClickListener(v -> marqueeTextViewClickListener.onClick(textView, index));
             LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             viewFlipper.addView(textView, lp);
             i++;

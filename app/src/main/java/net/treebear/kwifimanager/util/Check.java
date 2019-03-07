@@ -3,9 +3,11 @@ package net.treebear.kwifimanager.util;
 import android.widget.TextView;
 
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.mvp.IView;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -101,6 +103,22 @@ public final class Check {
         Pattern compile = Pattern.compile(regExp);
         Matcher matcher = compile.matcher(text);
         return matcher.matches();
+    }
+
+    /**
+     * 计算上线数
+     */
+    public static int onlineSum(List<MobilePhoneBean> list) {
+        if (list==null){
+            return 0;
+        }
+        int count = 0;
+        for (MobilePhoneBean bean : list) {
+            if (bean.isOnline()) {
+                count++;
+            }
+        }
+        return count;
     }
 
 }

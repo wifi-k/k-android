@@ -1,5 +1,8 @@
 package net.treebear.kwifimanager.config;
 
+/**
+ * @author Administrator
+ */
 public interface Values {
     /**
      * 当前上网为xiaok wifi

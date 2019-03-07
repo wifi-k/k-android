@@ -2,20 +2,32 @@ package net.treebear.kwifimanager.fragment;
 
 
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
+import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import net.treebear.kwifimanager.base.BaseFragment;
+import net.treebear.kwifimanager.bean.MobilePhoneBean;
+import net.treebear.kwifimanager.bean.NoticeBean;
+import net.treebear.kwifimanager.test.BeanTest;
+import net.treebear.kwifimanager.util.Check;
+import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.marquee.MarqueeTextView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * A simple {@link BaseFragment} subclass.
+ *
+ * @author Administrator
  */
 public class HomeBindFragment extends BaseFragment {
 
@@ -58,7 +70,11 @@ public class HomeBindFragment extends BaseFragment {
     TextView tvLookMore;
     @BindView(R.id.rv_children_device)
     RecyclerView rvChildrenDevice;
-    Unbinder unbinder;
+    private ArrayList<MobilePhoneBean> mobilePhoneList = new ArrayList<>();
+    private MobilePhoneAdapter mobilePhoneAdapter;
+
+    private ArrayList<MobilePhoneBean> childrenPhoneList = new ArrayList<>();
+    private ArrayList<NoticeBean> noticeList = new ArrayList<>();
 
     public HomeBindFragment() {
 
@@ -70,8 +86,38 @@ public class HomeBindFragment extends BaseFragment {
     }
 
     @Override
+    protected void initData() {
+    }
+
+    @Override
     protected void initView() {
         setTitle(R.string.app_name);
+//        设备列表模拟数据
+        mobilePhoneList.clear();
+        mobilePhoneList.addAll(BeanTest.getMobilePhoneList(3));
+        childrenPhoneList.clear();
+        childrenPhoneList.addAll(BeanTest.getChildrenPhoneList(1));
+        noticeList.clear();
+        noticeList.addAll(BeanTest.getNoticeList());
+//      设备列表适配器配置
+        rvDeviceList.setLayoutManager(new LinearLayoutManager(mContext));
+        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList);
+        rvDeviceList.setAdapter(mobilePhoneAdapter);
+//      儿童设备
+        rvChildrenDevice.setLayoutManager(new LinearLayoutManager(mContext));
+        ChildrenCarefulAdapter childrenCarefulAdapter = new ChildrenCarefulAdapter(childrenPhoneList);
+        rvChildrenDevice.setAdapter(childrenCarefulAdapter);
+//       公告
+        marqueeNotice.initMarqueeTextView(BeanTest.getNoticFromBean(noticeList), (view, position) -> {
+            TLog.i(position);
+            openWebsite(noticeList.get(position).getUrl());
+        });
+//        其他
+        tvUserState.setText(R.string.online);
+        tvApName.setText("xiaok123-4567");
+        tvHasNoBackup.setText("您有10张新的照片未备份，是否现在备份?");
+        tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速1000k/下行网速2.4M”", Check.onlineSum(mobilePhoneList)));
+        tvLookMore.setVisibility(mobilePhoneList.size() >= 3 ? View.VISIBLE : View.GONE);
     }
 
     @Override

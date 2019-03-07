@@ -65,23 +65,24 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
     }
 
     @Override
-    public void onLoadData(Object resultData) {
-        hideLoading();
-        ToastUtils.showShort(R.string.connect_success);
-        startActivity(ModifyWifiInfoActivity.class);
-    }
-
-    @Override
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
                 hideLoading();
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
+            case Config.WifiResponseCode.CONNECT_SUCCESS:
+                hideLoading();
+                startActivity(ModifyWifiInfoActivity.class);
+                ToastUtils.showShort(R.string.connect_success);
+                break;
             default:
+                // 延时1秒再次查询
+                btnNext.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
                 break;
         }
     }
+
     /**
      * 初步检查输入正确性
      */
@@ -111,6 +112,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
 
     @Override
     protected void onTitleLeftClick() {
+        super.onTitleLeftClick();
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 }

@@ -46,6 +46,23 @@ public final class Config {
         int LINE = Color.parseColor("#F2F2F2");
         @ColorInt
         int TEXT_9B = Color.parseColor("#9B9B9B");
+        @ColorInt
+        int DEVICE_ONLINE = Color.parseColor("#0AD88B");
+        @ColorInt
+        int DEVICE_OFFLINE = Color.parseColor("#7383A2");
+    }
+
+    /**
+     * 手机类型 、在线情况
+     */
+    public interface Types{
+        int APPLE = 0;
+        int ANDROID = 1;
+        int PAD = 2;
+        //-------------
+        int ONLINE = 0;
+        int OFFLINE = 1;
+        int DISABLE = 2;
     }
 
     /**
@@ -119,6 +136,8 @@ public final class Config {
         String SIGN_IN = "登录";
         //        String AP_NAME_START = "xiaok-";
         String AP_NAME_START = "Xiaomi";
+
+        String XIAO_K_WIFI_PASSOWRD = "xiaok";
     }
 
     /**

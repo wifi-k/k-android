@@ -3,13 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="1728dp"
+    android:layout_height="match_parent"
     tools:context=".fragment.HomeBindFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/online_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/bg_home_join_wrapper"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_network_speed">
+
+            <TextView
+                android:id="@+id/tv_look_more"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="23dp"
+                android:background="@drawable/bg_h32_f5_r8"
+                android:gravity="center"
+                android:text="@string/look_all"
+                android:textColor="#7383A2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_device_list" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_device_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
         <include
             android:id="@+id/include5"
@@ -59,6 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
+                android:drawableEnd="@mipmap/ic_line_arrow_right_white"
+                android:drawablePadding="4dp"
                 android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="@+id/tv_back_home"
                 app:layout_constraintTop_toBottomOf="@+id/tv_back_home"
@@ -326,52 +365,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_device_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_network_speed" />
-
-        <TextView
-            android:id="@+id/tv_look_more"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginEnd="28dp"
-            android:background="@drawable/bg_h32_f5_r8"
-            android:gravity="center"
-            android:text="@string/look_all"
-            android:textColor="#7383A2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_device_list" />
-
         <TextView
             android:id="@+id/textView22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="30dp"
             android:text="@string/title_take_care_children"
             android:textColor="#2B3852"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_look_more" />
+            app:layout_constraintTop_toBottomOf="@id/online_wrapper" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_children_device"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="14dp"
+            android:background="@drawable/bg_home_join_wrapper"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+            app:layout_constraintTop_toBottomOf="@+id/textView22">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_children_device"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 

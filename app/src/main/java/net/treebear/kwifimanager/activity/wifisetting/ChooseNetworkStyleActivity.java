@@ -76,26 +76,27 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
     }
 
     @Override
-    public void onLoadData(Object resultData) {
-        hideLoading();
-        ToastUtils.showShort(R.string.connect_success);
-        startActivity(ModifyWifiInfoActivity.class);
-    }
-
-    @Override
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
                 hideLoading();
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
+            case Config.WifiResponseCode.CONNECT_SUCCESS:
+                hideLoading();
+                ToastUtils.showShort(R.string.connect_success);
+                startActivity(ModifyWifiInfoActivity.class);
+                break;
             default:
+                // 延时1秒再次查询
+                rgOnlineType.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
                 break;
         }
     }
 
     @Override
     protected void onTitleLeftClick() {
+        super.onTitleLeftClick();
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 }

@@ -11,6 +11,8 @@ import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.BuildConfig;
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.wifisetting.ChooseNetworkStyleActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
@@ -62,6 +64,9 @@ public class BindAction1Activity extends BaseActivity {
 
     @Override
     protected void initView() {
+        if (BuildConfig.DEBUG) {
+            MyApplication.getAppContext().getUser().setAuthStatus(1);
+        }
         setTitleBack(R.string.setting);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
@@ -210,6 +215,7 @@ public class BindAction1Activity extends BaseActivity {
 
     @Override
     protected void onTitleLeftClick() {
+        super.onTitleLeftClick();
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 }

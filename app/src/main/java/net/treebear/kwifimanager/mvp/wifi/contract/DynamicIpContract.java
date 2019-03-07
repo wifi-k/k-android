@@ -15,6 +15,11 @@ public class DynamicIpContract {
          * 动态ip上网
          */
         void dynamicIpSet();
+
+        /**
+         * 查询网络连通状态
+         */
+        void queryNetStatus();
     }
 
     public interface IDynamicIpModel extends IModel {

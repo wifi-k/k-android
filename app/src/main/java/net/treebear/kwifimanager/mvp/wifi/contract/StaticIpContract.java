@@ -26,6 +26,11 @@ public class StaticIpContract {
          * dns2	str
          */
         void staticIpSet(String ip, String netmask, String gateway, String dns1, String dns2);
+
+        /**
+         * 查询网络状态
+         */
+        void queryNetStatus();
     }
 
     public interface IStaticIpModel extends IModel {
