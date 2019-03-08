@@ -21,6 +21,7 @@ import net.treebear.kwifimanager.activity.WebsiteActivity;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.IView;
 import net.treebear.kwifimanager.util.Check;
+import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.LoadingProgressDialog;
 
 import butterknife.ButterKnife;
@@ -68,7 +69,7 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
         }
         initView();
         initData();
-
+        TLog.w("构建" + getClass().getSimpleName());
         return mRootView;
     }
 

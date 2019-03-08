@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="119dp">
+
+    <ImageView
+        android:id="@+id/iv_message_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_message_icon" />
+
+    <TextView
+        android:id="@+id/tv_message_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/text_28354C"
+        android:textSize="17sp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        app:layout_constraintStart_toEndOf="@+id/iv_message_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="【设备下线】" />
+
+    <TextView
+        android:id="@+id/tv_message_content"
+        style="@style/text_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:textColor="#83889A"
+        app:layout_constraintStart_toStartOf="@+id/tv_message_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_message_title"
+        tools:text="树熊客访专用上网时间到了，被踢下线了" />
+
+    <TextView
+        android:id="@+id/tv_message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="#7383A2"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_message_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_message_content"
+        tools:text="2018-12-14 12:00" />
+</android.support.constraint.ConstraintLayout>

@@ -24,11 +24,10 @@ public class DateFormatUtils {
     private DateFormatUtils() {
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private static SimpleDateFormat sdfMDHmm = new SimpleDateFormat("M月d日 h:mm");
 
     public static void main(String[] args) {
         System.out.println(formatMDHmm(System.currentTimeMillis() - 86400 * 1000L));
+        System.out.println(formatY_M_dHmm(System.currentTimeMillis() - 86400 * 1000L));
     }
 
     /**
@@ -38,9 +37,23 @@ public class DateFormatUtils {
      * @return MD_Hmm格式时间
      */
     public static String formatMDHmm(long mills) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfMdHmm = new SimpleDateFormat("M月d日 h:mm");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
-        return sdfMDHmm.format(calendar.getTime());
+        return sdfMdHmm.format(calendar.getTime());
+    }
+
+    /**
+     * 格式化时间
+     *
+     * @param mills 时间毫秒值
+     * @return y-M-D_Hmm格式时间
+     */
+    public static String formatY_M_dHmm(long mills) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfy_M_dHmm = new SimpleDateFormat("yy-M-d h:mm");
+        GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
+        calendar.setTimeInMillis(mills);
+        return sdfy_M_dHmm.format(calendar.getTime());
     }
 
     /**

@@ -1,26 +1,23 @@
 package net.treebear.kwifimanager.activity;
 
 import android.support.v4.app.Fragment;
+import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chaychan.library.BottomBarLayout;
 
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.base.BaseActivity;
-import net.treebear.kwifimanager.base.BaseFragmentPagerAdapter;
+import net.treebear.kwifimanager.base.BaseFragmentActivity;
 import net.treebear.kwifimanager.base.IPresenter;
-import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.fragment.BlankFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import net.treebear.kwifimanager.http.WiFiHttpClient;
-import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.TLog;
-import net.treebear.kwifimanager.widget.SlideableViewPager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -29,15 +26,15 @@ import butterknife.BindView;
  * <h2>主界面大框架</h2>
  * We read the world wrong and say that it deceives us.
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseFragmentActivity {
 
     @BindView(R.id.vp_fragments)
-    SlideableViewPager vpFragments;
+    FrameLayout vpFragments;
     @BindView(R.id.bottom_bar)
     BottomBarLayout bottomBar;
     HomeBindFragment homeBindFragment;
     HomeUnbindFragment homeUnbindFragment;
-    private List<Fragment> fragments = new ArrayList<Fragment>() {
+    private ArrayList<Fragment> fragments = new ArrayList<Fragment>() {
         {
             homeBindFragment = new HomeBindFragment();
             homeUnbindFragment = new HomeUnbindFragment();
@@ -50,8 +47,7 @@ public class MainActivity extends BaseActivity {
             add(2, new BlankFragment());
         }
     };
-    private BaseFragmentPagerAdapter fragmentAdapter;
-    private ArrayList<MobilePhoneBean> mobileList;
+    long lastPressBackMills = 0;
 
     @Override
     public int layoutId() {
@@ -65,28 +61,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        fragmentAdapter = new BaseFragmentPagerAdapter(getSupportFragmentManager(), fragments);
-        vpFragments.setAdapter(fragmentAdapter);
-        bottomBar.setViewPager(vpFragments);
-        bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> {
-            switch (i) {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
-
-    @Override
-    protected void initData() {
-        // 测试手机设备
-        mobileList = BeanTest.getMobilePhoneList(3);
-
+        addFragments(fragments);
+        bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> updateFragment(i1));
     }
 
     @Override
@@ -98,26 +74,34 @@ public class MainActivity extends BaseActivity {
         //若已认证
         if (MyApplication.getAppContext().hasAuth()) {
             // 当前为未绑定界面
-            if (fragments.get(0) instanceof HomeUnbindFragment) {
+            if (mFragments.get(0) instanceof HomeUnbindFragment) {
                 // 切换为已绑定界面
-                fragmentAdapter.replaceFragment(0, homeBindFragment);
+                replaceFragment(0, homeBindFragment);
             }
             statusWhiteFontBlack();
         } else {
             // 若未认证 且当前为绑定界面
-            if (fragments.get(0) instanceof HomeBindFragment) {
+            if (mFragments.get(0) instanceof HomeBindFragment) {
                 // 切换为未绑定界面
-                fragmentAdapter.replaceFragment(0, homeUnbindFragment);
+                replaceFragment(0, homeUnbindFragment);
             }
             statusTransparentFontWhite();
         }
-        fragmentAdapter.notifyDataSetChanged();
         TLog.i(MyApplication.getAppContext().getUser().toString());
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected int getFragmentHolderId() {
+        return R.id.vp_fragments;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - lastPressBackMills > 3000) {
+            lastPressBackMills = System.currentTimeMillis();
+            ToastUtils.showShort(R.string.double_click_for_exit);
+        } else {
+            finish();
+        }
+    }
 }

@@ -11,6 +11,42 @@
         android:layout_height="wrap_content">
 
 
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_f1f5ff_r8"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:src="@mipmap/ic_home_sign_notice"
+                app:layout_constraintBottom_toBottomOf="@+id/marquee_notice"
+                app:layout_constraintTop_toTopOf="@+id/marquee_notice"
+                tools:layout_editor_absoluteX="28dp" />
+
+            <net.treebear.kwifimanager.widget.marquee.MarqueeTextView
+                android:id="@+id/marquee_notice"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                tools:layout_editor_absoluteY="255dp">
+
+            </net.treebear.kwifimanager.widget.marquee.MarqueeTextView>
+        </LinearLayout>
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/online_wrapper"
             android:layout_width="match_parent"
@@ -206,103 +242,87 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
-        <net.treebear.kwifimanager.widget.marquee.MarqueeTextView
-            android:id="@+id/marquee_notice"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-        </net.treebear.kwifimanager.widget.marquee.MarqueeTextView>
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="22dp"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            app:layout_constraintEnd_toEndOf="@+id/marquee_notice"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/marquee_notice">
-
-            <TextView
-                android:id="@+id/tv_parent_control"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@mipmap/ic_home_sign_parental"
-                android:drawablePadding="16dp"
-                android:gravity="center"
-                android:text="@string/parent_control"
-                android:textColor="@color/text_deep_black_33"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_healthy_model"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@mipmap/ic_home_sign_healthy"
-                android:drawablePadding="16dp"
-                android:gravity="center"
-                android:text="@string/healthy_model"
-                android:textColor="@color/text_deep_black_33"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_look_week_report"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@mipmap/ic_home_week_report"
-                android:drawablePadding="16dp"
-                android:gravity="center"
-                android:text="@string/look_week_report"
-                android:textColor="@color/text_deep_black_33"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@mipmap/ic_home_sign_wifisetting"
-                android:drawablePadding="16dp"
-                android:gravity="center"
-                android:text="@string/wifi_setting"
-                android:textColor="@color/text_deep_black_33"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView4"
+        <TextView
+            android:id="@+id/tv_parent_control"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:src="@mipmap/ic_home_sign_notice"
-            app:layout_constraintBottom_toBottomOf="@+id/marquee_notice"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/marquee_notice" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="22dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_home_sign_parental"
+            android:drawablePadding="16dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/parent_control"
+            android:textColor="@color/text_deep_black_33"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+        <TextView
+            android:id="@+id/tv_healthy_model"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_home_sign_healthy"
+            android:drawablePadding="16dp"
+            android:gravity="center"
+            android:text="@string/healthy_model"
+            android:textColor="@color/text_deep_black_33"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_parent_control"
+            app:layout_constraintEnd_toStartOf="@+id/tv_look_week_report"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_parent_control" />
+
+        <TextView
+            android:id="@+id/tv_look_week_report"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_home_week_report"
+            android:drawablePadding="16dp"
+            android:gravity="center"
+            android:text="@string/look_week_report"
+            android:textColor="@color/text_deep_black_33"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_parent_control"
+            app:layout_constraintEnd_toStartOf="@+id/textView13"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_healthy_model" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_home_sign_wifisetting"
+            android:drawablePadding="16dp"
+            android:gravity="center"
+            android:text="@string/wifi_setting"
+            android:textColor="@color/text_deep_black_33"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_parent_control"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout2" />
 
         <LinearLayout
             android:id="@+id/ll_has_no_backup_wrapper"
             android:layout_width="0dp"
-            android:layout_height="44dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_home_join_wrapper"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_parent_control">
 
             <ImageView
                 android:id="@+id/imageView5"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_found_backup" />
@@ -313,6 +333,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
+                style="@style/text_content"
                 android:text="@string/how_much_picture_backup"
                 android:textSize="11sp"
                 tools:text="您有10张新的照片未备份,是否现在备份?" />
@@ -321,6 +342,7 @@
                 android:id="@+id/tv_to_backup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
                 android:background="@drawable/btn_green_to_cyan14"
                 android:paddingStart="10dp"
                 android:paddingTop="5dp"
@@ -355,6 +377,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_has_no_backup_wrapper" />
 
         <TextView
+            style="@style/text_content"
             android:id="@+id/tv_network_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

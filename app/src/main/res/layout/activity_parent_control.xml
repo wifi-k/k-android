@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.family.ParentControlActivity">
+
+    <TextView
+        android:id="@+id/tv_time_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="44dp"
+        android:drawableTop="@mipmap/ic_parent_time_control"
+        android:drawablePadding="14dp"
+        android:text="@string/online_time_control"
+        android:textColor="#4A5A78"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_ban_app"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <include
+        android:id="@+id/include11"
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include11"
+        app:srcCompat="@mipmap/bg_parent_contol" />
+
+    <TextView
+        android:id="@+id/textView17"
+        style="@style/subtitle_text"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="29dp"
+        android:text="@string/parent_control"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+    <TextView
+        android:id="@+id/tv_ban_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="44dp"
+        android:drawableTop="@mipmap/ic_ban_app"
+        android:drawablePadding="14dp"
+        android:text="@string/ban_app"
+        android:textColor="#4A5A78"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+</android.support.constraint.ConstraintLayout>

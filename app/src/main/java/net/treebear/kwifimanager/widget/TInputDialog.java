@@ -48,8 +48,8 @@ public class TInputDialog {
         return mDialog.isShowing();
     }
 
-    public void show(){
-        if (mDialog == null){
+    public void show() {
+        if (mDialog == null) {
             initDialog();
         }
         if (!mDialog.isShowing()) {
@@ -57,8 +57,8 @@ public class TInputDialog {
         }
     }
 
-    public void dismiss(){
-        if (mDialog!=null){
+    public void dismiss() {
+        if (mDialog != null) {
             mDialog.dismiss();
         }
     }
@@ -97,12 +97,26 @@ public class TInputDialog {
         });
     }
 
-    public void setTitle(@StringRes int title){
+    public void clearInputText() {
+        if (etInput != null) {
+            etInput.setText("");
+        }
+    }
+
+    public void setTitle(@StringRes int title) {
         tvTitle.setText(title);
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         tvTitle.setText(title);
+    }
+
+    public void setEditHint(@StringRes int hint) {
+        etInput.setHint(hint);
+    }
+
+    public void setEditHint(String hint) {
+        etInput.setHint(hint);
     }
 
     public void setInputDialogListener(InputDialogListener listener) {

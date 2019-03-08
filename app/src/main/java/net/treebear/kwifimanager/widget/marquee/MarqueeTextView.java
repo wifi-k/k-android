@@ -2,6 +2,7 @@ package net.treebear.kwifimanager.widget.marquee;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -64,22 +65,26 @@ public class MarqueeTextView extends LinearLayout {
         if (textArrays.size() == 0) {
             return;
         }
-
-        int i = 0;
-        viewFlipper.removeAllViews();
-        while (i < textArrays.size()) {
-            final int index = i;
-            TextView textView = new TextView(mContext);
-            textView.setText(textArrays.get(i));
-            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_notice));
-            textView.setGravity(Gravity.CENTER_VERTICAL);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
-            textView.setOnClickListener(v -> marqueeTextViewClickListener.onClick(textView, index));
-            LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-            viewFlipper.addView(textView, lp);
-            i++;
+        if (viewFlipper != null) {
+            int i = 0;
+            viewFlipper.removeAllViews();
+            while (i < textArrays.size()) {
+                final int index = i;
+                TextView textView = new TextView(mContext);
+                textView.setText(textArrays.get(i));
+                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_notice));
+                textView.setGravity(Gravity.CENTER_VERTICAL);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+                textView.setSingleLine(true);
+                textView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                textView.setMarqueeRepeatLimit(2);
+                textView.setOnClickListener(v -> marqueeTextViewClickListener.onClick(textView, index));
+                LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+                viewFlipper.addView(textView, lp);
+                i++;
+            }
+            viewFlipper.startFlipping();
         }
-        viewFlipper.startFlipping();
     }
 
     @Override

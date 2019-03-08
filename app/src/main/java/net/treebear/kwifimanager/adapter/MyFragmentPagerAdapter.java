@@ -1,14 +1,13 @@
-package net.treebear.kwifimanager.base;
+package net.treebear.kwifimanager.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 
 import java.util.List;
 
-public class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
+public class MyFragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
     private List<Fragment> mFragmentList;
     private FragmentManager mFragmentManager;
     /**
@@ -17,7 +16,7 @@ public class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
     private SparseArray<String> mFragmentPositionMap;
     private SparseArray<String> mFragmentPositionMapAfterUpdate;
 
-    public BaseFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public MyFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         mFragmentList = fragments;
         mFragmentManager = fm;

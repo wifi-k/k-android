@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -318,7 +319,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      *
      * @param clazz 界面类
      */
-    public void startActivity(@NonNull Class<? extends BaseActivity> clazz) {
+    public void startActivity(@NonNull Class<? extends Activity> clazz) {
         startActivity(clazz, null);
     }
 
@@ -328,7 +329,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param clazz  界面类
      * @param bundle bundle数据
      */
-    public void startActivity(@NonNull Class<? extends BaseActivity> clazz, @Nullable Bundle bundle) {
+    public void startActivity(@NonNull Class<? extends Activity> clazz, @Nullable Bundle bundle) {
         startActivity(clazz, bundle, true);
     }
 
@@ -338,7 +339,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param clazz  界面类
      * @param bundle 数据
      */
-    public void startActivity(@NonNull Class<? extends BaseActivity> clazz, @Nullable Bundle bundle, boolean right) {
+    public void startActivity(@NonNull Class<? extends Activity> clazz, @Nullable Bundle bundle, boolean right) {
         if (noDoubleClick()) {
             Intent intent = new Intent();
             intent.setClass(this, clazz);

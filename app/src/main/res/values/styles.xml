@@ -22,6 +22,11 @@
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@mipmap/bg_launch_login</item>
     </style>
+    <!--内容统一样式-->
+    <style name="text_content">
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
     <!--输入框subtitle-->
     <style name="edit_title">
         <item name="android:layout_width">wrap_content</item>

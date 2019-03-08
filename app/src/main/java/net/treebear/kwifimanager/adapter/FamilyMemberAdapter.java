@@ -21,8 +21,12 @@ public class FamilyMemberAdapter extends BaseQuickAdapter<FamilyMemberBean, Base
     protected void convert(BaseViewHolder helper, FamilyMemberBean item) {
         CircleImageView header = helper.getView(R.id.iv_member_header);
         header.setImageResource(R.mipmap.logo);
-        helper.setText(R.id.tv_member_nickname, item.getName());
-        helper.setText(R.id.tv_member_mobile, String.format("手机号：%s", item.getMobile()));
-        helper.setImageResource(R.id.iv_member_admin, item.isAdmin() ? R.mipmap.ic_member_admin_yes : R.mipmap.ic_member_admin_no);
+        helper.setText(R.id.tv_member_nickname, item.getName())
+                .setText(R.id.tv_member_mobile, String.format("手机号：%s", item.getMobile()))
+                .setImageResource(R.id.iv_member_admin, item.isAdmin() ?
+                        R.mipmap.ic_member_admin_yes : R.mipmap.ic_member_admin_no)
+                .addOnClickListener(R.id.iv_member_admin)
+                .addOnClickListener(R.id.iv_member_edit)
+                .addOnClickListener(R.id.iv_member_delete);
     }
 }

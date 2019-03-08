@@ -1,53 +1,123 @@
 package net.treebear.kwifimanager.test;
 
 import net.treebear.kwifimanager.bean.AppBean;
+import net.treebear.kwifimanager.bean.BanAppPlanBean;
+import net.treebear.kwifimanager.bean.Daybean;
 import net.treebear.kwifimanager.bean.FamilyMemberBean;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.bean.NoticeBean;
+import net.treebear.kwifimanager.bean.TimeLimitBean;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 public class BeanTest {
+    private static ArrayList<NoticeBean> result = null;
+    private static ArrayList<MobilePhoneBean> mobilePhoneList = null;
+    private static ArrayList<MobilePhoneBean> childrenMobile = null;
+    private static ArrayList<FamilyMemberBean> familyMemberBeans = null;
+    private static ArrayList<BanAppPlanBean> banAppPlanBeans = null;
+
     private BeanTest() {
     }
 
-    private static Random random = new Random();
+    /**
+     * 测试数据
+     * @return 禁用app计划
+     */
+    public static ArrayList<BanAppPlanBean> getBanAppPlanList() {
+        if (banAppPlanBeans == null) {
+            banAppPlanBeans = new ArrayList<BanAppPlanBean>() {{
+                for (int i = 0; i < 3; i++) {
+                    add(new BanAppPlanBean(createString(5),
+                            new ArrayList<TimeLimitBean>() {{
+                                add(new TimeLimitBean(createString(3),"12:00","16:00",new ArrayList<Daybean>(){{
+                                    add(new Daybean("周一", Calendar.MONDAY));
+                                    add(new Daybean("周二", Calendar.TUESDAY));
+                                }}));
+                            }},
+                            new ArrayList<AppBean>() {{
+                                add(new AppBean());
+                                add(new AppBean());
+                                add(new AppBean());
+                            }},
+                            new ArrayList<MobilePhoneBean>() {{
+                                if (mobilePhoneList==null){
+                                    getMobilePhoneList(10);
+                                }
+                                addAll(mobilePhoneList.subList(2,4));
+                            }}
+                    ));
+                }
 
+            }};
+        }
+        return banAppPlanBeans;
+    }
+
+
+    /**
+     * 获取消息列表
+     */
     public static ArrayList<NoticeBean> getNoticeList() {
-        ArrayList<NoticeBean> result = new ArrayList<>();
-        result.add(new NoticeBean("好消息，小K管家1.0正式上线啦！", "https://www.baidu.com"));
-        result.add(new NoticeBean("特大好消息，小K管家2.0正式上线啦！", "https://www.baidu.com"));
-        result.add(new NoticeBean("特大大好消息，小K管家3.0正式上线啦！", "https://www.baidu.com"));
-        result.add(new NoticeBean("特大大大好消息，小K管家4.0正式上线啦！", "https://www.baidu.com"));
+        if (result == null) {
+            result = new ArrayList<>();
+            result.add(new NoticeBean("树熊客访专用上网时间到了，被踢下线了", "【设备下线】", createTimeMill()));
+            result.add(new NoticeBean("树熊客访专用上线啦", "【设备上线】", createTimeMill()));
+            result.add(new NoticeBean("熊孩子的手机上线啦", "【设备上线】", createTimeMill()));
+            result.add(new NoticeBean("您有新设备树熊客访专用上线啦，请立即备注 便于管理", "【新设备上线】", createTimeMill()));
+        }
         return result;
     }
 
-    public static ArrayList<String> getNoticFromBean(ArrayList<NoticeBean> notics) {
+    /**
+     * 从信息中提取字符串集合
+     */
+    public static ArrayList<String> getNoticeFromBean(ArrayList<NoticeBean> notices) {
         ArrayList<String> strings = new ArrayList<>();
-        for (NoticeBean notic : notics) {
-            strings.add(notic.getContent());
+        for (NoticeBean notice : notices) {
+            strings.add(notice.getContent());
         }
         return strings;
     }
 
     /**
      * 测试数据
-     * 首页----获取联网设备
+     * ----获取联网设备
      */
     public static ArrayList<MobilePhoneBean> getMobilePhoneList(int number) {
-        //long id, String name, String type, int status, long onlineTime, long offlineTime
-        ArrayList<MobilePhoneBean> result = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
-            result.add(new MobilePhoneBean(
-                    i,
-                    createString(random.nextInt(5)),
-                    random.nextInt(3),
-                    random.nextInt(3) >= 1,
-                    createTimeMill(),
-                    createTimeMill()
-            ));
+        if (mobilePhoneList == null) {
+            mobilePhoneList = new ArrayList<>();
+            for (int i = 0; i < number; i++) {
+                mobilePhoneList.add(new MobilePhoneBean(
+                        createString(random.nextInt(5)),
+                        random.nextInt(3),
+                        random.nextInt(3) >= 1,
+                        createTimeMill(),
+                        createTimeMill(),
+                        random.nextInt(100),
+                        createHoursMill(),
+                        new ArrayList<AppBean>(){{
+                            add(new AppBean());
+                            add(new AppBean());
+                            add(new AppBean());
+                        }}
+                ));
+            }
         }
+        return mobilePhoneList;
+    }
+
+    /**
+     * 获取首页设备
+     */
+    public static ArrayList<MobilePhoneBean> getHomeMobileList() {
+        ArrayList<MobilePhoneBean> result = new ArrayList<>();
+        if (mobilePhoneList == null || mobilePhoneList.size() < 3) {
+            getMobilePhoneList(10);
+        }
+        result.addAll(new ArrayList<>(mobilePhoneList.subList(0, 3)));
         return result;
     }
 
@@ -56,23 +126,16 @@ public class BeanTest {
      * 首页----获取儿童设备列表
      */
     public static ArrayList<MobilePhoneBean> getChildrenPhoneList(int number) {
-        ArrayList<MobilePhoneBean> result = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
-            result.add(new MobilePhoneBean(
-                    createString(random.nextInt(5)),
-                    random.nextInt(3),
-                    random.nextInt(100),
-                    createHoursMill(),
-                    new ArrayList<AppBean>() {
-                        {
-                            add(new AppBean());
-                            add(new AppBean());
-                            add(new AppBean());
-                        }
-                    }
-            ));
+        if (childrenMobile == null) {
+            childrenMobile = new ArrayList<>();
+            if (mobilePhoneList == null) {
+                getMobilePhoneList(10 + number);
+            }
+            for (int i = 3; i < 3 + number; i++) {
+                childrenMobile.add(mobilePhoneList.get(i));
+            }
         }
-        return result;
+        return childrenMobile;
     }
 
     /**
@@ -80,11 +143,13 @@ public class BeanTest {
      * 家庭成员----列表
      */
     public static ArrayList<FamilyMemberBean> getFamilyMemberList(int number) {
-        ArrayList<FamilyMemberBean> result = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
-            result.add(new FamilyMemberBean(createString(4), createMobile()));
+        if (familyMemberBeans == null) {
+            familyMemberBeans = new ArrayList<>();
+            for (int i = 0; i < number; i++) {
+                familyMemberBeans.add(new FamilyMemberBean(createString(4), createMobile()));
+            }
         }
-        return result;
+        return familyMemberBeans;
     }
 
 
@@ -101,9 +166,11 @@ public class BeanTest {
 
     private static char[] dict = text.toCharArray();
 
+    private static Random random = new Random();
+
     private static String createString(int number) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < number + 1; i++) {
+        for (int i = 0; i < number; i++) {
             sb.append(dict[random.nextInt(dict.length)]);
         }
         return sb.toString();

@@ -114,4 +114,13 @@
     <string name="input_family_code_into_family">输入家庭码加入家庭</string>
 
     <string name="family_member">家庭成员</string>
+    <string name="delete_member">家庭成员</string>
+    <string name="modify_name">修改名称</string>
+    <string name="input_new_name_please">请输入新的名称</string>
+    <string name="double_click_for_exit">连续点击两次返回退出应用</string>
+
+    <string name="message_center">消息中心</string>
+    <string name="ban_app">禁用App</string>
+    <string name="online_time_control">上网时间控制</string>
+    <string name="ban_app_tips">您可以根据不同设备，创建不同的禁用APP</string>
 </resources>

@@ -49,18 +49,12 @@ public class MobilePhoneBean {
     public MobilePhoneBean() {
     }
 
-    public MobilePhoneBean(long id, String name, int type, boolean status, long onlineTime, long offlineTime) {
-        this.id = id;
+    public MobilePhoneBean(String name, int type, boolean online, long onlineTime, long offlineTime, int rank, long averageTime, List<AppBean> activeApp) {
         this.name = name;
         this.type = type;
-        this.online = status;
+        this.online = online;
         this.onlineTime = onlineTime;
         this.offlineTime = offlineTime;
-    }
-
-    public MobilePhoneBean(String name, int type, int rank, long averageTime, List<AppBean> activeApp) {
-        this.name = name;
-        this.type = type;
         this.rank = rank;
         this.averageTime = averageTime;
         this.activeApp = activeApp;

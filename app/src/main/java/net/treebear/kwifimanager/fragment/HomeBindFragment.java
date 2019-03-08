@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.family.FamilyMemberActivity;
+import net.treebear.kwifimanager.activity.family.ParentControlActivity;
+import net.treebear.kwifimanager.activity.message.MessageListActivity;
 import net.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import net.treebear.kwifimanager.base.BaseFragment;
@@ -17,7 +19,6 @@ import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.bean.NoticeBean;
 import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.util.Check;
-import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.marquee.MarqueeTextView;
 
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class HomeBindFragment extends BaseFragment {
         setTitle(R.string.app_name);
 //        设备列表模拟数据
         mobilePhoneList.clear();
-        mobilePhoneList.addAll(BeanTest.getMobilePhoneList(3));
+        mobilePhoneList.addAll(BeanTest.getHomeMobileList());
         childrenPhoneList.clear();
         childrenPhoneList.addAll(BeanTest.getChildrenPhoneList(1));
         noticeList.clear();
@@ -109,10 +110,7 @@ public class HomeBindFragment extends BaseFragment {
         ChildrenCarefulAdapter childrenCarefulAdapter = new ChildrenCarefulAdapter(childrenPhoneList);
         rvChildrenDevice.setAdapter(childrenCarefulAdapter);
 //       公告
-        marqueeNotice.initMarqueeTextView(BeanTest.getNoticFromBean(noticeList), (view, position) -> {
-            TLog.i(position);
-            openWebsite(noticeList.get(position).getUrl());
-        });
+        marqueeNotice.initMarqueeTextView(BeanTest.getNoticeFromBean(noticeList), (view, position) -> startActivity(MessageListActivity.class));
 //        其他
         tvUserState.setText(R.string.online);
         tvApName.setText("xiaok123-4567");
@@ -148,6 +146,7 @@ public class HomeBindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_parent_control)
     public void onTvParentControlClicked() {
+        startActivity(ParentControlActivity.class);
     }
 
     @OnClick(R.id.tv_healthy_model)

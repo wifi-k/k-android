@@ -79,6 +79,6 @@ public class MyApplication extends Application {
      * @return 当前用户是否已认证
      */
     public boolean hasAuth() {
-        return user.getAuthStatus() == 1;
+        return getUser().getAuthStatus() == 1;
     }
 }
