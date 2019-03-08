@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.activity.family;
+package net.treebear.kwifimanager.activity.home;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

@@ -25,4 +25,9 @@ public interface Keys {
     String TITLE = "title";
     String TARGET = "target";
     String CONFIRM_BUTTON_TEXT = "confirm_button_text";
+    /**
+     * 传时间限制序列化对象
+     */
+    String TIME_LIMIT_BEAN = "time_limit_bean";
+
 }

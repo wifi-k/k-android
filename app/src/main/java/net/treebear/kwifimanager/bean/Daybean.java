@@ -3,7 +3,9 @@ package net.treebear.kwifimanager.bean;
 
 import net.treebear.kwifimanager.config.ConstConfig;
 
-public class Daybean {
+import java.io.Serializable;
+
+public class Daybean implements Serializable {
 
     private String name;
 
@@ -30,4 +32,5 @@ public class Daybean {
     public void setCode(@ConstConfig.DayCode int code) {
         this.code = code;
     }
+
 }

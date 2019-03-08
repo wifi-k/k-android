@@ -12,18 +12,53 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+/**
+ *
+ * 测试数据类
+ * 用于开发期间测试界面展示效果
+ * @author Administrator
+ */
 public class BeanTest {
     private static ArrayList<NoticeBean> result = null;
     private static ArrayList<MobilePhoneBean> mobilePhoneList = null;
     private static ArrayList<MobilePhoneBean> childrenMobile = null;
     private static ArrayList<FamilyMemberBean> familyMemberBeans = null;
     private static ArrayList<BanAppPlanBean> banAppPlanBeans = null;
+    private static ArrayList<TimeLimitBean> timeLimitBeans;
 
     private BeanTest() {
     }
 
     /**
      * 测试数据
+     * 获取时间控制列表
+     */
+    public static ArrayList<TimeLimitBean> getTimeLimitList() {
+        if (timeLimitBeans == null) {
+            timeLimitBeans = new ArrayList<TimeLimitBean>() {{
+                add(new TimeLimitBean(createString(3), "12:00", "16:00", new ArrayList<Daybean>() {{
+                    add(new Daybean("周一", Calendar.MONDAY));
+                    add(new Daybean("周二", Calendar.TUESDAY));
+                    add(new Daybean("周三", Calendar.WEDNESDAY));
+                }}));
+                add(new TimeLimitBean(createString(3), "12:00", "16:00", new ArrayList<Daybean>() {{
+                    add(new Daybean("周一", Calendar.MONDAY));
+                    add(new Daybean("周二", Calendar.TUESDAY));
+                    add(new Daybean("周三", Calendar.WEDNESDAY));
+                }}));
+                add(new TimeLimitBean(createString(3), "12:00", "16:00", new ArrayList<Daybean>() {{
+                    add(new Daybean("周一", Calendar.MONDAY));
+                    add(new Daybean("周二", Calendar.TUESDAY));
+                    add(new Daybean("周三", Calendar.WEDNESDAY));
+                }}));
+            }};
+        }
+        return timeLimitBeans;
+    }
+
+    /**
+     * 测试数据
+     *
      * @return 禁用app计划
      */
     public static ArrayList<BanAppPlanBean> getBanAppPlanList() {
@@ -32,7 +67,7 @@ public class BeanTest {
                 for (int i = 0; i < 3; i++) {
                     add(new BanAppPlanBean(createString(5),
                             new ArrayList<TimeLimitBean>() {{
-                                add(new TimeLimitBean(createString(3),"12:00","16:00",new ArrayList<Daybean>(){{
+                                add(new TimeLimitBean(createString(3), "12:00", "16:00", new ArrayList<Daybean>() {{
                                     add(new Daybean("周一", Calendar.MONDAY));
                                     add(new Daybean("周二", Calendar.TUESDAY));
                                 }}));
@@ -43,14 +78,13 @@ public class BeanTest {
                                 add(new AppBean());
                             }},
                             new ArrayList<MobilePhoneBean>() {{
-                                if (mobilePhoneList==null){
+                                if (mobilePhoneList == null) {
                                     getMobilePhoneList(10);
                                 }
-                                addAll(mobilePhoneList.subList(2,4));
+                                addAll(mobilePhoneList.subList(2, 4));
                             }}
                     ));
                 }
-
             }};
         }
         return banAppPlanBeans;
@@ -98,7 +132,7 @@ public class BeanTest {
                         createTimeMill(),
                         random.nextInt(100),
                         createHoursMill(),
-                        new ArrayList<AppBean>(){{
+                        new ArrayList<AppBean>() {{
                             add(new AppBean());
                             add(new AppBean());
                             add(new AppBean());

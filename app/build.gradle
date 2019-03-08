@@ -90,5 +90,8 @@ dependencies {
     implementation 'com.umeng.umsdk:common:2.0.0'
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
     implementation 'com.umeng.umsdk:push:5.0.2'
+    // switch button
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    implementation 'com.android.support:cardview-v7:28.0.0'
 
 }

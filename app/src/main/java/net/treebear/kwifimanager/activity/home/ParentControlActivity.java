@@ -1,6 +1,8 @@
-package net.treebear.kwifimanager.activity.family;
+package net.treebear.kwifimanager.activity.home;
 
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.activity.home.banapp.BanAppListActivity;
+import net.treebear.kwifimanager.activity.home.time.TimeControlListActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 
 import butterknife.OnClick;

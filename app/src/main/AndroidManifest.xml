@@ -28,11 +28,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.family.TimeControlListActivity"></activity>
-        <activity android:name=".activity.family.BanAppListActivity" />
-        <activity android:name=".activity.family.ParentControlActivity" />
+        <activity android:name=".activity.home.time.ModifyTimeActivity"></activity>
+        <activity android:name=".activity.home.healthy.HealthyModelActivity" />
+        <activity android:name=".activity.home.time.TimeControlListActivity" />
+        <activity android:name=".activity.home.banapp.BanAppListActivity" />
+        <activity android:name=".activity.home.ParentControlActivity" />
         <activity android:name=".activity.message.MessageListActivity" />
-        <activity android:name=".activity.family.FamilyMemberActivity" />
+        <activity android:name=".activity.home.FamilyMemberActivity" />
         <activity android:name=".activity.wifisetting.ModifyWifiInfoActivity" />
         <activity android:name=".activity.wifisetting.StaticIpOnlineActivity" />
         <activity android:name=".activity.wifisetting.DialUpOnlineActivity" />

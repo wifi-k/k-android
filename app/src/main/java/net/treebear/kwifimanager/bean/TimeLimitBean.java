@@ -1,11 +1,12 @@
 package net.treebear.kwifimanager.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Administrator
  */
-public class TimeLimitBean {
+public class TimeLimitBean implements Serializable {
 
     private long id;
 
@@ -16,6 +17,9 @@ public class TimeLimitBean {
     private String endTime;
 
     private List<Daybean> days;
+
+    public TimeLimitBean() {
+    }
 
     public TimeLimitBean(String name, String startTime, String endTime, List<Daybean> days) {
         this.name = name;

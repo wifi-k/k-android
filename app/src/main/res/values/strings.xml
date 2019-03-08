@@ -123,4 +123,8 @@
     <string name="ban_app">禁用App</string>
     <string name="online_time_control">上网时间控制</string>
     <string name="ban_app_tips">您可以根据不同设备，创建不同的禁用APP</string>
+    <string name="ban_time_tips">您可以根据不同设备，创建不同的上网时间控制</string>
+    <string name="online_start_time">上网开始时间</string>
+    <string name="online_end_time">上网结束时间</string>
+    <string name="confirm_din">确定</string>
 </resources>
