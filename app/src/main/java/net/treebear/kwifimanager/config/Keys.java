@@ -25,6 +25,8 @@ public interface Keys {
     String TITLE = "title";
     String TARGET = "target";
     String CONFIRM_BUTTON_TEXT = "confirm_button_text";
+
+    String DEVICE_INFO = "device_info";
     /**
      * 传时间限制序列化对象
      */

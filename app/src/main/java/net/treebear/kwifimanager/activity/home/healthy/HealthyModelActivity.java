@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.activity.home.healthy;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,9 +9,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.suke.widget.SwitchButton;
 
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.activity.home.time.ModifyTimeActivity;
 import net.treebear.kwifimanager.adapter.HealthyModelAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.TimeLimitBean;
+import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
 
 import java.util.ArrayList;
@@ -45,7 +48,9 @@ public class HealthyModelActivity extends BaseActivity {
         healthyModelAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                // TODO: 2019/3/8 去修改 
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Keys.TIME_LIMIT_BEAN, timeLimitList.get(position));
+                startActivity(ModifyTimeActivity.class, bundle);
             }
         });
     }

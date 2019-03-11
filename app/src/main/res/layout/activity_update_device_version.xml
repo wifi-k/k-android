@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.home.myk.UpdateDeviceVersionActivity">
+
+    <include
+        android:id="@+id/include16"
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="22dp"
+        android:fontFamily="sans-serif-medium"
+        android:textAllCaps="false"
+        android:textColor="@color/text_28354C"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include16"
+        tools:text="小k管家-84594" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="@string/serial_id"
+        android:textColor="#83889B"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_device_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_device_name" />
+
+    <TextView
+        android:id="@+id/tv_device_serial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_28354C"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/textView27"
+        app:layout_constraintTop_toTopOf="@+id/textView27"
+        tools:text="kJG58824542802" />
+
+    <TextView
+        android:id="@+id/tv_online"
+        android:layout_width="73dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/btn_green_to_cyan_r4"
+        android:gravity="center"
+        android:text="@string/online"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_device_serial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_device_serial" />
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="@string/current_device_version"
+        android:textColor="#83889B"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+    <TextView
+        android:id="@+id/tv_device_current_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_28354C"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/textView30"
+        app:layout_constraintTop_toTopOf="@+id/textView30"
+        tools:text="V1.0.0" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="@string/new_device_version"
+        android:textColor="#83889B"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/textView30"
+        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+    <TextView
+        android:id="@+id/tv_newer_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_28354C"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/textView32"
+        app:layout_constraintTop_toTopOf="@+id/textView32"
+        tools:text="V1.5.1" />
+
+    <TextView
+        android:id="@+id/tv_update_now"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/strock_d8_r26"
+        android:gravity="center"
+        android:text="@string/update_now"
+        android:textColor="#6C6C6C"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+</android.support.constraint.ConstraintLayout>

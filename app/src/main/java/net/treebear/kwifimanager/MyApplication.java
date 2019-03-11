@@ -1,10 +1,10 @@
 package net.treebear.kwifimanager;
 
 
-import android.app.Application;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.support.multidex.MultiDexApplication;
 
 import net.treebear.kwifimanager.activity.account.launchAccountActivity;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
@@ -18,7 +18,7 @@ import net.treebear.kwifimanager.util.TLog;
  * @date 2018/3/23.
  * I cannot choose the best. The best chooses me.
  */
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     private static MyApplication mContext;
 

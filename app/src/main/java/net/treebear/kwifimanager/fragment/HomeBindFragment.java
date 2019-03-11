@@ -12,6 +12,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.home.FamilyMemberActivity;
 import net.treebear.kwifimanager.activity.home.ParentControlActivity;
 import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
+import net.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
 import net.treebear.kwifimanager.activity.message.MessageListActivity;
 import net.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
@@ -143,6 +144,7 @@ public class HomeBindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_my_k)
     public void onTvMyKClicked() {
+        startActivity(MyDeviceListActivity.class);
     }
 
     @OnClick(R.id.tv_parent_control)

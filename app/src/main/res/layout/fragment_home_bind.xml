@@ -96,11 +96,12 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="165dp"
-            android:layout_marginStart="14dp"
+            android:layout_height="175dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="14dp"
-            android:background="@mipmap/bg_home_top_login"
+            android:layout_marginEnd="8dp"
+            android:background="@mipmap/bg_home_bind"
+            android:paddingTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include5">
@@ -109,8 +110,8 @@
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="26dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:src="@mipmap/ic_home_sign_default_header"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -184,6 +185,7 @@
                 android:id="@+id/tv_root_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:drawableTop="@mipmap/ic_home_sign_user_role"
                 android:drawablePadding="5dp"
                 android:text="@string/iam_bear"
@@ -200,6 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:drawableTop="@mipmap/ic_home_sign_invitefriend"
                 android:drawablePadding="5dp"
                 android:text="@string/invite_member"
@@ -215,7 +218,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/role_type"
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
@@ -226,21 +229,21 @@
                 app:layout_constraintStart_toStartOf="@+id/tv_root_name"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-        </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_my_k"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@mipmap/bg_home_myap"
+                android:gravity="center"
+                android:text="@string/my_k_ap"
+                android:textColor="@android:color/white"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
 
-        <TextView
-            android:id="@+id/tv_my_k"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
-            android:layout_marginEnd="10dp"
-            android:background="@mipmap/bg_home_myap"
-            android:gravity="center"
-            android:text="@string/my_k_ap"
-            android:textColor="@android:color/white"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+        </android.support.constraint.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_parent_control"
@@ -308,11 +311,11 @@
         <LinearLayout
             android:id="@+id/ll_has_no_backup_wrapper"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="52dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_home_join_wrapper"
+            android:background="@drawable/bg_home_join_wrapper8"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -321,19 +324,19 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_marginStart="11dp"
-                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="10dp"
                 android:src="@mipmap/ic_found_backup" />
 
             <TextView
                 android:id="@+id/tv_has_no_backup"
+                style="@style/text_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                style="@style/text_content"
                 android:text="@string/how_much_picture_backup"
                 android:textSize="11sp"
                 tools:text="您有10张新的照片未备份,是否现在备份?" />

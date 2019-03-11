@@ -3,6 +3,7 @@ package net.treebear.kwifimanager.test;
 import net.treebear.kwifimanager.bean.AppBean;
 import net.treebear.kwifimanager.bean.BanAppPlanBean;
 import net.treebear.kwifimanager.bean.Daybean;
+import net.treebear.kwifimanager.bean.DeviceBean;
 import net.treebear.kwifimanager.bean.FamilyMemberBean;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.bean.NoticeBean;
@@ -13,9 +14,9 @@ import java.util.Calendar;
 import java.util.Random;
 
 /**
- *
  * 测试数据类
  * 用于开发期间测试界面展示效果
+ *
  * @author Administrator
  */
 public class BeanTest {
@@ -24,9 +25,24 @@ public class BeanTest {
     private static ArrayList<MobilePhoneBean> childrenMobile = null;
     private static ArrayList<FamilyMemberBean> familyMemberBeans = null;
     private static ArrayList<BanAppPlanBean> banAppPlanBeans = null;
-    private static ArrayList<TimeLimitBean> timeLimitBeans;
+    private static ArrayList<TimeLimitBean> timeLimitBeans = null;
+    private static ArrayList<DeviceBean> deviceBeans = null;
 
     private BeanTest() {
+    }
+
+    /**
+     * 测试数据
+     * 我的小K列表
+     */
+    public static ArrayList<DeviceBean> getDeviceList() {
+        if (deviceBeans == null) {
+            deviceBeans = new ArrayList<DeviceBean>() {{
+                add(new DeviceBean(createKname(), createSerialId(), random.nextBoolean(), "V1.0.0", "V1.5.1"));
+                add(new DeviceBean(createKname(), createSerialId(), random.nextBoolean(), "V1.5.1", "V1.5.1"));
+            }};
+        }
+        return deviceBeans;
     }
 
     /**
@@ -198,9 +214,30 @@ public class BeanTest {
             "城夏孙宰容射峡叟奚春乘借准淞宵指拭洵洳狩兹珊站宸挈晃桓活洪畔亩眠秘粉纺航芳芙花峰涵畔埔恢恍恒柏派洹珉祜呗赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张" +
             "孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳酆鲍史唐费廉岑薛雷贺倪汤";
 
+    private static String number = "1234567890";
+
     private static char[] dict = text.toCharArray();
 
+    private static char[] num = number.toCharArray();
+
     private static Random random = new Random();
+
+    private static String createSerialId() {
+        // kJG58824542802
+        StringBuilder kJG = new StringBuilder("kJG");
+        for (int i = 0; i < 14; i++) {
+            kJG.append(num[random.nextInt(num.length)]);
+        }
+        return kJG.toString();
+    }
+
+    private static String createKname() {
+        StringBuilder name = new StringBuilder("小k管家-");
+        for (int i = 0; i < 5; i++) {
+            name.append(num[random.nextInt(num.length)]);
+        }
+        return name.toString();
+    }
 
     private static String createString(int number) {
         StringBuilder sb = new StringBuilder();

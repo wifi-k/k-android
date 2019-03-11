@@ -50,12 +50,23 @@ public final class Config {
         int DEVICE_ONLINE = Color.parseColor("#0AD88B");
         @ColorInt
         int DEVICE_OFFLINE = Color.parseColor("#7383A2");
+        @ColorInt
+        int DEVICE_K_OFFLINE = Color.parseColor("#313E54");
+        @ColorInt
+        int COLOR_D8 = Color.parseColor("#D8D8D8");
+        @ColorInt
+        int COLOR_F7 = Color.parseColor("#F7F7F7");
+        @ColorInt
+        int COLOR_4A5A78 = Color.parseColor("#4A5A78");
+        @ColorInt
+        int COLOR_C0 = Color.parseColor("#C0C0C0");
+
     }
 
     /**
      * 手机类型 、在线情况
      */
-    public interface Types{
+    public interface Types {
         int APPLE = 0;
         int ANDROID = 1;
         int PAD = 2;
@@ -134,7 +145,7 @@ public final class Config {
         String CANCEL = "取消";
         String SIGN_IN_NOW = "立即登录";
         String SIGN_IN = "登录";
-                String AP_NAME_START = "xiaok-";
+        String AP_NAME_START = "xiaok-";
 //        String AP_NAME_START = "Xiaomi";
 
         String XIAO_K_WIFI_PASSOWRD = "xiaok";
@@ -190,8 +201,8 @@ public final class Config {
         int HAS_SIGN_UP = 9;
     }
 
-    public interface WifiResponseCode{
-//        0-连接成功 1-连接失败 2-正在连接
+    public interface WifiResponseCode {
+        //        0-连接成功 1-连接失败 2-正在连接
         int CONNECT_SUCCESS = 0;
         int CONNECT_FAIL = 1;
         int CONNECTING = 2;

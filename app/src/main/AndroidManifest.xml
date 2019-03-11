@@ -23,37 +23,51 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.home.time.ModifyTimeActivity"></activity>
-        <activity android:name=".activity.home.healthy.HealthyModelActivity" />
-        <activity android:name=".activity.home.time.TimeControlListActivity" />
-        <activity android:name=".activity.home.banapp.BanAppListActivity" />
-        <activity android:name=".activity.home.ParentControlActivity" />
-        <activity android:name=".activity.message.MessageListActivity" />
-        <activity android:name=".activity.home.FamilyMemberActivity" />
-        <activity android:name=".activity.wifisetting.ModifyWifiInfoActivity" />
-        <activity android:name=".activity.wifisetting.StaticIpOnlineActivity" />
-        <activity android:name=".activity.wifisetting.DialUpOnlineActivity" />
-        <activity android:name=".activity.wifisetting.ChooseNetworkStyleActivity" />
-        <activity android:name=".activity.bindap.BindAction1Activity" />
-
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL}" />
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="${UMENG_APPKEY}" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="${UMENG_MESSAGE_SECRET}" />
-        <meta-data
-            android:name="BAIDU_MAP_APIKEY"
-            android:value="${BAIDU_MAP_APIKEY}" />
-
+        <activity android:name=".activity.home.myk.UpdateDeviceVersionActivity"></activity>
+        <activity
+            android:name=".activity.home.myk.MyDeviceListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.time.ModifyTimeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.healthy.HealthyModelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.time.TimeControlListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.banapp.BanAppListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.ParentControlActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.message.MessageListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.FamilyMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wifisetting.ModifyWifiInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wifisetting.StaticIpOnlineActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wifisetting.DialUpOnlineActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wifisetting.ChooseNetworkStyleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.bindap.BindAction1Activity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.account.ForgetPwdSetActivity"
             android:screenOrientation="portrait" />
@@ -89,6 +103,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL}" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${UMENG_APPKEY}" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="${UMENG_MESSAGE_SECRET}" />
+        <meta-data
+            android:name="BAIDU_MAP_APIKEY"
+            android:value="${BAIDU_MAP_APIKEY}" />
 
         <receiver
             android:name=".receiver.OpenFileReceiver"

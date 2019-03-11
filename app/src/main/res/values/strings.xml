@@ -127,4 +127,14 @@
     <string name="online_start_time">上网开始时间</string>
     <string name="online_end_time">上网结束时间</string>
     <string name="confirm_din">确定</string>
+    <string name="edit">编辑</string>
+    <string name="choose_time">选择时间</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    <string name="serial_id">序列号：</string>
+    <string name="unbind_k">解绑小k</string>
+    <string name="update_version">升级版本</string>
+    <string name="current_device_version">当前固件版本：</string>
+    <string name="new_device_version">最新固件版本：</string>
+    <string name="update_now">立即更新</string>
 </resources>
