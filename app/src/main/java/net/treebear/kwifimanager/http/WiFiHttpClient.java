@@ -3,6 +3,8 @@ package net.treebear.kwifimanager.http;
 
 import android.util.ArrayMap;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.base.BaseResponse;
@@ -13,16 +15,20 @@ import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.wifi.model.LoginWifiModel;
 import net.treebear.kwifimanager.util.RequestBodyUtils;
 import net.treebear.kwifimanager.util.SecurityUtils;
-import net.treebear.kwifimanager.util.SharedPreferencesUtil;
 import net.treebear.kwifimanager.util.TLog;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -82,12 +88,10 @@ public class WiFiHttpClient {
                         .addHeader("Api-Token", apiToken)
                         .addHeader("Accept-Encoding", "utf-8")
                         .addHeader("Api-Version", "2019.3.1");
-
-                String cookies[] = ((String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), "cookies", "")).split("-");
-                for (String cookie : cookies) {
-                    builder.addHeader("Cookie", cookie);
-                }
-
+//                String cookies[] = ((String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), "cookies", "")).split("-");
+//                for (String cookie : cookies) {
+//                    builder.addHeader("Cookie", cookie);
+//                }
                 Request request = builder.build();
                 return chain.proceed(request);
             };
@@ -106,9 +110,8 @@ public class WiFiHttpClient {
 //                return originalResponse;
 //            };
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(30, TimeUnit.SECONDS);
-            builder.readTimeout(30, TimeUnit.SECONDS);
-            builder.connectTimeout(30, TimeUnit.SECONDS);
+            builder.connectTimeout(160, TimeUnit.SECONDS);
+            builder.readTimeout(160, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
 //            builder.addInterceptor(cookieInterceptor);
             if (BuildConfig.DEBUG) {
@@ -147,6 +150,39 @@ public class WiFiHttpClient {
         tryToSignInWifi(null);
     }
 
+    public static void try1(){
+        Interceptor headerInterceptor = chain -> {
+            Request.Builder builder = chain.request().newBuilder()
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Api-Token", apiToken)
+                    .addHeader("Accept-Encoding", "utf-8")
+                    .addHeader("Api-Version", "2019.3.1");
+            Request request = builder.build();
+            return chain.proceed(request);
+        };
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(headerInterceptor)
+                .connectTimeout(160, TimeUnit.SECONDS)
+                .readTimeout(160, TimeUnit.SECONDS)
+                .build();
+        FormBody body = new FormBody.Builder().add(Keys.NAME, "admin")
+                .add(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD))
+                .build();
+        Request req = new Request.Builder().url(Config.Urls.ROUTER_BASE_URL + "app/login")
+                .post(body)
+                .build();
+        okHttpClient.newCall(req).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                TLog.e(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                TLog.i(response.body().string());
+            }
+        });
+    }
+
     /**
      * 便于各个界面调用WiFi登录
      * 内部处理token更新
@@ -166,7 +202,8 @@ public class WiFiHttpClient {
         loginWifiModel.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiUserInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiUserInfo> resultData) {
-                TLog.keep("WiFi login success !");
+                TLog.e("OkHttp", "WiFi login success !" + TLog.valueOf(resultData));
+                ToastUtils.showShort(TLog.valueOf(resultData.getData().toString()));
                 if (resultData.getData() != null) {
                     updataApiToken(resultData.getData().getToken());
                     needLogin = false;
@@ -178,7 +215,8 @@ public class WiFiHttpClient {
 
             @Override
             public void onFailed(String resultMsg, int resultCode) {
-                TLog.keep("WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
+                TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
+                ToastUtils.showShort("WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
                 if (callBack != null) {
                     callBack.onFailed(resultMsg, resultCode);
                 }

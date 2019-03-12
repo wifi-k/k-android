@@ -167,6 +167,8 @@
     <string name="spectrum_bandwidth">频段带宽</string>
     <string name="save">保存</string>
 
+    <string name="current_online_tai">当前在线(台)</string>
+
     <!--SPECTRUM_BANDWIDTH-->
     <string name="sb_auto">自动</string>
     <string name="sb_20mhz">20Mhz</string>
@@ -187,4 +189,7 @@
     <string name="nc_7">7</string>
     <string name="nc_8">8</string>
     <string name="nc_9">9</string>
+    <string name="device_list">设备列表</string>
+    <string name="upload_speed">上行网速(K)</string>
+    <string name="download_speed">下载网速(M)</string>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.activity.AllDeviceListActivity;
 import net.treebear.kwifimanager.activity.home.FamilyMemberActivity;
 import net.treebear.kwifimanager.activity.home.ParentControlActivity;
 import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
@@ -172,5 +173,6 @@ public class HomeBindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_look_more)
     public void onTvLookMoreClicked() {
+        startActivity(AllDeviceListActivity.class);
     }
 }

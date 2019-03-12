@@ -28,7 +28,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.toolkit.SeniorSettingItemActivity"></activity>
+        <activity android:name=".activity.AllDeviceListActivity"></activity>
+        <activity android:name=".activity.toolkit.SeniorSettingItemActivity" />
         <activity android:name=".activity.toolkit.DHCPServerActivity" />
         <activity android:name=".activity.toolkit.LanSettingActivity" />
         <activity android:name=".activity.toolkit.OnlineSettingActivity" />
