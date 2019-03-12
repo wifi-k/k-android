@@ -9,6 +9,11 @@ public class SecurityUtils {
     private SecurityUtils() {
     }
 
+//    public static void main(String[] args) {
+//        System.out.println(md5("123456"));
+//        System.out.println(md5(md5("123456") + "xiaok"));
+//    }
+
     public static String md5(String string) {
         if (TextUtils.isEmpty(string)) {
             return "";

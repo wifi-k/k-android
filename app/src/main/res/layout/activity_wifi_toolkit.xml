@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.toolkit.WifiToolkitActivity">
+
+    <include
+        android:id="@+id/include17"
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include17">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView25"
+                style="@style/subtitle_text"
+                android:text="@string/base_setting"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="23dp"
+                android:src="@mipmap/ic_toolkit_wifi_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/set_wifi_name"
+                android:textColor="@color/text_28354C"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+                app:layout_constraintStart_toEndOf="@+id/imageView10"
+                app:layout_constraintTop_toTopOf="@+id/imageView10" />
+
+            <TextView
+                android:id="@+id/tv_setting_wifi_name"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_f7_r4"
+                android:gravity="center"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:text="@string/setting"
+                android:textColor="#5D6778"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView28"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView28" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:src="@mipmap/ic_toolkit_wifi_passowrd"
+                app:layout_constraintStart_toStartOf="@+id/imageView10"
+                app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="4dp"
+                android:text="@string/set_wifi_passowrd"
+                android:textColor="@color/text_28354C"
+                app:layout_constraintBottom_toTopOf="@+id/tv_has_no_password"
+                app:layout_constraintStart_toEndOf="@+id/imageView11"
+                app:layout_constraintTop_toTopOf="@+id/imageView11" />
+
+            <TextView
+                android:id="@+id/tv_has_no_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/no_password_easy_gay"
+                android:textColor="#83889A"
+                android:textSize="12sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                app:layout_constraintStart_toEndOf="@+id/imageView11" />
+
+            <TextView
+                android:id="@+id/tv_setting_wifi_password"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_f7_r4"
+                android:gravity="center"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:text="@string/setting"
+                android:textColor="#5D6778"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView11"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/textView34"
+                style="@style/subtitle_text"
+                android:layout_marginTop="55dp"
+                android:text="@string/senior_settings"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+
+            <android.support.v7.widget.GridLayout
+                android:id="@+id/gl_senior_setting_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:columnCount="4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView34">
+
+                <TextView
+                    android:id="@+id/tv_guard_join_net"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_guard_join_net"
+                    android:text="@string/toolkit_guard_join_net" />
+
+                <TextView
+                    android:id="@+id/tv_senior_settings"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_senior_setting"
+                    android:text="@string/toolkit_senior_setting" />
+
+                <TextView
+                    android:id="@+id/tv_online_setting"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_online_setting"
+                    android:text="@string/toolkit_online_setting" />
+
+                <TextView
+                    android:id="@+id/tv_lan_setting"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_lan_setting"
+                    android:text="@string/toolkit_lan_setting" />
+
+                <TextView
+                    android:id="@+id/tv_restart_device"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_restart_device"
+                    android:text="@string/toolkit_restart_device" />
+
+                <TextView
+                    android:id="@+id/tv_dhcp_server"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_dhcp_server"
+                    android:text="@string/toolkit_dhcp_server" />
+
+                <TextView
+                    android:id="@+id/tv_reset_device"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_reset_device"
+                    android:text="@string/toolkit_guard_join_net" />
+
+            </android.support.v7.widget.GridLayout>
+
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

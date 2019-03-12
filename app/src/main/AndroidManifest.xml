@@ -28,7 +28,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.home.myk.UpdateDeviceVersionActivity"></activity>
+        <activity android:name=".activity.toolkit.SeniorSettingItemActivity"></activity>
+        <activity android:name=".activity.toolkit.DHCPServerActivity" />
+        <activity android:name=".activity.toolkit.LanSettingActivity" />
+        <activity android:name=".activity.toolkit.OnlineSettingActivity" />
+        <activity android:name=".activity.toolkit.SeniorWifiSettingActivity" />
+        <activity android:name=".activity.toolkit.GuardDeviceJoinActivity" />
+        <activity android:name=".activity.toolkit.WifiToolkitActivity" />
+        <activity android:name=".activity.home.myk.UpdateDeviceVersionActivity" />
         <activity
             android:name=".activity.home.myk.MyDeviceListActivity"
             android:screenOrientation="portrait" />
@@ -54,16 +61,16 @@
             android:name=".activity.home.FamilyMemberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.wifisetting.ModifyWifiInfoActivity"
+            android:name=".activity.home.settings.ModifyWifiInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.wifisetting.StaticIpOnlineActivity"
+            android:name=".activity.home.settings.StaticIpOnlineActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.wifisetting.DialUpOnlineActivity"
+            android:name=".activity.home.settings.DialUpOnlineActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.wifisetting.ChooseNetworkStyleActivity"
+            android:name=".activity.home.settings.ChooseNetworkStyleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.bindap.BindAction1Activity"

@@ -68,6 +68,7 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        WiFiHttpClient.tryToSignInWifi(null);
         if (NetWorkUtils.isConnectXiaoK(this)) {
             WiFiHttpClient.tryToSignInWifi(null);
         }

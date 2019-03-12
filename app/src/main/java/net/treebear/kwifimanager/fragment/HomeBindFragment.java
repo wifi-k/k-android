@@ -14,6 +14,7 @@ import net.treebear.kwifimanager.activity.home.ParentControlActivity;
 import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import net.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
 import net.treebear.kwifimanager.activity.message.MessageListActivity;
+import net.treebear.kwifimanager.activity.toolkit.WifiToolkitActivity;
 import net.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import net.treebear.kwifimanager.base.BaseFragment;
@@ -159,6 +160,10 @@ public class HomeBindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_look_week_report)
     public void onTvLookWeekReportClicked() {
+    }
+    @OnClick(R.id.tv_wifi_settings)
+    public void onTvWifiSettingsClicked() {
+        startActivity(WifiToolkitActivity.class);
     }
 
     @OnClick(R.id.tv_to_backup)

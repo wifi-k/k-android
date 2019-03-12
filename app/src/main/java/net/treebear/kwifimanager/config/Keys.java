@@ -12,18 +12,20 @@ public interface Keys {
     String VERIFY_CODE = "vcode";
     String PASSWORD = "passwd";
     String NAME = "name";
+    String SSID0 = "ssid0";
+    String SSID = "ssid";
     String PASSWD_WIFI = "passwd";
     String IP = "ip";
     String NET_MASK = "netmask";
     String GATEWAY = "gateway";
     String DNS1 = "dns1";
     String DNS2 = "dns2";
-    String SSID = "ssid";
     String BSSID = "bssid";
 
-    //----------------------intent传输key--------------------//
+    /**
+     * ----------------------intent传输key--------------------
+     */
     String TITLE = "title";
-    String TARGET = "target";
     String CONFIRM_BUTTON_TEXT = "confirm_button_text";
 
     String DEVICE_INFO = "device_info";
@@ -31,5 +33,9 @@ public interface Keys {
      * 传时间限制序列化对象
      */
     String TIME_LIMIT_BEAN = "time_limit_bean";
+
+    String SETTINGS_ITEM_DATA = "settings_item_data";
+
+    String POSITION = "position";
 
 }

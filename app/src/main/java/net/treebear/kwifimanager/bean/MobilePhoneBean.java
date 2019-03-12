@@ -42,6 +42,10 @@ public class MobilePhoneBean {
      */
     private long averageTime;
     /**
+     * 禁止上网
+     */
+    private boolean banOnline;
+    /**
      * 上周活跃app
      */
     private List<AppBean> activeApp;
@@ -49,7 +53,7 @@ public class MobilePhoneBean {
     public MobilePhoneBean() {
     }
 
-    public MobilePhoneBean(String name, int type, boolean online, long onlineTime, long offlineTime, int rank, long averageTime, List<AppBean> activeApp) {
+    public MobilePhoneBean(String name, int type, boolean online, long onlineTime, long offlineTime, int rank, long averageTime,boolean banOnline, List<AppBean> activeApp) {
         this.name = name;
         this.type = type;
         this.online = online;
@@ -57,7 +61,16 @@ public class MobilePhoneBean {
         this.offlineTime = offlineTime;
         this.rank = rank;
         this.averageTime = averageTime;
+        this.banOnline = banOnline;
         this.activeApp = activeApp;
+    }
+
+    public boolean isBanOnline() {
+        return banOnline;
+    }
+
+    public void setBanOnline(boolean banOnline) {
+        this.banOnline = banOnline;
     }
 
     public long getId() {

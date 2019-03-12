@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.wifisetting.ChooseNetworkStyleActivity">
+    tools:context=".activity.home.settings.ChooseNetworkStyleActivity">
 
     <include layout="@layout/common_title" />
 

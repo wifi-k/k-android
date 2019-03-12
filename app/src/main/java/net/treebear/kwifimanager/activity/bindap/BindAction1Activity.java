@@ -9,12 +9,11 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
-import com.blankj.utilcode.util.ToastUtils;
 
 import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.wifisetting.ChooseNetworkStyleActivity;
+import net.treebear.kwifimanager.activity.home.settings.ChooseNetworkStyleActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
@@ -22,7 +21,6 @@ import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.http.WiFiHttpClient;
 import net.treebear.kwifimanager.receiver.WiFiStateReceiver;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
-import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
 import net.treebear.kwifimanager.util.CountUtil;
 import net.treebear.kwifimanager.util.NetWorkUtils;
@@ -111,18 +109,20 @@ public class BindAction1Activity extends BaseActivity {
 
     @OnClick(R.id.btn_bottom)
     public void onBtnBottomClicked() {
-        if (NetWorkUtils.isWifiConnected(this)) {
-            String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
-            if (Check.hasContent(wifiSSID)) {
-                if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
-                    startActivity(ChooseNetworkStyleActivity.class);
-                } else {
-                    ToastUtils.showShort(R.string.connect_xiaok_tips1);
-                }
-            }
-        } else {
-            ToastUtils.showShort(R.string.connect_xiaok_tips1);
-        }
+//        if (NetWorkUtils.isWifiConnected(this)) {
+//            String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
+//            if (Check.hasContent(wifiSSID)) {
+//                if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
+//                    startActivity(ChooseNetworkStyleActivity.class);
+//                } else {
+//                    ToastUtils.showShort(R.string.connect_xiaok_tips1);
+//                }
+//            }
+//        } else {
+//            ToastUtils.showShort(R.string.connect_xiaok_tips1);
+//        }
+        //test startActivity(ChooseNetworkStyleActivity.class);
+        startActivity(ChooseNetworkStyleActivity.class);
     }
 
     private void scanWifi() {
@@ -177,7 +177,9 @@ public class BindAction1Activity extends BaseActivity {
                         @Override
                         public void onClickRight(View view) {
                             tMessageDialog.dismiss();
-                            ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
+                            // todo test
+                            startActivity(ChooseNetworkStyleActivity.class);
+//                            ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
                         }
                     }).show();
         }

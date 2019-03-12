@@ -29,4 +29,8 @@ public interface Values {
      */
     int ONLINE_TYPE_DYNAMIC_IP = 0x0013;
 
+    /**----------------------REQUEST CODE   RESULT CODE--------------------*/
+    int SENIOR_SETTING = 0x1001;
+
+
 }

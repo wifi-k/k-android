@@ -289,12 +289,12 @@
             android:textColor="@color/text_deep_black_33"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_parent_control"
-            app:layout_constraintEnd_toStartOf="@+id/textView13"
+            app:layout_constraintEnd_toStartOf="@+id/tv_wifi_settings"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tv_healthy_model" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/tv_wifi_settings"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"

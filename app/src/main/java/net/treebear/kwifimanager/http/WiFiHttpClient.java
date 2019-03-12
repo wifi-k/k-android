@@ -11,7 +11,6 @@ import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.wifi.model.LoginWifiModel;
-import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.RequestBodyUtils;
 import net.treebear.kwifimanager.util.SecurityUtils;
 import net.treebear.kwifimanager.util.SharedPreferencesUtil;
@@ -81,8 +80,8 @@ public class WiFiHttpClient {
                 Request.Builder builder = chain.request().newBuilder()
                         .addHeader("Content-Type", "application/json")
                         .addHeader("Api-Token", apiToken)
-                        .addHeader("charset", "utf-8")
-                        .addHeader("Api-Version", BuildConfig.VERSION_NAME);
+                        .addHeader("Accept-Encoding", "utf-8")
+                        .addHeader("Api-Version", "2019.3.1");
 
                 String cookies[] = ((String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), "cookies", "")).split("-");
                 for (String cookie : cookies) {
@@ -162,7 +161,7 @@ public class WiFiHttpClient {
             loginWifiModel = new LoginWifiModel();
         }
         ArrayMap<String, Object> map = new ArrayMap<>();
-        map.put(Keys.NAME, NetWorkUtils.getSSIDWhenWifi(MyApplication.getAppContext()));
+        map.put(Keys.NAME, "admin");
         map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD));
         loginWifiModel.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiUserInfo>>() {
             @Override
@@ -171,14 +170,18 @@ public class WiFiHttpClient {
                 if (resultData.getData() != null) {
                     updataApiToken(resultData.getData().getToken());
                     needLogin = false;
-                    callBack.onSuccess(resultData);
+                    if (callBack != null) {
+                        callBack.onSuccess(resultData);
+                    }
                 }
             }
 
             @Override
             public void onFailed(String resultMsg, int resultCode) {
                 TLog.keep("WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
-                callBack.onFailed(resultMsg, resultCode);
+                if (callBack != null) {
+                    callBack.onFailed(resultMsg, resultCode);
+                }
             }
         });
     }

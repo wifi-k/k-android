@@ -20,6 +20,7 @@ public class DateFormatUtils {
     private static final String S_HOUR = "小时";
     private static final String S_DAY = "天";
     private static final String S_LESS_SECENDS = "小于1秒";
+    public static final String BEFORE = "前";
 
     private DateFormatUtils() {
     }
@@ -28,6 +29,32 @@ public class DateFormatUtils {
     public static void main(String[] args) {
         System.out.println(formatMDHmm(System.currentTimeMillis() - 86400 * 1000L));
         System.out.println(formatY_M_dHmm(System.currentTimeMillis() - 86400 * 1000L));
+    }
+
+    /**
+     * 根据上下线状态及时间创建对应文字说明
+     */
+    public static String createTimeInfoByStatusLength(boolean onlineStatus, long mills) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf_mdhmm = new SimpleDateFormat("M月d日 h:mm");
+        String status = "";
+        String time = "";
+        long lll = mills - System.currentTimeMillis();
+        if (lll >= DAY) {
+            status = onlineStatus ? "上线时间:" : "离线时间:";
+            GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
+            calendar.setTimeInMillis(mills);
+            time = sdf_mdhmm.format(calendar.getTime());
+        } else if (lll >= HOUR) {
+            status = onlineStatus ? "上线 " : "离线 ";
+            time = (lll / HOUR) + S_HOUR + BEFORE;
+        } else if (lll >= MINUTE) {
+            status = onlineStatus ? "上线 " : "离线 ";
+            time = (lll / MINUTE) + S_MINUTE + BEFORE;
+        } else {
+            status = onlineStatus ? "上线 " : "离线 ";
+            time = (lll / SECONDS) + S_MILL + BEFORE;
+        }
+        return status + time;
     }
 
     /**

@@ -6,6 +6,8 @@
 
     <color name="color_dfdfdf">#DFDFDF</color>
 
+    <color name="switch_button_check">#37EDA3</color>
+
     <color name="text_dark_black">#222</color>
     <color name="text_light_black">#BEC3CC</color>
     <color name="c_f6f6f6">#F6F6F6</color>
@@ -15,6 +17,7 @@
     <color name="text_deep_black_33">#333333</color>
     <color name="text_hint_cf">#CFCFCF</color>
     <color name="line_f2">#F2F2F2</color>
+    <color name="line_f7">#F7F7F7</color>
     <color name="light_text_9b">#9B9B9B</color>
     <color name="white50">#80FFFFFF</color>
     <color name="text_deep_black_21">#212121</color>

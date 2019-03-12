@@ -21,7 +21,8 @@ public final class Config {
      */
     public interface Urls {
         String SERVER_BASE_URL = "http://test.user.famwifi.com/api/";
-        String ROUTER_BASE_URL = "http://192.168.1.1:80/";
+//        String ROUTER_BASE_URL = "http://192.168.1.1:80/";
+        String ROUTER_BASE_URL = "http://192.168.18.254:4000/api/";
         String USER_PROTOCOL = "http://www.baidu.com/";
         String PRIVATE_PROTOCOL = "http://www.baidu.com/";
     }
@@ -74,6 +75,10 @@ public final class Config {
         int ONLINE = 0;
         int OFFLINE = 1;
         int DISABLE = 2;
+
+        int NET_CHANNEL = 0;
+        int WORK_MODEL = 1;
+        int SPECTRUM_BANDWIDTH = 2;
     }
 
     /**
@@ -145,10 +150,10 @@ public final class Config {
         String CANCEL = "取消";
         String SIGN_IN_NOW = "立即登录";
         String SIGN_IN = "登录";
-        String AP_NAME_START = "xiaok-";
-//        String AP_NAME_START = "Xiaomi";
+//        String AP_NAME_START = "xiaok-";
+        String AP_NAME_START = "Xiaomi";
 
-        String XIAO_K_WIFI_PASSOWRD = "xiaok";
+        String XIAO_K_WIFI_PASSOWRD = "123456";
     }
 
     /**

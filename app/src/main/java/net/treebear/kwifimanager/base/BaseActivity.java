@@ -233,6 +233,16 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
     /**
      * 设置title样式
      *
+     * @param title title文字
+     * @param right 右侧文字
+     */
+    protected void setTitleBack(int title, int right) {
+        setTitle(R.mipmap.back, getString(title), getString(right), 0);
+    }
+
+    /**
+     * 设置title样式
+     *
      * @param leftRes 左侧资源
      * @param title   title文字
      */
@@ -354,6 +364,20 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
             } else {
                 leftStart();
             }
+        }
+    }
+
+    public void startActivityForResult(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
+        if (noDoubleClick()) {
+            Intent intent = new Intent();
+            intent.setClass(this, clazz);
+            if (bundle == null) {
+                bundle = new Bundle();
+            }
+            intent.putExtras(bundle);
+            lastClick = System.currentTimeMillis();
+            startActivityForResult(intent, requestCode);
+            rightStart();
         }
     }
 

@@ -31,6 +31,17 @@ public class BeanTest {
     private BeanTest() {
     }
 
+    public static ArrayList<MobilePhoneBean> getGuardDeviceList() {
+        ArrayList<MobilePhoneBean> result = new ArrayList<>();
+        if (mobilePhoneList == null) {
+            getMobilePhoneList(10);
+        }
+        for (int i = 5; i < mobilePhoneList.size() - 1; i++) {
+            result.add(mobilePhoneList.get(i));
+        }
+        return result;
+    }
+
     /**
      * 测试数据
      * 我的小K列表
@@ -141,13 +152,14 @@ public class BeanTest {
             mobilePhoneList = new ArrayList<>();
             for (int i = 0; i < number; i++) {
                 mobilePhoneList.add(new MobilePhoneBean(
-                        createString(random.nextInt(5)),
+                        createString(random.nextInt(3) + 1),
                         random.nextInt(3),
                         random.nextInt(3) >= 1,
                         createTimeMill(),
                         createTimeMill(),
                         random.nextInt(100),
                         createHoursMill(),
+                        random.nextBoolean(),
                         new ArrayList<AppBean>() {{
                             add(new AppBean());
                             add(new AppBean());
@@ -167,7 +179,9 @@ public class BeanTest {
         if (mobilePhoneList == null || mobilePhoneList.size() < 3) {
             getMobilePhoneList(10);
         }
-        result.addAll(new ArrayList<>(mobilePhoneList.subList(0, 3)));
+        for (int i = 0; i < 3; i++) {
+            result.add(mobilePhoneList.get(i));
+        }
         return result;
     }
 

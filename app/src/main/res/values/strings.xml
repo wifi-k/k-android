@@ -137,4 +137,54 @@
     <string name="current_device_version">当前固件版本：</string>
     <string name="new_device_version">最新固件版本：</string>
     <string name="update_now">立即更新</string>
+    <!--WiFi 设置-->
+    <string name="base_setting">基础设置</string>
+    <string name="set_wifi_name">设置WiFi名称</string>
+    <string name="set_wifi_passowrd">设置WiFi密码</string>
+    <string name="no_password_easy_gay">未设置密码（WiFi容易被蹭）</string>
+    <string name="senior_settings">高级设置</string>
+    <!--工具箱-->
+    <string name="wifi_toolkit">WiFi工具箱</string>
+    <string name="toolkit_guard_join_net">防蹭网</string>
+    <string name="toolkit_senior_setting">无线高级设置</string>
+    <string name="toolkit_online_setting">上网设置</string>
+    <string name="toolkit_lan_setting">LAN口设置</string>
+    <string name="toolkit_restart_device">重启路由器</string>
+    <string name="toolkit_dhcp_server">DHCP服务器</string>
+    <string name="toolkit_reset_device">恢复出厂设置</string>
+    <!--Tips-->
+    <string name="confirm_restart_please">请确认是否重启</string>
+    <string name="confirm_reset_please">请确认是否恢复出厂设置</string>
+    <string name="tips_device_restart">路由器重启预计需要几分钟时间，重启 过程中，所有已连设备会断开连接</string>
+    <string name="tips_device_reset">路由器的所有配置将恢复 至出厂时的默认状态</string>
+    <string name="has_no_guard_device">暂时没有添加任何设备\n请添加不允许上网的防蹭网设备</string>
+    <string name="add_guard_join_device">+ 添加防蹭网设备</string>
+    <string name="net_broadcast">无线广播</string>
+    <string name="net_channel">无线信道</string>
+    <string name="auto">自动</string>
+    <string name="work_model">工作模式</string>
+    <string name="model_11bgn">11BGN</string>
+    <string name="spectrum_bandwidth">频段带宽</string>
+    <string name="save">保存</string>
+
+    <!--SPECTRUM_BANDWIDTH-->
+    <string name="sb_auto">自动</string>
+    <string name="sb_20mhz">20Mhz</string>
+    <!--WORK_MODEL-->
+    <string name="wm_11b">11b</string>
+    <string name="wm_11g">11g</string>
+    <string name="wm_11bn">11bn</string>
+    <string name="wm_11n">11n</string>
+    <string name="wm_11gbn">11gbn</string>
+    <!--NET_CHANNEL-->
+    <string name="nc_auto">自动</string>
+    <string name="nc_1">1</string>
+    <string name="nc_2">2</string>
+    <string name="nc_3">3</string>
+    <string name="nc_4">4</string>
+    <string name="nc_5">5</string>
+    <string name="nc_6">6</string>
+    <string name="nc_7">7</string>
+    <string name="nc_8">8</string>
+    <string name="nc_9">9</string>
 </resources>
