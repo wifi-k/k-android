@@ -275,7 +275,7 @@ public class WheelView extends ScrollView {
 //            if(remainder > itemHeight / 2){
 //                if(scrollDirection == SCROLL_DIRECTION_DOWN){
 //                    position = divided + offset;
-//                    Log.d(TAG, ">down...position: " + position);
+//                    Log.d(TAG, ">ic_arrow_down_full_black...position: " + position);
 //                }else if(scrollDirection == SCROLL_DIRECTION_UP){
 //                    position = divided + offset + 1;
 //                    Log.d(TAG, ">up...position: " + position);
@@ -284,7 +284,7 @@ public class WheelView extends ScrollView {
 ////                position = y / itemHeight + offset;
 //                if(scrollDirection == SCROLL_DIRECTION_DOWN){
 //                    position = divided + offset;
-//                    Log.d(TAG, "<down...position: " + position);
+//                    Log.d(TAG, "<ic_arrow_down_full_black...position: " + position);
 //                }else if(scrollDirection == SCROLL_DIRECTION_UP){
 //                    position = divided + offset + 1;
 //                    Log.d(TAG, "<up...position: " + position);

@@ -13,6 +13,7 @@ import net.treebear.kwifimanager.base.IPresenter;
 import net.treebear.kwifimanager.fragment.BlankFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
+import net.treebear.kwifimanager.fragment.MeFragment;
 import net.treebear.kwifimanager.http.WiFiHttpClient;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.NetWorkUtils;
@@ -45,7 +46,7 @@ public class MainActivity extends BaseFragmentActivity {
                 add(0, homeUnbindFragment);
             }
             add(1, new BlankFragment());
-            add(2, new BlankFragment());
+            add(2, new MeFragment());
         }
     };
     long lastPressBackMills = 0;
@@ -63,33 +64,59 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void initView() {
         addFragments(fragments);
-        bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> updateFragment(i1));
+        statusTransparentFontWhite();
+        bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> {
+            updateFragment(i1);
+            switch (i1) {
+                case 0:
+                    if (MyApplication.getAppContext().hasAuth()) {
+                        statusWhiteFontBlack();
+                    } else {
+                        statusTransparentFontWhite();
+                    }
+                    break;
+                case 1:
+                    statusTransparentFontWhite();
+                    break;
+                case 2:
+                    statusTransparentFontWhite();
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
-            WiFiHttpClient.tryToSignInWifi(null);
-        }
-        if (NetWorkUtils.isConnectXiaoK(this)) {
-            WiFiHttpClient.tryToSignInWifi(null);
-        }
+//        WiFiHttpClient.try1();
+        bottomBar.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
+                    WiFiHttpClient.tryToSignInWifi(null);
+                }
+                if (NetWorkUtils.isConnectXiaoK(MainActivity.this)) {
+                    WiFiHttpClient.tryToSignInWifi(null);
+                }
+            }
+        },500);
         //若已认证
         if (MyApplication.getAppContext().hasAuth()) {
             // 当前为未绑定界面
             if (mFragments.get(0) instanceof HomeUnbindFragment) {
                 // 切换为已绑定界面
                 replaceFragment(0, homeBindFragment);
+                statusWhiteFontBlack();
             }
-            statusWhiteFontBlack();
         } else {
             // 若未认证 且当前为绑定界面
             if (mFragments.get(0) instanceof HomeBindFragment) {
                 // 切换为未绑定界面
                 replaceFragment(0, homeUnbindFragment);
+                statusTransparentFontWhite();
             }
-            statusTransparentFontWhite();
         }
         TLog.i(MyApplication.getAppContext().getUser().toString());
     }

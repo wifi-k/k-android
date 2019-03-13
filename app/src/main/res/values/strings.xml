@@ -210,4 +210,5 @@
     <string name="other">其他</string>
     <string name="brand">品牌</string>
     <string name="mac_address">MAC地址</string>
+    <string name="my_kid">我的孩子</string>
 </resources>

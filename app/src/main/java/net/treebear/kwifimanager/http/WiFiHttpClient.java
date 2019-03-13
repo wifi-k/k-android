@@ -17,6 +17,9 @@ import net.treebear.kwifimanager.util.RequestBodyUtils;
 import net.treebear.kwifimanager.util.SecurityUtils;
 import net.treebear.kwifimanager.util.TLog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -178,7 +181,21 @@ public class WiFiHttpClient {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                TLog.i(response.body().string());
+                String body = response.body().string();
+                TLog.i(body);
+                try {
+                    JSONObject jsonObject = new JSONObject(body);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0){
+                        apiToken = jsonObject.getJSONObject("data").getString("token");
+                        updataApiToken(apiToken);
+                        getDeviceSerialId();
+                        getDeviceOnlineStatus();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
@@ -248,7 +265,7 @@ public class WiFiHttpClient {
         loginWifiModel.queryNetStatus(new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                TLog.i(resultData);
+                TLog.i("getDeviceOnlineStatus ： "+TLog.valueOf(resultData));
             }
 
             @Override

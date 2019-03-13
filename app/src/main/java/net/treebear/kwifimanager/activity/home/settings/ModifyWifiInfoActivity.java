@@ -150,5 +150,6 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
     @Override
     protected void onTitleLeftClick() {
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
+        finish();
     }
 }
