@@ -48,6 +48,8 @@ public final class Config {
         @ColorInt
         int TEXT_9B = Color.parseColor("#9B9B9B");
         @ColorInt
+        int TEXT_28 = Color.parseColor("#28354C");
+        @ColorInt
         int DEVICE_ONLINE = Color.parseColor("#0AD88B");
         @ColorInt
         int DEVICE_OFFLINE = Color.parseColor("#7383A2");

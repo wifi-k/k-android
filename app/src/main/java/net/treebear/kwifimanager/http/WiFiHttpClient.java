@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.base.BaseResponse;
-import net.treebear.kwifimanager.bean.WifiUserInfo;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.IModel;
@@ -150,7 +150,7 @@ public class WiFiHttpClient {
         tryToSignInWifi(null);
     }
 
-    public static void try1(){
+    public static void try1() {
         Interceptor headerInterceptor = chain -> {
             Request.Builder builder = chain.request().newBuilder()
                     .addHeader("Content-Type", "application/json")
@@ -187,7 +187,7 @@ public class WiFiHttpClient {
      * 便于各个界面调用WiFi登录
      * 内部处理token更新
      */
-    public static void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiUserInfo>> callBack) {
+    public static void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         // 保证全局单次连接wifi只登录一次
         if (!needLogin) {
             TLog.keep("Current device has logged in !");
@@ -199,27 +199,61 @@ public class WiFiHttpClient {
         ArrayMap<String, Object> map = new ArrayMap<>();
         map.put(Keys.NAME, "admin");
         map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD));
-        loginWifiModel.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiUserInfo>>() {
+        loginWifiModel.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
-            public void onSuccess(BaseResponse<WifiUserInfo> resultData) {
+            public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.e("OkHttp", "WiFi login success !" + TLog.valueOf(resultData));
                 ToastUtils.showShort(TLog.valueOf(resultData.getData().toString()));
                 if (resultData.getData() != null) {
-                    updataApiToken(resultData.getData().getToken());
+                    apiToken = resultData.getData().getToken();
+                    updataApiToken(apiToken);
+                    MyApplication.getAppContext().getDeviceInfo().setToken(apiToken);
                     needLogin = false;
                     if (callBack != null) {
                         callBack.onSuccess(resultData);
                     }
+                   getDeviceSerialId();
+                    getDeviceOnlineStatus();
                 }
             }
 
             @Override
             public void onFailed(String resultMsg, int resultCode) {
                 TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
-                ToastUtils.showShort("WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
                 if (callBack != null) {
                     callBack.onFailed(resultMsg, resultCode);
                 }
+            }
+        });
+    }
+
+    private static void getDeviceSerialId() {
+        loginWifiModel.getNodeInfo(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+            @Override
+            public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                TLog.i(resultData);
+                if (resultData != null && resultData.getData() != null) {
+                    MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
+                }
+            }
+
+            @Override
+            public void onFailed(String resultMsg, int resultCode) {
+                TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
+            }
+        });
+    }
+
+    private static void getDeviceOnlineStatus() {
+        loginWifiModel.queryNetStatus(new IModel.AsyncCallBack<BaseResponse<Object>>() {
+            @Override
+            public void onSuccess(BaseResponse<Object> resultData) {
+                TLog.i(resultData);
+            }
+
+            @Override
+            public void onFailed(String resultMsg, int resultCode) {
+                TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
             }
         });
     }

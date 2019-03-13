@@ -80,7 +80,8 @@
 
     <string name="has_wifi_connected">您已连接WiFi</string>
     <string name="has_xiaok_connected">您已连接xiaok-WiFi</string>
-    <string name="ip_address">IP地址：</string>
+    <string name="ip_address_">IP地址：</string>
+    <string name="ip_address">IP地址</string>
     <string name="ip_hint">192.168.0.0</string>
     <string name="subnet_mask">子网掩码：</string>
     <string name="hint_subnet">0.0.0.0</string>
@@ -117,6 +118,7 @@
     <string name="delete_member">家庭成员</string>
     <string name="modify_name">修改名称</string>
     <string name="input_new_name_please">请输入新的名称</string>
+    <string name="input_name_please">请输入名称</string>
     <string name="double_click_for_exit">连续点击两次返回退出应用</string>
 
     <string name="message_center">消息中心</string>
@@ -192,4 +194,20 @@
     <string name="device_list">设备列表</string>
     <string name="upload_speed">上行网速(K)</string>
     <string name="download_speed">下载网速(M)</string>
+
+    <string name="remark_name">备注名称</string>
+    <string name="device_info">设备信息</string>
+    <string name="device_detail">设备详情</string>
+    <string name="online_alarm">上线提醒</string>
+    <string name="join_blacklisting">加入黑名单</string>
+    <string name="blacklisting_tips">（黑名单设备不允许上网）</string>
+    <string name="device_speed_limit">设备限速</string>
+    <string name="upload">上传</string>
+    <string name="download">下载</string>
+    <string name="type">类型</string>
+    <string name="android">安卓</string>
+    <string name="apple">苹果</string>
+    <string name="other">其他</string>
+    <string name="brand">品牌</string>
+    <string name="mac_address">MAC地址</string>
 </resources>

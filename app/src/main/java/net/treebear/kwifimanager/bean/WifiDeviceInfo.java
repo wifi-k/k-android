@@ -5,7 +5,7 @@ package net.treebear.kwifimanager.bean;
  * @date 2017/11/22
  */
 
-public class WifiUserInfo {
+public class WifiDeviceInfo {
 
 
     /**
@@ -26,7 +26,7 @@ public class WifiUserInfo {
      * isDelete : 0
      */
 
-    private int id;
+    private String id;
     private String token;
     private String name;
     private String mobile;
@@ -41,11 +41,11 @@ public class WifiUserInfo {
     private long updateTime;
     private int isDelete;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -155,7 +155,7 @@ public class WifiUserInfo {
 
     @Override
     public String toString() {
-        return "WifiUserInfo{" +
+        return "WifiDeviceInfo{" +
                 "id=" + id +
                 ", token='" + token + '\'' +
                 ", name='" + name + '\'' +

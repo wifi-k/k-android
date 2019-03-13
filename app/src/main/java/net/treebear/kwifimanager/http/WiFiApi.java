@@ -1,7 +1,7 @@
 package net.treebear.kwifimanager.http;
 
 import net.treebear.kwifimanager.base.BaseResponse;
-import net.treebear.kwifimanager.bean.WifiUserInfo;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -19,7 +19,7 @@ public interface WiFiApi {
      * * passwd	str	初始密码,app端md5(123456)-e10adc3949ba59abbe56e057f20f883e,wifi端md5(app+xiaok)
      */
     @POST("app/login")
-    Observable<BaseResponse<WifiUserInfo>> appLogin(@Body RequestBody params);
+    Observable<BaseResponse<WifiDeviceInfo>> appLogin(@Body RequestBody params);
 
     /**
      * 设置路由器使用拨号上网
@@ -57,4 +57,10 @@ public interface WiFiApi {
      */
     @POST("ssid/set")
     Observable<BaseResponse<Object>> ssidSet(@Body RequestBody params);
+
+    /**
+     * 获取节点序列号
+     */
+    @POST("node/get")
+    Observable<BaseResponse<WifiDeviceInfo>> getNode();
 }

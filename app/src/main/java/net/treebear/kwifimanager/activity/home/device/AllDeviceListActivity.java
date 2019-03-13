@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.activity;
+package net.treebear.kwifimanager.activity.home.device;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.test.BeanTest;
+import net.treebear.kwifimanager.widget.TInputDialog;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,8 @@ public class AllDeviceListActivity extends BaseActivity {
     RecyclerView rvDeviceList;
     private ArrayList<MobilePhoneBean> mobilePhoneList = new ArrayList<>();
     private MobilePhoneAdapter mobilePhoneAdapter;
+    private int currentModifyPosition;
+    private TInputDialog modifyNameDialog;
 
     @Override
     public int layoutId() {
@@ -45,5 +48,37 @@ public class AllDeviceListActivity extends BaseActivity {
         mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(mobilePhoneAdapter);
+        mobilePhoneAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            currentModifyPosition = position;
+            switch (view.getId()) {
+                default:
+                    showModifyNameDialog();
+                    break;
+            }
+        });
+    }
+
+    private void showModifyNameDialog() {
+        if (modifyNameDialog == null) {
+            modifyNameDialog = new TInputDialog(this);
+            modifyNameDialog.setTitle(R.string.remark_name);
+            modifyNameDialog.setEditHint(R.string.input_name_please);
+            modifyNameDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
+                @Override
+                public void onLeftClick(String s) {
+                    modifyNameDialog.dismiss();
+                }
+
+                @Override
+                public void onRightClick(String s) {
+                    // TODO: 2019/3/13 修改信息
+                    modifyNameDialog.dismiss();
+                    mobilePhoneList.get(currentModifyPosition).setName(s);
+                    mobilePhoneAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+        modifyNameDialog.clearInputText();
+        modifyNameDialog.show();
     }
 }

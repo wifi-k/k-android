@@ -89,7 +89,11 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
                 break;
             default:
                 // 延时1秒再次查询
-                rgOnlineType.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
+                rgOnlineType.postDelayed(() -> {
+                    if (mPresenter != null) {
+                        mPresenter.queryNetStatus();
+                    }
+                }, 1000);
                 break;
         }
     }

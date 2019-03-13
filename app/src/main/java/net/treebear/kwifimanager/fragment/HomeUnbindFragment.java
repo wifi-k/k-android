@@ -48,7 +48,7 @@ public class HomeUnbindFragment extends BaseFragment {
     @Override
     protected void initView() {
         super.initView();
-        setTitle(R.string.app_name);
+        setTitle(R.string.app_name, false);
     }
 
     @OnClick({R.id.iv_bind, R.id.tv_bind})

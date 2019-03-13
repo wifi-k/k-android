@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * 手机设备
+ *
  * @author Administrator
  */
 public class MobilePhoneBean {
@@ -46,6 +47,26 @@ public class MobilePhoneBean {
      */
     private boolean banOnline;
     /**
+     * 是否是儿童设备
+     */
+    private boolean children;
+    /**
+     * 是否上线提醒
+     */
+    private boolean onlineAlarm;
+    /**
+     * 限制网速
+     */
+    private boolean limitSpeed;
+    /**
+     * 允许上行网速
+     */
+    private int limitedUploadSpeed;
+    /**
+     * 允许下行网速
+     */
+    private int limitedDownloadSpeed;
+    /**
      * 上周活跃app
      */
     private List<AppBean> activeApp;
@@ -53,7 +74,7 @@ public class MobilePhoneBean {
     public MobilePhoneBean() {
     }
 
-    public MobilePhoneBean(String name, int type, boolean online, long onlineTime, long offlineTime, int rank, long averageTime,boolean banOnline, List<AppBean> activeApp) {
+    public MobilePhoneBean(String name, int type, boolean online, long onlineTime, long offlineTime, int rank, long averageTime, boolean banOnline, List<AppBean> activeApp) {
         this.name = name;
         this.type = type;
         this.online = online;
@@ -95,6 +116,46 @@ public class MobilePhoneBean {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public boolean isChildren() {
+        return children;
+    }
+
+    public void setChildren(boolean children) {
+        this.children = children;
+    }
+
+    public boolean isOnlineAlarm() {
+        return onlineAlarm;
+    }
+
+    public void setOnlineAlarm(boolean onlineAlarm) {
+        this.onlineAlarm = onlineAlarm;
+    }
+
+    public boolean isLimitSpeed() {
+        return limitSpeed;
+    }
+
+    public void setLimitSpeed(boolean limitSpeed) {
+        this.limitSpeed = limitSpeed;
+    }
+
+    public int getLimitedUploadSpeed() {
+        return limitedUploadSpeed;
+    }
+
+    public void setLimitedUploadSpeed(int limitedUploadSpeed) {
+        this.limitedUploadSpeed = limitedUploadSpeed;
+    }
+
+    public int getLimitedDownloadSpeed() {
+        return limitedDownloadSpeed;
+    }
+
+    public void setLimitedDownloadSpeed(int limitedDownloadSpeed) {
+        this.limitedDownloadSpeed = limitedDownloadSpeed;
     }
 
     public String getName() {

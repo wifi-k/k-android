@@ -38,21 +38,21 @@ public class DateFormatUtils {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf_mdhmm = new SimpleDateFormat("M月d日 h:mm");
         String status = "";
         String time = "";
-        long lll = mills - System.currentTimeMillis();
-        if (lll >= DAY) {
+        long lll = System.currentTimeMillis() - mills;
+        if (lll < MINUTE) {
+            status = onlineStatus ? "上线 " : "离线 ";
+            time = (lll / SECONDS) + S_SECENDS + BEFORE;
+        } else if (lll < HOUR) {
+            status = onlineStatus ? "上线 " : "离线 ";
+            time = (lll / MINUTE) + S_MINUTE + BEFORE;
+        } else if (lll < DAY) {
+            status = onlineStatus ? "上线 " : "离线 ";
+            time = (lll / HOUR) + S_HOUR + BEFORE;
+        } else {
             status = onlineStatus ? "上线时间:" : "离线时间:";
             GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
             calendar.setTimeInMillis(mills);
             time = sdf_mdhmm.format(calendar.getTime());
-        } else if (lll >= HOUR) {
-            status = onlineStatus ? "上线 " : "离线 ";
-            time = (lll / HOUR) + S_HOUR + BEFORE;
-        } else if (lll >= MINUTE) {
-            status = onlineStatus ? "上线 " : "离线 ";
-            time = (lll / MINUTE) + S_MINUTE + BEFORE;
-        } else {
-            status = onlineStatus ? "上线 " : "离线 ";
-            time = (lll / SECONDS) + S_MILL + BEFORE;
         }
         return status + time;
     }

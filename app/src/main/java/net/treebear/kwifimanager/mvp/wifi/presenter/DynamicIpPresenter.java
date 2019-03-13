@@ -34,6 +34,9 @@ public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.IDynamic
 
     @Override
     public void queryNetStatus() {
+        if (mModel == null) {
+            return;
+        }
         mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {

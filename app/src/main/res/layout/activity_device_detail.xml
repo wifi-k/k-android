@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.home.device.DeviceDetailActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_mobile_info_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@mipmap/bg_device_info">
+
+                <ImageView
+                    android:id="@+id/iv_device_type"
+                    android:layout_width="69dp"
+                    android:layout_height="69dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="91dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_device_android" />
+
+                <LinearLayout
+                    android:id="@+id/ll_user_name_wrapper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_device_type"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_device_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        tools:text="妈妈的手机" />
+
+                    <ImageView
+                        android:id="@+id/iv_modify_device_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@mipmap/ic_member_edit" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_device_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_user_name_wrapper"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    tools:text="20:00 离线" />
+
+            </RelativeLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/mobile_control_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="299dp"
+                android:layout_below="@+id/rl_mobile_info_wrapper"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="-50dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_home_join_wrapper8">
+
+                <com.suke.widget.SwitchButton
+                    android:id="@+id/sw_online_children"
+                    android:layout_width="51dp"
+                    android:layout_height="31dp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_children_careful"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_children_careful"
+                    app:sb_checked_color="@color/switch_button_check"
+                    app:sb_show_indicator="false" />
+
+                <TextView
+                    android:id="@+id/tv_device_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginEnd="30dp"
+                    android:drawableEnd="@mipmap/ic_line_arrow_right_black"
+                    android:text="@string/device_info"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/include25"
+                    layout="@layout/line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_device_info"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_device_info" />
+
+                <TextView
+                    android:id="@+id/tv_children_careful"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/title_take_care_children"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include25" />
+
+                <include
+                    android:id="@+id/include26"
+                    layout="@layout/line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_children_careful"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_children_careful" />
+
+                <TextView
+                    android:id="@+id/tv_online_alarm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/online_alarm"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include26" />
+
+                <com.suke.widget.SwitchButton
+                    android:id="@+id/sw_online_alarm"
+                    android:layout_width="51dp"
+                    android:layout_height="31dp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_online_alarm"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_online_alarm"
+                    app:sb_checked_color="@color/switch_button_check"
+                    app:sb_show_indicator="false" />
+
+                <include
+                    android:id="@+id/include27"
+                    layout="@layout/line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_online_alarm"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_online_alarm" />
+
+                <TextView
+                    android:id="@+id/tv_blacklisting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/join_blacklisting"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include27" />
+
+                <TextView
+                    android:id="@+id/textView42"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/blacklisting_tips"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_blacklisting" />
+
+                <com.suke.widget.SwitchButton
+                    android:id="@+id/swb_blacklisting"
+                    android:layout_width="51dp"
+                    android:layout_height="31dp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView42"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_blacklisting"
+                    app:sb_checked_color="@color/switch_button_check"
+                    app:sb_show_indicator="false" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/mobile_speed_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@+id/mobile_control_wrapper"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/bg_home_join_wrapper8">
+
+                <TextView
+                    android:id="@+id/tv_download_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="end"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/sb_download_speed"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/sb_download_speed"
+                    tools:text="1.3MB/S" />
+
+                <com.suke.widget.SwitchButton
+                    android:id="@+id/swb_speed_limit"
+                    android:layout_width="51dp"
+                    android:layout_height="31dp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_speed_limit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_speed_limit"
+                    app:sb_checked_color="@color/switch_button_check"
+                    app:sb_show_indicator="false" />
+
+                <TextView
+                    android:id="@+id/tv_speed_limit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="23dp"
+                    android:text="@string/device_speed_limit"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView43"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/upload"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_speed_limit"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_speed_limit" />
+
+                <SeekBar
+                    android:id="@+id/sb_upload_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:max="1000"
+                    android:paddingTop="21dp"
+                    android:paddingBottom="21dp"
+                    android:progress="500"
+                    android:progressDrawable="@drawable/seekbar_background"
+                    android:thumb="@mipmap/ic_cb_ok"
+                    app:layout_constraintEnd_toStartOf="@+id/swb_speed_limit"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView43" />
+
+                <TextView
+                    android:id="@+id/tv_upload_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="end"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/sb_upload_speed"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/sb_upload_speed"
+                    tools:text="1.3MB/S" />
+
+                <TextView
+                    android:id="@+id/textView45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/download"
+                    android:textColor="@color/text_28354C"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_speed_limit"
+                    app:layout_constraintTop_toBottomOf="@+id/sb_upload_speed" />
+
+                <SeekBar
+                    android:id="@+id/sb_download_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:max="1000"
+                    android:paddingTop="21dp"
+                    android:paddingBottom="21dp"
+                    android:progress="500"
+                    android:progressDrawable="@drawable/seekbar_background"
+                    android:thumb="@mipmap/ic_cb_ok"
+                    app:layout_constraintEnd_toStartOf="@+id/swb_speed_limit"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView45" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <include
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</RelativeLayout>

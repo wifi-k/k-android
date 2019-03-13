@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#26DCBC</color>
-    <color name="colorPrimaryDark">#26DCBC</color>
-    <color name="colorAccent">#26DCBC</color>
+    <color name="colorPrimary">#37EDA3</color>
+    <color name="colorPrimaryDark">#37EDA3</color>
+    <color name="colorAccent">#37EDA3</color>
 
     <color name="color_dfdfdf">#DFDFDF</color>
 
@@ -31,5 +31,7 @@
     <color name="text_color_notice">#7383A2</color>
     <color name="text_28354C">#28354C</color>
     <color name="color_313e54">#313E54</color>
+    <color name="text_6c">#6C6C6C</color>
+    <color name="text_83">#83889B</color>
 
 </resources>

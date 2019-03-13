@@ -1,6 +1,7 @@
 package net.treebear.kwifimanager.fragment;
 
 
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +9,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.AllDeviceListActivity;
 import net.treebear.kwifimanager.activity.home.FamilyMemberActivity;
 import net.treebear.kwifimanager.activity.home.ParentControlActivity;
+import net.treebear.kwifimanager.activity.home.device.AllDeviceListActivity;
+import net.treebear.kwifimanager.activity.home.device.DeviceDetailActivity;
 import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import net.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
 import net.treebear.kwifimanager.activity.message.MessageListActivity;
@@ -21,8 +25,10 @@ import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import net.treebear.kwifimanager.base.BaseFragment;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.bean.NoticeBean;
+import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.util.Check;
+import net.treebear.kwifimanager.widget.TInputDialog;
 import net.treebear.kwifimanager.widget.marquee.MarqueeTextView;
 
 import java.util.ArrayList;
@@ -81,6 +87,8 @@ public class HomeBindFragment extends BaseFragment {
 
     private ArrayList<MobilePhoneBean> childrenPhoneList = new ArrayList<>();
     private ArrayList<NoticeBean> noticeList = new ArrayList<>();
+    private int currentModifyPosition;
+    private TInputDialog modifyNameDialog;
 
     public HomeBindFragment() {
 
@@ -99,28 +107,85 @@ public class HomeBindFragment extends BaseFragment {
     protected void initView() {
         setTitle(R.string.app_name);
 //        设备列表模拟数据
+        testData();
+//      设备列表适配器配置
+        setMobileListAdapter();
+//      儿童设备
+        setChildrenListAdapter();
+//       公告 及 其他
+        updateOtherData();
+    }
+
+    private void updateOtherData() {
+        marqueeNotice.initMarqueeTextView(BeanTest.getNoticeFromBean(noticeList), (view, position) -> startActivity(MessageListActivity.class));
+        tvUserState.setText(R.string.online);
+        tvApName.setText("xiaok123-4567");
+        tvHasNoBackup.setText("您有10张新的照片未备份，是否现在备份?");
+        tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速1000k/下行网速2.4M”", Check.onlineSum(mobilePhoneList)));
+        tvLookMore.setVisibility(mobilePhoneList.size() >= 3 ? View.VISIBLE : View.GONE);
+    }
+
+    private void setChildrenListAdapter() {
+        rvChildrenDevice.setLayoutManager(new LinearLayoutManager(mContext));
+        ChildrenCarefulAdapter childrenCarefulAdapter = new ChildrenCarefulAdapter(childrenPhoneList);
+        rvChildrenDevice.setAdapter(childrenCarefulAdapter);
+    }
+
+    private void setMobileListAdapter() {
+        rvDeviceList.setLayoutManager(new LinearLayoutManager(mContext));
+        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList);
+        rvDeviceList.setAdapter(mobilePhoneAdapter);
+        mobilePhoneAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(Keys.POSITION, position);
+                startActivity(DeviceDetailActivity.class, bundle);
+            }
+        });
+        mobilePhoneAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                currentModifyPosition = position;
+                switch (view.getId()) {
+                    default:
+                        showModifyNameDialog();
+                }
+            }
+        });
+    }
+
+    private void testData() {
         mobilePhoneList.clear();
         mobilePhoneList.addAll(BeanTest.getHomeMobileList());
         childrenPhoneList.clear();
         childrenPhoneList.addAll(BeanTest.getChildrenPhoneList(1));
         noticeList.clear();
         noticeList.addAll(BeanTest.getNoticeList());
-//      设备列表适配器配置
-        rvDeviceList.setLayoutManager(new LinearLayoutManager(mContext));
-        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList);
-        rvDeviceList.setAdapter(mobilePhoneAdapter);
-//      儿童设备
-        rvChildrenDevice.setLayoutManager(new LinearLayoutManager(mContext));
-        ChildrenCarefulAdapter childrenCarefulAdapter = new ChildrenCarefulAdapter(childrenPhoneList);
-        rvChildrenDevice.setAdapter(childrenCarefulAdapter);
-//       公告
-        marqueeNotice.initMarqueeTextView(BeanTest.getNoticeFromBean(noticeList), (view, position) -> startActivity(MessageListActivity.class));
-//        其他
-        tvUserState.setText(R.string.online);
-        tvApName.setText("xiaok123-4567");
-        tvHasNoBackup.setText("您有10张新的照片未备份，是否现在备份?");
-        tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速1000k/下行网速2.4M”", Check.onlineSum(mobilePhoneList)));
-        tvLookMore.setVisibility(mobilePhoneList.size() >= 3 ? View.VISIBLE : View.GONE);
+    }
+
+    private void showModifyNameDialog() {
+        if (modifyNameDialog == null) {
+            modifyNameDialog = new TInputDialog(mContext);
+            modifyNameDialog.setTitle(R.string.remark_name);
+            modifyNameDialog.setEditHint(R.string.input_name_please);
+            modifyNameDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
+                @Override
+                public void onLeftClick(String s) {
+                    modifyNameDialog.dismiss();
+                }
+
+                @Override
+                public void onRightClick(String s) {
+                    // TODO: 2019/3/13 修改信息
+                    modifyNameDialog.dismiss();
+                    mobilePhoneList.get(currentModifyPosition).setName(s);
+                    mobilePhoneAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+        modifyNameDialog.clearInputText();
+        modifyNameDialog.show();
     }
 
     @Override
@@ -162,6 +227,7 @@ public class HomeBindFragment extends BaseFragment {
     @OnClick(R.id.tv_look_week_report)
     public void onTvLookWeekReportClicked() {
     }
+
     @OnClick(R.id.tv_wifi_settings)
     public void onTvWifiSettingsClicked() {
         startActivity(WifiToolkitActivity.class);

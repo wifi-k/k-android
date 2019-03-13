@@ -8,6 +8,7 @@ import android.support.multidex.MultiDexApplication;
 
 import net.treebear.kwifimanager.activity.account.launchAccountActivity;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.http.HttpClient;
 import net.treebear.kwifimanager.receiver.NetWorkReceiver;
 import net.treebear.kwifimanager.receiver.OpenFileReceiver;
@@ -30,6 +31,8 @@ public class MyApplication extends MultiDexApplication {
      * 若不保存用户信息情况下，仅单次记录用户信息
      */
     private ServerUserInfo user;
+
+    private WifiDeviceInfo info;
 
     @Override
     public void onCreate() {
@@ -73,6 +76,13 @@ public class MyApplication extends MultiDexApplication {
             user = new ServerUserInfo();
         }
         return user;
+    }
+
+    public WifiDeviceInfo getDeviceInfo(){
+        if (info == null){
+            info = new WifiDeviceInfo();
+        }
+        return info;
     }
 
     /**

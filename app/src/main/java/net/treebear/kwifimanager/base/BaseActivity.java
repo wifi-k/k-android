@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -165,7 +168,8 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      *
      * @return id
      */
-    public abstract int layoutId();
+    public abstract @LayoutRes
+    int layoutId();
 
     /**
      * 获取presenter
@@ -217,7 +221,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param title title文字
      */
     protected void setTitle(String title) {
-        setTitle(0, title, "", 0);
+        setTitle(0, title, "", 0, true);
     }
 
     /**
@@ -227,7 +231,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param right 右侧文字
      */
     protected void setTitleBack(String title, String right) {
-        setTitle(R.mipmap.back, title, right, 0);
+        setTitle(R.mipmap.back, title, right, 0, true);
     }
 
     /**
@@ -237,7 +241,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param right 右侧文字
      */
     protected void setTitleBack(int title, int right) {
-        setTitle(R.mipmap.back, getString(title), getString(right), 0);
+        setTitle(R.mipmap.back, getString(title), getString(right), 0, true);
     }
 
     /**
@@ -247,7 +251,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param title   title文字
      */
     protected void setTitle(@DrawableRes int leftRes, String title) {
-        setTitle(leftRes, title, "", 0);
+        setTitle(leftRes, title, "", 0, true);
     }
 
     /**
@@ -258,8 +262,9 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param rightTitle 右侧文字
      * @param rightRes   右侧资源
      */
-    protected void setTitle(@DrawableRes int leftRes, String title, String rightTitle, @DrawableRes int rightRes) {
+    protected void setTitle(@DrawableRes int leftRes, String title, String rightTitle, @DrawableRes int rightRes, boolean white) {
         try {
+            RelativeLayout statusBar = findViewById(R.id.rl_title);
             ImageView ivLeft = findViewById(R.id.iv_back);
             ImageView ivRight = findViewById(R.id.iv_title_right);
             TextView tvTitle = findViewById(R.id.tv_title_text);
@@ -278,6 +283,15 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
             ivLeft.setOnClickListener(view -> onTitleLeftClick());
             if (Check.hasContent(rightTitle)) {
                 tvRight.setOnClickListener(view -> onTitleRightClick());
+            }
+            if (white) {
+                tvRight.setTextColor(Config.Colors.TEXT_28);
+                tvTitle.setTextColor(Config.Colors.TEXT_28);
+                statusBar.setBackgroundColor(Color.WHITE);
+            } else {
+                tvRight.setTextColor(Color.WHITE);
+                tvTitle.setTextColor(Color.WHITE);
+                statusBar.setBackgroundColor(Color.TRANSPARENT);
             }
         } catch (Exception e) {
             e.printStackTrace();

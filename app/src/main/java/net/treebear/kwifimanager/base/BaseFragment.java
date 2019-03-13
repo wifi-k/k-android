@@ -2,6 +2,7 @@ package net.treebear.kwifimanager.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -122,7 +124,11 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
      * @param title title文字
      */
     protected void setTitle(String title) {
-        setTitle(0, title, "", 0);
+        setTitle(0, title, "", 0, true);
+    }
+
+    protected void setTitle(String title, boolean white) {
+        setTitle(0, title, "", 0, white);
     }
 
     /**
@@ -134,6 +140,10 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
         setTitle(mContext.getResources().getString(title));
     }
 
+    protected void setTitle(@StringRes int title, boolean white) {
+        setTitle(mContext.getResources().getString(title), white);
+    }
+
     /**
      * 设置title样式
      *
@@ -141,7 +151,11 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
      * @param right 右侧文字
      */
     protected void setTitleBack(String title, String right) {
-        setTitle(R.mipmap.back, title, right, 0);
+        setTitle(R.mipmap.back, title, right, 0, true);
+    }
+
+    protected void setTitleBack(String title, String right, boolean white) {
+        setTitle(R.mipmap.back, title, right, 0, white);
     }
 
     /**
@@ -151,7 +165,7 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
      * @param title   title文字
      */
     protected void setTitle(@DrawableRes int leftRes, String title) {
-        setTitle(leftRes, title, "", 0);
+        setTitle(leftRes, title, "", 0, true);
     }
 
     /**
@@ -162,8 +176,9 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
      * @param rightTitle 右侧文字
      * @param rightRes   右侧资源
      */
-    protected void setTitle(@DrawableRes int leftRes, String title, String rightTitle, @DrawableRes int rightRes) {
+    protected void setTitle(@DrawableRes int leftRes, String title, String rightTitle, @DrawableRes int rightRes, boolean white) {
         try {
+            RelativeLayout statusBar = mRootView.findViewById(R.id.rl_title);
             ImageView ivLeft = mRootView.findViewById(R.id.iv_back);
             ImageView ivRight = mRootView.findViewById(R.id.iv_title_right);
             TextView tvTitle = mRootView.findViewById(R.id.tv_title_text);
@@ -182,6 +197,15 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
             ivLeft.setOnClickListener(view -> onTitleLeftClick());
             if (Check.hasContent(rightTitle)) {
                 tvRight.setOnClickListener(view -> onTitleRightClick());
+            }
+            if (white) {
+                statusBar.setBackgroundColor(Color.WHITE);
+                tvTitle.setTextColor(Config.Colors.TEXT_28);
+                tvRight.setTextColor(Config.Colors.TEXT_28);
+            } else {
+                statusBar.setBackgroundColor(Color.TRANSPARENT);
+                tvTitle.setTextColor(Color.WHITE);
+                tvRight.setTextColor(Color.WHITE);
             }
         } catch (Exception e) {
             e.printStackTrace();

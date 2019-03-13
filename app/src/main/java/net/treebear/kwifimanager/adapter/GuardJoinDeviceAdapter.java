@@ -13,6 +13,9 @@ import net.treebear.kwifimanager.util.DateFormatUtils;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class GuardJoinDeviceAdapter extends BaseQuickAdapter<MobilePhoneBean, BaseViewHolder> {
     public GuardJoinDeviceAdapter(@Nullable List<MobilePhoneBean> data) {
         super(R.layout.layout_item_ban_device, data);

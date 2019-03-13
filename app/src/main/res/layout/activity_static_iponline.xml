@@ -54,7 +54,7 @@
             <TextView
                 android:id="@+id/textView9"
                 style="@style/edit_title"
-                android:text="@string/ip_address"
+                android:text="@string/ip_address_"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 

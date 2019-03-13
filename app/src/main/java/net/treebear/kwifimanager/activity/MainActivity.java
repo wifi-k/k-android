@@ -14,6 +14,7 @@ import net.treebear.kwifimanager.fragment.BlankFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import net.treebear.kwifimanager.http.WiFiHttpClient;
+import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.TLog;
 
@@ -68,8 +69,9 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        WiFiHttpClient.try1();
-        WiFiHttpClient.tryToSignInWifi(null);
+        if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
+            WiFiHttpClient.tryToSignInWifi(null);
+        }
         if (NetWorkUtils.isConnectXiaoK(this)) {
             WiFiHttpClient.tryToSignInWifi(null);
         }
