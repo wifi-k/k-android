@@ -9,12 +9,15 @@ import com.chaychan.library.BottomBarLayout;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseFragmentActivity;
+import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.fragment.BlankFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import net.treebear.kwifimanager.fragment.MeFragment;
 import net.treebear.kwifimanager.http.WiFiHttpClient;
+import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.TLog;
@@ -50,6 +53,7 @@ public class MainActivity extends BaseFragmentActivity {
         }
     };
     long lastPressBackMills = 0;
+    boolean isTryingSign = false;
 
     @Override
     public int layoutId() {
@@ -91,33 +95,10 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onResume() {
         super.onResume();
 //        WiFiHttpClient.try1();
-        bottomBar.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
-                    WiFiHttpClient.tryToSignInWifi(null);
-                }
-                if (NetWorkUtils.isConnectXiaoK(MainActivity.this)) {
-                    WiFiHttpClient.tryToSignInWifi(null);
-                }
-            }
-        },500);
-        //若已认证
-        if (MyApplication.getAppContext().hasAuth()) {
-            // 当前为未绑定界面
-            if (mFragments.get(0) instanceof HomeUnbindFragment) {
-                // 切换为已绑定界面
-                replaceFragment(0, homeBindFragment);
-                statusWhiteFontBlack();
-            }
-        } else {
-            // 若未认证 且当前为绑定界面
-            if (mFragments.get(0) instanceof HomeBindFragment) {
-                // 切换为未绑定界面
-                replaceFragment(0, homeUnbindFragment);
-                statusTransparentFontWhite();
-            }
+        if (!isTryingSign) {
+            tryToSignWifi();
         }
+        updateHomeFragment();
         TLog.i(MyApplication.getAppContext().getUser().toString());
     }
 
@@ -134,5 +115,61 @@ public class MainActivity extends BaseFragmentActivity {
         } else {
             finish();
         }
+    }
+
+    private void updateHomeFragment() {
+        //若已认证
+        if (MyApplication.getAppContext().hasAuth()) {
+            // 当前为未绑定界面
+            if (mFragments.get(0) instanceof HomeUnbindFragment) {
+                // 切换为已绑定界面
+                replaceFragment(0, homeBindFragment);
+                statusWhiteFontBlack();
+            }
+        } else {
+            // 若未认证 且当前为绑定界面
+            if (mFragments.get(0) instanceof HomeBindFragment) {
+                // 切换为未绑定界面
+                replaceFragment(0, homeUnbindFragment);
+                statusTransparentFontWhite();
+            }
+        }
+    }
+
+    private void tryToSignWifi() {
+        isTryingSign = true;
+        bottomBar.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
+                    WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+                        @Override
+                        public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                            isTryingSign = false;
+                        }
+
+                        @Override
+                        public void onFailed(String resultMsg, int resultCode) {
+                            isTryingSign = false;
+                        }
+                    });
+
+                }
+                if (NetWorkUtils.isConnectXiaoK(MainActivity.this)) {
+                    WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+                        @Override
+                        public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                            isTryingSign = false;
+                        }
+
+                        @Override
+                        public void onFailed(String resultMsg, int resultCode) {
+                            isTryingSign = false;
+                        }
+                    });
+
+                }
+            }
+        }, 5000);
     }
 }

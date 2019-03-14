@@ -71,7 +71,7 @@ public class SeniorSettingItemActivity extends BaseActivity {
         intent.putExtra(Keys.NAME,itemData.get(currentPosition).getName());
         intent.putExtra(Keys.POSITION,currentPosition);
         intent.putExtra(Keys.TYPE,settingItemType);
-        setResult(Values.SENIOR_SETTING,intent);
+        setResult(Values.REQUEST_SENIOR_SETTING,intent);
         onTitleLeftClick();
     }
 }

@@ -84,6 +84,24 @@ public class DateFormatUtils {
     }
 
     /**
+     * 返回当前时间戳
+     */
+    public static String fmtYMDhmssNow() {
+        return fmtYMDhmss(System.currentTimeMillis());
+    }
+
+
+    /**
+     * 获取时间戳格式字符
+     */
+    public static String fmtYMDhmss(long mills) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat yyMMddhhmmssSS = new SimpleDateFormat("yyMMddhhmmssSS");
+        GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
+        calendar.setTimeInMillis(mills);
+        return yyMMddhhmmssSS.format(calendar.getTime());
+    }
+
+    /**
      * 将毫秒值转换为时长（仅保留最大单位）
      */
     public static String mill2Time(long mill) {

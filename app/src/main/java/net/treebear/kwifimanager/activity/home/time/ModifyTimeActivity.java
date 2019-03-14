@@ -1,7 +1,6 @@
 package net.treebear.kwifimanager.activity.home.time;
 
 import android.os.Bundle;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
@@ -113,12 +112,4 @@ public class ModifyTimeActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 设置添加屏幕的背景透明度
-     */
-    public void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = bgAlpha;
-        getWindow().setAttributes(lp);
-    }
 }

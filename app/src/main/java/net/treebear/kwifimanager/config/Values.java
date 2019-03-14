@@ -30,7 +30,15 @@ public interface Values {
     int ONLINE_TYPE_DYNAMIC_IP = 0x0013;
 
     /**----------------------REQUEST CODE   RESULT CODE--------------------*/
-    int SENIOR_SETTING = 0x1001;
+    int REQUEST_SENIOR_SETTING = 0x0001;
+    /**
+     * request code 相机拍照
+     */
+    int REQUEST_SYSTEM_CAMERA = 0x0011;
+    /**
+     * request code 相册获取
+     */
+    int REQUEST_SYSTEM_GALLERY = 0x0012;
 
 
 }

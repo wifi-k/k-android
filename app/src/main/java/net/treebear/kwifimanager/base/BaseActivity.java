@@ -527,4 +527,13 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         }
     }
 
+    /**
+     * 设置添加屏幕的背景透明度
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getWindow().setAttributes(lp);
+    }
+
 }

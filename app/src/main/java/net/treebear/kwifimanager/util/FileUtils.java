@@ -1,6 +1,7 @@
 package net.treebear.kwifimanager.util;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -8,10 +9,14 @@ import android.support.annotation.Size;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
+import net.treebear.kwifimanager.config.Config;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import okhttp3.MultipartBody;
@@ -23,6 +28,12 @@ public class FileUtils {
     public static final String APK = "apk";
     private static final String TAG = "FileUtils";
     private static final String DEFAULT_CATEGORY = "android.intent.category.DEFAULT";
+
+    public interface Tails {
+        String JPEG = ".jpg";
+        String APK = ".apk";
+
+    }
 
     private FileUtils() {
     }
@@ -97,7 +108,7 @@ public class FileUtils {
     public static Uri createUriFromPath(String path) {
         File data = new File(path);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            return FileProvider.getUriForFile(MyApplication.getAppContext(), "com.wendu.file.t.provider", data);
+            return FileProvider.getUriForFile(MyApplication.getAppContext(), BuildConfig.APPLICATION_ID + ".file_provider", data);
         } else {
             return Uri.fromFile(data);
         }
@@ -111,7 +122,7 @@ public class FileUtils {
      */
     public static Uri createUriFromFile(File file) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            return FileProvider.getUriForFile(MyApplication.getAppContext(), "com.wendu.file.image.provider", file);
+            return FileProvider.getUriForFile(MyApplication.getAppContext(), BuildConfig.APPLICATION_ID + ".file_provider", file);
         } else {
             return Uri.fromFile(file);
         }
@@ -146,7 +157,7 @@ public class FileUtils {
             return "";
         }
         /* 取得扩展名 */
-        return file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length()).toLowerCase();
+        return file.getName().substring(file.getName().lastIndexOf(".") + 1).toLowerCase();
     }
 
     /**
@@ -391,4 +402,41 @@ public class FileUtils {
         return Environment.getRootDirectory().getAbsolutePath() + "/files/";
     }
 
+    public static void saveJpgToSdCard(Bitmap bmp) {
+        // 检查sd card是否存在
+        if (!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            TLog.i("SD卡状态不满足保存条件");
+            return;
+        }
+        // 为图片命名啊
+        String name = Config.Text.AP_NAME_START + DateFormatUtils.fmtYMDhmssNow() + ".jpg";
+        // 解析返回的图片成bitmap
+        // 保存文件
+        FileOutputStream fos = null;
+        File file = new File(Environment.getExternalStorageDirectory(), "xiaok/");
+        if (!file.exists()) {
+            if (file.mkdirs()) {
+                TLog.i(file.getAbsolutePath() + "文件夹生成成功");
+            }
+        }
+        TLog.i(file.getAbsolutePath() + "文件夹存在");
+        String fileName = file.getAbsolutePath() + name;
+        try {
+            fos = new FileOutputStream(fileName);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.flush();
+                    fos.close();
+                    TLog.i("保存图片流关闭完成");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -17,21 +17,13 @@ import net.treebear.kwifimanager.util.RequestBodyUtils;
 import net.treebear.kwifimanager.util.SecurityUtils;
 import net.treebear.kwifimanager.util.TLog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -91,32 +83,13 @@ public class WiFiHttpClient {
                         .addHeader("Api-Token", apiToken)
                         .addHeader("Accept-Encoding", "utf-8")
                         .addHeader("Api-Version", "2019.3.1");
-//                String cookies[] = ((String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), "cookies", "")).split("-");
-//                for (String cookie : cookies) {
-//                    builder.addHeader("Cookie", cookie);
-//                }
                 Request request = builder.build();
                 return chain.proceed(request);
             };
-
-            //增加cookie信息
-//            Interceptor cookieInterceptor = chain -> {
-//                okhttp3.Response originalResponse = chain.proceed(chain.request());
-//                if (!originalResponse.headers("Set-Cookie").isEmpty()) {
-//                    StringBuilder sb = new StringBuilder();
-//                    for (String cookie : originalResponse.headers("Set-Cookie")) {
-//                        sb.append(cookie).append("-");
-//                    }
-//                    SharedPreferencesUtil.setParam(MyApplication.getAppContext(), "cookies", sb.length() > 0 ? sb.subSequence(0, sb.length() - 1).toString() : "");
-//                }
-//
-//                return originalResponse;
-//            };
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(160, TimeUnit.SECONDS);
             builder.readTimeout(160, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
-//            builder.addInterceptor(cookieInterceptor);
             if (BuildConfig.DEBUG) {
                 // Log信息拦截器
                 HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -151,53 +124,6 @@ public class WiFiHttpClient {
      */
     public static void xiaokOnline() {
         tryToSignInWifi(null);
-    }
-
-    public static void try1() {
-        Interceptor headerInterceptor = chain -> {
-            Request.Builder builder = chain.request().newBuilder()
-                    .addHeader("Content-Type", "application/json")
-                    .addHeader("Api-Token", apiToken)
-                    .addHeader("Accept-Encoding", "utf-8")
-                    .addHeader("Api-Version", "2019.3.1");
-            Request request = builder.build();
-            return chain.proceed(request);
-        };
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(headerInterceptor)
-                .connectTimeout(160, TimeUnit.SECONDS)
-                .readTimeout(160, TimeUnit.SECONDS)
-                .build();
-        FormBody body = new FormBody.Builder().add(Keys.NAME, "admin")
-                .add(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD))
-                .build();
-        Request req = new Request.Builder().url(Config.Urls.ROUTER_BASE_URL + "app/login")
-                .post(body)
-                .build();
-        okHttpClient.newCall(req).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                TLog.e(e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String body = response.body().string();
-                TLog.i(body);
-                try {
-                    JSONObject jsonObject = new JSONObject(body);
-                    int code = jsonObject.getInt("code");
-                    if (code == 0){
-                        apiToken = jsonObject.getJSONObject("data").getString("token");
-                        updataApiToken(apiToken);
-                        getDeviceSerialId();
-                        getDeviceOnlineStatus();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
     }
 
     /**

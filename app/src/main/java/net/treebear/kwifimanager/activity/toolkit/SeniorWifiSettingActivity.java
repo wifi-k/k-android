@@ -64,7 +64,7 @@ public class SeniorWifiSettingActivity extends BaseActivity {
         bundle.putInt(Keys.TYPE, Config.Types.SPECTRUM_BANDWIDTH);
         bundle.putInt(Keys.POSITION, spectrumBandwidthPosition);
         bundle.putSerializable(Keys.SETTINGS_ITEM_DATA, convert(ConstConfig.SPECTRUM_BANDWIDTH));
-        startActivityForResult(SeniorSettingItemActivity.class, bundle, Values.SENIOR_SETTING);
+        startActivityForResult(SeniorSettingItemActivity.class, bundle, Values.REQUEST_SENIOR_SETTING);
     }
 
     @OnClick(R.id.tv_work_model)
@@ -74,7 +74,7 @@ public class SeniorWifiSettingActivity extends BaseActivity {
         bundle.putInt(Keys.TYPE, Config.Types.WORK_MODEL);
         bundle.putInt(Keys.POSITION, workModelPosition);
         bundle.putSerializable(Keys.SETTINGS_ITEM_DATA, convert(ConstConfig.WORK_MODEL));
-        startActivityForResult(SeniorSettingItemActivity.class, bundle, Values.SENIOR_SETTING);
+        startActivityForResult(SeniorSettingItemActivity.class, bundle, Values.REQUEST_SENIOR_SETTING);
     }
 
     @OnClick(R.id.tv_net_channel)
@@ -84,13 +84,13 @@ public class SeniorWifiSettingActivity extends BaseActivity {
         bundle.putInt(Keys.TYPE, Config.Types.NET_CHANNEL);
         bundle.putInt(Keys.POSITION, netChannelPosition);
         bundle.putSerializable(Keys.SETTINGS_ITEM_DATA, convert(ConstConfig.NET_CHANNEL));
-        startActivityForResult(SeniorSettingItemActivity.class, bundle,Values.SENIOR_SETTING);
+        startActivityForResult(SeniorSettingItemActivity.class, bundle,Values.REQUEST_SENIOR_SETTING);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Values.SENIOR_SETTING && resultCode == Values.SENIOR_SETTING && data != null) {
+        if (requestCode == Values.REQUEST_SENIOR_SETTING && resultCode == Values.REQUEST_SENIOR_SETTING && data != null) {
 //            intent.putExtra(Keys.NAME,itemData.get(currentPosition).getName());
 ////            intent.putExtra(Keys.POSITION,currentPosition);
 ////            intent.putExtra(Keys.TYPE,settingItemType);

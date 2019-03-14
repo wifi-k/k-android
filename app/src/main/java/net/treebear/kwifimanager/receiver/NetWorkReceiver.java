@@ -8,8 +8,13 @@ import android.net.NetworkInfo;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.http.WiFiHttpClient;
+import net.treebear.kwifimanager.mvp.IModel;
+import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 
 /**
@@ -17,6 +22,8 @@ import net.treebear.kwifimanager.util.NetWorkUtils;
  */
 public class NetWorkReceiver extends BroadcastReceiver {
     private boolean hasOnWifi = false;
+
+    private boolean isTryingSign = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -32,11 +39,31 @@ public class NetWorkReceiver extends BroadcastReceiver {
                 } else {
                     ToastUtils.showShort(R.string.has_wifi_connected);
                 }
+                tryToSignWifi();
             }
             if (!isWifi && hasOnWifi) {
                 ToastUtils.showShort("您已断开WiFi连接");
                 WiFiHttpClient.xiaokOffline();
                 hasOnWifi = false;
+            }
+        }
+    }
+
+    private void tryToSignWifi() {
+        if (!isTryingSign) {
+            isTryingSign = true;
+            if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
+                WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+                    @Override
+                    public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                        isTryingSign = false;
+                    }
+
+                    @Override
+                    public void onFailed(String resultMsg, int resultCode) {
+                        isTryingSign = false;
+                    }
+                });
             }
         }
     }
