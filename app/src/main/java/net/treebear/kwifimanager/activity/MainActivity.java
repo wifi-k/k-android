@@ -94,8 +94,7 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        WiFiHttpClient.try1();
-        if (!isTryingSign) {
+        if (!isTryingSign && NetWorkUtils.isWifiConnected(this)) {
             tryToSignWifi();
         }
         updateHomeFragment();

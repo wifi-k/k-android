@@ -224,4 +224,8 @@
     <string name="take_picture_gallery">从相册选择</string>
     <string name="refuse_camera_permission_error">您拒绝了拍照/存储权限，无法打开相机拍照</string>
     <string name="refuse_gallery_permission_error">您拒绝了拍照/存储权限，无法打开相册</string>
+    <string name="input_new_nick_name">请输入新的昵称</string>
+    <string name="new_mobile_number">新手机号</string>
+    <string name="verify_code">验证码</string>
+    <string name="modify_mobile_number">更换手机号</string>
 </resources>

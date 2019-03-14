@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 浮动通知权限 -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".MyApplication"
@@ -29,7 +29,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.me.UserInfoActivity"></activity>
+        <activity android:name=".activity.me.ModifyMobileActivity"></activity>
+        <activity android:name=".activity.me.ModifyNickNameActivity" />
+        <activity android:name=".activity.me.UserInfoActivity" />
         <activity android:name=".activity.me.UpdateAppActivity" />
         <activity android:name=".activity.me.SettingsActivity" />
         <activity android:name=".activity.home.device.DeviceInfoActivity" />

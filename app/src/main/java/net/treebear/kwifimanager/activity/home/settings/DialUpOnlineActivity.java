@@ -100,8 +100,11 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
-                hideLoading();
-                ToastUtils.showShort(R.string.connect_fail);
+                btnDialUpConfirm.postDelayed(() -> {
+                    if (mPresenter != null) {
+                        mPresenter.queryNetStatus();
+                    }
+                }, 1000);
                 break;
             case Config.WifiResponseCode.CONNECT_SUCCESS:
                 hideLoading();
@@ -109,8 +112,10 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
                 startActivity(ModifyWifiInfoActivity.class);
                 break;
             default:
+                hideLoading();
+                ToastUtils.showShort(R.string.connect_fail);
                 // 延时1秒再次查询
-                btnDialUpConfirm.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
+//                btnDialUpConfirm.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
                 break;
         }
     }

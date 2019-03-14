@@ -15,10 +15,13 @@ import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.account.ForgetPwdCodeActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Values;
+import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.FileUtils;
 import net.treebear.kwifimanager.widget.TChooseTypePop;
 
@@ -40,8 +43,8 @@ public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.tv_mobile_number)
     TextView tvMobileNumber;
     private TChooseTypePop choosePicTypePop;
-    private Uri mImageUri;
     private String picPath;
+    private ServerUserInfo userInfo;
 
     @Override
     public int layoutId() {
@@ -51,6 +54,9 @@ public class UserInfoActivity extends BaseActivity {
     @Override
     protected void initView() {
         setTitleBack(R.string.personal_info);
+        userInfo = MyApplication.getAppContext().getUser();
+        tvNickName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile());
+        tvMobileNumber.setText(userInfo.getMobile());
     }
 
     @OnClick(R.id.civ_header_pic)
@@ -60,10 +66,12 @@ public class UserInfoActivity extends BaseActivity {
 
     @OnClick(R.id.tv_nick_name)
     public void onTvNickNameClicked() {
+        startActivity(ModifyNickNameActivity.class);
     }
 
     @OnClick(R.id.tv_mobile_number)
     public void onTvMobileNumberClicked() {
+        startActivity(ModifyMobileActivity.class);
     }
 
     @OnClick(R.id.tv_modify_password)

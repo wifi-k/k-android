@@ -14,7 +14,6 @@ import net.treebear.kwifimanager.util.Check;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * @author Administrator
@@ -26,7 +25,6 @@ public class MeFragment extends BaseFragment {
     TextView tvUserMobile;
     @BindView(R.id.iv_me_user_header)
     ImageView ivMeUserHeader;
-    Unbinder unbinder;
     private ServerUserInfo userInfo;
 
     @Override

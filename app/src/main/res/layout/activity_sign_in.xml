@@ -115,7 +115,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/et_sign_in_phone"
         app:layout_constraintEnd_toEndOf="@+id/et_sign_in_phone"
         app:layout_constraintTop_toTopOf="@+id/et_sign_in_phone"
-        app:srcCompat="@mipmap/ic_edit_close" />
+        android:src="@mipmap/ic_edit_close" />
 
 
 </android.support.constraint.ConstraintLayout>

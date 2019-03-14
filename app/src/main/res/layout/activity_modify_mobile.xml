@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.me.ModifyMobileActivity">
+
+    <include
+        android:id="@+id/include33"
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_new_mobile"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:digits="1234567890"
+        android:hint="@string/new_mobile_number"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:textColor="@color/text_28354C"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include33" />
+
+    <include
+        android:id="@+id/include34"
+        layout="@layout/line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintEnd_toEndOf="@+id/et_new_mobile"
+        app:layout_constraintStart_toStartOf="@+id/et_new_mobile"
+        app:layout_constraintTop_toBottomOf="@+id/et_new_mobile" />
+
+    <EditText
+        android:id="@+id/et_verify_code"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@null"
+        android:digits="0123456789"
+        android:hint="@string/verify_code"
+        android:inputType="phone"
+        android:maxLength="6"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:textColor="@color/text_28354C"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_get_verify_code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include34" />
+
+    <TextView
+        android:id="@+id/tv_get_verify_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="19dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rect_h29_r2_line_f2_trans"
+        android:padding="5dp"
+        android:text="@string/get_code"
+        app:layout_constraintBottom_toBottomOf="@+id/et_verify_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include34" />
+
+    <include
+        android:id="@+id/include35"
+        layout="@layout/line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/et_verify_code"
+        app:layout_constraintTop_toBottomOf="@+id/et_verify_code" />
+
+    <TextView
+        android:id="@+id/tv_complete"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btn_green_to_cyan_r4"
+        android:gravity="center"
+        android:text="@string/complete"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include35" />
+
+</android.support.constraint.ConstraintLayout>

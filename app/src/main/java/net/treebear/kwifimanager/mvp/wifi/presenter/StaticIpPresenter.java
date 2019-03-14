@@ -43,6 +43,9 @@ public class StaticIpPresenter extends BasePresenter<StaticIpContract.IStaticIpV
 
     @Override
     public void queryNetStatus() {
+        if (mModel==null){
+            return;
+        }
         mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {

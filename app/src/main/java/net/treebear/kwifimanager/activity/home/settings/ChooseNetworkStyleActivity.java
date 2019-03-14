@@ -86,8 +86,11 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
-                hideLoading();
-                ToastUtils.showShort(R.string.connect_fail);
+                rgOnlineType.postDelayed(() -> {
+                    if (mPresenter != null) {
+                        mPresenter.queryNetStatus();
+                    }
+                }, 1000);
                 break;
             case Config.WifiResponseCode.CONNECT_SUCCESS:
                 hideLoading();
@@ -96,11 +99,8 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
                 break;
             default:
                 // 延时1秒再次查询
-                rgOnlineType.postDelayed(() -> {
-                    if (mPresenter != null) {
-                        mPresenter.queryNetStatus();
-                    }
-                }, 1000);
+                hideLoading();
+                ToastUtils.showShort(R.string.connect_fail);
                 break;
         }
     }

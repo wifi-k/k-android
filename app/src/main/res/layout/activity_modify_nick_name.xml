@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.me.ModifyNickNameActivity">
+
+    <include
+        android:id="@+id/include32"
+        layout="@layout/common_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_nick_name"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/color_f6f7fb_gray"
+        android:ems="15"
+        android:focusableInTouchMode="true"
+        android:textColor="@color/text_28354C"
+        android:hint="@string/input_new_nick_name"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textColorHint="#DEDEDE"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include32" />
+
+    <ImageView
+        android:id="@+id/iv_edit_close"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_nick_name"
+        app:layout_constraintEnd_toEndOf="@+id/et_nick_name"
+        app:layout_constraintTop_toTopOf="@+id/et_nick_name"
+        app:srcCompat="@mipmap/ic_edit_close" />
+</android.support.constraint.ConstraintLayout>

@@ -23,6 +23,7 @@ public class ModifyWifiInfoPresenter extends BasePresenter<ModifyWifiInfoContrac
     public void modifyWifiInfo(String ssid0, String ssid, String password) {
         ArrayMap<String, Object> map = map();
         map.put(Keys.SSID0, ssid0.substring(1, ssid0.length() - 1));
+//        map.put(Keys.SSID0, ssid0);
         map.put(Keys.SSID, ssid);
         map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(password));
         mModel.modifyWifiInfo(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<Object>>() {

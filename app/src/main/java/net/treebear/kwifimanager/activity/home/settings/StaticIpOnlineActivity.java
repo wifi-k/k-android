@@ -68,8 +68,11 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
-                hideLoading();
-                ToastUtils.showShort(R.string.connect_fail);
+                btnNext.postDelayed(() -> {
+                    if (mPresenter != null) {
+                        mPresenter.queryNetStatus();
+                    }
+                }, 1000);
                 break;
             case Config.WifiResponseCode.CONNECT_SUCCESS:
                 hideLoading();
@@ -77,8 +80,11 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
                 ToastUtils.showShort(R.string.connect_success);
                 break;
             default:
+                hideLoading();
+                ToastUtils.showShort(R.string.connect_fail);
+//                ToastUtils.showShort(resultMsg);
                 // 延时1秒再次查询
-                btnNext.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
+//                btnNext.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
                 break;
         }
     }

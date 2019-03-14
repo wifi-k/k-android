@@ -43,6 +43,7 @@ public class WiFiHttpClient {
     private Retrofit retrofit;
     private static String apiToken = "";
     private static boolean needLogin = true;
+    private static boolean isLogin_ing = false;
 
     private WiFiHttpClient() {
 
@@ -133,12 +134,17 @@ public class WiFiHttpClient {
     public static void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         // 保证全局单次连接wifi只登录一次
         if (!needLogin) {
-            TLog.keep("Current device has logged in !");
+            TLog.w("Current device has logged in !");
+            return;
+        }
+        if (isLogin_ing) {
+            TLog.w("Current device is login ing !");
             return;
         }
         if (loginWifiModel == null) {
             loginWifiModel = new LoginWifiModel();
         }
+        isLogin_ing = true;
         ArrayMap<String, Object> map = new ArrayMap<>();
         map.put(Keys.NAME, "admin");
         map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD));
@@ -155,14 +161,16 @@ public class WiFiHttpClient {
                     if (callBack != null) {
                         callBack.onSuccess(resultData);
                     }
-                   getDeviceSerialId();
-                    getDeviceOnlineStatus();
+                    isLogin_ing = false;
+                    getDeviceSerialId();
+//                    getDeviceOnlineStatus();
                 }
             }
 
             @Override
             public void onFailed(String resultMsg, int resultCode) {
                 TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
+                isLogin_ing = false;
                 if (callBack != null) {
                     callBack.onFailed(resultMsg, resultCode);
                 }
@@ -178,6 +186,7 @@ public class WiFiHttpClient {
                 if (resultData != null && resultData.getData() != null) {
                     MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
                 }
+                getDeviceOnlineStatus();
             }
 
             @Override
@@ -191,7 +200,7 @@ public class WiFiHttpClient {
         loginWifiModel.queryNetStatus(new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                TLog.i("getDeviceOnlineStatus ： "+TLog.valueOf(resultData));
+                TLog.i("getDeviceOnlineStatus ： " + TLog.valueOf(resultData));
             }
 
             @Override
