@@ -18,13 +18,13 @@ import butterknife.BindView;
  */
 public class MessageListActivity extends BaseActivity {
 
-    @BindView(R.id.rv_message_list)
+    @BindView(R.id.recycler_view)
     RecyclerView rvMessageList;
     private ArrayList<NoticeBean> noticeList;
 
     @Override
     public int layoutId() {
-        return R.layout.activity_message_list;
+        return R.layout.layout_title_recyclerview;
     }
 
     @Override

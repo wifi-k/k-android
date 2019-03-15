@@ -22,7 +22,7 @@ import butterknife.BindView;
  */
 public class FamilyMemberActivity extends BaseActivity {
 
-    @BindView(R.id.rv_family_list)
+    @BindView(R.id.recycler_view)
     RecyclerView rvFamilyList;
     private ArrayList<FamilyMemberBean> familyMemberList = new ArrayList<>();
     private FamilyMemberAdapter familyMemberAdapter;
@@ -32,7 +32,7 @@ public class FamilyMemberActivity extends BaseActivity {
 
     @Override
     public int layoutId() {
-        return R.layout.activity_family_member;
+        return R.layout.layout_title_recyclerview;
     }
 
     @Override

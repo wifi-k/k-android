@@ -29,6 +29,13 @@ public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.IDynamic
                     }
                 });
             }
+
+            @Override
+            public void onFailed(String resultMsg, int resultCode) {
+                if (mView != null) {
+                    mView.onLoadFail(resultMsg, Config.ServerResponseCode.CUSTOM_ERROR);
+                }
+            }
         });
     }
 

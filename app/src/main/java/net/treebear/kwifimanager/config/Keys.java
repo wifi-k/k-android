@@ -33,6 +33,10 @@ public interface Keys {
      * 传时间限制序列化对象
      */
     String TIME_LIMIT_BEAN = "time_limit_bean";
+    /**
+     * 禁用app计划
+     */
+    String BAN_APP_PLAN = "ban_app_plan";
 
     String SETTINGS_ITEM_DATA = "settings_item_data";
 

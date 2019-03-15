@@ -29,7 +29,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.me.ModifyMobileActivity"></activity>
+        <activity android:name=".activity.home.parent.ChooseControlDeviceActivity"></activity>
+        <activity android:name=".activity.home.parent.ChooseBanAppActivity" />
+        <activity android:name=".activity.home.parent.BanAppPlanActivity" />
+        <activity android:name=".activity.me.ModifyMobileActivity" />
         <activity android:name=".activity.me.ModifyNickNameActivity" />
         <activity android:name=".activity.me.UserInfoActivity" />
         <activity android:name=".activity.me.UpdateAppActivity" />
@@ -58,10 +61,10 @@
             android:name=".activity.home.time.TimeControlListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.banapp.BanAppListActivity"
+            android:name=".activity.home.parent.BanAppListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.ParentControlActivity"
+            android:name=".activity.home.parent.ParentControlActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.message.MessageListActivity"

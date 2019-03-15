@@ -1,6 +1,8 @@
 package net.treebear.kwifimanager.bean;
 
-public class AppBean {
+import java.io.Serializable;
+
+public class AppBean implements Serializable {
 
     private int id;
 
@@ -11,6 +13,22 @@ public class AppBean {
     private String name;
 
     private long useTime;
+
+    private boolean ban;
+
+    public AppBean(String name, int iconRes,boolean ban) {
+        this.iconRes = iconRes;
+        this.name = name;
+        this.ban = ban;
+    }
+
+    public boolean isBan() {
+        return ban;
+    }
+
+    public void setBan(boolean ban) {
+        this.ban = ban;
+    }
 
     public int getId() {
         return id;

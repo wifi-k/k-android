@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  *
  * @author Administrator
  */
-public class MobilePhoneBean {
+public class MobilePhoneBean implements Serializable {
 
     private long id;
 

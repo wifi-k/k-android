@@ -186,7 +186,7 @@ public class WiFiHttpClient {
                 if (resultData != null && resultData.getData() != null) {
                     MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
                 }
-                getDeviceOnlineStatus();
+//                getDeviceOnlineStatus();
             }
 
             @Override

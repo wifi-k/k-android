@@ -1,11 +1,12 @@
 package net.treebear.kwifimanager.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Administrator
  */
-public class BanAppPlanBean {
+public class BanAppPlanBean implements Serializable {
 
     private long id;
 

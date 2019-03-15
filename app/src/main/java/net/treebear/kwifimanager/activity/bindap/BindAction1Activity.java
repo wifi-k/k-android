@@ -171,7 +171,7 @@ public class BindAction1Activity extends BaseActivity {
                         @Override
                         public void onClickLeft(View view) {
                             tMessageDialog.dismiss();
-//                            ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
+                            ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
                         }
 
                         @Override

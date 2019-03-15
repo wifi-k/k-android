@@ -38,12 +38,19 @@ public class StaticIpPresenter extends BasePresenter<StaticIpContract.IStaticIpV
                     }
                 });
             }
+
+            @Override
+            public void onFailed(String resultMsg, int resultCode) {
+                if (mView != null) {
+                    mView.onLoadFail(resultMsg, Config.ServerResponseCode.CUSTOM_ERROR);
+                }
+            }
         });
     }
 
     @Override
     public void queryNetStatus() {
-        if (mModel==null){
+        if (mModel == null) {
             return;
         }
         mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {

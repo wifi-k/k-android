@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.test;
 
+import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.bean.AppBean;
 import net.treebear.kwifimanager.bean.BanAppPlanBean;
 import net.treebear.kwifimanager.bean.Daybean;
@@ -24,11 +25,32 @@ public class BeanTest {
     private static ArrayList<MobilePhoneBean> mobilePhoneList = null;
     private static ArrayList<MobilePhoneBean> childrenMobile = null;
     private static ArrayList<FamilyMemberBean> familyMemberBeans = null;
-    private static ArrayList<BanAppPlanBean> banAppPlanBeans = null;
+    public static ArrayList<BanAppPlanBean> banAppPlanBeans = null;
     private static ArrayList<TimeLimitBean> timeLimitBeans = null;
     private static ArrayList<DeviceBean> deviceBeans = null;
+    private static ArrayList<AppBean> appBeans = null;
 
     private BeanTest() {
+    }
+
+    /**
+     * 测试数据
+     * --- App 列表
+     */
+    public static ArrayList<AppBean> getAppList() {
+        if (appBeans == null) {
+            appBeans = new ArrayList<AppBean>() {{
+                add(new AppBean("王者荣耀", R.mipmap.logo, false));
+                add(new AppBean("QQ", R.mipmap.logo, false));
+                add(new AppBean("微信", R.mipmap.logo, false));
+                add(new AppBean("微博", R.mipmap.logo, false));
+                add(new AppBean("知乎", R.mipmap.logo, false));
+                add(new AppBean("刺激战场", R.mipmap.logo, false));
+                add(new AppBean("明日之后", R.mipmap.logo, false));
+                add(new AppBean("脉脉", R.mipmap.logo, false));
+            }};
+        }
+        return appBeans;
     }
 
     public static ArrayList<MobilePhoneBean> getGuardDeviceList() {
@@ -100,9 +122,9 @@ public class BeanTest {
                                 }}));
                             }},
                             new ArrayList<AppBean>() {{
-                                add(new AppBean());
-                                add(new AppBean());
-                                add(new AppBean());
+                                add(getAppList().get(random.nextInt(getAppList().size())));
+                                add(getAppList().get(random.nextInt(getAppList().size())));
+                                add(getAppList().get(random.nextInt(getAppList().size())));
                             }},
                             new ArrayList<MobilePhoneBean>() {{
                                 if (mobilePhoneList == null) {
@@ -161,9 +183,9 @@ public class BeanTest {
                         createHoursMill(),
                         random.nextBoolean(),
                         new ArrayList<AppBean>() {{
-                            add(new AppBean());
-                            add(new AppBean());
-                            add(new AppBean());
+                            add(getAppList().get(random.nextInt(getAppList().size())));
+                            add(getAppList().get(random.nextInt(getAppList().size())));
+                            add(getAppList().get(random.nextInt(getAppList().size())));
                         }}
                 ));
             }

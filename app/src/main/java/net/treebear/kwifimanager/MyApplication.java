@@ -4,6 +4,7 @@ package net.treebear.kwifimanager;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.support.multidex.MultiDexApplication;
 
 import net.treebear.kwifimanager.activity.account.launchAccountActivity;
@@ -12,6 +13,7 @@ import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.http.HttpClient;
 import net.treebear.kwifimanager.receiver.NetWorkReceiver;
 import net.treebear.kwifimanager.receiver.OpenFileReceiver;
+import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.TLog;
 
 /**
@@ -41,6 +43,20 @@ public class MyApplication extends MultiDexApplication {
         dealUncaughtException();
         registerReceiver(new OpenFileReceiver(), new IntentFilter(BuildConfig.APPLICATION_ID + ".open_file"));
         registerNetReceiver();
+        if (BuildConfig.DEBUG) {
+            test();
+        }
+    }
+
+    private void test() {
+        String ssid0 = NetWorkUtils.getSSIDWhenWifi(this);
+        String so0 = ssid0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (ssid0.startsWith("\"") && ssid0.endsWith("\"")) {
+                so0 = ssid0.substring(1, ssid0.length() - 1);
+            }
+        }
+        TLog.e("ssid0 = %s ; so0 = %s", ssid0, so0);
     }
 
     private void registerNetReceiver() {
@@ -78,8 +94,8 @@ public class MyApplication extends MultiDexApplication {
         return user;
     }
 
-    public WifiDeviceInfo getDeviceInfo(){
-        if (info == null){
+    public WifiDeviceInfo getDeviceInfo() {
+        if (info == null) {
             info = new WifiDeviceInfo();
         }
         return info;

@@ -25,7 +25,7 @@ import butterknife.BindView;
  */
 public class MyDeviceListActivity extends BaseActivity {
 
-    @BindView(R.id.rv_device_list)
+    @BindView(R.id.recycler_view)
     RecyclerView rvDeviceList;
     private ArrayList<DeviceBean> deviceList = new ArrayList<>();
     private MyDeviceAdapter deviceAdapter;
@@ -35,7 +35,7 @@ public class MyDeviceListActivity extends BaseActivity {
 
     @Override
     public int layoutId() {
-        return R.layout.activity_my_device_list;
+        return R.layout.layout_title_recyclerview;
     }
 
     @Override

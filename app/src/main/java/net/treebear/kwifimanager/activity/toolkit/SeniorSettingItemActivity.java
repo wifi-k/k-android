@@ -21,7 +21,7 @@ import butterknife.BindView;
  */
 public class SeniorSettingItemActivity extends BaseActivity {
 
-    @BindView(R.id.rv_setting_item)
+    @BindView(R.id.recycler_view)
     RecyclerView rvSettingItem;
     private String titleText;
     private ArrayList<ItemBean> itemData = new ArrayList<>();
@@ -31,7 +31,7 @@ public class SeniorSettingItemActivity extends BaseActivity {
 
     @Override
     public int layoutId() {
-        return R.layout.activity_senior_setting_item;
+        return R.layout.layout_title_recyclerview;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.mvp.wifi.presenter;
 
+import android.os.Build;
 import android.util.ArrayMap;
 
 import net.treebear.kwifimanager.base.BasePresenter;
@@ -22,8 +23,13 @@ public class ModifyWifiInfoPresenter extends BasePresenter<ModifyWifiInfoContrac
     @Override
     public void modifyWifiInfo(String ssid0, String ssid, String password) {
         ArrayMap<String, Object> map = map();
-        map.put(Keys.SSID0, ssid0.substring(1, ssid0.length() - 1));
-//        map.put(Keys.SSID0, ssid0);
+        String so0 = ssid0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (ssid0.startsWith("\"") && ssid0.endsWith("\"")) {
+                so0 = ssid0.substring(1, ssid0.length() - 1);
+            }
+        }
+        map.put(Keys.SSID0, so0);
         map.put(Keys.SSID, ssid);
         map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(password));
         mModel.modifyWifiInfo(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<Object>>() {

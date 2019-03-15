@@ -35,6 +35,13 @@ public class DialUpPresenter extends BasePresenter<DialUpContract.IDialUpView, D
                     }
                 });
             }
+
+            @Override
+            public void onFailed(String resultMsg, int resultCode) {
+                if (mView!=null){
+                    mView.onLoadFail(resultMsg,Config.ServerResponseCode.CUSTOM_ERROR);
+                }
+            }
         });
     }
 

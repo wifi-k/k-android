@@ -21,7 +21,7 @@ public final class Config {
      */
     public interface Urls {
         String SERVER_BASE_URL = "http://test.user.famwifi.com/api/";
-//        String ROUTER_BASE_URL = "http://192.168.1.1:80/";
+        //        String ROUTER_BASE_URL = "http://192.168.1.1:80/";
         String ROUTER_BASE_URL = "http://192.168.18.254:4000/api/";
         String USER_PROTOCOL = "http://www.baidu.com/";
         String PRIVATE_PROTOCOL = "http://www.baidu.com/";
@@ -139,6 +139,10 @@ public final class Config {
          * wifi密码上限
          */
         int MAX_WIFI_PASSWORD = 20;
+        /**
+         * 查询wifi状态尝试次数
+         */
+        int WIFI_STATUS_QUERY_TRY_TIMES = 10;
     }
 
     /**
@@ -202,6 +206,10 @@ public final class Config {
          * TOKEN异常
          */
         int TOKEN_ERROR = 2;
+        /**
+         * 自定义使用的error
+         */
+        int CUSTOM_ERROR = 9;
         /**
          * 已注册
          */

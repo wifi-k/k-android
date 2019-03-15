@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.home.FamilyMemberActivity;
-import net.treebear.kwifimanager.activity.home.ParentControlActivity;
+import net.treebear.kwifimanager.activity.home.parent.ParentControlActivity;
 import net.treebear.kwifimanager.activity.home.device.AllDeviceListActivity;
 import net.treebear.kwifimanager.activity.home.device.DeviceDetailActivity;
 import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
