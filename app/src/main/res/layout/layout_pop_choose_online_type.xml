@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="150dp"
+    android:layout_height="170dp"
+    android:background="@drawable/bg_pop_wrapper_r10"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_dynamic_ip"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingStart="14dp"
+        android:paddingEnd="5dp"
+        android:text="@string/auto_get_ip_address"
+        android:textColor="@color/text_28354C"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:background="#E7E7E7" />
+
+    <TextView
+        android:id="@+id/tv_static_ip"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingStart="14dp"
+        android:paddingEnd="5dp"
+        android:text="@string/static_ip_address"
+        android:textColor="@color/text_28354C"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:background="#E7E7E7" />
+
+    <TextView
+        android:id="@+id/tv_pppoe"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingStart="14dp"
+        android:paddingEnd="5dp"
+        android:text="@string/pppoe"
+        android:textColor="@color/text_28354C"
+        android:textSize="15sp" />
+
+</LinearLayout>

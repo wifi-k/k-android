@@ -16,7 +16,7 @@ import net.treebear.kwifimanager.util.TLog;
 /**
  * @author Administrator
  */
-public class TChooseTypePop {
+public class TChoosePicTypePop {
 
     private final Context mContext;
     private PopupWindow popupWindow;
@@ -51,7 +51,7 @@ public class TChooseTypePop {
         }
     };
 
-    public TChooseTypePop(Context context) {
+    public TChoosePicTypePop(Context context) {
         mContext = context;
     }
 

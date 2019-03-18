@@ -23,7 +23,7 @@ import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.FileUtils;
-import net.treebear.kwifimanager.widget.TChooseTypePop;
+import net.treebear.kwifimanager.widget.TChoosePicTypePop;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,7 +42,7 @@ public class UserInfoActivity extends BaseActivity {
     TextView tvNickName;
     @BindView(R.id.tv_mobile_number)
     TextView tvMobileNumber;
-    private TChooseTypePop choosePicTypePop;
+    private TChoosePicTypePop choosePicTypePop;
     private String picPath;
     private ServerUserInfo userInfo;
 
@@ -85,8 +85,8 @@ public class UserInfoActivity extends BaseActivity {
      */
     private void showChoosePop() {
         if (choosePicTypePop == null) {
-            choosePicTypePop = new TChooseTypePop(this);
-            choosePicTypePop.setOnChooseTypeList(new TChooseTypePop.OnChooseTypeListener() {
+            choosePicTypePop = new TChoosePicTypePop(this);
+            choosePicTypePop.setOnChooseTypeList(new TChoosePicTypePop.OnChooseTypeListener() {
                 @Override
                 public void onCancelClick() {
                     choosePicTypePop.dismiss();

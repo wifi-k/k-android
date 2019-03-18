@@ -244,5 +244,12 @@
     <string name="set_success_scan_fail">已设置成功单尚未扫描到新的WiFi，请稍后连接</string>
     <string name="repeat">重复</string>
     <string name="edit_time">编辑时间</string>
+    <string name="online_type">上网方式</string>
+    <string name="auto_get_ip_address">自动获取IP地址</string>
+    <string name="static_ip_address">固定IP地址</string>
+    <string name="pppoe">宽带拨号上网</string>
+    <string name="connect_status">连接状态：</string>
+    <string name="gateway_address_">网关地址：</string>
+    <string name="update_ip_address">更新IP地址</string>
 
 </resources>

@@ -9,37 +9,21 @@ public class WifiDeviceInfo {
 
 
     /**
-     * id : 30
-     * name : null
-     * mobile : 13797470026
-     * email : null
-     * authStatus : 0
-     * passwd : 3d3aa4baff65ac68c4c6e9365ed2d95f
-     * avatar : null
-     * inviteCode : null
-     * inviteUser : null
-     * sex : 0
-     * apikey : null
-     * role : 1
-     * createTime : 1551256974950
-     * updateTime : 1551347014277
-     * isDelete : 0
+     * {
+     * "id": "节点序列号",
+     * "wan": {  // 1-pppoe 2-static 3-dynamic
+     * "ip":"", "netmask":"", "gateway":"" , "dns1":"", "dns2":"", "type":1, "name":"pppoe账号", "passwd":"账号密码"
+     * }
+     * }
      */
 
     private String id;
     private String token;
-    private String name;
-    private String mobile;
-    private String email;
-    private int authStatus;
-    private String passwd;
-    private String avatar;
-    private int sex;
-    private String apikey;
-    private int role;
-    private long createTime;
-    private long updateTime;
-    private int isDelete;
+    /**
+     * wan : {"ip":"","netmask":"","gateway":"","dns1":"","dns2":"","type":1,"name":"pppoe账号","passwd":"账号密码"}
+     */
+
+    private WanBean wan;
 
     public String getId() {
         return id;
@@ -57,119 +41,106 @@ public class WifiDeviceInfo {
         this.token = token;
     }
 
-    public String getName() {
-        return name;
+    public WanBean getWan() {
+        return wan;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWan(WanBean wan) {
+        this.wan = wan;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
+    public static class WanBean {
+        /**
+         * ip :
+         * netmask :
+         * gateway :
+         * dns1 :
+         * dns2 :
+         * type : 1
+         * name : pppoe账号
+         * passwd : 账号密码
+         */
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
+        private String ip;
+        private String netmask;
+        private String gateway;
+        private String dns1;
+        private String dns2;
+        private int type;
+        private String name;
+        private String passwd;
 
-    public String getEmail() {
-        return email;
-    }
+        public String getIp() {
+            return ip;
+        }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+        public void setIp(String ip) {
+            this.ip = ip;
+        }
 
-    public int getAuthStatus() {
-        return authStatus;
-    }
+        public String getNetmask() {
+            return netmask;
+        }
 
-    public void setAuthStatus(int authStatus) {
-        this.authStatus = authStatus;
-    }
+        public void setNetmask(String netmask) {
+            this.netmask = netmask;
+        }
 
-    public String getPasswd() {
-        return passwd;
-    }
+        public String getGateway() {
+            return gateway;
+        }
 
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
+        public void setGateway(String gateway) {
+            this.gateway = gateway;
+        }
 
-    public String getAvatar() {
-        return avatar;
-    }
+        public String getDns1() {
+            return dns1;
+        }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+        public void setDns1(String dns1) {
+            this.dns1 = dns1;
+        }
 
-    public int getSex() {
-        return sex;
-    }
+        public String getDns2() {
+            return dns2;
+        }
 
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
+        public void setDns2(String dns2) {
+            this.dns2 = dns2;
+        }
 
-    public String getApikey() {
-        return apikey;
-    }
+        public int getType() {
+            return type;
+        }
 
-    public void setApikey(String apikey) {
-        this.apikey = apikey;
-    }
+        public void setType(int type) {
+            this.type = type;
+        }
 
-    public int getRole() {
-        return role;
-    }
+        public String getName() {
+            return name;
+        }
 
-    public void setRole(int role) {
-        this.role = role;
-    }
+        public void setName(String name) {
+            this.name = name;
+        }
 
-    public long getCreateTime() {
-        return createTime;
-    }
+        public String getPasswd() {
+            return passwd;
+        }
 
-    public void setCreateTime(long createTime) {
-        this.createTime = createTime;
-    }
-
-    public long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(long updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public int getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(int isDelete) {
-        this.isDelete = isDelete;
+        public void setPasswd(String passwd) {
+            this.passwd = passwd;
+        }
     }
 
     @Override
     public String toString() {
         return "WifiDeviceInfo{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", token='" + token + '\'' +
-                ", name='" + name + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", email='" + email + '\'' +
-                ", authStatus=" + authStatus +
-                ", passwd='" + passwd + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", sex=" + sex +
-                ", apikey='" + apikey + '\'' +
-                ", role=" + role +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", isDelete=" + isDelete +
+                ", wan=" + wan +
                 '}';
     }
 }
