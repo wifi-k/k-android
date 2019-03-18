@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 
-import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.home.settings.ChooseNetworkStyleActivity;
@@ -62,10 +61,8 @@ public class BindAction1Activity extends BaseActivity {
 
     @Override
     protected void initView() {
-        if (BuildConfig.DEBUG) {
-            MyApplication.getAppContext().getUser().setAuthStatus(1);
-        }
         setTitleBack(R.string.setting);
+        MyApplication.getAppContext().getUser().setAuthStatus(1);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
 //        @StringRes int infoTextId;

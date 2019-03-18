@@ -7,10 +7,12 @@ import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
-import net.treebear.kwifimanager.bean.AppBean;
 import net.treebear.kwifimanager.bean.BanAppPlanBean;
+import net.treebear.kwifimanager.bean.MobilePhoneBean;
+import net.treebear.kwifimanager.bean.TimeLimitBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
+import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.TInputDialog;
 
 import java.util.ArrayList;
@@ -21,15 +23,16 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class BanAppPlanActivity extends BaseActivity {
-
+public class TimeControlPlanActivity extends BaseActivity {
 
     @BindView(R.id.tv_ban_app_name)
     TextView tvBanAppName;
-    @BindView(R.id.tv_limited_online_time)
-    TextView tvBanApp;
     @BindView(R.id.tv_ban_app_tips)
     TextView tvBanAppTips;
+    @BindView(R.id.tv_modify_name)
+    TextView tvModifyName;
+    @BindView(R.id.tv_limited_online_time)
+    TextView tvLimitedTime;
     private BanAppPlanBean needModifyPlan;
     private TInputDialog modifyNameDialog;
 
@@ -52,8 +55,8 @@ public class BanAppPlanActivity extends BaseActivity {
         } else {
             change2IncreaseDisplay();
         }
-        tvBanApp.setText(R.string.ban_app_ban_app);
-        tvBanAppTips.setText(R.string.choose_ban_app_and_device);
+        tvLimitedTime.setText(R.string.limited_online_time);
+        tvBanAppTips.setText(R.string.choose_ban_time_and_device);
     }
 
     private void change2IncreaseDisplay() {
@@ -77,18 +80,14 @@ public class BanAppPlanActivity extends BaseActivity {
     @OnClick(R.id.tv_limited_online_time)
     public void onTvLimitedOnlineTimeClicked() {
         Bundle bundle = new Bundle();
-        if (needModifyPlan != null) {
-            bundle.putSerializable(Keys.BAN_APP_PLAN, needModifyPlan);
-        }
-        startActivityForResult(ChooseBanAppActivity.class, bundle, Values.REQUEST_BAN_APP);
+        bundle.putParcelableArrayList(Keys.TIME_LIMIT_TIME, needModifyPlan.getLimitOnlineTime());
+        startActivityForResult(NewEditTimeActivity.class, bundle, Values.REQUEST_EDIT_TIME);
     }
 
     @OnClick(R.id.tv_control_device)
     public void onTvControlDeviceClicked() {
         Bundle bundle = new Bundle();
-        if (needModifyPlan != null) {
-            bundle.putParcelableArrayList(Keys.PARENT_CONTROL_DEVICE, needModifyPlan.getBanMobile());
-        }
+        bundle.putParcelableArrayList(Keys.PARENT_CONTROL_DEVICE, needModifyPlan.getBanMobile());
         startActivityForResult(ChooseControlDeviceActivity.class, bundle, Values.REQUEST_EDIT_DEVICE);
     }
 
@@ -123,12 +122,19 @@ public class BanAppPlanActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             Bundle bundle = data.getExtras();
+            if (bundle == null) {
+                return;
+            }
             switch (requestCode) {
-                case Values.REQUEST_BAN_APP:
-                    ArrayList<AppBean> apps = bundle.getParcelableArrayList(Keys.BAN_APP_PLAN);
-                    needModifyPlan.setBanApps(apps);
+                case Values.REQUEST_EDIT_TIME:
+                    TimeLimitBean timeLimitBean = bundle.getParcelable(Keys.TIME_LIMIT_TIME);
+                    needModifyPlan.getLimitOnlineTime().set(0, timeLimitBean);
+                    TLog.i(timeLimitBean);
                     break;
                 case Values.REQUEST_EDIT_DEVICE:
+                    ArrayList<MobilePhoneBean> devices = bundle.getParcelableArrayList(Keys.PARENT_CONTROL_DEVICE);
+                    needModifyPlan.setBanMobile(devices);
+                    TLog.i(devices);
                     break;
                 default:
                     break;

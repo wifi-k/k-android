@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="154dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_home_join_wrapper8">
+
+    <TextView
+        android:id="@+id/tv_limit_time_name"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_28354C"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="上网时间段1 " />
+
+    <TextView
+        android:id="@+id/textView53"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#EEEDED"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_limit_time_name" />
+
+    <ImageView
+        android:id="@+id/iv_delete_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView53"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_member_delete" />
+
+    <ImageView
+        android:id="@+id/iv_edit_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_delete_time"
+        app:layout_constraintEnd_toStartOf="@+id/iv_delete_time"
+        app:layout_constraintTop_toTopOf="@+id/iv_delete_time"
+        app:srcCompat="@mipmap/ic_member_edit" />
+
+    <TextView
+        android:id="@+id/tv_time_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/text_28354C"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_limit_time_name"
+        app:layout_constraintTop_toBottomOf="@+id/textView53"
+        tools:text="12:00-14:00" />
+
+    <TextView
+        android:id="@+id/tv_time_days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="20dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textColor="#4A5A78"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_time_hour"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time_hour"
+        tools:text="周一、周二、周三、周四、周五、周六、周日" />
+</android.support.constraint.ConstraintLayout>

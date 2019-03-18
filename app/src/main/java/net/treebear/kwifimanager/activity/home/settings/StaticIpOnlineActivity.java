@@ -72,7 +72,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
                     if (mPresenter != null) {
                         mPresenter.queryNetStatus();
                     }
-                }, 1000);
+                }, 2000);
                 break;
             case Config.WifiResponseCode.CONNECT_SUCCESS:
                 hideLoading();
@@ -109,16 +109,17 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
             ToastUtils.showShort(R.string.first_dns_server_error);
             return false;
         }
-        if (!Check.ipLike(etSecendDns.getText().toString())) {
-            ToastUtils.showShort(R.string.second_dns_server_error);
-            return false;
-        }
+//        if (!Check.ipLike(etSecendDns.getText().toString())) {
+//            ToastUtils.showShort(R.string.second_dns_server_error);
+//            return false;
+//        }
         return true;
     }
 
     @Override
     protected void onTitleLeftClick() {
         super.onTitleLeftClick();
+        mPresenter = null;
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 }

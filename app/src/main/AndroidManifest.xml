@@ -29,7 +29,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.home.parent.ChooseControlDeviceActivity"></activity>
+        <activity android:name=".activity.home.parent.NewEditTimeActivity"></activity>
+        <activity android:name=".activity.home.parent.LimitTimeControlActivity" />
+        <activity android:name=".activity.home.parent.TimeControlPlanActivity" />
+        <activity android:name=".activity.home.parent.ChooseControlDeviceActivity" />
         <activity android:name=".activity.home.parent.ChooseBanAppActivity" />
         <activity android:name=".activity.home.parent.BanAppPlanActivity" />
         <activity android:name=".activity.me.ModifyMobileActivity" />
@@ -58,7 +61,7 @@
             android:name=".activity.home.healthy.HealthyModelActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.time.TimeControlListActivity"
+            android:name=".activity.home.parent.TimeControlListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.home.parent.BanAppListActivity"

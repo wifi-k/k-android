@@ -190,6 +190,9 @@ public class BeanTest {
                 ));
             }
         }
+        for (MobilePhoneBean bean : mobilePhoneList) {
+            bean.setBanOnline(false);
+        }
         return mobilePhoneList;
     }
 

@@ -93,6 +93,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
     @OnClick(R.id.btn_dial_up_confirm)
     public void onBtnDialUpConfirmClicked() {
         showLoading();
+
         mPresenter.dialUpSet(etNetAccount.getText().toString(), etNetPassowrd.getText().toString());
     }
 
@@ -104,7 +105,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
                     if (mPresenter != null) {
                         mPresenter.queryNetStatus();
                     }
-                }, 1000);
+                }, 2000);
                 break;
             case Config.WifiResponseCode.CONNECT_SUCCESS:
                 hideLoading();
@@ -123,6 +124,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
     @Override
     protected void onTitleLeftClick() {
         super.onTitleLeftClick();
+        mPresenter = null;
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 }

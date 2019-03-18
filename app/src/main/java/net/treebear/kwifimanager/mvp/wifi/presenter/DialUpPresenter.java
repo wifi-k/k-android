@@ -26,14 +26,7 @@ public class DialUpPresenter extends BasePresenter<DialUpContract.IDialUpView, D
         mModel.dialUpSet(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
-                    @Override
-                    public void onSuccess(BaseResponse<Object> data) {
-                        if (mView != null) {
-                            mView.onLoadData(data);
-                        }
-                    }
-                });
+                queryNetStatus();
             }
 
             @Override
@@ -47,6 +40,9 @@ public class DialUpPresenter extends BasePresenter<DialUpContract.IDialUpView, D
 
     @Override
     public void queryNetStatus() {
+        if (mModel == null) {
+            return;
+        }
         mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {

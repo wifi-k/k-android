@@ -1,8 +1,11 @@
 package net.treebear.kwifimanager.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class AppBean implements Serializable {
+public class AppBean implements Serializable, Parcelable {
 
     private int id;
 
@@ -80,4 +83,40 @@ public class AppBean implements Serializable {
                 ", useTime=" + useTime +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.iconUrl);
+        dest.writeInt(this.iconRes);
+        dest.writeString(this.name);
+        dest.writeLong(this.useTime);
+        dest.writeByte(this.ban ? (byte) 1 : (byte) 0);
+    }
+
+    protected AppBean(Parcel in) {
+        this.id = in.readInt();
+        this.iconUrl = in.readString();
+        this.iconRes = in.readInt();
+        this.name = in.readString();
+        this.useTime = in.readLong();
+        this.ban = in.readByte() != 0;
+    }
+
+    public static final Creator<AppBean> CREATOR = new Creator<AppBean>() {
+        @Override
+        public AppBean createFromParcel(Parcel source) {
+            return new AppBean(source);
+        }
+
+        @Override
+        public AppBean[] newArray(int size) {
+            return new AppBean[size];
+        }
+    };
 }

@@ -1,5 +1,8 @@
 package net.treebear.kwifimanager.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,7 +11,7 @@ import java.util.List;
  *
  * @author Administrator
  */
-public class MobilePhoneBean implements Serializable {
+public class MobilePhoneBean implements Serializable, Parcelable {
 
     private long id;
 
@@ -248,4 +251,64 @@ public class MobilePhoneBean implements Serializable {
                 ", activeApp=" + activeApp +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.mac);
+        dest.writeString(this.ip);
+        dest.writeString(this.name);
+        dest.writeString(this.brand);
+        dest.writeInt(this.type);
+        dest.writeByte(this.online ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.onlineTime);
+        dest.writeLong(this.offlineTime);
+        dest.writeInt(this.rank);
+        dest.writeLong(this.averageTime);
+        dest.writeByte(this.banOnline ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.children ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.onlineAlarm ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.limitSpeed ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.limitedUploadSpeed);
+        dest.writeInt(this.limitedDownloadSpeed);
+        dest.writeTypedList(this.activeApp);
+    }
+
+    protected MobilePhoneBean(Parcel in) {
+        this.id = in.readLong();
+        this.mac = in.readString();
+        this.ip = in.readString();
+        this.name = in.readString();
+        this.brand = in.readString();
+        this.type = in.readInt();
+        this.online = in.readByte() != 0;
+        this.onlineTime = in.readLong();
+        this.offlineTime = in.readLong();
+        this.rank = in.readInt();
+        this.averageTime = in.readLong();
+        this.banOnline = in.readByte() != 0;
+        this.children = in.readByte() != 0;
+        this.onlineAlarm = in.readByte() != 0;
+        this.limitSpeed = in.readByte() != 0;
+        this.limitedUploadSpeed = in.readInt();
+        this.limitedDownloadSpeed = in.readInt();
+        this.activeApp = in.createTypedArrayList(AppBean.CREATOR);
+    }
+
+    public static final Creator<MobilePhoneBean> CREATOR = new Creator<MobilePhoneBean>() {
+        @Override
+        public MobilePhoneBean createFromParcel(Parcel source) {
+            return new MobilePhoneBean(source);
+        }
+
+        @Override
+        public MobilePhoneBean[] newArray(int size) {
+            return new MobilePhoneBean[size];
+        }
+    };
 }

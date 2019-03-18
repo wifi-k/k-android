@@ -230,13 +230,19 @@
     <string name="verify_code">验证码</string>
     <string name="modify_mobile_number">更换手机号</string>
     <string name="add_new_ban_app">+ 新增禁用APP</string>
+    <string name="add_new_limit_time">+ 新增时间段</string>
     <string name="increase">新增</string>
     <string name="modify">修改</string>
     <string name="choose_ban_app_and_device">先选择禁用的APP，然后选择控制的设备，则该设备上的禁用APP将无法访问网络</string>
+    <string name="choose_ban_time_and_device">先选择控制的时间，然后选择控制的设备，则该 设备只有在允许上网的时间才能访问网络</string>
     <string name="limited_online_time">允许上网时间</string>
     <string name="control_device">控制的设备</string>
     <string name="ban_app_plan_1">禁用APP方案1</string>
     <string name="ban_app_ban_app">禁用的APP</string>
     <string name="choose_ban_app">选择禁用APP</string>
     <string name="choose_control_device">选择控制设备</string>
+    <string name="set_success_scan_fail">已设置成功单尚未扫描到新的WiFi，请稍后连接</string>
+    <string name="repeat">重复</string>
+    <string name="edit_time">编辑时间</string>
+
 </resources>

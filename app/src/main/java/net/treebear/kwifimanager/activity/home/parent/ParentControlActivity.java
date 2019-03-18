@@ -1,7 +1,6 @@
 package net.treebear.kwifimanager.activity.home.parent;
 
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.home.time.TimeControlListActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 
 import butterknife.OnClick;

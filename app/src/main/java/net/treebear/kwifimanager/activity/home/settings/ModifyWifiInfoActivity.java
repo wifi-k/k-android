@@ -1,5 +1,7 @@
 package net.treebear.kwifimanager.activity.home.settings;
 
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -7,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import net.treebear.kwifimanager.MyApplication;
@@ -18,10 +22,12 @@ import net.treebear.kwifimanager.mvp.wifi.presenter.ModifyWifiInfoPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.NetWorkUtils;
+import net.treebear.kwifimanager.widget.LoadingProgressDialog;
 import net.treebear.kwifimanager.widget.TMessageDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
 
 /**
  * @author Administrator
@@ -40,6 +46,8 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
     ImageView ivPasswordEye;
     private boolean passwordVisible = false;
     private TMessageDialog tMessageDialog;
+    private Disposable mDisposable;
+    private WifiManager wifiManager;
 
     @Override
     public int layoutId() {
@@ -54,6 +62,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
     @Override
     protected void initView() {
         setTitleBack(R.string.setting);
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
         listenFocus();
     }
@@ -113,6 +122,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
                     mPresenter.modifyWifiInfo(NetWorkUtils.getSSIDWhenWifi(MyApplication.getAppContext()),
                             etWifiName.getText().toString(), etWifiPassword.getText().toString());
                     tMessageDialog.dismiss();
+                    showLoading();
                 }
             }).show();
         }
@@ -120,9 +130,34 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
 
     @Override
     public void onLoadData(Object resultData) {
-        ToastUtils.showShort(R.string.wifi_info_modify_success);
-        MyApplication.getAppContext().getUser().setAuthStatus(1);
-        ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
+        PermissionUtils.permission(PermissionConstants.LOCATION)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                        LoadingProgressDialog.showProgressDialog(ModifyWifiInfoActivity.this, getString(R.string.scanning));
+//                        if (wifiManager != null) {
+//                            wifiManager.setWifiEnabled(false);
+//                            wifiManager.setWifiEnabled(true);
+//                            wifiManager.startScan();
+//                        }
+                        MyApplication.getAppContext().getUser().setAuthStatus(1);
+                        ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
+                    }
+
+                    @Override
+                    public void onDenied() {
+
+                    }
+                }).request();
+//        etWifiName.postDelayed(() -> {
+//            hideLoading();
+//            if (NetWorkUtils.scanWifiByName(ModifyWifiInfoActivity.this, etWifiName.getText().toString())) {
+//                ToastUtils.showShort(R.string.wifi_info_modify_success);
+//            } else {
+//                ToastUtils.showShort(R.string.set_success_scan_fail);
+//            }
+//
+//        }, 3000);
     }
 
     private boolean checkInput() {

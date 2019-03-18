@@ -29,7 +29,9 @@ public interface Values {
      */
     int ONLINE_TYPE_DYNAMIC_IP = 0x0013;
 
-    /**----------------------REQUEST CODE   RESULT CODE--------------------*/
+    /**
+     * ----------------------REQUEST CODE   RESULT CODE--------------------
+     */
     int REQUEST_SENIOR_SETTING = 0x0001;
     /**
      * request code 相机拍照
@@ -39,6 +41,18 @@ public interface Values {
      * request code 相册获取
      */
     int REQUEST_SYSTEM_GALLERY = 0x0012;
+    /**
+     * 获取控制时间
+     */
+    int REQUEST_EDIT_TIME = 0x0002;
+    /**
+     * 获取控制设备
+     */
+    int REQUEST_EDIT_DEVICE = 0x0003;
+    /**
+     * 获取控制app
+     */
+    int REQUEST_BAN_APP = 0x0004;
 
 
 }

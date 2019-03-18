@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.activity.home.parent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -70,6 +71,21 @@ public class ChooseBanAppActivity extends BaseActivity {
 
     @Override
     protected void onTitleRightClick() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(Keys.BAN_APP_PLAN, convert(appList));
+        intent.putExtras(bundle);
+        setResult(RESULT_OK,intent);
         onTitleLeftClick();
+    }
+
+    private ArrayList<AppBean> convert(ArrayList<AppBean> appList) {
+        ArrayList<AppBean> result = new ArrayList<>();
+        for (AppBean bean : appList) {
+            if (bean.isBan()) {
+                result.add(bean);
+            }
+        }
+        return result;
     }
 }

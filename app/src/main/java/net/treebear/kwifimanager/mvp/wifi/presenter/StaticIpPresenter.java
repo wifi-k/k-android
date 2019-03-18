@@ -29,14 +29,7 @@ public class StaticIpPresenter extends BasePresenter<StaticIpContract.IStaticIpV
         mModel.staticIpSet(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
-                    @Override
-                    public void onSuccess(BaseResponse<Object> data) {
-                        if (mView != null) {
-                            mView.onLoadData(data);
-                        }
-                    }
-                });
+               queryNetStatus();
             }
 
             @Override

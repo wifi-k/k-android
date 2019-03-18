@@ -37,6 +37,8 @@ public interface Keys {
      * 禁用app计划
      */
     String BAN_APP_PLAN = "ban_app_plan";
+    String TIME_LIMIT_TIME = "time_limit_time";
+    String PARENT_CONTROL_DEVICE = "parent_control_device";
 
     String SETTINGS_ITEM_DATA = "settings_item_data";
 

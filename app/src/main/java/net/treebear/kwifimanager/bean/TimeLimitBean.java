@@ -1,12 +1,15 @@
 package net.treebear.kwifimanager.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author Administrator
  */
-public class TimeLimitBean implements Serializable {
+public class TimeLimitBean implements Serializable, Parcelable {
 
     private long id;
 
@@ -16,12 +19,12 @@ public class TimeLimitBean implements Serializable {
 
     private String endTime;
 
-    private List<Daybean> days;
+    private ArrayList<Daybean> days;
 
     public TimeLimitBean() {
     }
 
-    public TimeLimitBean(String name, String startTime, String endTime, List<Daybean> days) {
+    public TimeLimitBean(String name, String startTime, String endTime, ArrayList<Daybean> days) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -60,12 +63,17 @@ public class TimeLimitBean implements Serializable {
         this.endTime = endTime;
     }
 
-    public List<Daybean> getDays() {
+    public ArrayList<Daybean> getDays() {
         return days;
     }
 
-    public void setDays(List<Daybean> days) {
-        this.days = days;
+    public void setDays(ArrayList<Daybean> days) {
+        if (this.days == null) {
+            this.days = days;
+        } else {
+            this.days.clear();
+            this.days.addAll(days);
+        }
     }
 
     @Override
@@ -78,4 +86,39 @@ public class TimeLimitBean implements Serializable {
                 ", days=" + days +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.startTime);
+        dest.writeString(this.endTime);
+        dest.writeList(this.days);
+    }
+
+    protected TimeLimitBean(Parcel in) {
+        this.id = in.readLong();
+        this.name = in.readString();
+        this.startTime = in.readString();
+        this.endTime = in.readString();
+        this.days = new ArrayList<Daybean>();
+        in.readList(this.days, Daybean.class.getClassLoader());
+    }
+
+    public static final Creator<TimeLimitBean> CREATOR = new Creator<TimeLimitBean>() {
+        @Override
+        public TimeLimitBean createFromParcel(Parcel source) {
+            return new TimeLimitBean(source);
+        }
+
+        @Override
+        public TimeLimitBean[] newArray(int size) {
+            return new TimeLimitBean[size];
+        }
+    };
 }

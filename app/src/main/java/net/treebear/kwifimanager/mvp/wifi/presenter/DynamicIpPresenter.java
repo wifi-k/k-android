@@ -20,14 +20,7 @@ public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.IDynamic
         mModel.dynamicIpSet(new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
-                    @Override
-                    public void onSuccess(BaseResponse<Object> data) {
-                        if (mView != null) {
-                            mView.onLoadData(data);
-                        }
-                    }
-                });
+               queryNetStatus();
             }
 
             @Override

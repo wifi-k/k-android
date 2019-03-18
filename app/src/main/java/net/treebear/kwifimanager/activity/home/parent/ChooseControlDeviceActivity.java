@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.activity.home.parent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
-import net.treebear.kwifimanager.bean.BanAppPlanBean;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
@@ -34,10 +34,9 @@ public class ChooseControlDeviceActivity extends BaseActivity {
 
     @Override
     public void initParams(Bundle params) {
-        BanAppPlanBean needModifyPlan = (BanAppPlanBean) params.getSerializable(Keys.BAN_APP_PLAN);
+        List<MobilePhoneBean> banMobile = params.getParcelableArrayList(Keys.PARENT_CONTROL_DEVICE);
         ArrayList<MobilePhoneBean> mobilePhoneList = BeanTest.getMobilePhoneList(10);
-        if (needModifyPlan != null) {
-            List<MobilePhoneBean> banMobile = needModifyPlan.getBanMobile();
+        if (banMobile != null) {
             for (MobilePhoneBean bean : banMobile) {
                 for (MobilePhoneBean phone : mobilePhoneList) {
                     if (phone.getName().equals(bean.getName())) {
@@ -59,6 +58,21 @@ public class ChooseControlDeviceActivity extends BaseActivity {
 
     @Override
     protected void onTitleRightClick() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(Keys.PARENT_CONTROL_DEVICE, convert(adapter.getData()));
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
         onTitleLeftClick();
+    }
+
+    private ArrayList<MobilePhoneBean> convert(List<MobilePhoneBean> data) {
+        ArrayList<MobilePhoneBean> result = new ArrayList<>();
+        for (MobilePhoneBean datum : data) {
+            if (datum.isBanOnline()){
+                result.add(datum);
+            }
+        }
+        return result;
     }
 }

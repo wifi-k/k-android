@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 
@@ -71,6 +72,7 @@ public class NetWorkUtils {
         }
         return "";
     }
+
     /**
      * Wifi环境下获取当前Wifi \\ mac// bssid
      */
@@ -118,6 +120,43 @@ public class NetWorkUtils {
             }
         }
         return number;
+    }
+
+    /**
+     * 监测附近有ssid 位name的wifi
+     */
+    public static boolean scanWifiByName(Context context, String name) {
+        List<ScanResult> wifiList = getWifiList(context);
+        TLog.i(wifiList);
+        if (wifiList != null) {
+            for (ScanResult scanResult : wifiList) {
+                TLog.i(scanResult);
+                if (scanResult.SSID != null && getRealSSID(scanResult).equals(name)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static String getRealSSID(ScanResult scanResult) {
+        String so0 = scanResult.SSID;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (scanResult.SSID.startsWith("\"") && scanResult.SSID.endsWith("\"")) {
+                so0 = scanResult.SSID.substring(1, scanResult.SSID.length() - 1);
+            }
+        }
+        return so0;
+    }
+
+    public static String getRealSSID(String ssid0) {
+        String so0 = ssid0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (ssid0.startsWith("\"") && ssid0.endsWith("\"")) {
+                so0 = ssid0.substring(1, ssid0.length() - 1);
+            }
+        }
+        return so0;
     }
 
     /**

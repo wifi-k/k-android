@@ -1,5 +1,6 @@
-package net.treebear.kwifimanager.activity.home.time;
+package net.treebear.kwifimanager.activity.home.parent;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +11,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.adapter.BanTimeAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
-import net.treebear.kwifimanager.bean.TimeLimitBean;
+import net.treebear.kwifimanager.bean.BanAppPlanBean;
+import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.widget.TInputDialog;
 
@@ -27,7 +29,7 @@ public class TimeControlListActivity extends BaseActivity {
     TextView tvTips;
     @BindView(R.id.rv_ban_app)
     RecyclerView recyclerView;
-    private ArrayList<TimeLimitBean> timeLimitList;
+    private ArrayList<BanAppPlanBean> timeLimitList;
     private int currentModifyPosition;
     private TInputDialog tInputDialog;
     private BanTimeAdapter banTimeAdapter;
@@ -41,7 +43,7 @@ public class TimeControlListActivity extends BaseActivity {
     protected void initView() {
         setTitleBack(R.string.online_time_control);
         tvTips.setText(R.string.ban_time_tips);
-        timeLimitList = BeanTest.getTimeLimitList();
+        timeLimitList = BeanTest.getBanAppPlanList();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         banTimeAdapter = new BanTimeAdapter(timeLimitList);
         recyclerView.setAdapter(banTimeAdapter);
@@ -61,6 +63,14 @@ public class TimeControlListActivity extends BaseActivity {
                     default:
                         break;
                 }
+            }
+        });
+        banTimeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Keys.BAN_APP_PLAN, timeLimitList.get(position));
+                startActivity(TimeControlPlanActivity.class, bundle);
             }
         });
     }
