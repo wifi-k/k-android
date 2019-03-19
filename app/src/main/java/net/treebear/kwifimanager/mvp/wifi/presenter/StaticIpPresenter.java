@@ -51,7 +51,7 @@ public class StaticIpPresenter extends BasePresenter<StaticIpContract.IStaticIpV
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 if (mView != null) {
-                    mView.onLoadData(resultData.getData());
+                    mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
                 }
             }
         });

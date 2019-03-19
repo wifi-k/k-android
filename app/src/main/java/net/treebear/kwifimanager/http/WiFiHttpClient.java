@@ -10,7 +10,7 @@ import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.IModel;
-import net.treebear.kwifimanager.mvp.wifi.model.LoginWifiModel;
+import net.treebear.kwifimanager.mvp.wifi.model.WiFiSettingProxyModel;
 import net.treebear.kwifimanager.util.RequestBodyUtils;
 import net.treebear.kwifimanager.util.SecurityUtils;
 import net.treebear.kwifimanager.util.TLog;
@@ -36,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WiFiHttpClient {
     private static WiFiHttpClient mRetrofitHttp;
-    private static LoginWifiModel loginWifiModel;
+    private static WiFiSettingProxyModel wifiProxyClient;
     private String baseUrl = Config.Urls.ROUTER_BASE_URL;
     private Retrofit retrofit;
     private static String apiToken = "";
@@ -139,14 +139,14 @@ public class WiFiHttpClient {
             TLog.w("Current device is login ing !");
             return;
         }
-        if (loginWifiModel == null) {
-            loginWifiModel = new LoginWifiModel();
+        if (wifiProxyClient == null) {
+            wifiProxyClient = new WiFiSettingProxyModel();
         }
         isLogin_ing = true;
         ArrayMap<String, Object> map = new ArrayMap<>();
         map.put(Keys.NAME, "admin");
         map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD));
-        loginWifiModel.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+        wifiProxyClient.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.e("OkHttp", "WiFi login success !" + TLog.valueOf(resultData));
@@ -177,12 +177,13 @@ public class WiFiHttpClient {
     }
 
     private static void getDeviceSerialId() {
-        loginWifiModel.getNodeInfo(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+        wifiProxyClient.getNodeInfo(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.i(resultData);
                 if (resultData != null && resultData.getData() != null) {
-                    MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
+//                    MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
+                    MyApplication.getAppContext().saveDeviceInfo(resultData.getData());
                 }
                 getDeviceOnlineStatus();
             }
@@ -195,7 +196,7 @@ public class WiFiHttpClient {
     }
 
     private static void getDeviceOnlineStatus() {
-        loginWifiModel.queryNetStatus(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+        wifiProxyClient.queryNetStatus(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.i("getDeviceOnlineStatus ： " + TLog.valueOf(resultData));

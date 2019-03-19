@@ -13,7 +13,7 @@ import okhttp3.RequestBody;
  */
 public class LoginWifiContract {
 
-    public interface ILoginView extends IView<WifiDeviceInfo> {
+    public interface ILoginView extends IView<Object> {
 
     }
 

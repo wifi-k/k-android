@@ -106,9 +106,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
         MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
-        hideLoading();
-        startActivity(ModifyWifiInfoActivity.class);
-        ToastUtils.showShort(R.string.connect_success);
+
     }
 
     @Override
@@ -124,6 +122,11 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
                         mPresenter.queryNetStatus();
                     }
                 }, 2000);
+                break;
+            case Config.WifiResponseCode.CONNECT_SUCCESS:
+                hideLoading();
+                startActivity(ModifyWifiInfoActivity.class);
+                ToastUtils.showShort(R.string.connect_success);
                 break;
             default:
                 hideLoading();

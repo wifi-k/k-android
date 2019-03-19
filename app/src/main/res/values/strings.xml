@@ -272,5 +272,8 @@
     <string name="close">关</string>
     <string name="address_duration_tips">分钟（支持1-2880分钟，默认120分钟）</string>
     <string name="last_week_action_time">上周活跃时长</string>
+    <string name="wifi_restart_success">WiFi重启成功</string>
+    <string name="wifi_restart_failed">WiFi重启失败</string>
+    <string name="reset_device_success">恢复出厂设置成功</string>
 
 </resources>

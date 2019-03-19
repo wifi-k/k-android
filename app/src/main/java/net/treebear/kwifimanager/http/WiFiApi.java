@@ -63,4 +63,16 @@ public interface WiFiApi {
      */
     @POST("node/get")
     Observable<BaseResponse<WifiDeviceInfo>> getNode();
+
+    /**
+     * 重启
+     */
+    @POST("node/restart")
+    Observable<BaseResponse<Object>> restart();
+
+    /**
+     * 重置
+     */
+    @POST("node/reset")
+    Observable<BaseResponse<Object>> reset();
 }

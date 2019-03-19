@@ -42,7 +42,7 @@ public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.IDynamic
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 if (mView != null) {
-                    mView.onLoadData(resultData.getData());
+                    mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
                 }
             }
         });
