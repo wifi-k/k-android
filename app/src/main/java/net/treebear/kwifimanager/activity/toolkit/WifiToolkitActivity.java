@@ -25,14 +25,14 @@ public class WifiToolkitActivity extends BaseActivity {
     TextView tvSettingWifiName;
     @BindView(R.id.tv_setting_wifi_password)
     TextView tvSettingWifiPassword;
-    @BindView(R.id.tv_guard_join_net)
-    TextView tvGuardJoinNet;
-    @BindView(R.id.tv_senior_settings)
-    TextView tvSeniorSettings;
+//    @BindView(R.id.tv_guard_join_net)
+//    TextView tvGuardJoinNet;
+//    @BindView(R.id.tv_senior_settings)
+//    TextView tvSeniorSettings;
     @BindView(R.id.tv_online_setting)
     TextView tvOnlineSetting;
-    @BindView(R.id.tv_lan_setting)
-    TextView tvLanSetting;
+//    @BindView(R.id.tv_lan_setting)
+//    TextView tvLanSetting;
     @BindView(R.id.tv_restart_device)
     TextView tvRestartDevice;
     @BindView(R.id.tv_dhcp_server)
@@ -68,25 +68,25 @@ public class WifiToolkitActivity extends BaseActivity {
         showPasswordInputDialog();
     }
 
-    @OnClick(R.id.tv_guard_join_net)
-    public void onTvGuardJoinNetClicked() {
-        startActivity(GuardDeviceJoinActivity.class);
-    }
-
-    @OnClick(R.id.tv_senior_settings)
-    public void onTvSeniorSettingsClicked() {
-        startActivity(SeniorWifiSettingActivity.class);
-    }
+//    @OnClick(R.id.tv_guard_join_net)
+//    public void onTvGuardJoinNetClicked() {
+//        startActivity(GuardDeviceJoinActivity.class);
+//    }
+//
+//    @OnClick(R.id.tv_senior_settings)
+//    public void onTvSeniorSettingsClicked() {
+//        startActivity(SeniorWifiSettingActivity.class);
+//    }
 
     @OnClick(R.id.tv_online_setting)
     public void onTvOnlineSettingClicked() {
         startActivity(OnlineSettingActivity.class);
     }
 
-    @OnClick(R.id.tv_lan_setting)
-    public void onTvLanSettingClicked() {
-        startActivity(LanSettingActivity.class);
-    }
+//    @OnClick(R.id.tv_lan_setting)
+//    public void onTvLanSettingClicked() {
+//        startActivity(LanSettingActivity.class);
+//    }
 
     @OnClick(R.id.tv_restart_device)
     public void onTvRestartDeviceClicked() {

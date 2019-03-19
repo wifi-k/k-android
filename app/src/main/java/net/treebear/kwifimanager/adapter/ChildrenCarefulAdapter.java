@@ -34,9 +34,10 @@ public class ChildrenCarefulAdapter extends BaseQuickAdapter<MobilePhoneBean, Ba
                 helper.setImageResource(R.id.iv_children_phone_icon, R.mipmap.ic_device_pad);
                 break;
         }
-        helper.setText(R.id.tv_mobile_name, item.getName());
-        helper.setText(R.id.tv_average_use_time, String.format("上周平均每日活跃时长：%s", DateFormatUtils.mill2Time(item.getAverageTime())));
-        helper.setText(R.id.tv_use_time_rank, String.format("超过%s%%同龄人上网时长", item.getRank()));
+        helper.setText(R.id.tv_mobile_name, item.getName())
+                .setText(R.id.tv_average_use_time, String.format("上周平均每日活跃时长：%s", DateFormatUtils.mill2Time(item.getAverageTime())))
+                .setText(R.id.tv_use_time_rank, String.format("超过%s%%同龄人上网时长", item.getRank()))
+                .addOnClickListener(R.id.tv_look_week_report);
         LinearLayout llAppWrapper = helper.getView(R.id.ll_active_app_wrapper);
         for (AppBean appBean : item.getActiveApp()) {
             ImageView appIcon = (ImageView) LayoutInflater.from(mContext).inflate(R.layout.item_app_icon, null);

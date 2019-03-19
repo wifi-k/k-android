@@ -7,10 +7,267 @@
     tools:context=".activity.toolkit.DHCPServerActivity">
 
     <include
+        android:id="@+id/include38"
         layout="@layout/common_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.37"/>
+
+    <TextView
+        android:id="@+id/textView71"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/dhcp_server_"
+        android:textColor="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/include38" />
+
+    <TextView
+        android:id="@+id/textView73"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
+        android:text="@string/gateway_"
+        android:textColor="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView77" />
+
+    <TextView
+        android:id="@+id/textView76"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/address_pool_end_ad_"
+        android:textColor="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView75" />
+
+    <TextView
+        android:id="@+id/textView77"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/address_duration_"
+        android:textColor="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView76" />
+
+    <TextView
+        android:id="@+id/textView75"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/address_pool_start_ad_"
+        android:textColor="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView71" />
+
+    <TextView
+        android:id="@+id/textView72"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/first_dns_server"
+        android:textColor="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView73" />
+
+    <TextView
+        android:id="@+id/textView74"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/second_dns_server"
+        android:textColor="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView72" />
+
+    <RadioGroup
+        android:id="@+id/rg_dhcp_server"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView71"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="@+id/textView71"
+        app:layout_constraintVertical_bias="1.0">
+
+        <RadioButton
+            android:id="@+id/rb_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:button="@drawable/bg_check_radio"
+            android:checked="true"
+            android:paddingStart="5dp"
+            android:text="@string/open" />
+
+        <RadioButton
+            android:id="@+id/rb_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_weight="1"
+            android:button="@drawable/bg_check_radio"
+            android:paddingStart="5dp"
+            android:text="@string/close" />
+
+        <RadioButton
+            android:id="@+id/rb_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_weight="1"
+            android:button="@drawable/bg_check_radio"
+            android:paddingStart="5dp"
+            android:text="@string/sb_auto" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/et_address_start"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_bg_f6f7fb"
+        android:digits="@string/digits_ip"
+        android:ems="10"
+        android:hint="192.168.1.100"
+        android:inputType="number"
+        android:paddingStart="12dp"
+        android:textColor="@color/text_28354C"
+        android:textColorHint="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView75"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView75"
+        app:layout_constraintTop_toTopOf="@+id/textView75" />
+
+    <EditText
+        android:id="@+id/et_dns2"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_bg_f6f7fb"
+        android:digits="@string/digits_ip"
+        android:ems="10"
+        android:hint="0.0.0.0"
+        android:inputType="number"
+        android:paddingStart="12dp"
+        android:textColor="@color/text_28354C"
+        android:textColorHint="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView74"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView75"
+        app:layout_constraintTop_toTopOf="@+id/textView74" />
+
+    <EditText
+        android:id="@+id/et_dns1"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_bg_f6f7fb"
+        android:digits="@string/digits_ip"
+        android:ems="10"
+        android:hint="0.0.0.0"
+        android:inputType="number"
+        android:paddingStart="12dp"
+        android:textColor="@color/text_28354C"
+        android:textColorHint="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView72"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView75"
+        app:layout_constraintTop_toTopOf="@+id/textView72" />
+
+    <EditText
+        android:id="@+id/et_gateway"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_bg_f6f7fb"
+        android:digits="@string/digits_ip"
+        android:ems="10"
+        android:hint="0.0.0.0"
+        android:inputType="number"
+        android:paddingStart="12dp"
+        android:textColor="@color/text_28354C"
+        android:textColorHint="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView73"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView75"
+        app:layout_constraintTop_toTopOf="@+id/textView73" />
+
+    <EditText
+        android:id="@+id/et_address_duration"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_bg_f6f7fb"
+        android:digits="@string/digits_ip"
+        android:ems="10"
+        android:hint="120"
+        android:inputType="number"
+        android:paddingStart="12dp"
+        android:textColor="@color/text_28354C"
+        android:textColorHint="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView77"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView75"
+        app:layout_constraintTop_toTopOf="@+id/textView77" />
+
+    <EditText
+        android:id="@+id/et_address_end"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_bg_f6f7fb"
+        android:digits="@string/digits_ip"
+        android:ems="10"
+        android:hint="192.168.1.199"
+        android:inputType="number"
+        android:paddingStart="12dp"
+        android:textColor="@color/text_28354C"
+        android:textColorHint="@color/text_83"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView76"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView75"
+        app:layout_constraintTop_toTopOf="@+id/textView76" />
+
+    <TextView
+        android:id="@+id/textView78"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/address_duration_tips"
+        android:textColor="@color/text_83"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/et_address_duration" />
+
 </android.support.constraint.ConstraintLayout>

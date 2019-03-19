@@ -92,7 +92,7 @@
             <TextView
                 android:id="@+id/textView12"
                 style="@style/edit_title"
-                android:text="@string/gateway"
+                android:text="@string/gateway_"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 

@@ -13,11 +13,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.home.FamilyMemberActivity;
-import net.treebear.kwifimanager.activity.home.parent.ParentControlActivity;
+import net.treebear.kwifimanager.activity.home.WeekReportActivity;
 import net.treebear.kwifimanager.activity.home.device.AllDeviceListActivity;
 import net.treebear.kwifimanager.activity.home.device.DeviceDetailActivity;
 import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import net.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
+import net.treebear.kwifimanager.activity.home.parent.ParentControlActivity;
 import net.treebear.kwifimanager.activity.message.MessageListActivity;
 import net.treebear.kwifimanager.activity.toolkit.WifiToolkitActivity;
 import net.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
@@ -129,6 +130,18 @@ public class HomeBindFragment extends BaseFragment {
         rvChildrenDevice.setLayoutManager(new LinearLayoutManager(mContext));
         ChildrenCarefulAdapter childrenCarefulAdapter = new ChildrenCarefulAdapter(childrenPhoneList);
         rvChildrenDevice.setAdapter(childrenCarefulAdapter);
+        childrenCarefulAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.tv_look_week_report:
+                        startActivity(WeekReportActivity.class);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     private void setMobileListAdapter() {
@@ -226,6 +239,7 @@ public class HomeBindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_look_week_report)
     public void onTvLookWeekReportClicked() {
+        startActivity(WeekReportActivity.class);
     }
 
     @OnClick(R.id.tv_wifi_settings)

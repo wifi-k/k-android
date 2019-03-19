@@ -95,4 +95,7 @@ dependencies {
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     // 选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.7'
+    //    图表
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+
 }

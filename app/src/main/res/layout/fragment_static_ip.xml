@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:paddingStart="10dp"
-        android:text="@string/gateway"
+        android:text="@string/gateway_"
         android:textColor="@color/text_28354C"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/textView63" />
