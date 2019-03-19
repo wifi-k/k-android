@@ -251,5 +251,18 @@
     <string name="connect_status">连接状态：</string>
     <string name="gateway_address_">网关地址：</string>
     <string name="update_ip_address">更新IP地址</string>
+    <string name="digits_ip">1234567890.</string>
+    <string name="can_null_select">(可选)</string>
+    <string name="broadband_account_">宽带账号：</string>
+    <string name="broadband_password_">宽带密码：</string>
+    <string name="dns_server_">DNS服务器：</string>
+    <string name="disconnect">断开</string>
+    <string name="connect">连接</string>
+    <string name="wan_connect_ok">WAN口连接正常</string>
+    <string name="wan_connect_no">WAN口连接异常</string>
+    <string name="option_update_success">配置更新成功</string>
+    <string name="update_option_info">更新配置信息</string>
+
+    <string name="check_pppoe_account_info">请输入正确的宽带账号和密码提交</string>
 
 </resources>

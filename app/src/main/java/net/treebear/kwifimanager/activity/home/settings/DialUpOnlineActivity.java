@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
 import net.treebear.kwifimanager.mvp.wifi.presenter.DialUpPresenter;
@@ -25,7 +27,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPresenter, Object> implements DialUpContract.IDialUpView {
+public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPresenter, WifiDeviceInfo> implements DialUpContract.IDialUpView {
 
     @BindView(R.id.et_net_account)
     EditText etNetAccount;
@@ -40,6 +42,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
     @BindView(R.id.btn_dial_up_confirm)
     Button btnDialUpConfirm;
     private boolean passwordVisible = false;
+    private int count = 0;
 
     @Override
     public int layoutId() {
@@ -93,24 +96,34 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
     @OnClick(R.id.btn_dial_up_confirm)
     public void onBtnDialUpConfirmClicked() {
         showLoading();
-
+        count = 0;
         mPresenter.dialUpSet(etNetAccount.getText().toString(), etNetPassowrd.getText().toString());
+    }
+
+    @Override
+    public void onLoadData(WifiDeviceInfo resultData) {
+        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        deviceInfo.setConnect(true);
+        deviceInfo.setWan(resultData.getWan());
+        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+        hideLoading();
+        startActivity(ModifyWifiInfoActivity.class);
+        ToastUtils.showShort(R.string.connect_success);
     }
 
     @Override
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
+                if (++count > 4) {
+                    hideLoading();
+                    ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                }
                 btnDialUpConfirm.postDelayed(() -> {
                     if (mPresenter != null) {
                         mPresenter.queryNetStatus();
                     }
                 }, 2000);
-                break;
-            case Config.WifiResponseCode.CONNECT_SUCCESS:
-                hideLoading();
-                ToastUtils.showShort(R.string.connect_success);
-                startActivity(ModifyWifiInfoActivity.class);
                 break;
             default:
                 hideLoading();

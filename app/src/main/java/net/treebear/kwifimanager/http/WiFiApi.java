@@ -50,7 +50,7 @@ public interface WiFiApi {
      * 查询网络状态
      */
     @POST("network/status")
-    Observable<BaseResponse<Object>> queryWifiStatus();
+    Observable<BaseResponse<WifiDeviceInfo>> queryWifiStatus();
 
     /**
      * 设置wifi参数

@@ -2,6 +2,7 @@ package net.treebear.kwifimanager.mvp.wifi.presenter;
 
 import net.treebear.kwifimanager.base.BasePresenter;
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 import net.treebear.kwifimanager.mvp.wifi.model.DynamicIpModel;
@@ -20,7 +21,7 @@ public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.IDynamic
         mModel.dynamicIpSet(new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-               queryNetStatus();
+                queryNetStatus();
             }
 
             @Override
@@ -37,11 +38,11 @@ public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.IDynamic
         if (mModel == null) {
             return;
         }
-        mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
+        mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<WifiDeviceInfo>>() {
             @Override
-            public void onSuccess(BaseResponse<Object> resultData) {
+            public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 if (mView != null) {
-                    mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
+                    mView.onLoadData(resultData.getData());
                 }
             }
         });

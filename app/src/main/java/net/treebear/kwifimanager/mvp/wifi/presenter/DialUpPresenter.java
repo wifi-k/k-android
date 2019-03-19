@@ -4,6 +4,7 @@ import android.util.ArrayMap;
 
 import net.treebear.kwifimanager.base.BasePresenter;
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
@@ -43,9 +44,9 @@ public class DialUpPresenter extends BasePresenter<DialUpContract.IDialUpView, D
         if (mModel == null) {
             return;
         }
-        mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<Object>>() {
+        mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<WifiDeviceInfo>>() {
             @Override
-            public void onSuccess(BaseResponse<Object> resultData) {
+            public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 if (mView != null) {
                     mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
                 }

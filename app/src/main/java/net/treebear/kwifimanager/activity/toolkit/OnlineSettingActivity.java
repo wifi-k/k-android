@@ -2,13 +2,15 @@ package net.treebear.kwifimanager.activity.toolkit;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v4.app.FragmentManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseFragmentActivity;
+import net.treebear.kwifimanager.config.ConstConfig;
 import net.treebear.kwifimanager.fragment.DynamicOnlineFragment;
+import net.treebear.kwifimanager.fragment.PPPOEFragment;
+import net.treebear.kwifimanager.fragment.StaticIpFragment;
 import net.treebear.kwifimanager.widget.TChooseOnlineTypePop;
 
 import butterknife.BindView;
@@ -25,7 +27,8 @@ public class OnlineSettingActivity extends BaseFragmentActivity {
     FrameLayout fragmentWrapper;
     private TChooseOnlineTypePop tChooseOnlineTypePop;
     private DynamicOnlineFragment dynamicOnlineFragment;
-    private FragmentManager supportFragmentManager;
+    private StaticIpFragment staticIpFragment;
+    private PPPOEFragment pppoeFragment;
 
     @Override
     public int layoutId() {
@@ -45,7 +48,9 @@ public class OnlineSettingActivity extends BaseFragmentActivity {
 
     private void initFragment() {
         dynamicOnlineFragment = new DynamicOnlineFragment();
-        addFragments(dynamicOnlineFragment);
+        staticIpFragment = new StaticIpFragment();
+        pppoeFragment = new PPPOEFragment();
+        addFragments(dynamicOnlineFragment, staticIpFragment, pppoeFragment);
     }
 
     @OnClick(R.id.tv_choose_online_type)
@@ -54,18 +59,9 @@ public class OnlineSettingActivity extends BaseFragmentActivity {
             tChooseOnlineTypePop = new TChooseOnlineTypePop(this);
             tChooseOnlineTypePop.setOnChooseTypeList(new TChooseOnlineTypePop.OnChooseTypeListener() {
                 @Override
-                public void onClickAutoIp() {
-
-                }
-
-                @Override
-                public void onClickStaticIp() {
-
-                }
-
-                @Override
-                public void onClickPPPOE() {
-
+                public void onClickItem(int position) {
+                    tvChooseOnlineType.setText(ConstConfig.ONLINE_TIME_TYPE.get(position));
+                    updateFragment(position);
                 }
             });
         }

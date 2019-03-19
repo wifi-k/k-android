@@ -4,8 +4,10 @@ import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
@@ -19,12 +21,14 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.IDynamicIpPresenter, Object> implements DynamicIpContract.IDynamicIpView {
+public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.IDynamicIpPresenter, WifiDeviceInfo> implements DynamicIpContract.IDynamicIpView {
 
     @BindView(R.id.rg_online_type)
     RadioGroup rgOnlineType;
 
     private int onlineType;
+
+    int count = 0;
 
     @Override
     public int layoutId() {
@@ -70,6 +74,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
             default:
                 LoadingProgressDialog.showProgressDialog(this, getString(R.string.try_to_connect_wifi));
                 mPresenter.dynamicIpSet();
+                count = 0;
                 showLoading();
                 // TODO: 2019/3/13
 //                startActivity(ModifyWifiInfoActivity.class);
@@ -77,26 +82,31 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
         }
     }
 
-//    @Override
-//    public void onLoadData(Object resultData) {
-//        startActivity(ModifyWifiInfoActivity.class);
-//    }
+    @Override
+    public void onLoadData(WifiDeviceInfo resultData) {
+        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        deviceInfo.setConnect(true);
+        deviceInfo.setWan(resultData.getWan());
+        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+        hideLoading();
+        ToastUtils.showShort(R.string.connect_success);
+        startActivity(ModifyWifiInfoActivity.class);
+    }
 
     @Override
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
+                if (++count > 4) {
+                    hideLoading();
+                    ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                }
                 // 延时1秒再次查询
                 rgOnlineType.postDelayed(() -> {
                     if (mPresenter != null) {
                         mPresenter.queryNetStatus();
                     }
                 }, 2000);
-                break;
-            case Config.WifiResponseCode.CONNECT_SUCCESS:
-                hideLoading();
-                ToastUtils.showShort(R.string.connect_success);
-                startActivity(ModifyWifiInfoActivity.class);
                 break;
             case Config.ServerResponseCode.CUSTOM_ERROR:
                 hideLoading();

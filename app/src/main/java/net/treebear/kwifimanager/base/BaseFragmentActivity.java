@@ -174,6 +174,15 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
             immersionBar.destroy();
         }
         lastClick = 0L;
+        if (fragmentManager != null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            for (Fragment fragment : mFragments) {
+                transaction.remove(fragment);
+            }
+            transaction.commit();
+            mFragments.clear();
+            mFragments = null;
+        }
         super.onDestroy();
     }
 
@@ -523,7 +532,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * @param newFragment 新fragment
      */
     protected void replaceFragment(int position, Fragment newFragment) {
-        if (mFragments.contains(newFragment)){
+        if (mFragments.contains(newFragment)) {
             return;
         }
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -568,11 +577,11 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     protected void addFragments(Fragment... fragments) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
-            for (Fragment fragment : fragments) {
-                if (!mFragments.contains(fragment)) {
-                    mFragments.add(fragment);
-                    fragmentTransaction.add(getFragmentHolderId(), fragment);
-                    fragmentTransaction.hide(fragment);
+            for (int i = 0; i < fragments.length; i++) {
+                if (!mFragments.contains(fragments[i])) {
+                    mFragments.add(fragments[i]);
+                    fragmentTransaction.add(getFragmentHolderId(), fragments[i], String.valueOf(i));
+                    fragmentTransaction.hide(fragments[i]);
                 }
             }
             currentFragmentIndex = 0;
@@ -587,11 +596,11 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     protected void addFragments(ArrayList<Fragment> fragments) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
-            for (Fragment fragment : fragments) {
-                if (!mFragments.contains(fragment)) {
-                    mFragments.add(fragment);
-                    fragmentTransaction.add(getFragmentHolderId(), fragment);
-                    fragmentTransaction.hide(fragment);
+            for (int i = 0; i < fragments.size(); i++) {
+                if (!mFragments.contains(fragments.get(i))) {
+                    mFragments.add(fragments.get(i));
+                    fragmentTransaction.add(getFragmentHolderId(), fragments.get(i), String.valueOf(i));
+                    fragmentTransaction.hide(fragments.get(i));
                 }
             }
             currentFragmentIndex = 0;
@@ -604,4 +613,5 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
 //        super.onSaveInstanceState(outState, outPersistentState);
     }
+
 }

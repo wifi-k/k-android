@@ -2,6 +2,7 @@ package net.treebear.kwifimanager.mvp.wifi.model;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.BaseWifiModel;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.mvp.wifi.contract.StaticIpContract;
 
 import okhttp3.RequestBody;
@@ -16,7 +17,7 @@ public class StaticIpModel extends BaseWifiModel implements StaticIpContract.ISt
     }
 
     @Override
-    public void queryNetStatus(AsyncCallBack<BaseResponse<Object>> callBack) {
+    public void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         bindObservable(mService.queryWifiStatus(),callBack);
     }
 }

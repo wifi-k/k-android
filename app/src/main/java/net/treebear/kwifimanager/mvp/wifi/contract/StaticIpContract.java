@@ -2,6 +2,7 @@ package net.treebear.kwifimanager.mvp.wifi.contract;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.IView;
 
@@ -12,7 +13,7 @@ import okhttp3.RequestBody;
  */
 public class StaticIpContract {
 
-    public interface IStaticIpView extends IView<Object> {
+    public interface IStaticIpView extends IView<WifiDeviceInfo> {
 
     }
 
@@ -46,6 +47,6 @@ public class StaticIpContract {
          * 查询wifi连接状态
          * @param callBack 回调
          */
-        void queryNetStatus(AsyncCallBack<BaseResponse<Object>> callBack);
+        void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack);
     }
 }

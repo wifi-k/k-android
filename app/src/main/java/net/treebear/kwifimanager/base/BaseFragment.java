@@ -35,7 +35,7 @@ import butterknife.Unbinder;
  * The little flower lies in the dust. It sought the path of the butterfly.
  */
 
-public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends Fragment implements IView<DATA> {
+public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment implements IView<DATA> {
     public static final String FULL_SCREEN = "full_screen";
     public static final String AUTO_TITLE = "auto_title";
     public static final String RIGHT_TEXT = "right_text";
@@ -322,6 +322,10 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
         LoadingProgressDialog.showProgressDialog(mContext);
     }
 
+    public void showLoading(String msg) {
+        LoadingProgressDialog.showProgressDialog(mContext, msg);
+    }
+
     public void hideLoading() {
         LoadingProgressDialog.dismissProgressDialog();
     }
@@ -338,5 +342,11 @@ public abstract class BaseFragment<P extends IPresenter<IView<?>>, DATA> extends
 
     protected boolean noDoubleClick() {
         return System.currentTimeMillis() - lastClick >= Config.Numbers.CLICK_LIMIT;
+    }
+
+    @Override
+    public void onDestroyView() {
+        hideLoading();
+        super.onDestroyView();
     }
 }

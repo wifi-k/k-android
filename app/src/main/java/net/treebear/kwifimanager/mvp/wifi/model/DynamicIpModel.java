@@ -2,6 +2,7 @@ package net.treebear.kwifimanager.mvp.wifi.model;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.BaseWifiModel;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 
 /**
@@ -14,7 +15,7 @@ public class DynamicIpModel extends BaseWifiModel implements DynamicIpContract.I
     }
 
     @Override
-    public void queryNetStatus(AsyncCallBack<BaseResponse<Object>> callBack) {
+    public void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         bindObservable(mService.queryWifiStatus(),callBack);
     }
 }

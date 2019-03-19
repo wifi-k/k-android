@@ -1,6 +1,7 @@
 package net.treebear.kwifimanager.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,20 +21,21 @@ public class TChooseOnlineTypePop {
     private final Context mContext;
     private PopupWindow popupWindow;
     private View mContentView;
+    private TextView tvDynamic;
+    private TextView tvStatic;
+    private TextView tvPppoe;
+    private TextView[] tvs;
+    public static final int DYNAMIC = 0;
+    public static final int STATIC = 1;
+    public static final int PPPOE = 2;
+    private int currentPosition = 0;
+    private int selectedColor = Color.parseColor("#25DBBD");
+    private int unSelectedColor = Color.parseColor("#28354C");
     private OnChooseTypeListener mListener = new OnChooseTypeListener() {
-        @Override
-        public void onClickAutoIp() {
-
-        }
 
         @Override
-        public void onClickStaticIp() {
-
-        }
-
-        @Override
-        public void onClickPPPOE() {
-
+        public void onClickItem(int position) {
+            TLog.i(position);
         }
 
         @Override
@@ -41,9 +43,6 @@ public class TChooseOnlineTypePop {
 
         }
     };
-    private TextView tvDynamic;
-    private TextView tvStatic;
-    private TextView tvPppoe;
 
     public TChooseOnlineTypePop(Context context) {
         mContext = context;
@@ -77,26 +76,28 @@ public class TChooseOnlineTypePop {
         tvDynamic = mContentView.findViewById(R.id.tv_dynamic_ip);
         tvStatic = mContentView.findViewById(R.id.tv_static_ip);
         tvPppoe = mContentView.findViewById(R.id.tv_pppoe);
-        tvDynamic.setOnClickListener(v -> {
-            mListener.onClickAutoIp();
-            popupWindow.dismiss();
-        });
-        tvStatic.setOnClickListener(v -> {
-            mListener.onClickStaticIp();
-            popupWindow.dismiss();
-        });
-        tvPppoe.setOnClickListener(v -> {
-            mListener.onClickPPPOE();
-            popupWindow.dismiss();
-        });
+        tvs = new TextView[]{tvDynamic, tvStatic, tvPppoe};
+        tvs[currentPosition].setTextColor(selectedColor);
+        tvDynamic.setOnClickListener(v -> onSelectItem(DYNAMIC));
+        tvStatic.setOnClickListener(v -> onSelectItem(STATIC));
+        tvPppoe.setOnClickListener(v -> onSelectItem(PPPOE));
+    }
 
+    private void onSelectItem(final int type) {
+        if (currentPosition != type) {
+            tvs[currentPosition].setTextColor(unSelectedColor);
+        }
+        mListener.onClickItem(type);
+        currentPosition = type;
+        tvs[currentPosition].setTextColor(selectedColor);
+        popupWindow.dismiss();
     }
 
     public void show(View parent) {
         if (popupWindow == null) {
             initPopupWindow();
         }
-        popupWindow.showAsDropDown(parent, Gravity.BOTTOM, DensityUtil.dip2px(mContext,20), Gravity.END);
+        popupWindow.showAsDropDown(parent, Gravity.BOTTOM, DensityUtil.dip2px(mContext, 20), Gravity.END);
     }
 
     public void setOnChooseTypeList(OnChooseTypeListener listener) {
@@ -110,11 +111,7 @@ public class TChooseOnlineTypePop {
     }
 
     public static abstract class OnChooseTypeListener {
-        public abstract void onClickAutoIp();
-
-        public abstract void onClickStaticIp();
-
-        public abstract void onClickPPPOE();
+        public abstract void onClickItem(int position);
 
         public void onDismiss() {
         }

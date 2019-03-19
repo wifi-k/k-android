@@ -2,11 +2,16 @@ package net.treebear.kwifimanager.mvp.wifi.contract;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.IView;
 
+/**
+ * @author Administrator
+ */
 public class DynamicIpContract {
-    public interface IDynamicIpView extends IView<Object> {
+
+    public interface IDynamicIpView extends IView<WifiDeviceInfo> {
 
     }
 
@@ -32,6 +37,6 @@ public class DynamicIpContract {
          * 查询wifi连接状态
          * @param callBack 回调
          */
-        void queryNetStatus(AsyncCallBack<BaseResponse<Object>> callBack);
+        void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack);
     }
 }

@@ -16,7 +16,7 @@ public class WifiDeviceInfo {
      * }
      * }
      */
-
+    private boolean connect;
     private String id;
     private String token;
     /**
@@ -24,6 +24,14 @@ public class WifiDeviceInfo {
      */
 
     private WanBean wan;
+
+    public boolean isConnect() {
+        return connect;
+    }
+
+    public void setConnect(boolean connect) {
+        this.connect = connect;
+    }
 
     public String getId() {
         return id;
@@ -42,6 +50,9 @@ public class WifiDeviceInfo {
     }
 
     public WanBean getWan() {
+        if (wan == null){
+            wan = new WanBean();
+        }
         return wan;
     }
 

@@ -3,8 +3,6 @@ package net.treebear.kwifimanager.http;
 
 import android.util.ArrayMap;
 
-import com.blankj.utilcode.util.ToastUtils;
-
 import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.base.BaseResponse;
@@ -152,7 +150,7 @@ public class WiFiHttpClient {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.e("OkHttp", "WiFi login success !" + TLog.valueOf(resultData));
-                ToastUtils.showShort(TLog.valueOf(resultData.getData().toString()));
+//                ToastUtils.showShort(TLog.valueOf(resultData.getData().toString()));
                 if (resultData.getData() != null) {
                     apiToken = resultData.getData().getToken();
                     updataApiToken(apiToken);
@@ -186,7 +184,7 @@ public class WiFiHttpClient {
                 if (resultData != null && resultData.getData() != null) {
                     MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
                 }
-//                getDeviceOnlineStatus();
+                getDeviceOnlineStatus();
             }
 
             @Override
@@ -197,10 +195,14 @@ public class WiFiHttpClient {
     }
 
     private static void getDeviceOnlineStatus() {
-        loginWifiModel.queryNetStatus(new IModel.AsyncCallBack<BaseResponse<Object>>() {
+        loginWifiModel.queryNetStatus(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
-            public void onSuccess(BaseResponse<Object> resultData) {
+            public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.i("getDeviceOnlineStatus ： " + TLog.valueOf(resultData));
+                WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+                deviceInfo.setConnect(true);
+                deviceInfo.setWan(resultData.getData().getWan());
+                MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
             }
 
             @Override

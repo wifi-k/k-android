@@ -21,7 +21,7 @@ public class LoginWifiModel extends BaseWifiModel implements LoginWifiContract.I
         bindObservable(mService.getNode(), callBack);
     }
 
-    public void queryNetStatus(AsyncCallBack<BaseResponse<Object>> callBack) {
+    public void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         bindObservable(mService.queryWifiStatus(),callBack);
     }
 }

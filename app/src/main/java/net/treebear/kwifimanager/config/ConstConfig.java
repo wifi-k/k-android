@@ -33,6 +33,12 @@ public interface ConstConfig {
         }
     };
 
+    ArrayList<Integer> ONLINE_TIME_TYPE = new ArrayList<Integer>(){{
+        add(R.string.auto_get_ip_address);
+        add(R.string.static_ip_address);
+        add(R.string.pppoe);
+    }};
+
     ArrayList<Integer> SPECTRUM_BANDWIDTH = new ArrayList<Integer>() {{
         add(R.string.auto);
         add(R.string.sb_20mhz);

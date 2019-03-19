@@ -5,8 +5,10 @@ import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.wifi.contract.StaticIpContract;
 import net.treebear.kwifimanager.mvp.wifi.presenter.StaticIpPresenter;
@@ -19,7 +21,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStaticIpPresenter, Object> implements StaticIpContract.IStaticIpView {
+public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStaticIpPresenter, WifiDeviceInfo> implements StaticIpContract.IStaticIpView {
 
     @BindView(R.id.et_ip_address)
     EditText etIpAddress;
@@ -33,6 +35,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
     EditText etSecendDns;
     @BindView(R.id.btn_next)
     Button btnNext;
+    int count = 0;
 
     @Override
     public int layoutId() {
@@ -54,6 +57,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
     public void onViewClicked() {
         if (checkInput()) {
             showLoading();
+            count = 0;
             mPresenter.staticIpSet(
                     etIpAddress.getText().toString(),
                     etSubnetMask.getText().toString(),
@@ -65,19 +69,29 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
     }
 
     @Override
+    public void onLoadData(WifiDeviceInfo resultData) {
+        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        deviceInfo.setConnect(true);
+        deviceInfo.setWan(resultData.getWan());
+        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+        hideLoading();
+        startActivity(ModifyWifiInfoActivity.class);
+        ToastUtils.showShort(R.string.connect_success);
+    }
+
+    @Override
     public void onLoadFail(String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
+                if (++count > 4) {
+                    hideLoading();
+                    ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                }
                 btnNext.postDelayed(() -> {
                     if (mPresenter != null) {
                         mPresenter.queryNetStatus();
                     }
                 }, 2000);
-                break;
-            case Config.WifiResponseCode.CONNECT_SUCCESS:
-                hideLoading();
-                startActivity(ModifyWifiInfoActivity.class);
-                ToastUtils.showShort(R.string.connect_success);
                 break;
             default:
                 hideLoading();

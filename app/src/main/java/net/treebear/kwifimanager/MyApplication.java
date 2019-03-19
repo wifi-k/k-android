@@ -101,6 +101,10 @@ public class MyApplication extends MultiDexApplication {
         return info;
     }
 
+    public void saveDeviceInfo(WifiDeviceInfo info) {
+        this.info = info;
+    }
+
     /**
      * @return 当前用户是否已认证
      */
