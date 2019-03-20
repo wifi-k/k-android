@@ -99,6 +99,7 @@ public class MainActivity extends BaseFragmentActivity {
         }
         updateHomeFragment();
         TLog.i(MyApplication.getAppContext().getUser().toString());
+        TLog.i(MyApplication.getAppContext().getDeviceInfo());
     }
 
     @Override

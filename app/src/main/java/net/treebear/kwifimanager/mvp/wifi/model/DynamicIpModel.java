@@ -18,4 +18,9 @@ public class DynamicIpModel extends BaseWifiModel implements DynamicIpContract.I
     public void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         bindObservable(mService.queryWifiStatus(),callBack);
     }
+
+    @Override
+    public void getNode(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
+        bindObservable(mService.getNode(),callBack);
+    }
 }

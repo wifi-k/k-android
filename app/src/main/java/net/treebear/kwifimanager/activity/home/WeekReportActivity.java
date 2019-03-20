@@ -3,6 +3,7 @@ package net.treebear.kwifimanager.activity.home;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -20,8 +21,10 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.adapter.ActiveAppAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
-import net.treebear.kwifimanager.util.TLog;
+import net.treebear.kwifimanager.bean.AppBean;
+import net.treebear.kwifimanager.test.BeanTest;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -39,6 +42,8 @@ public class WeekReportActivity extends BaseActivity {
     RecyclerView recyclerView;
 
     private String[] values = {"a", "b", "c", "d", "e", "f", "g"};
+    private ArrayList<AppBean> appList = new ArrayList<>();
+    private ActiveAppAdapter activeAppAdapter;
 
     @Override
     public int layoutId() {
@@ -49,41 +54,47 @@ public class WeekReportActivity extends BaseActivity {
     protected void initView() {
         setTitleBack("孩子的手机");
         initChart2();
+        setAdapter();
     }
+
+    private void setAdapter() {
+        appList.addAll(BeanTest.getAppList());
+        activeAppAdapter = new ActiveAppAdapter(appList);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerView.setAdapter(activeAppAdapter);
+    }
+
 
     private void initChart2() {
         {   // // Chart Style // //
             // background color
             chart.setBackgroundColor(Color.WHITE);
-
             // disable description text
             chart.getDescription().setEnabled(false);
-
             // enable touch gestures
             chart.setTouchEnabled(true);
-
             // set listeners
 //            chart.setOnChartValueSelectedListener(this);
             chart.setDrawGridBackground(false);
 
+            chart.setHighlightPerTapEnabled(true);
+            chart.setHighlightPerDragEnabled(false);
             // create marker to display box when values are selected
             MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-
             // Set the marker to the chart
             mv.setChartView(chart);
             chart.setMarker(mv);
-
             // enable scaling and dragging
             chart.setDragEnabled(true);
             chart.setScaleEnabled(false);
             // force pinch zoom along both axis
-            chart.setPinchZoom(false);
+            chart.setPinchZoom(true);
         }
 
         XAxis x = chart.getXAxis();
         x.setEnabled(true);
         //自定义x轴显示
-        MyXFormatter formatter = new MyXFormatter(values);
+        XAxisFormatter formatter = new XAxisFormatter(values);
         x.setDrawAxisLine(false);
         x.setDrawGridLines(false);
         //显示个数
@@ -97,9 +108,11 @@ public class WeekReportActivity extends BaseActivity {
         y.setTextColor(Color.parseColor("#83889B"));
         y.setDrawGridLines(true);
         y.setAxisLineColor(Color.parseColor("#36D2F3"));
-        setData(20, 150);
+        y.setAxisMinimum(0);
+        y.setAxisMaximum(24);
+        setData(8, 15);
         // draw points over time
-        chart.animateX(1000);
+        chart.animateX(300);
 
         chart.getAxisRight().setEnabled(false);
         // get the legend (only possible after setting data)
@@ -115,7 +128,7 @@ public class WeekReportActivity extends BaseActivity {
 
         for (int i = 0; i < count; i++) {
 
-            float val = (float) (new Random().nextInt(range)) + 10;
+            float val = (float) (new Random().nextInt(range));
             values.add(new Entry(i, val));
         }
 
@@ -130,9 +143,8 @@ public class WeekReportActivity extends BaseActivity {
             chart.notifyDataSetChanged();
         } else {
             // create a dataset and give it a type
-            set1 = new LineDataSet(values, "");
+            set1 = new LineDataSet(values, null);
             set1.setDrawIcons(false);
-            // TODO: 2019/3/19
             set1.setCubicIntensity(0.2f);
             set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
@@ -144,17 +156,14 @@ public class WeekReportActivity extends BaseActivity {
             set1.setLineWidth(1f);
 
             // draw points as solid circles
-//            set1.setDrawCircleHole(false);
+            set1.setDrawCircleHole(true);
 
             // customize legend entry
             set1.setFormLineWidth(1f);
-//            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-//            set1.setFormSize(15.f);
 
             // text size of values
-//            set1.setValueTextSize(9f);
             set1.setDrawValues(false);
-            set1.setDrawCircles(false);
+            set1.setDrawCircles(true);
             // draw selection line as dashed
 //            set1.enableDashedHighlightLine(10f, 5f, 0f);
 
@@ -187,20 +196,19 @@ public class WeekReportActivity extends BaseActivity {
         }
     }
 
-    public class MyXFormatter implements IAxisValueFormatter {
+    public class XAxisFormatter implements IAxisValueFormatter {
 
         private String[] mValues;
 
-        public MyXFormatter(String[] values) {
+        public XAxisFormatter(String[] values) {
             this.mValues = values;
         }
 
-        private static final String TAG = "MyXFormatter";
+        private static final String TAG = "XAxisFormatter";
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
             // "value" represents the position of the label on the axis (x or y)
-            TLog.i(TAG, "----->getFormattedValue: " + value);
             return mValues[(int) value % mValues.length];
         }
     }

@@ -14,7 +14,7 @@ import net.treebear.kwifimanager.base.BaseSeekBarChangeListener;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
-import net.treebear.kwifimanager.util.DateFormatUtils;
+import net.treebear.kwifimanager.util.DateTimeUtils;
 import net.treebear.kwifimanager.widget.TInputDialog;
 
 import butterknife.BindView;
@@ -72,7 +72,7 @@ public class DeviceDetailActivity extends BaseActivity {
         mobilePhoneBean = BeanTest.getMobilePhoneList(10).get(position);
         tvDeviceName.setText(mobilePhoneBean.getName());
         tvDeviceTime.setText(String.format("%s " + (mobilePhoneBean.isOnline() ? "上线" : "离线"),
-                DateFormatUtils.formatMDHmm(mobilePhoneBean.isOnline() ? mobilePhoneBean.getOnlineTime() : mobilePhoneBean.getOfflineTime())));
+                DateTimeUtils.formatMDHmm(mobilePhoneBean.isOnline() ? mobilePhoneBean.getOnlineTime() : mobilePhoneBean.getOfflineTime())));
         swbOnlineChildren.setChecked(mobilePhoneBean.isChildren());
         swbOnlineAlarm.setChecked(mobilePhoneBean.isOnlineAlarm());
         swbBlacklisting.setChecked(mobilePhoneBean.isBanOnline());

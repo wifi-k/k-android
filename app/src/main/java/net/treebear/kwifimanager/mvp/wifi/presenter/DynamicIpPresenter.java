@@ -41,8 +41,20 @@ public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.IDynamic
         mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+//                if (mView != null) {
+//                    mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
+//                }
+                getNode();
+            }
+        });
+    }
+
+    public void getNode() {
+        mModel.getNode(new BaseAsyncCallback<BaseResponse<WifiDeviceInfo>>() {
+            @Override
+            public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 if (mView != null) {
-                    mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
+                    mView.onLoadData(resultData.getData());
                 }
             }
         });

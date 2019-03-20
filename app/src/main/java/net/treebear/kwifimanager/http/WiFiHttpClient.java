@@ -200,10 +200,7 @@ public class WiFiHttpClient {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.i("getDeviceOnlineStatus ： " + TLog.valueOf(resultData));
-                WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
-                deviceInfo.setConnect(true);
-                deviceInfo.setWan(resultData.getData().getWan());
-                MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+                MyApplication.getAppContext().getDeviceInfo().setConnect(true);
             }
 
             @Override

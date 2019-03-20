@@ -38,5 +38,10 @@ public class DynamicIpContract {
          * @param callBack 回调
          */
         void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack);
+        /**
+         * 获取node
+         */
+        void getNode(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack);
+
     }
 }

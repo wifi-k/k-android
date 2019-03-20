@@ -12,7 +12,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.bean.AppBean;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.util.DateFormatUtils;
+import net.treebear.kwifimanager.util.DateTimeUtils;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class ChildrenCarefulAdapter extends BaseQuickAdapter<MobilePhoneBean, Ba
                 break;
         }
         helper.setText(R.id.tv_mobile_name, item.getName())
-                .setText(R.id.tv_average_use_time, String.format("上周平均每日活跃时长：%s", DateFormatUtils.mill2Time(item.getAverageTime())))
+                .setText(R.id.tv_average_use_time, String.format("上周平均每日活跃时长：%s", DateTimeUtils.mill2Time(item.getAverageTime())))
                 .setText(R.id.tv_use_time_rank, String.format("超过%s%%同龄人上网时长", item.getRank()))
                 .addOnClickListener(R.id.tv_look_week_report);
         LinearLayout llAppWrapper = helper.getView(R.id.ll_active_app_wrapper);

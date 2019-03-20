@@ -21,7 +21,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class StaticIpFragment extends BaseFragment<StaticIpContract.IStaticIpPresenter,WifiDeviceInfo> implements StaticIpContract.IStaticIpView {
+public class StaticIpFragment extends BaseFragment<StaticIpContract.IStaticIpPresenter, WifiDeviceInfo> implements StaticIpContract.IStaticIpView {
     @BindView(R.id.et_ip_address)
     EditText etIpAddress;
     @BindView(R.id.et_subnet)
@@ -84,7 +84,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.IStaticIpPre
             case Config.WifiResponseCode.CONNECT_FAIL:
                 if (++count > 4) {
                     hideLoading();
-                    ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                    ToastUtils.showShort(R.string.connect_fail);
                 }
                 tvUpdateOption.postDelayed(() -> {
                     if (mPresenter != null) {

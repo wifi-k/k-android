@@ -9,7 +9,7 @@ import com.suke.widget.SwitchButton;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.util.DateFormatUtils;
+import net.treebear.kwifimanager.util.DateTimeUtils;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class GuardJoinDeviceAdapter extends BaseQuickAdapter<MobilePhoneBean, Ba
     @Override
     protected void convert(BaseViewHolder helper, MobilePhoneBean item) {
         helper.setText(R.id.tv_device_name, item.getName())
-                .setText(R.id.tv_device_time, DateFormatUtils.createTimeInfoByStatusLength(item.isOnline(),
+                .setText(R.id.tv_device_time, DateTimeUtils.createTimeInfoByStatusLength(item.isOnline(),
                         item.isOnline() ? item.getOnlineTime() : item.getOfflineTime()))
                 .setChecked(R.id.sw_guard_device, item.isBanOnline());
         switch (item.getType()) {

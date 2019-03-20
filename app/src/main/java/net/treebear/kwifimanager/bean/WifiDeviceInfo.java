@@ -144,6 +144,20 @@ public class WifiDeviceInfo {
         public void setPasswd(String passwd) {
             this.passwd = passwd;
         }
+
+        @Override
+        public String toString() {
+            return "WanBean{" +
+                    "ip='" + ip + '\'' +
+                    ", netmask='" + netmask + '\'' +
+                    ", gateway='" + gateway + '\'' +
+                    ", dns1='" + dns1 + '\'' +
+                    ", dns2='" + dns2 + '\'' +
+                    ", type=" + type +
+                    ", name='" + name + '\'' +
+                    ", passwd='" + passwd + '\'' +
+                    '}';
+        }
     }
 
     @Override

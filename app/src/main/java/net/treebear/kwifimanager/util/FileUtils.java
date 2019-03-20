@@ -410,7 +410,7 @@ public class FileUtils {
             return;
         }
         // 为图片命名啊
-        String name = Config.Text.AP_NAME_START + DateFormatUtils.fmtYMDhmssNow() + ".jpg";
+        String name = Config.Text.AP_NAME_START + DateTimeUtils.fmtYMDhmssNow() + ".jpg";
         // 解析返回的图片成bitmap
         // 保存文件
         FileOutputStream fos = null;

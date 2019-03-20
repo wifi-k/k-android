@@ -4,6 +4,7 @@ import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -83,10 +84,13 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
-//        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
-//        deviceInfo.setConnect(true);
-//        deviceInfo.setWan(resultData.getWan());
-//        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        deviceInfo.setConnect(true);
+        deviceInfo.setWan(resultData.getWan());
+        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+        hideLoading();
+        startActivity(ModifyWifiInfoActivity.class);
+        ToastUtils.showShort(R.string.connect_success);
     }
 
     @Override
@@ -96,6 +100,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
                 if (++count > 4) {
                     hideLoading();
                     ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                    return;
                 }
                 // 延时1秒再次查询
                 rgOnlineType.postDelayed(() -> {

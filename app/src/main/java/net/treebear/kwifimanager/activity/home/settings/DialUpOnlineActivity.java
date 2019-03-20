@@ -106,7 +106,9 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
         MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
-
+        hideLoading();
+        startActivity(ModifyWifiInfoActivity.class);
+        ToastUtils.showShort(R.string.connect_success);
     }
 
     @Override
@@ -116,6 +118,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
                 if (++count > 4) {
                     hideLoading();
                     ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                    return;
                 }
                 btnDialUpConfirm.postDelayed(() -> {
                     if (mPresenter != null) {

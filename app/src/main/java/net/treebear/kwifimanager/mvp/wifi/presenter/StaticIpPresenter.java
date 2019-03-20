@@ -30,7 +30,7 @@ public class StaticIpPresenter extends BasePresenter<StaticIpContract.IStaticIpV
         mModel.staticIpSet(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-               queryNetStatus();
+                queryNetStatus();
             }
 
             @Override
@@ -50,8 +50,23 @@ public class StaticIpPresenter extends BasePresenter<StaticIpContract.IStaticIpV
         mModel.queryNetStatus(new BaseAsyncCallback<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+//                if (mView != null) {
+//                    mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
+//                }
+                getNode();
+            }
+        });
+    }
+
+    public void getNode() {
+        if (mModel == null) {
+            return;
+        }
+        mModel.getNode(new BaseAsyncCallback<BaseResponse<WifiDeviceInfo>>() {
+            @Override
+            public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 if (mView != null) {
-                    mView.onLoadFail("", Config.WifiResponseCode.CONNECT_SUCCESS);
+                    mView.onLoadData(resultData.getData());
                 }
             }
         });

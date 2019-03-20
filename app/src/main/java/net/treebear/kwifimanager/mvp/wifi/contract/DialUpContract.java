@@ -29,6 +29,7 @@ public class DialUpContract {
          * 查询网络连通状态
          */
         void queryNetStatus();
+
     }
 
     public interface IDialUpModel extends IModel {
@@ -46,5 +47,9 @@ public class DialUpContract {
          */
         void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack);
 
+        /**
+         * getNode
+         */
+        void getNode(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack);
     }
 }

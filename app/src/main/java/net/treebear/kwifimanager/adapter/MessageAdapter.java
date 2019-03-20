@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.bean.NoticeBean;
-import net.treebear.kwifimanager.util.DateFormatUtils;
+import net.treebear.kwifimanager.util.DateTimeUtils;
 
 import java.util.List;
 
@@ -23,6 +23,6 @@ public class MessageAdapter extends BaseQuickAdapter<NoticeBean, BaseViewHolder>
     protected void convert(BaseViewHolder helper, NoticeBean item) {
         helper.setText(R.id.tv_message_title,item.getTitle())
                 .setText(R.id.tv_message_content,item.getContent())
-                .setText(R.id.tv_message_time, DateFormatUtils.formatY_M_dHmm(item.getMills()));
+                .setText(R.id.tv_message_time, DateTimeUtils.formatY_M_dHmm(item.getMills()));
     }
 }

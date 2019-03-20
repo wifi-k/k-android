@@ -3,10 +3,12 @@ package net.treebear.kwifimanager.util;
 import android.annotation.SuppressLint;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-public class DateFormatUtils {
+public class DateTimeUtils {
 
     public static final long MILL = 1L;
     public static final long SECONDS = 1000 * MILL;
@@ -22,13 +24,29 @@ public class DateFormatUtils {
     private static final String S_LESS_SECENDS = "小于1秒";
     public static final String BEFORE = "前";
 
-    private DateFormatUtils() {
+    private DateTimeUtils() {
     }
-
 
     public static void main(String[] args) {
         System.out.println(formatMDHmm(System.currentTimeMillis() - 86400 * 1000L));
         System.out.println(formatY_M_dHmm(System.currentTimeMillis() - 86400 * 1000L));
+        getLastWeekDays();
+    }
+
+    public static String[] getLastWeekDays(){
+        String[] days = new String[7];
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR,0);
+        calendar.set(Calendar.MINUTE,0);
+        long todayZero = calendar.getTimeInMillis();
+        System.out.println(todayZero);
+        System.out.println(formatY_M_dHmm(todayZero));
+        for (int i = 0; i < days.length; i++) {
+
+        }
+
+        return days;
     }
 
     /**

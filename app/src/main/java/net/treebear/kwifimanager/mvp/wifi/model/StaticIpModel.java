@@ -20,4 +20,9 @@ public class StaticIpModel extends BaseWifiModel implements StaticIpContract.ISt
     public void queryNetStatus(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         bindObservable(mService.queryWifiStatus(),callBack);
     }
+
+    @Override
+    public void getNode(AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack){
+        bindObservable(mService.getNode(),callBack);
+    }
 }

@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.util.DateFormatUtils;
+import net.treebear.kwifimanager.util.DateTimeUtils;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class MobilePhoneAdapter extends BaseQuickAdapter<MobilePhoneBean, BaseVi
         helper.setText(R.id.tv_phone_name, item.getName())
                 .setText(R.id.tv_onoff_time, String.format((item.isOnline() ? "上线" : "离线")
                                 + "时间:%s",
-                        DateFormatUtils.formatMDHmm(item.isOnline() ? item.getOnlineTime() : item.getOfflineTime())))
+                        DateTimeUtils.formatMDHmm(item.isOnline() ? item.getOnlineTime() : item.getOfflineTime())))
                 .setTextColor(R.id.tv_onoff_type, item.isOnline()
                         ? Config.Colors.DEVICE_ONLINE : Config.Colors.DEVICE_OFFLINE)
                 .setText(R.id.tv_onoff_type, item.isOnline() ? R.string.online : R.string.offline)

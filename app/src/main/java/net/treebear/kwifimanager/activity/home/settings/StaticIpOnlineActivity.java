@@ -5,6 +5,7 @@ import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -69,10 +70,13 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
-//        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
-//        deviceInfo.setConnect(true);
-//        deviceInfo.setWan(resultData.getWan());
-//        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        deviceInfo.setConnect(true);
+        deviceInfo.setWan(resultData.getWan());
+        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+        hideLoading();
+        startActivity(ModifyWifiInfoActivity.class);
+        ToastUtils.showShort(R.string.connect_success);
     }
 
     @Override
@@ -82,6 +86,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
                 if (++count > 4) {
                     hideLoading();
                     ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                    return;
                 }
                 btnNext.postDelayed(() -> {
                     if (mPresenter != null) {
