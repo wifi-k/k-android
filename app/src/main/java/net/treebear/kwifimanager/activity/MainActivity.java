@@ -12,7 +12,7 @@ import net.treebear.kwifimanager.base.BaseFragmentActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
-import net.treebear.kwifimanager.fragment.BlankFragment;
+import net.treebear.kwifimanager.fragment.GalleryFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import net.treebear.kwifimanager.fragment.MeFragment;
@@ -48,7 +48,7 @@ public class MainActivity extends BaseFragmentActivity {
             } else {
                 add(0, homeUnbindFragment);
             }
-            add(1, new BlankFragment());
+            add(1, new GalleryFragment());
             add(2, new MeFragment());
         }
     };
@@ -117,7 +117,7 @@ public class MainActivity extends BaseFragmentActivity {
         }
     }
 
-    private void updateHomeFragment() {
+    public void updateHomeFragment() {
         //若已认证
         if (MyApplication.getAppContext().hasAuth()) {
             // 当前为未绑定界面

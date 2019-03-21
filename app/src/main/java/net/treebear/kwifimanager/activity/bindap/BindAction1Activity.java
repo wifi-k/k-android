@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
@@ -17,9 +18,10 @@ import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
-import net.treebear.kwifimanager.http.WiFiHttpClient;
-import net.treebear.kwifimanager.receiver.WiFiStateReceiver;
+import net.treebear.kwifimanager.mvp.IView;
+import net.treebear.kwifimanager.mvp.server.contract.BindNodeConstract;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
+import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
 import net.treebear.kwifimanager.util.CountUtil;
 import net.treebear.kwifimanager.util.NetWorkUtils;
@@ -34,7 +36,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * @author Administrator
  */
-public class BindAction1Activity extends BaseActivity {
+public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNodePresenter, Object> implements IView<Object> {
 
     @BindView(R.id.tv_mid_info)
     TextView tvMidInfo;
@@ -42,10 +44,8 @@ public class BindAction1Activity extends BaseActivity {
     Button btnConfirm;
     private int wifiState;
     private TMessageDialog tMessageDialog;
-    private boolean isScanned;
     private WifiManager wifiManager;
     private Disposable mDisposable;
-    private WiFiStateReceiver wiFiStateReceiver;
 
     @Override
     public int layoutId() {
@@ -62,30 +62,14 @@ public class BindAction1Activity extends BaseActivity {
     @Override
     protected void initView() {
         setTitleBack(R.string.setting);
-        MyApplication.getAppContext().getUser().setAuthStatus(1);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
-//        @StringRes int infoTextId;
-//        switch (wifiState) {
-//            case Values.CONNET_WIFI_XIAOK:
-//                infoTextId = R.string.online_wifi_bind_xiaok;
-//                break;
-//            case Values.CONNECT_WIFI_OTHER:
-//                infoTextId = R.string.app_name;
-//                break;
-//            default:
-//                infoTextId = R.string.app_name;
-//                break;
-//        }
-//        tvMidInfo.setText(getString(infoTextId));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (NetWorkUtils.isConnectXiaoK(this)) {
-            WiFiHttpClient.tryToSignInWifi(null);
-            // 连接到小K的处理
+        if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
             tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，点击立即绑定设备", NetWorkUtils.getSSIDWhenWifi(this)));
             btnConfirm.setText(R.string.bind_now);
         } else {
@@ -98,7 +82,6 @@ public class BindAction1Activity extends BaseActivity {
 
                         @Override
                         public void onDenied() {
-
                         }
                     }).request();
         }
@@ -106,20 +89,34 @@ public class BindAction1Activity extends BaseActivity {
 
     @OnClick(R.id.btn_bottom)
     public void onBtnBottomClicked() {
-//        if (NetWorkUtils.isWifiConnected(this)) {
-//            String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
-//            if (Check.hasContent(wifiSSID)) {
-//                if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
-//                    startActivity(ChooseNetworkStyleActivity.class);
-//                } else {
-//                    ToastUtils.showShort(R.string.connect_xiaok_tips1);
-//                }
-//            }
-//        } else {
-//            ToastUtils.showShort(R.string.connect_xiaok_tips1);
-//        }
-        //test startActivity(ChooseNetworkStyleActivity.class);
+        // TODO: 2019/3/21  test
+        MyApplication.getAppContext().getUser().setAuthStatus(1);
+        if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
+            showLoading();
+            mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
+        } else {
+            if (NetWorkUtils.isWifiConnected(this)) {
+                String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
+                if (Check.hasContent(wifiSSID)) {
+                    if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
+                        startActivity(ChooseNetworkStyleActivity.class);
+                    } else {
+                        ToastUtils.showShort(R.string.connect_xiaok_tips1);
+                    }
+                }
+            } else {
+                ToastUtils.showShort(R.string.connect_xiaok_tips1);
+            }
+        }
+    }
+
+    @Override
+    public void onLoadData(Object resultData) {
+        ToastUtils.showShort(R.string.bind_success);
+        MyApplication.getAppContext().getUser().setAuthStatus(1);
         startActivity(ChooseNetworkStyleActivity.class);
+        ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
+        finish();
     }
 
     private void scanWifi() {

@@ -399,18 +399,33 @@ public class FileUtils {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             return Environment.getExternalStorageDirectory().getAbsolutePath();
         }
-        return Environment.getRootDirectory().getAbsolutePath() + "/files/";
+        return Environment.getRootDirectory().getAbsolutePath() + "/xiaok/";
     }
 
-    public static void saveJpgToSdCard(Bitmap bmp) {
+    public static String getPublicDiskSafe() {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            File xiaok = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "xiaok");
+            if (xiaok.exists() && xiaok.isDirectory()) {
+                return xiaok.getAbsolutePath();
+            } else {
+                if (xiaok.mkdirs()) {
+                    return xiaok.getAbsolutePath();
+                }
+            }
+        }
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+    public static String saveAsJpgToSdCard(Bitmap bmp) {
         // 检查sd card是否存在
         if (!Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
             TLog.i("SD卡状态不满足保存条件");
-            return;
+            return null;
         }
         // 为图片命名啊
         String name = Config.Text.AP_NAME_START + DateTimeUtils.fmtYMDhmssNow() + ".jpg";
+        TLog.i(name);
         // 解析返回的图片成bitmap
         // 保存文件
         FileOutputStream fos = null;
@@ -421,10 +436,12 @@ public class FileUtils {
             }
         }
         TLog.i(file.getAbsolutePath() + "文件夹存在");
-        String fileName = file.getAbsolutePath() + name;
+        String fileName = file.getAbsolutePath() + "/" + name;
+        TLog.i(fileName);
         try {
             fos = new FileOutputStream(fileName);
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -438,5 +455,23 @@ public class FileUtils {
                 e.printStackTrace();
             }
         }
+        return fileName;
+    }
+
+    public static String createNewFileName() {
+        String path = getPublicDiskSafe() + "/" + Config.Text.AP_NAME_START + DateTimeUtils.fmtYMDhmssNow() + ".jpg";
+        File file = new File(path);
+        try {
+            if (file.exists() && file.isFile()) {
+                return path;
+            } else {
+                if (file.createNewFile()) {
+                    return path;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

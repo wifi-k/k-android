@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
-
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.activity.bindap.BindAction1Activity;
 import net.treebear.kwifimanager.base.BaseFragment;
 import net.treebear.kwifimanager.config.Config;
@@ -16,6 +16,7 @@ import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.widget.TInputDialog;
+import net.treebear.kwifimanager.widget.TipsDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,6 +36,8 @@ public class HomeUnbindFragment extends BaseFragment {
     @BindView(R.id.tv_input_family_code)
     TextView tvInputFamilyCode;
     private TInputDialog inputDialog;
+    private TipsDialog errorTipsDialog;
+    private TipsDialog successTipsDialog;
 
     public HomeUnbindFragment() {
 
@@ -69,11 +72,11 @@ public class HomeUnbindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_input_family_code)
     public void onFamilyCodeClicked() {
-        initFamilyDialog();
-        inputDialog.show();
+        showFamilyCodeDialog();
+
     }
 
-    private void initFamilyDialog() {
+    private void showFamilyCodeDialog() {
         if (inputDialog == null) {
             inputDialog = new TInputDialog(mContext);
             inputDialog.setTitle(R.string.input_family_code_into_family);
@@ -88,9 +91,53 @@ public class HomeUnbindFragment extends BaseFragment {
                 public void onRightClick(String s) {
                     // TODO: 2019/3/7 上传判断家庭码
                     inputDialog.dismiss();
-                    ToastUtils.showShort(s);
+                    if ("1234".equals(s)) {
+                        showSuccessTips();
+                    } else {
+                        showErrorTips();
+                    }
                 }
             });
         }
+        inputDialog.show();
+    }
+
+    private void showErrorTips() {
+        if (errorTipsDialog == null) {
+            errorTipsDialog = new TipsDialog(mContext).icon(R.mipmap.ic_tips_warnning)
+                    .title(R.string.family_code_error)
+                    .content(R.string.family_code_error_tips)
+                    .oneButtonRight()
+                    .right(R.string.input_again)
+                    .doClick(new TipsDialog.DoClickListener() {
+                        @Override
+                        public void onClickRight(TextView tvRight) {
+                            errorTipsDialog.dismiss();
+                            showFamilyCodeDialog();
+                        }
+                    });
+        }
+        errorTipsDialog.show();
+    }
+
+    private void showSuccessTips() {
+        if (successTipsDialog == null) {
+            successTipsDialog = new TipsDialog(mContext).icon(R.mipmap.ic_tips_warnning)
+                    .title(R.string.family_code_ok)
+                    .noContent()
+                    .oneButtonRight()
+                    .right(R.string.confirm)
+                    .doClick(new TipsDialog.DoClickListener() {
+                        @Override
+                        public void onClickRight(TextView tvRight) {
+                            MyApplication.getAppContext().getUser().setAuthStatus(1);
+                            if (mContext instanceof MainActivity) {
+                                ((MainActivity) mContext).updateHomeFragment();
+                            }
+                            successTipsDialog.dismiss();
+                        }
+                    });
+        }
+        successTipsDialog.show();
     }
 }

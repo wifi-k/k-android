@@ -3,7 +3,7 @@
 
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#0aEAF3F3" />
+            <solid android:color="#0aababab" />
             <corners android:radius="4dp" />
             <padding
                 android:bottom="4px"
@@ -14,8 +14,8 @@
     </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#14EAF3F3" />
-            <corners android:radius="4dp" />
+            <solid android:color="#14ababab" />
+            <corners android:radius="8dp" />
             <padding
                 android:bottom="4px"
                 android:left="4px"
@@ -25,7 +25,7 @@
     </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#19EAF3F3" />
+            <solid android:color="#19ababab" />
             <corners android:radius="4dp" />
             <padding
                 android:bottom="2px"
@@ -36,7 +36,7 @@
     </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#23EAF3F3" />
+            <solid android:color="#23ababab" />
             <corners android:radius="4dp" />
             <padding
                 android:bottom="2px"
@@ -47,7 +47,7 @@
     </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#28EAF3F3" />
+            <solid android:color="#28ababab" />
             <corners android:radius="4dp" />
             <padding
                 android:bottom="2px"

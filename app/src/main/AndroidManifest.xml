@@ -29,7 +29,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.home.WeekReportActivity"></activity>
+        <activity android:name=".activity.me.MyChildrenListActivity"></activity>
+        <activity android:name=".activity.home.WeekReportActivity" />
         <activity android:name=".activity.home.parent.NewEditTimeActivity" />
         <activity android:name=".activity.home.parent.LimitTimeControlActivity" />
         <activity android:name=".activity.home.parent.TimeControlPlanActivity" />

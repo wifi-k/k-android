@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
-                        app:srcCompat="@mipmap/ic_member_edit" />
+                        app:srcCompat="@mipmap/ic_edit_white" />
                 </LinearLayout>
 
                 <TextView
@@ -284,7 +284,7 @@
                     android:paddingBottom="21dp"
                     android:progress="500"
                     android:progressDrawable="@drawable/seekbar_background"
-                    android:thumb="@mipmap/ic_cb_ok"
+                    android:thumb="@mipmap/slide_thumb"
                     app:layout_constraintEnd_toStartOf="@+id/swb_speed_limit"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView43" />
@@ -325,7 +325,7 @@
                     android:paddingBottom="21dp"
                     android:progress="500"
                     android:progressDrawable="@drawable/seekbar_background"
-                    android:thumb="@mipmap/ic_cb_ok"
+                    android:thumb="@mipmap/slide_thumb"
                     app:layout_constraintEnd_toStartOf="@+id/swb_speed_limit"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"

@@ -2,6 +2,9 @@ package net.treebear.kwifimanager.http;
 
 
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.MessageInfoBean;
+import net.treebear.kwifimanager.bean.NodeSSIDListBean;
+import net.treebear.kwifimanager.bean.QiNiuUserBean;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 
 import io.reactivex.Observable;
@@ -112,5 +115,95 @@ public interface HttpService {
      */
     @POST("user/node/bind")
     Observable<BaseResponse<Object>> bindNode(@Body RequestBody params);
+
+    /**
+     * 获取七牛云的token'
+     */
+    @POST("user/qiniu/get")
+    Observable<BaseResponse<QiNiuUserBean>> getQiNiuToken();
+
+    /**
+     * 查询用户消息
+     *
+     * @param params 分页
+     *               * pageNo	int	分页号,默认1
+     *               * pageSize	int	一页的数据,默认10
+     */
+    @POST("user/message/list")
+    Observable<BaseResponse<MessageInfoBean>> getMessageList(@Body RequestBody params);
+
+    /**
+     * 获取节点的ssid /user/node/ssid/list
+     *
+     * @param params * nodeId*	str
+     */
+    @POST("user/node/ssid/list")
+    Observable<BaseResponse<NodeSSIDListBean>> getNodeSSIDList(@Body RequestBody params);
+
+    /**
+     * 设置节点ssid /user/node/ssid/set
+     * <p>
+     * 说明
+     * freq=0时,表示更新节点下所有的ssid或passwd
+     *
+     * @param params * nodeId*	str
+     *               * freq*	int	1-2.4G,2-5G
+     *               * ssid	str	新的ssid名称
+     *               * passwd	str	新的md5密码
+     *               * rssi	int	信号强度, [0,-100]dbm,好>=-50,强>=-70,中<-70,差<-80
+     */
+    @POST("user/node/ssid/set")
+    Observable<BaseResponse<Object>> setNodeSsid(@Body RequestBody params);
+
+    /**
+     * 节点解绑 /user/node/unbind
+     *
+     * @param params * nodeId*	str
+     */
+    @POST("user/node/unbind")
+    Observable<BaseResponse<Object>> unbindNode(@Body RequestBody params);
+
+    /**
+     * 节点信息修改 /user/node/info/set
+     *
+     * @param params * nodeId*	str
+     *               * name	str	节点名称
+     */
+    @POST("user/node/info/set")
+    Observable<BaseResponse<Object>> setNodeInfo(@Body RequestBody params);
+
+    /**
+     * 节点加入共享计划 /user/node/share/join
+     *
+     * @param params * nodeId*	str
+     */
+    @POST("user/node/share/join")
+    Observable<BaseResponse<Object>> joinShare(@Body RequestBody params);
+
+    /**
+     * 离开共享计划 /user/node/share/quit
+     * 说明
+     * 节点完成当前任务后离开
+     * 提前预约3天离开
+     * 产生一个系统通知给我们
+     *
+     * @param params * nodeId*	str
+     */
+    @POST("user/node/share/quit")
+    Observable<BaseResponse<Object>> quiteShare(@Body RequestBody params);
+
+    /**
+     * 升级节点固件 /user/node/firmware/upgrade
+     *
+     * @param params * nodeId*	str
+     */
+    @POST("user/node/firmware/upgrade")
+    Observable<BaseResponse<Object>> firmwareUpgrade(@Body RequestBody params);
+
+    /**
+     * 用户退出 /user/quit
+     */
+    @POST("user/quit")
+    Observable<BaseResponse<Object>> userQuit();
 
 }

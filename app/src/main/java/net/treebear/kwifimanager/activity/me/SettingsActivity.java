@@ -36,6 +36,7 @@ public class SettingsActivity extends BaseActivity {
                 // TODO: 2019/3/14 跳转关于我们
                 break;
             case R.id.tv_version_update:
+                startActivity(UpdateAppActivity.class);
                 break;
             case R.id.tv_version:
                 break;

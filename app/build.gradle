@@ -98,4 +98,7 @@ dependencies {
     //    图表
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
 
+    implementation 'com.qiniu:qiniu-android-sdk:7.3.15'
+
+    implementation 'com.github.nanchen2251:CompressHelper:1.0.5'
 }

@@ -214,6 +214,14 @@ public final class Config {
          * 已注册
          */
         int HAS_SIGN_UP = 9;
+        /**
+         * // 26-无可用升级版本 27-正在升级
+         */
+        int FIRMWARE_NO_HIGHER_VERSION = 26;
+        /**
+         * // 26-无可用升级版本 27-正在升级
+         */
+        int FIRMWARE_UPGRADE_ING = 27;
     }
 
     public interface WifiResponseCode {
@@ -227,10 +235,10 @@ public final class Config {
      * 文件目录
      */
     public interface Path {
-        String PRIVATE = String.format("%s/%s", Environment.getExternalStorageState(), BuildConfig.APP_NAME);
-        String FILE = PRIVATE + "/files/";
-        String CACHE = PRIVATE + "/cache/";
-        String MEDIA = PRIVATE + "/media/";
+        String PRIVATE = String.format("%s/%s/", Environment.getExternalStorageState(), BuildConfig.APP_NAME);
+        String FILE = PRIVATE + "files/";
+        String CACHE = PRIVATE + "cache/";
+        String MEDIA = PRIVATE + "media/";
     }
 
 }

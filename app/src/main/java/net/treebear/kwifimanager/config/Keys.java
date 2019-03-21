@@ -21,6 +21,8 @@ public interface Keys {
     String DNS1 = "dns1";
     String DNS2 = "dns2";
     String BSSID = "bssid";
+    String AVATAR = "avatar";
+    String NODE_ID = "nodeId";
 
     /**
      * ----------------------intent传输key--------------------
@@ -43,5 +45,7 @@ public interface Keys {
     String SETTINGS_ITEM_DATA = "settings_item_data";
 
     String POSITION = "position";
+
+    String QI_NIU_TOKEN = "mQiNiuToken";
 
 }

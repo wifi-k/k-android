@@ -17,11 +17,11 @@ public class FileSizeUtil {
      * 获取文件大小单位为MB的double值
      */
     public static final int SIZETYPE_MB = 3;
-    private static final long BYTE = 1;
-    private static final long KB = 1024 * BYTE;
-    private static final long MB = 1024 * KB;
-    private static final long GB = 1024 * MB;
-    private static final long TB = 1024 * GB;
+    public static final long BYTE = 1;
+    public static final long KB = 1024 * BYTE;
+    public static final long MB = 1024 * KB;
+    public static final long GB = 1024 * MB;
+    public static final long TB = 1024 * GB;
     /**
      * 获取文件大小单位为B的double值
      */

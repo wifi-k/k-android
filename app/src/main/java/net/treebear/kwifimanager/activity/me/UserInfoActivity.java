@@ -5,25 +5,41 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nanchen.compresshelper.CompressHelper;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
 
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.account.ForgetPwdCodeActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.bean.QiNiuUserBean;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
+import net.treebear.kwifimanager.config.GlideApp;
+import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
+import net.treebear.kwifimanager.http.ImageUploadManager;
+import net.treebear.kwifimanager.mvp.server.contract.ModifyUserInfoContract;
+import net.treebear.kwifimanager.mvp.server.presenter.ModifyUserInfoPresenter;
+import net.treebear.kwifimanager.util.BitmapUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.FileUtils;
+import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.TChoosePicTypePop;
+
+import org.json.JSONObject;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * @author Administrator
  */
-public class UserInfoActivity extends BaseActivity {
+public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserInfoPresenter, QiNiuUserBean> implements ModifyUserInfoContract.IUserInfoView {
 
     @BindView(R.id.root_view)
     ConstraintLayout mRootView;
@@ -45,10 +61,16 @@ public class UserInfoActivity extends BaseActivity {
     private TChoosePicTypePop choosePicTypePop;
     private String picPath;
     private ServerUserInfo userInfo;
+    private String mQiNiuToken;
 
     @Override
     public int layoutId() {
         return R.layout.activity_user_info;
+    }
+
+    @Override
+    public ModifyUserInfoContract.IUserInfoPresenter getPresenter() {
+        return new ModifyUserInfoPresenter();
     }
 
     @Override
@@ -57,6 +79,13 @@ public class UserInfoActivity extends BaseActivity {
         userInfo = MyApplication.getAppContext().getUser();
         tvNickName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile());
         tvMobileNumber.setText(userInfo.getMobile());
+        GlideApp.with(mRootView)
+                .load(userInfo.getAvatar())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.ic_me_header)
+                .error(R.mipmap.ic_me_header)
+                .circleCrop()
+                .into(civHeaderPic);
     }
 
     @OnClick(R.id.civ_header_pic)
@@ -145,6 +174,9 @@ public class UserInfoActivity extends BaseActivity {
                     public void onGranted() {
                         //系统常量， 启动相机的关键
                         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        picPath = FileUtils.createNewFileName();
+                        TLog.i(picPath);
+                        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileUtils.createUriFromPath(picPath));
                         // 参数常量为自定义的request code, 在取返回结果时有用
                         startActivityForResult(openCameraIntent, Values.REQUEST_SYSTEM_CAMERA);
                     }
@@ -159,20 +191,24 @@ public class UserInfoActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK || data == null) {
+        if (resultCode != RESULT_OK) {
             return;
         }
         switch (requestCode) {
             case Values.REQUEST_SYSTEM_CAMERA:
-                Bundle bundle = data.getExtras();
-                if (bundle != null) {
-                    Bitmap bmp = (Bitmap) bundle.get("data");
-                    FileUtils.saveJpgToSdCard(bmp);
-                    civHeaderPic.setImageBitmap(bmp);
-                }
+//                Bundle bundle = data.getExtras();
+//                if (bundle != null) {
+//                    Bitmap bmp = (Bitmap) bundle.get("data");
+//                    picPath = FileUtils.saveAsJpgToSdCard(bmp);
+                TLog.i("result -->>> " + picPath);
+                civHeaderPic.setImageBitmap(BitmapUtils.readBitmapAutoSize(picPath, 512, 512));
+//                }
                 break;
             case Values.REQUEST_SYSTEM_GALLERY:
                 try {
+                    if (data == null) {
+                        return;
+                    }
                     Uri selectedImage = data.getData();
                     if (selectedImage == null) {
                         return;
@@ -197,6 +233,70 @@ public class UserInfoActivity extends BaseActivity {
             default:
                 break;
         }
+        TLog.i(picPath);
+        PermissionUtils.permission(PermissionConstants.STORAGE)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                        preUploadImage();
+                    }
+
+                    @Override
+                    public void onDenied() {
+                        ToastUtils.showShort(R.string.refuse_storage_permission_error);
+                    }
+                }).request();
     }
 
+    private void preUploadImage() {
+        showLoading(R.string.upload_ing);
+        if (!Check.hasContent(mQiNiuToken = CacheDiskUtils.getInstance(
+                MyApplication.getAppContext().getUser().getMobile())
+                .getString(Keys.QI_NIU_TOKEN, ""))
+        ) {
+            mPresenter.getQiNiuToken();
+        }
+    }
+
+    @Override
+    public void onLoadData(QiNiuUserBean resultData) {
+        mQiNiuToken = resultData.getToken();
+        CacheDiskUtils.getInstance(MyApplication.getAppContext().getUser().getMobile())
+                .put(Keys.QI_NIU_TOKEN, mQiNiuToken, 60 * 3);
+        uploadImage();
+    }
+
+    private void uploadImage() {
+        if (Check.hasContent(picPath)) {
+            File file = new File(picPath);
+            File newFile = new CompressHelper.Builder(this)
+                    .setMaxWidth(720)  // 默认最大宽度为720
+                    .setMaxHeight(960) // 默认最大高度为960
+                    .setQuality(80)    // 默认压缩质量为80
+                    .setFileName(file.getName().split(".")[0]) // 设置你需要修改的文件名
+                    .setCompressFormat(Bitmap.CompressFormat.JPEG) // 设置默认压缩为jpg格式
+                    .setDestinationDirectoryPath(FileUtils.getPublicDiskSafe())
+                    .build()
+                    .compressToFile(file);
+            ImageUploadManager.getInstance().put(newFile, newFile.getName(), mQiNiuToken, new UpCompletionHandler() {
+                @Override
+                public void complete(String key, ResponseInfo info, JSONObject response) {
+                    if (!info.isOK()) {
+                        hideLoading();
+                        ToastUtils.showShort(R.string.upload_error);
+                    } else {
+                        mPresenter.setUserAvatar(tvNickName.getText().toString(), newFile.getName());
+                    }
+                }
+            }, null);
+        }
+    }
+
+    @Override
+    public void onUserAvatarUpload() {
+        hideLoading();
+        MyApplication.getAppContext().setNeedUpdateUserInfo(false);
+        civHeaderPic.setImageBitmap(BitmapUtils.readBitmapAutoSize(picPath, 720, 960));
+        ToastUtils.showShort(R.string.user_info_update_success);
+    }
 }

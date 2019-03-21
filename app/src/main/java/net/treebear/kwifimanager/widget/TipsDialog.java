@@ -157,9 +157,15 @@ public class TipsDialog {
     }
 
     public TipsDialog content(CharSequence content, @ColorInt int colorInt) {
+        tvContent.setVisibility(View.VISIBLE);
         tvContent.setText(content);
         tvContent.setTextColor(colorInt);
         tvContent.setOnClickListener(v -> mListener.onClickTitle(tvContent));
+        return this;
+    }
+
+    public TipsDialog noContent(){
+        tvContent.setVisibility(View.GONE);
         return this;
     }
 
@@ -208,6 +214,20 @@ public class TipsDialog {
             listener.onClick(tvRight);
             mListener.onClickRight(tvRight);
         });
+        return this;
+    }
+
+    public TipsDialog oneButtonLeft(){
+        tvRight.setVisibility(View.GONE);
+        tvLeft.setVisibility(View.VISIBLE);
+        tvLeft.setBackgroundResource(R.drawable.btn_bottom_lrbr8_gray);
+        return this;
+    }
+
+    public TipsDialog oneButtonRight(){
+        tvRight.setVisibility(View.VISIBLE);
+        tvLeft.setVisibility(View.GONE);
+        tvRight.setBackgroundResource(R.drawable.btn_bottom_lrbr8_main);
         return this;
     }
 

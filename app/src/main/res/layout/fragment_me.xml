@@ -23,7 +23,7 @@
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_setting_white" />
+            android:src="@mipmap/ic_setting_white" />
 
         <TextView
             android:id="@+id/tv_user_name"

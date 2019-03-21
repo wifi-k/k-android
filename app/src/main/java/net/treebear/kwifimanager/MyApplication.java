@@ -29,6 +29,8 @@ public class MyApplication extends MultiDexApplication {
         return mContext;
     }
 
+    private boolean needUpdateUserInfo = true;
+
     /**
      * 若不保存用户信息情况下，仅单次记录用户信息
      */
@@ -99,6 +101,14 @@ public class MyApplication extends MultiDexApplication {
             info = new WifiDeviceInfo();
         }
         return info;
+    }
+
+    public void setNeedUpdateUserInfo(boolean need){
+        needUpdateUserInfo = need;
+    }
+
+    public boolean isNeedUpdateUserInfo(){
+        return needUpdateUserInfo;
     }
 
     public void saveDeviceInfo(WifiDeviceInfo info) {

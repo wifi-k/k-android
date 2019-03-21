@@ -496,6 +496,14 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         LoadingProgressDialog.showProgressDialog(this);
     }
 
+    public void showLoading(String tips) {
+        LoadingProgressDialog.showProgressDialog(this, tips);
+    }
+
+    public void showLoading(@StringRes int tips) {
+        LoadingProgressDialog.showProgressDialog(this, getString(tips));
+    }
+
     /**
      * 隐藏加载框，暂时未使用
      */
