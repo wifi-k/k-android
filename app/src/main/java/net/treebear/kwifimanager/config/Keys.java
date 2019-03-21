@@ -23,6 +23,8 @@ public interface Keys {
     String BSSID = "bssid";
     String AVATAR = "avatar";
     String NODE_ID = "nodeId";
+    String PAGE_NO = "pageNo";
+    String PAGE_SIZE = "pageSize";
 
     /**
      * ----------------------intent传输key--------------------

@@ -28,9 +28,10 @@ public class DateTimeUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(formatMDHmm(System.currentTimeMillis() - 86400 * 1000L));
-        System.out.println(formatY_M_dHmm(System.currentTimeMillis() - 86400 * 1000L));
-        getLastWeekDays();
+//        System.out.println(formatMDHmm(System.currentTimeMillis() - 86400 * 1000L));
+//        System.out.println(formatY_M_dHmm(System.currentTimeMillis() - 86400 * 1000L));
+//        getLastWeekDays();
+        System.out.println(fmtYMDhmss(System.currentTimeMillis()));
     }
 
     public static String[] getLastWeekDays(){
@@ -53,7 +54,7 @@ public class DateTimeUtils {
      * 根据上下线状态及时间创建对应文字说明
      */
     public static String createTimeInfoByStatusLength(boolean onlineStatus, long mills) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf_mdhmm = new SimpleDateFormat("M月d日 h:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf_mdhmm = new SimpleDateFormat("M月d日 H:mm");
         String status = "";
         String time = "";
         long lll = System.currentTimeMillis() - mills;
@@ -82,7 +83,7 @@ public class DateTimeUtils {
      * @return MD_Hmm格式时间
      */
     public static String formatMDHmm(long mills) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfMdHmm = new SimpleDateFormat("M月d日 h:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfMdHmm = new SimpleDateFormat("M月d日 H:mm");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
         return sdfMdHmm.format(calendar.getTime());
@@ -95,7 +96,7 @@ public class DateTimeUtils {
      * @return y-M-D_Hmm格式时间
      */
     public static String formatY_M_dHmm(long mills) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfy_M_dHmm = new SimpleDateFormat("yy-M-d h:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfy_M_dHmm = new SimpleDateFormat("yy-M-d H:mm");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
         return sdfy_M_dHmm.format(calendar.getTime());
@@ -113,7 +114,7 @@ public class DateTimeUtils {
      * 获取时间戳格式字符
      */
     public static String fmtYMDhmss(long mills) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat yyMMddhhmmssSS = new SimpleDateFormat("yyMMddhhmmssSS");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat yyMMddhhmmssSS = new SimpleDateFormat("yyMMddHHmmssSS");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
         return yyMMddhhmmssSS.format(calendar.getTime());

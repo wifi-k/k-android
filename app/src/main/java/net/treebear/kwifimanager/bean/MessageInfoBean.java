@@ -38,7 +38,7 @@ public class MessageInfoBean {
         private String title;
         private int type;
         private String content;
-        private String createTime;
+        private long createTime;
 
         public String getTitle() {
             return title;
@@ -64,11 +64,11 @@ public class MessageInfoBean {
             this.content = content;
         }
 
-        public String getCreateTime() {
+        public long getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(String createTime) {
+        public void setCreateTime(long createTime) {
             this.createTime = createTime;
         }
 
