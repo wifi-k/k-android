@@ -10,20 +10,21 @@ import okhttp3.RequestBody;
 
 public interface PwdSignInContract {
 
-    interface IPwdSignInView extends IView<ServerUserInfo> {
+    interface View extends IView<ServerUserInfo> {
 
         void onnUserInfoLoaded(ServerUserInfo bean);
 
     }
 
-    interface IPwdSignInPresenter extends IPresenter<IPwdSignInView> {
+    interface Presenter extends IPresenter<View> {
 
         void signInByPwd(String mobile, String pwd);
 
         void getUserInfo();
+
     }
 
-    interface IPwdSignInModel extends IModel {
+    interface Model extends IModel {
 
         void signInByVerifyPwd(RequestBody params, AsyncCallBack<BaseResponse<ServerUserInfo>> callBack);
 

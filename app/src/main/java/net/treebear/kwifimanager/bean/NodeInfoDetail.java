@@ -42,6 +42,7 @@ public class NodeInfoDetail implements Serializable{
          * bindTime : 绑定时间
          * isShare : 1
          * firmwareUpgrade : 固件升级版本号
+         * isSelect : 1 当前选择节点
          */
 
         private String nodeId;
@@ -53,6 +54,15 @@ public class NodeInfoDetail implements Serializable{
         private String bindTime;
         private int isShare;
         private String firmwareUpgrade;
+        private int isSelect;
+
+        public int getIsSelect() {
+            return isSelect;
+        }
+
+        public void setIsSelect(int isSelect) {
+            this.isSelect = isSelect;
+        }
 
         public String getNodeId() {
             return nodeId;

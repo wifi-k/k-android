@@ -3,7 +3,6 @@ package net.treebear.kwifimanager.activity.bindap;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,7 +13,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.home.settings.ChooseNetworkStyleActivity;
+import net.treebear.kwifimanager.activity.bindap.settings.ChooseNetworkStyleActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -30,8 +29,8 @@ import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
 import net.treebear.kwifimanager.util.CountUtil;
 import net.treebear.kwifimanager.util.NetWorkUtils;
-import net.treebear.kwifimanager.widget.LoadingProgressDialog;
-import net.treebear.kwifimanager.widget.TMessageDialog;
+import net.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
+import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * @author Administrator
  */
-public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNodePresenter, Object> implements BindNodeConstract.IBindNodeView {
+public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presenter, Object> implements BindNodeConstract.View {
 
     @BindView(R.id.tv_mid_info)
     TextView tvMidInfo;
@@ -64,7 +63,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
     }
 
     @Override
-    public BindNodeConstract.IBindNodePresenter getPresenter() {
+    public BindNodeConstract.Presenter getPresenter() {
         return new BindNodePresenter();
     }
 
@@ -78,6 +77,21 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
     @Override
     protected void onResume() {
         super.onResume();
+        PermissionUtils.permission(PermissionConstants.LOCATION)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                        checkWiFi();
+                    }
+
+                    @Override
+                    public void onDenied() {
+                        ToastUtils.showLong(R.string.refuse_loaction_permission);
+                    }
+                }).request();
+    }
+
+    private void checkWiFi() {
         if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
             WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
                 @Override
@@ -120,7 +134,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
     public void onBtnBottomClicked() {
         if (BuildConfig.DEBUG) {
             // TODO: 2019/3/22  
-            MyApplication.getAppContext().getUser().setAuthStatus(1);
+            MyApplication.getAppContext().getUser().setNodeSize(1);
         }
         if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
             showLoading();
@@ -158,7 +172,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
     public void onLoadData(Object resultData) {
         ToastUtils.showShort(R.string.bind_success);
         hideLoading();
-        MyApplication.getAppContext().getUser().setAuthStatus(1);
+        MyApplication.getAppContext().getUser().setNodeSize(1);
         startActivity(ChooseNetworkStyleActivity.class);
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
         finish();
@@ -203,12 +217,12 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
             tMessageDialog.content(String.format("请前往设置连接名称为“xiaok-XXXX”的WiFi，然后再绑定设备。"))
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
-                        public void onClickLeft(View view) {
+                        public void onClickLeft(android.view.View view) {
                             tMessageDialog.dismiss();
                         }
 
                         @Override
-                        public void onClickRight(View view) {
+                        public void onClickRight(android.view.View view) {
                             NetWorkUtils.gotoWifiSetting(BindAction1Activity.this);
                             tMessageDialog.dismiss();
                         }
@@ -219,13 +233,13 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
             tMessageDialog.content(String.format("暂时没有发现wifi名称为“xiaok-XXXX”的设备,请先启动设备。"))
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
-                        public void onClickLeft(View view) {
+                        public void onClickLeft(android.view.View view) {
                             tMessageDialog.dismiss();
                             ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
                         }
 
                         @Override
-                        public void onClickRight(View view) {
+                        public void onClickRight(android.view.View view) {
                             tMessageDialog.dismiss();
                             // todo test
                             startActivity(ChooseNetworkStyleActivity.class);
@@ -244,12 +258,12 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
                     .right(R.string.confirm)
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
-                        public void onClickLeft(View view) {
+                        public void onClickLeft(android.view.View view) {
                             tMessageDialog.dismiss();
                         }
 
                         @Override
-                        public void onClickRight(View view) {
+                        public void onClickRight(android.view.View view) {
                             tMessageDialog.dismiss();
                         }
                     });
@@ -258,11 +272,9 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        dismiss(tMessageDialog);
         dispose(mDisposable);
-        if (tMessageDialog != null) {
-            tMessageDialog.dismiss();
-        }
+        super.onDestroy();
     }
 
     @Override

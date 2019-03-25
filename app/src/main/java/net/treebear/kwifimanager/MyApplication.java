@@ -16,6 +16,8 @@ import net.treebear.kwifimanager.receiver.OpenFileReceiver;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.TLog;
 
+import io.realm.Realm;
+
 /**
  * @author Tinlone
  * @date 2018/3/23.
@@ -43,6 +45,7 @@ public class MyApplication extends MultiDexApplication {
         super.onCreate();
         mContext = this;
         dealUncaughtException();
+        Realm.init(this);
         registerReceiver(new OpenFileReceiver(), new IntentFilter(BuildConfig.APPLICATION_ID + ".open_file"));
         registerNetReceiver();
         if (BuildConfig.DEBUG) {
@@ -103,11 +106,11 @@ public class MyApplication extends MultiDexApplication {
         return info;
     }
 
-    public void setNeedUpdateUserInfo(boolean need){
+    public void setNeedUpdateUserInfo(boolean need) {
         needUpdateUserInfo = need;
     }
 
-    public boolean isNeedUpdateUserInfo(){
+    public boolean isNeedUpdateUserInfo() {
         return needUpdateUserInfo;
     }
 
@@ -118,7 +121,7 @@ public class MyApplication extends MultiDexApplication {
     /**
      * @return 当前用户是否已认证
      */
-    public boolean hasAuth() {
-        return getUser().getAuthStatus() == 1;
+    public boolean hasBoundNode() {
+        return getUser().getNodeSize() > 0;
     }
 }

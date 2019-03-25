@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.Size;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,7 +25,9 @@ import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.IView;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.TLog;
-import net.treebear.kwifimanager.widget.LoadingProgressDialog;
+import net.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
+import net.treebear.kwifimanager.widget.dialog.TDialog;
+import net.treebear.kwifimanager.widget.pop.TPop;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -352,5 +355,21 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
     public void onDestroyView() {
         hideLoading();
         super.onDestroyView();
+    }
+
+    protected void dismiss(@Size(min = 1) TDialog... dialogs) {
+        for (TDialog dialog : dialogs) {
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+        }
+    }
+
+    protected void dismiss(@Size(min = 1) TPop... pops) {
+        for (TPop pop : pops) {
+            if (pop != null) {
+                pop.dismiss();
+            }
+        }
     }
 }

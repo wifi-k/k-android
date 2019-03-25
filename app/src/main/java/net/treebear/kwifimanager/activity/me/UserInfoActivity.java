@@ -35,7 +35,7 @@ import net.treebear.kwifimanager.util.BitmapUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.FileUtils;
 import net.treebear.kwifimanager.util.TLog;
-import net.treebear.kwifimanager.widget.TChoosePicTypePop;
+import net.treebear.kwifimanager.widget.pop.TChoosePicTypePop;
 
 import org.json.JSONObject;
 
@@ -48,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * @author Administrator
  */
-public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserInfoPresenter, Object> implements ModifyUserInfoContract.IUserInfoView {
+public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presenter, Object> implements ModifyUserInfoContract.View {
 
     @BindView(R.id.root_view)
     ConstraintLayout mRootView;
@@ -69,7 +69,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserI
     }
 
     @Override
-    public ModifyUserInfoContract.IUserInfoPresenter getPresenter() {
+    public ModifyUserInfoContract.Presenter getPresenter() {
         return new ModifyUserInfoPresenter();
     }
 
@@ -300,4 +300,9 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserI
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        dismiss(choosePicTypePop);
+        super.onDestroy();
+    }
 }

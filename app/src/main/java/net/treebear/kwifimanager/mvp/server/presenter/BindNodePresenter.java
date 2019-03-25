@@ -8,7 +8,7 @@ import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.BindNodeConstract;
 import net.treebear.kwifimanager.mvp.server.model.BindNodeModel;
 
-public class BindNodePresenter extends BasePresenter<BindNodeConstract.IBindNodeView, BindNodeConstract.IBindNodeModel> implements BindNodeConstract.IBindNodePresenter {
+public class BindNodePresenter extends BasePresenter<BindNodeConstract.View, BindNodeConstract.Model> implements BindNodeConstract.Presenter {
     @Override
     public void setModel() {
         mModel = new BindNodeModel();

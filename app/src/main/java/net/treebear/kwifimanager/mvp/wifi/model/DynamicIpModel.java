@@ -8,7 +8,7 @@ import net.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 /**
  * @author Administrator
  */
-public class DynamicIpModel extends BaseWifiModel implements DynamicIpContract.IDynamicIpModel {
+public class DynamicIpModel extends BaseWifiModel implements DynamicIpContract.Model {
     @Override
     public void dynamicIpSet(AsyncCallBack<BaseResponse<Object>> callBack) {
         bindObservable(mService.dynamicSet(), callBack);

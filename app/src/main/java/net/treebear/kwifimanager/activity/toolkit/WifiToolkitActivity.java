@@ -6,16 +6,22 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.config.Keys;
+import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.mvp.IModel;
+import net.treebear.kwifimanager.mvp.server.contract.NodeOptionSetContract;
+import net.treebear.kwifimanager.mvp.server.presenter.NodeOptionSetPresenter;
 import net.treebear.kwifimanager.mvp.wifi.model.WiFiSettingProxyModel;
 import net.treebear.kwifimanager.util.DensityUtil;
+import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.RequestBodyUtils;
-import net.treebear.kwifimanager.widget.TInputDialog;
-import net.treebear.kwifimanager.widget.TipsDialog;
+import net.treebear.kwifimanager.util.TLog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TipsDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,7 +29,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class WifiToolkitActivity extends BaseActivity {
+public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Presenter, Object> implements NodeOptionSetContract.View {
 
     @BindView(R.id.tv_has_no_password)
     TextView tvHasNoPassword;
@@ -56,6 +62,11 @@ public class WifiToolkitActivity extends BaseActivity {
     @Override
     public int layoutId() {
         return R.layout.activity_wifi_toolkit;
+    }
+
+    @Override
+    public NodeOptionSetContract.Presenter getPresenter() {
+        return new NodeOptionSetPresenter();
     }
 
     @Override
@@ -118,13 +129,16 @@ public class WifiToolkitActivity extends BaseActivity {
             nameModifyDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    nameModifyDialog.dismiss();
+                    dismiss(nameModifyDialog);
                 }
 
                 @Override
                 public void onRightClick(String s) {
-                    nameModifyDialog.dismiss();
-                    modifyNameOrPassword(Keys.NAME, s);
+                    if (NetWorkUtils.isXiaoKSignIn()) {
+                        modifyNameLocal(s, "");
+                    } else {
+                        mPresenter.modifySsid(MyApplication.getAppContext().getDeviceInfo().getId(), Values.FREQ_ALL, s);
+                    }
                 }
             });
         }
@@ -132,21 +146,20 @@ public class WifiToolkitActivity extends BaseActivity {
         nameModifyDialog.show();
     }
 
-    private void modifyNameOrPassword(String key, String s) {
-        showLoading(R.string.commit_ing);
-        ArrayMap<String, Object> map = RequestBodyUtils.map();
-        map.put(key, s);
-        proxyModel.modifyWifiInfo(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<Object>>() {
+    private void modifyNameLocal(String name, String passwd) {
+        ArrayMap<String, Object> params = new ArrayMap<>();
+        params.put(Keys.SSID0, NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()));
+        params.put(Keys.SSID, name);
+        params.put(Keys.PASSWD_WIFI, passwd);
+        proxyModel.modifyWifiInfo(RequestBodyUtils.convert(params), new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                hideLoading();
-                ToastUtils.showShort(R.string.modify_success);
+                ToastUtils.showShort(R.string.option_success_restart);
             }
 
             @Override
             public void onFailed(String resultMsg, int resultCode) {
-                hideLoading();
-                ToastUtils.showShort(R.string.modify_failed);
+                ToastUtils.showShort(R.string.option_failed);
             }
         });
     }
@@ -159,13 +172,16 @@ public class WifiToolkitActivity extends BaseActivity {
             passwordModifyDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    passwordModifyDialog.dismiss();
+                    dismiss(passwordModifyDialog);
                 }
 
                 @Override
                 public void onRightClick(String s) {
-                    passwordModifyDialog.dismiss();
-                    modifyNameOrPassword(Keys.PASSWORD, s);
+                    if (NetWorkUtils.isXiaoKSignIn()) {
+                        modifyNameLocal(NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()), s);
+                    } else {
+                        mPresenter.modifyPasswd(MyApplication.getAppContext().getDeviceInfo().getId(), Values.FREQ_ALL, s);
+                    }
                 }
             });
         }
@@ -196,16 +212,17 @@ public class WifiToolkitActivity extends BaseActivity {
     }
 
     private void restart() {
+        TLog.i("OkHttp restart---");
         proxyModel.restart(new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                restartTipsDialog.dismiss();
-                ToastUtils.showShort(R.string.wifi_restart_success);
+                dismiss(restartTipsDialog);
+                ToastUtils.showShort(R.string.wifi_restart_option_success);
             }
 
             @Override
             public void onFailed(String resultMsg, int resultCode) {
-                restartTipsDialog.dismiss();
+                dismiss(restartTipsDialog);
                 ToastUtils.showShort(R.string.wifi_restart_failed);
             }
         });
@@ -215,13 +232,13 @@ public class WifiToolkitActivity extends BaseActivity {
         proxyModel.reset(new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                resetTipsDialog.dismiss();
+                dismiss(resetTipsDialog);
                 ToastUtils.showShort(R.string.reset_device_success);
             }
 
             @Override
             public void onFailed(String resultMsg, int resultCode) {
-                resetTipsDialog.dismiss();
+                dismiss(resetTipsDialog);
                 ToastUtils.showShort("恢复出厂设置失败");
             }
         });
@@ -246,5 +263,27 @@ public class WifiToolkitActivity extends BaseActivity {
                     });
         }
         resetTipsDialog.show();
+    }
+
+    @Override
+    public void onSSIDResponseOK() {
+        if (nameModifyDialog != null) {
+            nameModifyDialog.dismiss();
+            ToastUtils.showShort(R.string.modify_success);
+        }
+    }
+
+    @Override
+    public void onPwdResponseOK() {
+        if (passwordModifyDialog != null) {
+            passwordModifyDialog.dismiss();
+            ToastUtils.showShort(R.string.modify_success);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismiss(nameModifyDialog, passwordModifyDialog, resetTipsDialog, restartTipsDialog);
+        super.onDestroy();
     }
 }

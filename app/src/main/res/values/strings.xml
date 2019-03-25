@@ -73,8 +73,8 @@
     <string name="input_net_password">输入宽带密码</string>
 
     <string name="online_tips">联网提示</string>
-    <string name="scanning">扫描中...</string>
-    <string name="commit_ing">正在提交...</string>
+    <string name="scanning">扫描中…</string>
+    <string name="commit_ing">正在提交…</string>
     <string name="cancel">取消</string>
     <string name="setting">设置</string>
     <string name="goto_online_setting">前往连接小K</string>
@@ -105,7 +105,7 @@
     <string name="set_option_success">配置成功</string>
 
     <string name="input_wifi_name_please">请输入合法的WiFi名称</string>
-    <string name="input_wifi_passowrd_please">请设置8-20位的WiFi密码</string>
+    <string name="input_wifi_passowrd_please">请设置8–20位的WiFi密码</string>
 
     <string name="modify_wifi_tips">修改WiFi名称或密码会断开当前连接，请更改成功后连接修改后的WiFi!</string>
     <string name="try_to_connect_wifi">正在连接网络，请稍候</string>
@@ -281,20 +281,26 @@
     <string name="address_duration_">地址租期：</string>
     <string name="open">开</string>
     <string name="close">关</string>
-    <string name="address_duration_tips">分钟（支持1-2880分钟，默认120分钟）</string>
+    <string name="address_duration_tips">分钟（支持1–2880分钟，默认120分钟）</string>
     <string name="last_week_action_time">上周活跃时长</string>
-    <string name="wifi_restart_success">WiFi重启成功</string>
+    <string name="wifi_restart_option_success">WiFi重启成功</string>
     <string name="wifi_restart_failed">WiFi重启失败</string>
     <string name="reset_device_success">恢复出厂设置成功</string>
     <string name="gallery_lab">照片库</string>
     <string name="newer_picture">最新照片</string>
     <string name="intelligence_gallery">智能相册</string>
     <string name="share_gallery">共享相册</string>
-    <string name="upload_ing">上传中...</string>
+    <string name="upload_ing">上传中…</string>
     <string name="upload_error">图片上传失败</string>
     <string name="user_info_update_success">信息更新成功</string>
     <string name="this_node_has_bound">该设备已被其他账户绑定</string>
     <string name="bind_fail_please_retry">绑定失败，请稍后重试</string>
     <string name="modify_success">修改成功</string>
+    <string name="no_higher_version">无可用升级版本</string>
+    <string name="update_ing">正在更新</string>
+    <string name="option_failed">配置失败</string>
+    <string name="option_success_restart">配置成功，WiFi即将重启</string>
+    <string name="token_overdue_retry">登录信息过期，请自行登录</string>
+    <string name="refuse_loaction_permission">获取和修改WiFi设置需要定位权限，拒绝该权限WiFi设置功能将无法工作</string>
 
 </resources>

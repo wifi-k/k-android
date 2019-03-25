@@ -11,11 +11,11 @@ import net.treebear.kwifimanager.mvp.IView;
  */
 public class DynamicIpContract {
 
-    public interface IDynamicIpView extends IView<WifiDeviceInfo> {
+    public interface View extends IView<WifiDeviceInfo> {
 
     }
 
-    public interface IDynamicIpPresenter extends IPresenter<IDynamicIpView> {
+    public interface Presenter extends IPresenter<View> {
         /**
          * 动态ip上网
          */
@@ -27,7 +27,7 @@ public class DynamicIpContract {
         void queryNetStatus();
     }
 
-    public interface IDynamicIpModel extends IModel {
+    public interface Model extends IModel {
         /**
          * 配置动态ip上网
          */

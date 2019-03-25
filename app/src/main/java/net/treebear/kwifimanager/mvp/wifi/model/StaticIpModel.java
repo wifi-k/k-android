@@ -10,7 +10,7 @@ import okhttp3.RequestBody;
 /**
  * @author Administrator
  */
-public class StaticIpModel extends BaseWifiModel implements StaticIpContract.IStaticIpModel {
+public class StaticIpModel extends BaseWifiModel implements StaticIpContract.Model {
     @Override
     public void staticIpSet(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack) {
         bindObservable(mService.staticSet(params), callBack);

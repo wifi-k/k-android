@@ -1,10 +1,9 @@
-package net.treebear.kwifimanager.activity.home.settings;
+package net.treebear.kwifimanager.activity.bindap.settings;
 
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,8 +21,8 @@ import net.treebear.kwifimanager.mvp.wifi.presenter.ModifyWifiInfoPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.NetWorkUtils;
-import net.treebear.kwifimanager.widget.LoadingProgressDialog;
-import net.treebear.kwifimanager.widget.TMessageDialog;
+import net.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
+import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,7 +31,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * @author Administrator
  */
-public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.IModifyWifiInfoPresenter, Object> implements ModifyWifiInfoContract.IModifyWifiInfoView {
+public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.Presenter, Object> implements ModifyWifiInfoContract.View {
 
     @BindView(R.id.et_wifi_name)
     EditText etWifiName;
@@ -55,7 +54,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
     }
 
     @Override
-    public ModifyWifiInfoContract.IModifyWifiInfoPresenter getPresenter() {
+    public ModifyWifiInfoContract.Presenter getPresenter() {
         return new ModifyWifiInfoPresenter();
     }
 
@@ -68,9 +67,9 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
     }
 
     private void listenFocus() {
-        etWifiName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etWifiName.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etWifiName.setSelection(etWifiName.getText().length());
                     tvLineName.setBackgroundColor(Config.Colors.MAIN);
@@ -79,9 +78,9 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
                 }
             }
         });
-        etWifiPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etWifiPassword.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etWifiPassword.setSelection(etWifiPassword.getText().length());
                     tvLinePassword.setBackgroundColor(Config.Colors.MAIN);
@@ -113,12 +112,12 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
             initMessageDialog();
             tMessageDialog.doClick(new TMessageDialog.DoClickListener() {
                 @Override
-                public void onClickLeft(View view) {
+                public void onClickLeft(android.view.View view) {
                     tMessageDialog.dismiss();
                 }
 
                 @Override
-                public void onClickRight(View view) {
+                public void onClickRight(android.view.View view) {
                     mPresenter.modifyWifiInfo(NetWorkUtils.getSSIDWhenWifi(MyApplication.getAppContext()),
                             etWifiName.getText().toString(), etWifiPassword.getText().toString());
                     tMessageDialog.dismiss();
@@ -140,7 +139,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
 //                            wifiManager.setWifiEnabled(true);
 //                            wifiManager.startScan();
 //                        }
-                        MyApplication.getAppContext().getUser().setAuthStatus(1);
+                        MyApplication.getAppContext().getUser().setNodeSize(1);
                         ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
                     }
 

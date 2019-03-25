@@ -10,34 +10,34 @@ import okhttp3.RequestBody;
 
 public interface MyNodeContract {
 
-    interface IMyNodeView extends IView<NodeInfoDetail> {
+    interface View extends IView<NodeInfoDetail> {
 
         void modifyNodeNameResponse(int resultCode, String msg);
 
         void unbindNodeResponse(int resultCode, String msg);
 
-        void upgardeNodeVersion(int resultCode, String msg);
+        void upgradeNodeVersion(int resultCode, String msg);
     }
 
-    interface IMyNodePresenter extends IPresenter<IMyNodeView> {
+    interface Presenter extends IPresenter<View> {
         void getNodeList();
 
         void modifyNodeName(String nodeId, String name);
 
         void unbindNode(String nodeId);
 
-        void upgardeNode(String nodeId);
+        void upgradeNode(String nodeId);
 
     }
 
-    interface IMyNodeModel extends IModel {
+    interface Model extends IModel {
         void getNodeList(RequestBody params,AsyncCallBack<BaseResponse<NodeInfoDetail>> callBack);
 
         void modifyNodeName(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
 
         void unbindNode(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
 
-        void upgardeNode(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
+        void upgradeNode(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
     }
 
 }

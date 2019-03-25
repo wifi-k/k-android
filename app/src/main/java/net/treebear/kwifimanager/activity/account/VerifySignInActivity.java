@@ -1,7 +1,6 @@
 package net.treebear.kwifimanager.activity.account;
 
 import android.text.Editable;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
 import net.treebear.kwifimanager.util.CountUtil;
+import net.treebear.kwifimanager.util.UserInfoUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,7 +30,7 @@ import io.reactivex.disposables.Disposable;
  * <h2>验证码登录界面</h2>
  * 登录和验证系列界面尚有很大优化空间
  */
-public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeSignInPresenter, String> implements CodeSignInContract.ICodeSignInView {
+public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presenter, String> implements CodeSignInContract.View {
 
 
     @BindView(R.id.et_verify)
@@ -62,7 +62,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
     }
 
     @Override
-    public CodeSignInContract.ICodeSignInPresenter getPresenter() {
+    public CodeSignInContract.Presenter getPresenter() {
         return new CodeSignInPresenter();
     }
 
@@ -119,12 +119,12 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
         etSignInPhone.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
@@ -154,9 +154,9 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignInPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignInPhone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignInPhone.setSelection(etSignInPhone.getText().length());
                     linePhone.setBackgroundColor(Config.Colors.MAIN);
@@ -165,9 +165,9 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
                 }
             }
         });
-        etSignInVerify.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignInVerify.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignInVerify.setSelection(etSignInVerify.getText().length());
                     linePassword.setBackgroundColor(Config.Colors.MAIN);
@@ -217,6 +217,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.ICodeS
         if (bean != null) {
             bean.setToken(MyApplication.getAppContext().getUser().getToken());
             MyApplication.getAppContext().savedUser(bean);
+            UserInfoUtil.updateUserInfo(bean);
             dispose(mCountDisposable);
             hideLoading();
             ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);

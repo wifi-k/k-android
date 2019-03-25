@@ -7,7 +7,7 @@ import net.treebear.kwifimanager.mvp.server.contract.GetUserInfoContract;
 import net.treebear.kwifimanager.mvp.server.model.GetUserInfoModel;
 import net.treebear.kwifimanager.util.Check;
 
-public class GetUserInfoPresenter extends BasePresenter<GetUserInfoContract.IGetUserInfoView, GetUserInfoContract.IGetUserInfoModel> implements GetUserInfoContract.IGetUserInfoPresenter {
+public class GetUserInfoPresenter extends BasePresenter<GetUserInfoContract.View, GetUserInfoContract.Model> implements GetUserInfoContract.Presenter {
     @Override
     public void setModel() {
         mModel = new GetUserInfoModel();

@@ -25,6 +25,7 @@ public interface Keys {
     String NODE_ID = "nodeId";
     String PAGE_NO = "pageNo";
     String PAGE_SIZE = "pageSize";
+    String FREQ = "freq";
 
     /**
      * ----------------------intent传输key--------------------

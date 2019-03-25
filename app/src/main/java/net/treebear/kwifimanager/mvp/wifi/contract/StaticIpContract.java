@@ -13,11 +13,11 @@ import okhttp3.RequestBody;
  */
 public class StaticIpContract {
 
-    public interface IStaticIpView extends IView<WifiDeviceInfo> {
+    public interface View extends IView<WifiDeviceInfo> {
 
     }
 
-    public interface IStaticIpPresenter extends IPresenter<StaticIpContract.IStaticIpView> {
+    public interface Presenter extends IPresenter<View> {
         /**
          * 设置宽带账号
          * ip	str	xxx.xxx.xxx.xxx
@@ -34,7 +34,7 @@ public class StaticIpContract {
         void queryNetStatus();
     }
 
-    public interface IStaticIpModel extends IModel {
+    public interface Model extends IModel {
         /**
          * 设置宽带账号
          *

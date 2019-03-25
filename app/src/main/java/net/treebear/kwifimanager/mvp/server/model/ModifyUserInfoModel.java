@@ -7,7 +7,7 @@ import net.treebear.kwifimanager.mvp.server.contract.ModifyUserInfoContract;
 
 import okhttp3.RequestBody;
 
-public class ModifyUserInfoModel extends BaseServerModel implements ModifyUserInfoContract.IUserInfoModel {
+public class ModifyUserInfoModel extends BaseServerModel implements ModifyUserInfoContract.Model {
     @Override
     public void getQiNiuToken(AsyncCallBack<BaseResponse<QiNiuUserBean>> callBack) {
         bindObservable(mService.getQiNiuToken(), callBack);

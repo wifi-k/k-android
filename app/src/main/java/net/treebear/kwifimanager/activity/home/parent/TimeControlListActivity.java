@@ -14,7 +14,7 @@ import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.BanAppPlanBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
-import net.treebear.kwifimanager.widget.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 import java.util.ArrayList;
 
@@ -99,5 +99,11 @@ public class TimeControlListActivity extends BaseActivity {
             });
         }
         tInputDialog.clearInputText();
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismiss(tInputDialog);
+        super.onDestroy();
     }
 }

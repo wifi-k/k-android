@@ -11,7 +11,7 @@ import net.treebear.kwifimanager.bean.AppBean;
 import net.treebear.kwifimanager.bean.BanAppPlanBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
-import net.treebear.kwifimanager.widget.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 import java.util.ArrayList;
 

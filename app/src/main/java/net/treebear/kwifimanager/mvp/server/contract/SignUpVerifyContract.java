@@ -14,20 +14,20 @@ import okhttp3.RequestBody;
  */
 public interface SignUpVerifyContract {
 
-    interface ISignUpVerifyView extends IView<String> {
+    interface View extends IView<String> {
 
         void onSignUpOk(ServerUserInfo bean);
 
     }
 
-    interface ISignUpVerifyPresenter extends IPresenter<ISignUpVerifyView> {
+    interface Presenter extends IPresenter<View> {
 
         void getSignUpVerifyCode(String mobile);
 
         void signUpByVerifyCode(String mobile, String code);
     }
 
-    interface ISignUpVerifyModel extends IModel {
+    interface Model extends IModel {
 
         void getSignUpVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack);
 

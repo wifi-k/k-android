@@ -43,7 +43,7 @@ public class MainActivity extends BaseFragmentActivity {
         {
             homeBindFragment = new HomeBindFragment();
             homeUnbindFragment = new HomeUnbindFragment();
-            if (MyApplication.getAppContext().hasAuth()) {
+            if (MyApplication.getAppContext().hasBoundNode()) {
                 add(0, homeBindFragment);
             } else {
                 add(0, homeUnbindFragment);
@@ -68,12 +68,16 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void initView() {
         addFragments(fragments);
-        statusTransparentFontWhite();
+        if (MyApplication.getAppContext().hasBoundNode()) {
+            statusWhiteFontBlack();
+        } else {
+            statusTransparentFontWhite();
+        }
         bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> {
             updateFragment(i1);
             switch (i1) {
                 case 0:
-                    if (MyApplication.getAppContext().hasAuth()) {
+                    if (MyApplication.getAppContext().hasBoundNode()) {
                         statusWhiteFontBlack();
                     } else {
                         statusTransparentFontWhite();
@@ -119,7 +123,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     public void updateHomeFragment() {
         //若已认证
-        if (MyApplication.getAppContext().hasAuth()) {
+        if (MyApplication.getAppContext().hasBoundNode()) {
             // 当前为未绑定界面
             if (mFragments.get(0) instanceof HomeUnbindFragment) {
                 // 切换为已绑定界面
@@ -155,7 +159,7 @@ public class MainActivity extends BaseFragmentActivity {
                     });
 
                 }
-                if (NetWorkUtils.isConnectXiaoK(MainActivity.this)) {
+                if (NetWorkUtils.isSameLikeXiaoK(MainActivity.this)) {
                     WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
                         @Override
                         public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {

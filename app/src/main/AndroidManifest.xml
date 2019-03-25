@@ -78,16 +78,16 @@
             android:name=".activity.home.FamilyMemberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.settings.ModifyWifiInfoActivity"
+            android:name=".activity.bindap.settings.ModifyWifiInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.settings.StaticIpOnlineActivity"
+            android:name=".activity.bindap.settings.StaticIpOnlineActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.settings.DialUpOnlineActivity"
+            android:name=".activity.bindap.settings.DialUpOnlineActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.settings.ChooseNetworkStyleActivity"
+            android:name=".activity.bindap.settings.ChooseNetworkStyleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.bindap.BindAction1Activity"

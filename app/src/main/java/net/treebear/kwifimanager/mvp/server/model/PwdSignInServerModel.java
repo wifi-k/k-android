@@ -7,7 +7,7 @@ import net.treebear.kwifimanager.mvp.server.contract.PwdSignInContract;
 
 import okhttp3.RequestBody;
 
-public class PwdSignInServerModel extends BaseServerModel implements PwdSignInContract.IPwdSignInModel {
+public class PwdSignInServerModel extends BaseServerModel implements PwdSignInContract.Model {
     @Override
     public void signInByVerifyPwd(RequestBody params, AsyncCallBack<BaseResponse<ServerUserInfo>> callBack) {
         bindObservable(mService.signinByPassword(params), callBack);

@@ -2,7 +2,6 @@ package net.treebear.kwifimanager.activity.account;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ import io.reactivex.disposables.Disposable;
  * 考虑到会使界面臃肿，后期难以维护，故弃用
  */
 @Deprecated
-public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerifyPresenter, String> implements GetVerifyContract.IGetVerifyView {
+public class GetVerifyActivity extends BaseActivity<GetVerifyContract.Presenter, String> implements GetVerifyContract.View {
     @BindView(R.id.et_verify)
     EditText etSignUpVerify;
     @BindView(R.id.line_password)
@@ -68,7 +67,7 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
     }
 
     @Override
-    public GetVerifyContract.IGetVerifyPresenter getPresenter() {
+    public GetVerifyContract.Presenter getPresenter() {
         return new GetVerifyPresenter();
     }
 
@@ -138,12 +137,12 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
         etSignUpPhone.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
@@ -170,9 +169,9 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignUpPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignUpPhone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignUpPhone.setSelection(etSignUpPhone.getText().length());
                     linePhone.setBackgroundColor(Config.Colors.MAIN);
@@ -181,9 +180,9 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.IGetVerify
                 }
             }
         });
-        etSignUpVerify.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignUpVerify.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignUpVerify.setSelection(etSignUpVerify.getText().length());
                     linePassword.setBackgroundColor(Config.Colors.MAIN);

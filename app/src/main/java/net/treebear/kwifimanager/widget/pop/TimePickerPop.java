@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.widget;
+package net.treebear.kwifimanager.widget.pop;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -20,7 +20,7 @@ import net.treebear.kwifimanager.util.TLog;
 
 import java.util.ArrayList;
 
-public class TimePickerPop {
+public class TimePickerPop implements TPop{
 
     private final Context mContext;
     private PopupWindow popupWindow;
@@ -125,6 +125,7 @@ public class TimePickerPop {
         }
     }
 
+    @Override
     public void show(View parent) {
         if (popupWindow == null) {
             initPopupWindow();
@@ -132,6 +133,7 @@ public class TimePickerPop {
         popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
     }
 
+    @Override
     public void dismiss() {
         if (popupWindow != null) {
             popupWindow.dismiss();

@@ -7,9 +7,9 @@ import net.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 
 import okhttp3.RequestBody;
 
-public class MyNodeModel extends BaseServerModel implements MyNodeContract.IMyNodeModel {
+public class MyNodeModel extends BaseServerModel implements MyNodeContract.Model {
     @Override
-    public void getNodeList(RequestBody params,AsyncCallBack<BaseResponse<NodeInfoDetail>> callBack) {
+    public void getNodeList(RequestBody params, AsyncCallBack<BaseResponse<NodeInfoDetail>> callBack) {
         bindObservable(mService.getNodeList(params), callBack);
     }
 
@@ -24,7 +24,7 @@ public class MyNodeModel extends BaseServerModel implements MyNodeContract.IMyNo
     }
 
     @Override
-    public void upgardeNode(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack) {
-
+    public void upgradeNode(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack) {
+        bindObservable(mService.firmwareUpgrade(params), callBack);
     }
 }

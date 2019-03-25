@@ -11,7 +11,7 @@ import net.treebear.kwifimanager.config.ConstConfig;
 import net.treebear.kwifimanager.fragment.DynamicOnlineFragment;
 import net.treebear.kwifimanager.fragment.PPPOEFragment;
 import net.treebear.kwifimanager.fragment.StaticIpFragment;
-import net.treebear.kwifimanager.widget.TChooseOnlineTypePop;
+import net.treebear.kwifimanager.widget.pop.TChooseOnlineTypePop;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -71,5 +71,11 @@ public class OnlineSettingActivity extends BaseFragmentActivity {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
 //        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismiss(tChooseOnlineTypePop);
+        super.onDestroy();
     }
 }

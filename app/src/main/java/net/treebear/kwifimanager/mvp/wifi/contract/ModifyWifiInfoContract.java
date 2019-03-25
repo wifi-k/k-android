@@ -12,11 +12,11 @@ import okhttp3.RequestBody;
  */
 public class ModifyWifiInfoContract {
 
-    public interface IModifyWifiInfoView extends IView<Object> {
+    public interface View extends IView<Object> {
 
     }
 
-    public interface IModifyWifiInfoPresenter extends IPresenter<ModifyWifiInfoContract.IModifyWifiInfoView> {
+    public interface Presenter extends IPresenter<View> {
         /**
          * 设置宽带账号
          *
@@ -26,7 +26,7 @@ public class ModifyWifiInfoContract {
         void modifyWifiInfo(String bssid,String name, String password);
     }
 
-    public interface IModifyWifiInfoModel extends IModel {
+    public interface Model extends IModel {
         /**
          * 设置宽带账号
          *

@@ -15,8 +15,8 @@ import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.util.NetWorkUtils;
-import net.treebear.kwifimanager.widget.TInputDialog;
-import net.treebear.kwifimanager.widget.TipsDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TipsDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -130,7 +130,7 @@ public class HomeUnbindFragment extends BaseFragment {
                     .doClick(new TipsDialog.DoClickListener() {
                         @Override
                         public void onClickRight(TextView tvRight) {
-                            MyApplication.getAppContext().getUser().setAuthStatus(1);
+                            MyApplication.getAppContext().getUser().setNodeSize(1);
                             if (mContext instanceof MainActivity) {
                                 ((MainActivity) mContext).updateHomeFragment();
                             }
@@ -139,5 +139,11 @@ public class HomeUnbindFragment extends BaseFragment {
                     });
         }
         successTipsDialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        dismiss(successTipsDialog, errorTipsDialog, inputDialog);
+        super.onDestroy();
     }
 }

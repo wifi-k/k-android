@@ -1,6 +1,5 @@
 package net.treebear.kwifimanager.fragment;
 
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +24,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class MeFragment extends BaseFragment<GetUserInfoContract.IGetUserInfoPresenter, ServerUserInfo> implements GetUserInfoContract.IGetUserInfoView {
+public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, ServerUserInfo> implements GetUserInfoContract.View {
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
     @BindView(R.id.tv_user_mobile)
@@ -40,7 +39,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.IGetUserInfoPre
     }
 
     @Override
-    public GetUserInfoContract.IGetUserInfoPresenter getPresenter() {
+    public GetUserInfoContract.Presenter getPresenter() {
         return new GetUserInfoPresenter();
     }
 
@@ -84,7 +83,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.IGetUserInfoPre
     }
 
     @OnClick({R.id.tv_user_name, R.id.tv_user_mobile, R.id.iv_me_user_header})
-    public void onTvUserNameClicked(View v) {
+    public void onTvUserNameClicked(android.view.View v) {
         startActivity(UserInfoActivity.class);
     }
 

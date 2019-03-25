@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.activity.home.settings;
+package net.treebear.kwifimanager.activity.bindap.settings;
 
 import android.widget.RadioGroup;
 
@@ -13,7 +13,7 @@ import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 import net.treebear.kwifimanager.mvp.wifi.presenter.DynamicIpPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
-import net.treebear.kwifimanager.widget.LoadingProgressDialog;
+import net.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,7 +21,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.IDynamicIpPresenter, WifiDeviceInfo> implements DynamicIpContract.IDynamicIpView {
+public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.Presenter, WifiDeviceInfo> implements DynamicIpContract.View {
 
     @BindView(R.id.rg_online_type)
     RadioGroup rgOnlineType;
@@ -36,7 +36,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.I
     }
 
     @Override
-    public DynamicIpContract.IDynamicIpPresenter getPresenter() {
+    public DynamicIpContract.Presenter getPresenter() {
         return new DynamicIpPresenter();
     }
 

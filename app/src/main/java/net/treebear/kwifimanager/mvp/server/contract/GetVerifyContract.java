@@ -13,16 +13,16 @@ import okhttp3.RequestBody;
  */
 public interface GetVerifyContract {
 
-    interface IGetVerifyView extends IView<String> {
+    interface View extends IView<String> {
 
     }
 
-    interface IGetVerifyPresenter extends IPresenter<IGetVerifyView> {
+    interface Presenter extends IPresenter<View> {
 
         void getGetVerifyCode(int type, String mobile);
     }
 
-    interface IGetVerifyModel extends IModel {
+    interface Model extends IModel {
 
         void getGetVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack);
 

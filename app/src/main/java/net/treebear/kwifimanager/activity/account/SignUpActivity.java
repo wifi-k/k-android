@@ -1,7 +1,6 @@
 package net.treebear.kwifimanager.activity.account;
 
 import android.text.Editable;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,7 +20,8 @@ import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
 import net.treebear.kwifimanager.util.CountUtil;
-import net.treebear.kwifimanager.widget.TMessageDialog;
+import net.treebear.kwifimanager.util.UserInfoUtil;
+import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,7 +36,7 @@ import io.reactivex.disposables.Disposable;
  * <li>点击注册</li>
  * </ul>
  */
-public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVerifyPresenter, String> implements SignUpVerifyContract.ISignUpVerifyView {
+public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter, String> implements SignUpVerifyContract.View {
 
     @BindView(R.id.et_verify)
     EditText etSignUpCode;
@@ -73,7 +73,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
     }
 
     @Override
-    public SignUpVerifyContract.ISignUpVerifyPresenter getPresenter() {
+    public SignUpVerifyContract.Presenter getPresenter() {
         return new SignUpVerifyPresenter();
     }
 
@@ -152,12 +152,12 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
         etSignUpPhone.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
@@ -187,9 +187,9 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignUpPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignUpPhone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignUpPhone.setSelection(etSignUpPhone.getText().length());
                     linePhoneNumber.setBackgroundColor(Config.Colors.MAIN);
@@ -198,9 +198,9 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
                 }
             }
         });
-        etSignUpCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignUpCode.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignUpCode.setSelection(etSignUpCode.getText().length());
                     linePassword.setBackgroundColor(Config.Colors.MAIN);
@@ -223,12 +223,12 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
                     .right(Config.Text.SIGN_IN_NOW)
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
-                        public void onClickLeft(View view) {
+                        public void onClickLeft(android.view.View view) {
                             signDialog.dismiss();
                         }
 
                         @Override
-                        public void onClickRight(View view) {
+                        public void onClickRight(android.view.View view) {
                             startActivity(SignInActivity.class);
 //                            startActivity(SetPasswordActivity.class);
                             signDialog.dismiss();
@@ -269,12 +269,14 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.ISignUpVer
     @Override
     protected void onDestroy() {
         dispose(mCountDisposable);
+        dismiss(signDialog);
         super.onDestroy();
     }
 
     @Override
     public void onSignUpOk(ServerUserInfo bean) {
         MyApplication.getAppContext().savedUser(bean);
+        UserInfoUtil.updateUserInfo(bean);
         dispose(mCountDisposable);
         startActivity(SetPasswordActivity.class);
     }

@@ -9,7 +9,7 @@ import net.treebear.kwifimanager.mvp.server.contract.GetVerifyContract;
 import net.treebear.kwifimanager.mvp.server.model.GetVerifyServerModel;
 import net.treebear.kwifimanager.util.Check;
 
-public class GetVerifyPresenter extends BasePresenter<GetVerifyContract.IGetVerifyView, GetVerifyContract.IGetVerifyModel> implements GetVerifyContract.IGetVerifyPresenter {
+public class GetVerifyPresenter extends BasePresenter<GetVerifyContract.View, GetVerifyContract.Model> implements GetVerifyContract.Presenter {
     @Override
     public void setModel() {
         mModel = new GetVerifyServerModel();

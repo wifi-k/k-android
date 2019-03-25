@@ -15,7 +15,7 @@ import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.util.DateTimeUtils;
-import net.treebear.kwifimanager.widget.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -144,5 +144,11 @@ public class MobileDetailActivity extends BaseActivity {
         }
         modifyNameDialog.clearInputText();
         modifyNameDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismiss(modifyNameDialog);
+        super.onDestroy();
     }
 }

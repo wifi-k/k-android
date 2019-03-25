@@ -13,7 +13,7 @@ import net.treebear.kwifimanager.bean.TimeLimitBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.util.TLog;
-import net.treebear.kwifimanager.widget.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 import java.util.ArrayList;
 

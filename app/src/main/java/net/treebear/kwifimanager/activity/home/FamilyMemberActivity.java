@@ -10,8 +10,8 @@ import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.FamilyMemberBean;
 import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.util.TLog;
-import net.treebear.kwifimanager.widget.TInputDialog;
-import net.treebear.kwifimanager.widget.TMessageDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 import java.util.ArrayList;
 
@@ -56,12 +56,10 @@ public class FamilyMemberActivity extends BaseActivity {
                     familyMemberAdapter.notifyDataSetChanged();
                     break;
                 case R.id.iv_member_edit:
-                    resetInputDialog();
-                    tInputDialog.show();
+                    showInputDialog();
                     break;
                 case R.id.iv_member_delete:
-                    resetMessageDialog();
-                    tMessageDialog.show();
+                    showMessageDialog();
                     break;
                 default:
                     break;
@@ -72,7 +70,7 @@ public class FamilyMemberActivity extends BaseActivity {
     /**
      * 修改名称弹窗
      */
-    private void resetInputDialog() {
+    private void showInputDialog() {
         if (tInputDialog == null) {
             tInputDialog = new TInputDialog(this);
             tInputDialog.setTitle(R.string.modify_name);
@@ -93,12 +91,13 @@ public class FamilyMemberActivity extends BaseActivity {
             });
         }
         tInputDialog.clearInputText();
+        tInputDialog.show();
     }
 
     /**
      * 删除成员弹窗
      */
-    private void resetMessageDialog() {
+    private void showMessageDialog() {
         if (tMessageDialog == null) {
             tMessageDialog = new TMessageDialog(this).withoutMid()
                     .title(R.string.delete_member)
@@ -119,6 +118,12 @@ public class FamilyMemberActivity extends BaseActivity {
                         }
                     });
         }
+        tMessageDialog.show();
     }
 
+    @Override
+    protected void onDestroy() {
+        dismiss(tInputDialog, tMessageDialog);
+        super.onDestroy();
+    }
 }

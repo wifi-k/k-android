@@ -9,7 +9,7 @@ import net.treebear.kwifimanager.mvp.server.contract.ForgetPasswordContract;
 import net.treebear.kwifimanager.mvp.server.model.ForgetPasswordServerModel;
 import net.treebear.kwifimanager.util.SecurityUtils;
 
-public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContract.IForgetPasswordView, ForgetPasswordContract.IForgetPasswordModel> implements ForgetPasswordContract.IForgetPasswordPresenter {
+public class ForgetPasswordPresenter extends BasePresenter<ForgetPasswordContract.View, ForgetPasswordContract.Model> implements ForgetPasswordContract.Presenter {
     @Override
     public void setModel() {
         mModel = new ForgetPasswordServerModel();

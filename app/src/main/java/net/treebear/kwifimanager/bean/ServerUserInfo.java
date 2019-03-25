@@ -13,7 +13,7 @@ public class ServerUserInfo {
      * name : null
      * mobile : 13797470026
      * email : null
-     * authStatus : 0
+     * boundNode : 0
      * passwd : 3d3aa4baff65ac68c4c6e9365ed2d95f
      * avatar : null
      * inviteCode : null
@@ -32,6 +32,7 @@ public class ServerUserInfo {
     private String mobile;
     private String email;
     private int authStatus;
+    private int nodeSize;
     private String passwd;
     private String avatar;
     private String inviteCode;
@@ -42,6 +43,23 @@ public class ServerUserInfo {
     private long createTime;
     private long updateTime;
     private int isDelete;
+
+
+    public int getNodeSize() {
+        return nodeSize;
+    }
+
+    public void setNodeSize(int nodeSize) {
+        this.nodeSize = nodeSize;
+    }
+
+    public int getAuthStatus() {
+        return authStatus;
+    }
+
+    public void setAuthStatus(int authStatus) {
+        this.authStatus = authStatus;
+    }
 
     public int getId() {
         return id;
@@ -81,14 +99,6 @@ public class ServerUserInfo {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getAuthStatus() {
-        return authStatus;
-    }
-
-    public void setAuthStatus(int authStatus) {
-        this.authStatus = authStatus;
     }
 
     public String getPasswd() {
@@ -180,6 +190,7 @@ public class ServerUserInfo {
                 ", mobile='" + mobile + '\'' +
                 ", email='" + email + '\'' +
                 ", authStatus=" + authStatus +
+                ", nodeSize=" + nodeSize +
                 ", passwd='" + passwd + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", inviteCode='" + inviteCode + '\'' +

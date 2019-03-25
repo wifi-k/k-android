@@ -10,14 +10,14 @@ import okhttp3.RequestBody;
 
 public interface CodeSignInContract {
 
-    interface ICodeSignInView extends IView<String> {
+    interface View extends IView<String> {
 
         void onSignInOk(ServerUserInfo bean);
 
         void onUserInfoLoaded(ServerUserInfo bean);
     }
 
-    interface ICodeSignInPresenter extends IPresenter<ICodeSignInView> {
+    interface Presenter extends IPresenter<View> {
 
         void getSignInVerifyCode(String mobile);
 
@@ -26,7 +26,7 @@ public interface CodeSignInContract {
         void getUserInfo();
     }
 
-    interface ICodeSignInModel extends IModel {
+    interface Model extends IModel {
 
         void getSignInVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack);
 

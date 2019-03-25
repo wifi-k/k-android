@@ -3,10 +3,10 @@ package net.treebear.kwifimanager.activity.home.myk;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.adapter.MyDeviceAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
@@ -15,8 +15,8 @@ import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 import net.treebear.kwifimanager.mvp.server.presenter.MyNodePresenter;
 import net.treebear.kwifimanager.util.Check;
-import net.treebear.kwifimanager.widget.TInputDialog;
-import net.treebear.kwifimanager.widget.TMessageDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ import butterknife.BindView;
 /**
  * @author Administrator
  */
-public class MyDeviceListActivity extends BaseActivity<MyNodeContract.IMyNodePresenter, NodeInfoDetail> implements MyNodeContract.IMyNodeView {
+public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter, NodeInfoDetail> implements MyNodeContract.View {
 
     @BindView(R.id.recycler_view)
     RecyclerView rvDeviceList;
@@ -41,7 +41,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.IMyNodePre
     }
 
     @Override
-    public MyNodeContract.IMyNodePresenter getPresenter() {
+    public MyNodeContract.Presenter getPresenter() {
         return new MyNodePresenter();
     }
 
@@ -81,12 +81,12 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.IMyNodePre
                     .right(R.string.confirm)
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
-                        public void onClickLeft(View view) {
+                        public void onClickLeft(android.view.View view) {
                             tMessageDialog.dismiss();
                         }
 
                         @Override
-                        public void onClickRight(View view) {
+                        public void onClickRight(android.view.View view) {
                             tMessageDialog.dismiss();
                             mPresenter.unbindNode(nodeList.get(currentModifyPosition).getNodeId());
                         }
@@ -140,12 +140,19 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.IMyNodePre
     @Override
     public void unbindNodeResponse(int resultCode, String msg) {
         nodeList.remove(currentModifyPosition);
+        MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
         deviceAdapter.notifyDataSetChanged();
         ToastUtils.showShort("解绑成功");
     }
 
     @Override
-    public void upgardeNodeVersion(int resultCode, String msg) {
+    public void upgradeNodeVersion(int resultCode, String msg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismiss(tInputDialog, tMessageDialog);
+        super.onDestroy();
     }
 }

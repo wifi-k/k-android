@@ -10,7 +10,7 @@ import net.treebear.kwifimanager.mvp.wifi.model.DynamicIpModel;
 /**
  * @author Administrator
  */
-public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.IDynamicIpView, DynamicIpContract.IDynamicIpModel> implements DynamicIpContract.IDynamicIpPresenter {
+public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.View, DynamicIpContract.Model> implements DynamicIpContract.Presenter {
     @Override
     public void setModel() {
         mModel = new DynamicIpModel();

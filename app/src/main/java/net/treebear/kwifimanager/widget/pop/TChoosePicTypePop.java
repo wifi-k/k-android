@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.widget;
+package net.treebear.kwifimanager.widget.pop;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -16,7 +16,7 @@ import net.treebear.kwifimanager.util.TLog;
 /**
  * @author Administrator
  */
-public class TChoosePicTypePop {
+public class TChoosePicTypePop implements TPop{
 
     private final Context mContext;
     private PopupWindow popupWindow;
@@ -90,6 +90,7 @@ public class TChoosePicTypePop {
         tvCancel.setOnClickListener(v -> mListener.onCancelClick());
     }
 
+    @Override
     public void show(View parent) {
         if (popupWindow == null) {
             initPopupWindow();
@@ -101,6 +102,7 @@ public class TChoosePicTypePop {
         this.mListener = listener;
     }
 
+    @Override
     public void dismiss() {
         if (popupWindow != null) {
             popupWindow.dismiss();

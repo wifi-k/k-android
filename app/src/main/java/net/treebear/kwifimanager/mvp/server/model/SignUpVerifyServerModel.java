@@ -13,7 +13,7 @@ import okhttp3.RequestBody;
  * @date 2018/3/23.
  */
 
-public class SignUpVerifyServerModel extends BaseServerModel implements SignUpVerifyContract.ISignUpVerifyModel {
+public class SignUpVerifyServerModel extends BaseServerModel implements SignUpVerifyContract.Model {
 
     @Override
     public void getSignUpVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack) {

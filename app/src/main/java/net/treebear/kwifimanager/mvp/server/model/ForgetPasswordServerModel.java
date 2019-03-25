@@ -6,7 +6,7 @@ import net.treebear.kwifimanager.mvp.server.contract.ForgetPasswordContract;
 
 import okhttp3.RequestBody;
 
-public class ForgetPasswordServerModel extends BaseServerModel implements ForgetPasswordContract.IForgetPasswordModel {
+public class ForgetPasswordServerModel extends BaseServerModel implements ForgetPasswordContract.Model {
     @Override
     public void setPassword(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack) {
         bindObservable(mService.forgetPassword(params), callBack);

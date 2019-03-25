@@ -9,7 +9,7 @@ import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.test.BeanTest;
-import net.treebear.kwifimanager.widget.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 import java.util.ArrayList;
 
@@ -80,5 +80,11 @@ public class AllMobileListActivity extends BaseActivity {
         }
         modifyNameDialog.clearInputText();
         modifyNameDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismiss(modifyNameDialog);
+        super.onDestroy();
     }
 }

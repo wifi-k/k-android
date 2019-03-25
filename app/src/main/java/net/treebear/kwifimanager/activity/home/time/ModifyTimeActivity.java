@@ -7,7 +7,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.TimeLimitBean;
 import net.treebear.kwifimanager.config.Keys;
-import net.treebear.kwifimanager.widget.TimePickerPop;
+import net.treebear.kwifimanager.widget.pop.TimePickerPop;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -112,4 +112,9 @@ public class ModifyTimeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        dismiss(endTimePop,startTimePop);
+        super.onDestroy();
+    }
 }

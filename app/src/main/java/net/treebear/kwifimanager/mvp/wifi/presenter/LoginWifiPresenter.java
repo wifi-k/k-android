@@ -10,7 +10,7 @@ import net.treebear.kwifimanager.http.WiFiHttpClient;
 import net.treebear.kwifimanager.mvp.wifi.contract.LoginWifiContract;
 import net.treebear.kwifimanager.mvp.wifi.model.LoginWifiModel;
 
-public class LoginWifiPresenter extends BasePresenter<LoginWifiContract.ILoginView, LoginWifiContract.ILoginModel> implements LoginWifiContract.ILoginPresenter {
+public class LoginWifiPresenter extends BasePresenter<LoginWifiContract.View, LoginWifiContract.Model> implements LoginWifiContract.Presenter {
     @Override
     public void setModel() {
         mModel = new LoginWifiModel();

@@ -1,7 +1,6 @@
 package net.treebear.kwifimanager.activity.me;
 
 import android.text.Editable;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -21,7 +20,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.IUserInfoPresenter, Object> implements ModifyUserInfoContract.IUserInfoView {
+public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.Presenter, Object> implements ModifyUserInfoContract.View {
 
     @BindView(R.id.et_nick_name)
     EditText etNickName;
@@ -34,7 +33,7 @@ public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.
     }
 
     @Override
-    public ModifyUserInfoContract.IUserInfoPresenter getPresenter() {
+    public ModifyUserInfoContract.Presenter getPresenter() {
         return new ModifyUserInfoPresenter();
     }
 
@@ -49,7 +48,7 @@ public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.
         etNickName.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                ivEditClose.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
+                ivEditClose.setVisibility(s.length() > 0 ? android.view.View.VISIBLE : android.view.View.GONE);
             }
         });
     }

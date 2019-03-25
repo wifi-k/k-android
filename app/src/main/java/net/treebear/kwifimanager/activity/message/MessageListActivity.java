@@ -19,7 +19,7 @@ import butterknife.BindView;
 /**
  * @author Administrator
  */
-public class MessageListActivity extends BaseActivity<MessageConstract.IMessagePresenter, MessageInfoBean> implements MessageConstract.IMessageView {
+public class MessageListActivity extends BaseActivity<MessageConstract.Presenter, MessageInfoBean> implements MessageConstract.View {
 
     @BindView(R.id.recycler_view)
     RecyclerView rvMessageList;
@@ -35,7 +35,7 @@ public class MessageListActivity extends BaseActivity<MessageConstract.IMessageP
     }
 
     @Override
-    public MessageConstract.IMessagePresenter getPresenter() {
+    public MessageConstract.Presenter getPresenter() {
         return new MessagePresenter();
     }
 

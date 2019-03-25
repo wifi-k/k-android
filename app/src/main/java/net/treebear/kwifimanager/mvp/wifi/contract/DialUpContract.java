@@ -13,11 +13,11 @@ import okhttp3.RequestBody;
  */
 public class DialUpContract {
 
-    public interface IDialUpView extends IView<WifiDeviceInfo> {
+    public interface View extends IView<WifiDeviceInfo> {
 
     }
 
-    public interface IDialUpPresenter extends IPresenter<DialUpContract.IDialUpView> {
+    public interface Presenter extends IPresenter<View> {
         /**
          * 设置宽带账号
          *
@@ -32,7 +32,7 @@ public class DialUpContract {
 
     }
 
-    public interface IDialUpModel extends IModel {
+    public interface Model extends IModel {
         /**
          * 设置宽带账号
          *

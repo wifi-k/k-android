@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.widget;
+package net.treebear.kwifimanager.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.util.DensityUtil;
+import net.treebear.kwifimanager.widget.ProgressDrawableHelper;
 
 
 /**
@@ -26,7 +27,7 @@ import net.treebear.kwifimanager.util.DensityUtil;
  * 定制化多按键
  * 包含水平进度条，默认不展示
  */
-public class TMessageDialog {
+public class TMessageDialog implements TDialog {
 
     private Context mContext;
     private Dialog mDialog;
@@ -105,8 +106,14 @@ public class TMessageDialog {
         llButton = view.findViewById(R.id.ll_button);
     }
 
-    public TMessageDialog doClick(@NonNull DoClickListener listener) {
-        mListener = listener;
+    public TMessageDialog doClick( DoClickListener listener) {
+        if (listener!=null) {
+            mListener = listener;
+        }
+        tvTitle.setOnClickListener(v -> mListener.onClickTitle(tvTitle));
+        tvContent.setOnClickListener(v -> mListener.onClickContent(tvContent));
+        tvLeft.setOnClickListener(v -> mListener.onClickLeft(tvLeft));
+        tvRight.setOnClickListener(v -> mListener.onClickRight(tvRight));
         return this;
     }
 
@@ -292,6 +299,7 @@ public class TMessageDialog {
         return this;
     }
 
+    @Override
     public void show() {
         if (!mDialog.isShowing()) {
             mDialog.show();
@@ -302,6 +310,7 @@ public class TMessageDialog {
         show();
     }
 
+    @Override
     public void dismiss() {
         mDialog.dismiss();
     }

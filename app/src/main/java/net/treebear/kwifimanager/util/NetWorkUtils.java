@@ -11,6 +11,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.config.Config;
 
 import java.util.List;
@@ -74,6 +75,19 @@ public class NetWorkUtils {
     }
 
     /**
+     * Wifi环境下获取当前Wifi名称
+     */
+    public static String getRealSSIDWhenWifi(Context context) {
+        if (isWifiConnected(context)) {
+            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            return getRealSSID(wifiManager.getConnectionInfo().getSSID());
+//            TLog.i(getNetworkInfo(context).getSubtypeName());
+//            return getNetworkInfo(context) != null ? getNetworkInfo(context).getSubtypeName() : "";
+        }
+        return "";
+    }
+
+    /**
      * Wifi环境下获取当前Wifi \\ mac// bssid
      */
     public static String getBSSIDWhenWifi(Context context) {
@@ -87,8 +101,15 @@ public class NetWorkUtils {
     /**
      * 是否连接到小K
      */
-    public static boolean isConnectXiaoK(Context context) {
+    public static boolean isSameLikeXiaoK(Context context) {
         return isWifiConnected(context) && getSSIDWhenWifi(context).contains(Config.Text.AP_NAME_START);
+    }
+
+    /**
+     * 小K 已登录
+     */
+    public static boolean isXiaoKSignIn() {
+        return Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getToken());
     }
 
     /**

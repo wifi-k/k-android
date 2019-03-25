@@ -11,6 +11,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.Size;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -31,7 +32,9 @@ import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.IView;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.TLog;
-import net.treebear.kwifimanager.widget.LoadingProgressDialog;
+import net.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
+import net.treebear.kwifimanager.widget.dialog.TDialog;
+import net.treebear.kwifimanager.widget.pop.TPop;
 
 import java.util.ArrayList;
 
@@ -174,15 +177,6 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
             immersionBar.destroy();
         }
         lastClick = 0L;
-        if (fragmentManager != null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            for (Fragment fragment : mFragments) {
-                transaction.remove(fragment);
-            }
-            transaction.commit();
-            mFragments.clear();
-            mFragments = null;
-        }
         super.onDestroy();
     }
 
@@ -614,4 +608,19 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
 //        super.onSaveInstanceState(outState, outPersistentState);
     }
 
+    protected void dismiss(@Size(min = 1) TDialog... dialogs) {
+        for (TDialog dialog : dialogs) {
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+        }
+    }
+
+    protected void dismiss(@Size(min = 1) TPop... pops) {
+        for (TPop pop : pops) {
+            if (pop != null) {
+                pop.dismiss();
+            }
+        }
+    }
 }

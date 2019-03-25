@@ -13,7 +13,7 @@ import net.treebear.kwifimanager.bean.Daybean;
 import net.treebear.kwifimanager.bean.TimeLimitBean;
 import net.treebear.kwifimanager.config.ConstConfig;
 import net.treebear.kwifimanager.config.Keys;
-import net.treebear.kwifimanager.widget.TimePickerPop;
+import net.treebear.kwifimanager.widget.pop.TimePickerPop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,4 +160,9 @@ public class NewEditTimeActivity extends BaseActivity {
         endTimePop.show(getWindow().getDecorView());
     }
 
+    @Override
+    protected void onDestroy() {
+        dismiss(endTimePop, startTimePop);
+        super.onDestroy();
+    }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +29,7 @@ import butterknife.OnClick;
  * <li>获取验证码界面</li>
  * <li>重设密码界面(本页)</li>
  */
-public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IForgetPasswordPresenter, Object> implements ForgetPasswordContract.IForgetPasswordView {
+public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Presenter, Object> implements ForgetPasswordContract.View {
 
     @BindView(R.id.et_password_again)
     EditText etPasswordAgain;
@@ -62,7 +61,7 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
     }
 
     @Override
-    public ForgetPasswordContract.IForgetPasswordPresenter getPresenter() {
+    public ForgetPasswordContract.Presenter getPresenter() {
         return new ForgetPasswordPresenter();
     }
 
@@ -146,9 +145,9 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignUpPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignUpPassword.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignUpPassword.setSelection(etSignUpPassword.getText().length());
                     linePhone.setBackgroundColor(Config.Colors.MAIN);
@@ -157,9 +156,9 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.IF
                 }
             }
         });
-        etPasswordAgain.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etPasswordAgain.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etPasswordAgain.setSelection(etPasswordAgain.getText().length());
                     linePassword.setBackgroundColor(Config.Colors.MAIN);

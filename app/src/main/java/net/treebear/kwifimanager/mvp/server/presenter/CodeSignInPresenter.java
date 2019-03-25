@@ -11,8 +11,8 @@ import net.treebear.kwifimanager.mvp.server.contract.CodeSignInContract;
 import net.treebear.kwifimanager.mvp.server.model.CodeSignInServerModel;
 import net.treebear.kwifimanager.util.Check;
 
-public class CodeSignInPresenter extends BasePresenter<CodeSignInContract.ICodeSignInView, CodeSignInContract.ICodeSignInModel>
-        implements CodeSignInContract.ICodeSignInPresenter {
+public class CodeSignInPresenter extends BasePresenter<CodeSignInContract.View, CodeSignInContract.Model>
+        implements CodeSignInContract.Presenter {
     @Override
     public void setModel() {
         mModel = new CodeSignInServerModel();

@@ -11,8 +11,9 @@ import net.treebear.kwifimanager.mvp.server.model.PwdSignInServerModel;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.SecurityUtils;
 
-public class PwdSignInPresenter extends BasePresenter<PwdSignInContract.IPwdSignInView, PwdSignInContract.IPwdSignInModel>
-        implements PwdSignInContract.IPwdSignInPresenter {
+public class PwdSignInPresenter extends BasePresenter<PwdSignInContract.View, PwdSignInContract.Model>
+        implements PwdSignInContract.Presenter {
+
     @Override
     public void setModel() {
         mModel = new PwdSignInServerModel();
@@ -44,4 +45,5 @@ public class PwdSignInPresenter extends BasePresenter<PwdSignInContract.IPwdSign
             }
         });
     }
+
 }

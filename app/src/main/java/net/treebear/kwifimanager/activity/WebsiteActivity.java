@@ -34,7 +34,7 @@ import net.treebear.kwifimanager.receiver.OpenFileReceiver;
 import net.treebear.kwifimanager.service.ODownloadService;
 import net.treebear.kwifimanager.service.OnDownloadListener;
 import net.treebear.kwifimanager.util.FileUtils;
-import net.treebear.kwifimanager.widget.TMessageDialog;
+import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 import java.io.File;
 
@@ -297,6 +297,7 @@ public class WebsiteActivity extends BaseActivity {
             downloadBinder = null;
             unbindService(conn);
         }
+        dismiss(messageDialog);
         super.onDestroy();
     }
 }

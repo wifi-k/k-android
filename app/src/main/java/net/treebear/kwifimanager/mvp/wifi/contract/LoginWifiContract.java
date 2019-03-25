@@ -13,16 +13,16 @@ import okhttp3.RequestBody;
  */
 public class LoginWifiContract {
 
-    public interface ILoginView extends IView<Object> {
+    public interface View extends IView<Object> {
 
     }
 
-    public interface ILoginPresenter extends IPresenter<LoginWifiContract.ILoginView> {
+    public interface Presenter extends IPresenter<View> {
 
         void appLogin(String name, String password);
     }
 
-    public interface ILoginModel extends IModel {
+    public interface Model extends IModel {
 
         void appLogin(RequestBody params, AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack);
 

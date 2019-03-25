@@ -42,7 +42,7 @@ public class HttpObserver {
                 } else {
                     callBack.onFailed(response.getMsg(), response.getCode());
                 }
-                TLog.i("tag", "(HttpObserver.java:45) ~ onNext:" + response.toString());
+                TLog.i("OkHttp", "(HttpObserver.java:45) ~ onNext:" + response.toString());
             }
 
             @Override

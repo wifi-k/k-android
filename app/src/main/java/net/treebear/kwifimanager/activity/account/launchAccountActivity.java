@@ -1,10 +1,25 @@
 package net.treebear.kwifimanager.activity.account;
 
-import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.base.BaseActivity;
-import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.util.ActivityStackUtils;
+import android.view.View;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+
+import net.treebear.kwifimanager.BuildConfig;
+import net.treebear.kwifimanager.MyApplication;
+import net.treebear.kwifimanager.R;
+import net.treebear.kwifimanager.activity.MainActivity;
+import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.ServerUserInfo;
+import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.mvp.IModel;
+import net.treebear.kwifimanager.mvp.server.model.GetUserInfoModel;
+import net.treebear.kwifimanager.util.ActivityStackUtils;
+import net.treebear.kwifimanager.util.Check;
+import net.treebear.kwifimanager.util.UserInfoUtil;
+
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -15,15 +30,60 @@ import butterknife.OnClick;
  */
 public class launchAccountActivity extends BaseActivity {
 
+    @BindView(R.id.btn_signup)
+    TextView btnSignup;
+    @BindView(R.id.btn_signin)
+    TextView btnSignin;
+
     @Override
     public int layoutId() {
         return R.layout.activity_launch_account;
     }
 
+
     @Override
     protected void initView() {
         statusTransparentFontWhite();
         ActivityStackUtils.pressActivity(Config.Tags.TAG_LAUNCH_ROOT, this);
+        if (Check.hasContent(UserInfoUtil.getUserInfo().getToken())) {
+            btnSignin.setVisibility(View.GONE);
+            btnSignup.setVisibility(View.GONE);
+            MyApplication.getAppContext().savedUser(UserInfoUtil.getUserInfo());
+            getNodeList();
+        }
+    }
+
+    private void getNodeList() {
+        showLoading("自动登录中...");
+        new GetUserInfoModel().getUserInfo(new IModel.AsyncCallBack<BaseResponse<ServerUserInfo>>() {
+            @Override
+            public void onSuccess(BaseResponse<ServerUserInfo> resultData) {
+                hideLoading();
+                String token = MyApplication.getAppContext().getUser().getToken();
+                ServerUserInfo user;
+                if (resultData != null) {
+                    user = resultData.getData();
+                    user.setToken(token);
+                    if (BuildConfig.DEBUG) {
+                        user.setNodeSize(1);
+                    }
+                    MyApplication.getAppContext().savedUser(user);
+                    startActivity(MainActivity.class);
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onFailed(String resultMsg, int resultCode) {
+                if (btnSignin != null) {
+                    btnSignin.setVisibility(View.VISIBLE);
+                    btnSignup.setVisibility(View.VISIBLE);
+                }
+                ToastUtils.showShort(R.string.token_overdue_retry);
+                hideLoading();
+            }
+        });
     }
 
     @OnClick(R.id.btn_signin)
@@ -34,6 +94,12 @@ public class launchAccountActivity extends BaseActivity {
     @OnClick(R.id.btn_signup)
     public void onSignUpClick() {
         startActivity(SignUpActivity.class);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityStackUtils.popActivity(Config.Tags.TAG_LAUNCH_ROOT, this);
+        super.onDestroy();
     }
 
 }

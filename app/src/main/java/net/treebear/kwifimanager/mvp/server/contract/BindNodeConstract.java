@@ -9,15 +9,15 @@ import okhttp3.RequestBody;
 
 public interface BindNodeConstract {
 
-    interface IBindNodeView extends IView<Object> {
+    interface View extends IView<Object> {
 
     }
 
-    interface IBindNodePresenter extends IPresenter<IBindNodeView> {
+    interface Presenter extends IPresenter<View> {
         void bindNode(String nodeId);
     }
 
-    interface IBindNodeModel extends IModel {
+    interface Model extends IModel {
 
         void bindNode(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
     }

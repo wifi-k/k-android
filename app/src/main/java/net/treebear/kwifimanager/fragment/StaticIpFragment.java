@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.home.settings.ModifyWifiInfoActivity;
+import net.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity;
 import net.treebear.kwifimanager.base.BaseFragment;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
@@ -21,7 +21,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class StaticIpFragment extends BaseFragment<StaticIpContract.IStaticIpPresenter, WifiDeviceInfo> implements StaticIpContract.IStaticIpView {
+public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, WifiDeviceInfo> implements StaticIpContract.View {
     @BindView(R.id.et_ip_address)
     EditText etIpAddress;
     @BindView(R.id.et_subnet)
@@ -48,7 +48,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.IStaticIpPre
     }
 
     @Override
-    public StaticIpContract.IStaticIpPresenter getPresenter() {
+    public StaticIpContract.Presenter getPresenter() {
         return new StaticIpPresenter();
     }
 

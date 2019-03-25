@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.widget;
+package net.treebear.kwifimanager.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,7 +17,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.util.DensityUtil;
 
-public class TInputDialog {
+public class TInputDialog implements TDialog {
     private Context mContext;
     private Dialog mDialog;
     private View view;
@@ -48,6 +48,7 @@ public class TInputDialog {
         return mDialog.isShowing();
     }
 
+    @Override
     public void show() {
         if (mDialog == null) {
             initDialog();
@@ -57,6 +58,7 @@ public class TInputDialog {
         }
     }
 
+    @Override
     public void dismiss() {
         if (mDialog != null) {
             mDialog.dismiss();

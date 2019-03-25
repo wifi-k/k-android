@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.widget;
+package net.treebear.kwifimanager.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -29,7 +29,7 @@ import net.treebear.kwifimanager.util.DensityUtil;
  * 定制化多按键
  * 包含水平进度条，默认不展示
  */
-public class TipsDialog {
+public class TipsDialog implements TDialog {
 
     private Context mContext;
     private Dialog mDialog;
@@ -44,10 +44,8 @@ public class TipsDialog {
     private static final String CONTENT_DEFAULT_COLOR = "#999999";
     private static final String CANCEL_DEFAULT_COLOR = "#212121";
     private static final String CONFIRM_DEFAULT_COLOR = "#FFFFFF";
-    private float widthPercent = 0.75f;
+    private float widthPercent = 0.8f;
     private DoClickListener mListener = new DoClickListener();
-    private View.OnClickListener defaultListener = v -> {
-    };
 
     public TipsDialog(@NonNull Context context) {
         mContext = context;
@@ -84,8 +82,15 @@ public class TipsDialog {
         llButton = view.findViewById(R.id.btn_wrapper);
     }
 
-    public TipsDialog doClick(@NonNull DoClickListener listener) {
-        mListener = listener;
+    public TipsDialog doClick(DoClickListener listener) {
+        if (listener != null) {
+            mListener = listener;
+        }
+        ivIcon.setOnClickListener(v -> mListener.onClickIcon(ivIcon));
+        tvTitle.setOnClickListener(v -> mListener.onClickTitle(tvTitle));
+        tvContent.setOnClickListener(v -> mListener.onClickContent(tvContent));
+        tvLeft.setOnClickListener(v -> mListener.onClickLeft(tvLeft));
+        tvRight.setOnClickListener(v -> mListener.onClickRight(tvRight));
         return this;
     }
 
@@ -164,7 +169,7 @@ public class TipsDialog {
         return this;
     }
 
-    public TipsDialog noContent(){
+    public TipsDialog noContent() {
         tvContent.setVisibility(View.GONE);
         return this;
     }
@@ -178,16 +183,16 @@ public class TipsDialog {
     }
 
     public TipsDialog left(CharSequence text, @ColorInt int colorInt) {
-        return left(text, colorInt, defaultListener);
+        return left(text, colorInt, null);
     }
 
-    public TipsDialog left(CharSequence text, @ColorInt int colorInt, @NonNull View.OnClickListener listener) {
+    public TipsDialog left(CharSequence text, @ColorInt int colorInt, DoClickListener listener) {
+        if (listener != null) {
+            mListener = listener;
+        }
         tvLeft.setText(text);
         tvLeft.setTextColor(colorInt);
-        tvLeft.setOnClickListener(v -> {
-            listener.onClick(tvLeft);
-            mListener.onClickLeft(tvLeft);
-        });
+        tvLeft.setOnClickListener(v -> mListener.onClickLeft(tvLeft));
         return this;
     }
 
@@ -204,27 +209,27 @@ public class TipsDialog {
     }
 
     public TipsDialog right(CharSequence text, @ColorInt int colorInt) {
-        return right(text, colorInt, defaultListener);
+        return right(text, colorInt, null);
     }
 
-    public TipsDialog right(CharSequence text, @ColorInt int colorInt, @NonNull View.OnClickListener listener) {
+    public TipsDialog right(CharSequence text, @ColorInt int colorInt, DoClickListener listener) {
+        if (listener != null) {
+            mListener = listener;
+        }
         tvRight.setText(text);
         tvRight.setTextColor(colorInt);
-        tvRight.setOnClickListener(v -> {
-            listener.onClick(tvRight);
-            mListener.onClickRight(tvRight);
-        });
+        tvRight.setOnClickListener(v -> mListener.onClickRight(tvRight));
         return this;
     }
 
-    public TipsDialog oneButtonLeft(){
+    public TipsDialog oneButtonLeft() {
         tvRight.setVisibility(View.GONE);
         tvLeft.setVisibility(View.VISIBLE);
         tvLeft.setBackgroundResource(R.drawable.btn_bottom_lrbr8_gray);
         return this;
     }
 
-    public TipsDialog oneButtonRight(){
+    public TipsDialog oneButtonRight() {
         tvRight.setVisibility(View.VISIBLE);
         tvLeft.setVisibility(View.GONE);
         tvRight.setBackgroundResource(R.drawable.btn_bottom_lrbr8_main);
@@ -241,6 +246,7 @@ public class TipsDialog {
         return this;
     }
 
+    @Override
     public void show() {
         if (!mDialog.isShowing()) {
             mDialog.show();
@@ -251,6 +257,7 @@ public class TipsDialog {
         show();
     }
 
+    @Override
     public void dismiss() {
         mDialog.dismiss();
     }

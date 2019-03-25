@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.activity.home.settings;
+package net.treebear.kwifimanager.activity.bindap.settings;
 
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +21,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStaticIpPresenter, WifiDeviceInfo> implements StaticIpContract.IStaticIpView {
+public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presenter, WifiDeviceInfo> implements StaticIpContract.View {
 
     @BindView(R.id.et_ip_address)
     EditText etIpAddress;
@@ -43,7 +43,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.IStati
     }
 
     @Override
-    public StaticIpContract.IStaticIpPresenter getPresenter() {
+    public StaticIpContract.Presenter getPresenter() {
         return new StaticIpPresenter();
     }
 

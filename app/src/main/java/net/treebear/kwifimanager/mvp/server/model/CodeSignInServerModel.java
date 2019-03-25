@@ -7,7 +7,7 @@ import net.treebear.kwifimanager.mvp.server.contract.CodeSignInContract;
 
 import okhttp3.RequestBody;
 
-public class CodeSignInServerModel extends BaseServerModel implements CodeSignInContract.ICodeSignInModel {
+public class CodeSignInServerModel extends BaseServerModel implements CodeSignInContract.Model {
     @Override
     public void getSignInVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack) {
         bindObservable(mService.getVerifyByType(params), callBack);

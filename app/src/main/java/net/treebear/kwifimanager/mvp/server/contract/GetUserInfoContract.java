@@ -8,14 +8,14 @@ import net.treebear.kwifimanager.mvp.IView;
 
 public interface GetUserInfoContract {
 
-    interface IGetUserInfoView extends IView<ServerUserInfo>{}
+    interface View extends IView<ServerUserInfo>{}
 
-    interface IGetUserInfoPresenter extends IPresenter<IGetUserInfoView>{
+    interface Presenter extends IPresenter<View>{
 
         void getUserInfo();
     }
 
-    interface IGetUserInfoModel extends IModel{
+    interface Model extends IModel{
 
         void getUserInfo(AsyncCallBack<BaseResponse<ServerUserInfo>> callBack);
     }

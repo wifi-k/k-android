@@ -10,7 +10,7 @@ import net.treebear.kwifimanager.mvp.server.contract.ModifyUserInfoContract;
 import net.treebear.kwifimanager.mvp.server.model.ModifyUserInfoModel;
 import net.treebear.kwifimanager.util.Check;
 
-public class ModifyUserInfoPresenter extends BasePresenter<ModifyUserInfoContract.IUserInfoView, ModifyUserInfoContract.IUserInfoModel> implements ModifyUserInfoContract.IUserInfoPresenter {
+public class ModifyUserInfoPresenter extends BasePresenter<ModifyUserInfoContract.View, ModifyUserInfoContract.Model> implements ModifyUserInfoContract.Presenter {
     @Override
     public void setModel() {
         mModel = new ModifyUserInfoModel();

@@ -12,7 +12,7 @@ import okhttp3.RequestBody;
  *
  * @author Administrator
  */
-public class DialUpModel extends BaseWifiModel implements DialUpContract.IDialUpModel {
+public class DialUpModel extends BaseWifiModel implements DialUpContract.Model {
     @Override
     public void dialUpSet(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack) {
         bindObservable(mService.ppoeSet(params), callBack);

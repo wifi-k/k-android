@@ -11,7 +11,7 @@ import net.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 import net.treebear.kwifimanager.mvp.server.model.MyNodeModel;
 import net.treebear.kwifimanager.util.Check;
 
-public class MyNodePresenter extends BasePresenter<MyNodeContract.IMyNodeView, MyNodeContract.IMyNodeModel> implements MyNodeContract.IMyNodePresenter {
+public class MyNodePresenter extends BasePresenter<MyNodeContract.View, MyNodeContract.Model> implements MyNodeContract.Presenter {
     @Override
     public void setModel() {
         mModel = new MyNodeModel();
@@ -62,7 +62,7 @@ public class MyNodePresenter extends BasePresenter<MyNodeContract.IMyNodeView, M
     }
 
     @Override
-    public void upgardeNode(String nodeId) {
+    public void upgradeNode(String nodeId) {
 
     }
 }

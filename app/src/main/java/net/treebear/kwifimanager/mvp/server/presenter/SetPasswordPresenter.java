@@ -9,7 +9,7 @@ import net.treebear.kwifimanager.mvp.server.contract.SetPasswordContract;
 import net.treebear.kwifimanager.mvp.server.model.SetPasswordServerModel;
 import net.treebear.kwifimanager.util.SecurityUtils;
 
-public class SetPasswordPresenter extends BasePresenter<SetPasswordContract.ISetPasswordView, SetPasswordContract.ISetPasswordModel> implements SetPasswordContract.ISetPasswordPresenter {
+public class SetPasswordPresenter extends BasePresenter<SetPasswordContract.View, SetPasswordContract.Model> implements SetPasswordContract.Presenter {
     @Override
     public void setModel() {
         mModel = new SetPasswordServerModel();

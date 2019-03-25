@@ -13,15 +13,15 @@ import okhttp3.RequestBody;
  */
 public interface SetPasswordContract {
 
-    interface ISetPasswordView extends IView<Object> {
+    interface View extends IView<Object> {
 
     }
 
-    interface ISetPasswordPresenter extends IPresenter<ISetPasswordView> {
+    interface Presenter extends IPresenter<View> {
         void setPassword(String passwd);
     }
 
-    interface ISetPasswordModel extends IModel {
+    interface Model extends IModel {
 
         void setPassword(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
     }

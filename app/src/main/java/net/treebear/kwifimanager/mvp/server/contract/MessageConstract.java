@@ -10,15 +10,15 @@ import okhttp3.RequestBody;
 
 public interface MessageConstract {
 
-    interface IMessageView extends IView<MessageInfoBean> {
+    interface View extends IView<MessageInfoBean> {
     }
 
-    interface IMessagePresenter extends IPresenter<IMessageView> {
+    interface Presenter extends IPresenter<View> {
 
         void getMessageInfoList(int pageNo);
     }
 
-    interface IMessageModel extends IModel {
+    interface Model extends IModel {
         void getMessageInfoList(RequestBody params, AsyncCallBack<BaseResponse<MessageInfoBean>> callBack);
     }
 }

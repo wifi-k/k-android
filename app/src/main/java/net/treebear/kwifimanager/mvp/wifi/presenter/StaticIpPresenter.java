@@ -13,7 +13,7 @@ import net.treebear.kwifimanager.mvp.wifi.model.StaticIpModel;
 /**
  * @author Administrator
  */
-public class StaticIpPresenter extends BasePresenter<StaticIpContract.IStaticIpView, StaticIpContract.IStaticIpModel> implements StaticIpContract.IStaticIpPresenter {
+public class StaticIpPresenter extends BasePresenter<StaticIpContract.View, StaticIpContract.Model> implements StaticIpContract.Presenter {
     @Override
     public void setModel() {
         mModel = new StaticIpModel();

@@ -18,7 +18,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.IDynamicIpPresenter, WifiDeviceInfo> implements DynamicIpContract.IDynamicIpView {
+public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presenter, WifiDeviceInfo> implements DynamicIpContract.View {
     @BindView(R.id.tv_connect_status)
     TextView tvConnectStatus;
     @BindView(R.id.tv_ip)
@@ -39,7 +39,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.IDynam
     }
 
     @Override
-    public DynamicIpContract.IDynamicIpPresenter getPresenter() {
+    public DynamicIpContract.Presenter getPresenter() {
         return new DynamicIpPresenter();
     }
 

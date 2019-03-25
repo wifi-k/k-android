@@ -53,6 +53,17 @@ public interface Values {
      * 获取控制app
      */
     int REQUEST_BAN_APP = 0x0004;
-
+    /**
+     * 频率 -- 所有
+     */
+    int FREQ_ALL = 0;
+    /**
+     * 频率 -- 2.4G
+     */
+    int FREQ_2D4_G = 1;
+    /**
+     * 频率 -- 5G
+     */
+    int FREQ_5_G = 2;
 
 }

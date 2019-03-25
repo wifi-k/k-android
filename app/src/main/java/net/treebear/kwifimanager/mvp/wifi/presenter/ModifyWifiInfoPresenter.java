@@ -13,8 +13,8 @@ import net.treebear.kwifimanager.util.SecurityUtils;
 /**
  * @author Administrator
  */
-public class ModifyWifiInfoPresenter extends BasePresenter<ModifyWifiInfoContract.IModifyWifiInfoView,
-        ModifyWifiInfoContract.IModifyWifiInfoModel> implements ModifyWifiInfoContract.IModifyWifiInfoPresenter {
+public class ModifyWifiInfoPresenter extends BasePresenter<ModifyWifiInfoContract.View,
+        ModifyWifiInfoContract.Model> implements ModifyWifiInfoContract.Presenter {
     @Override
     public void setModel() {
         mModel = new ModifyWifiInfoModel();

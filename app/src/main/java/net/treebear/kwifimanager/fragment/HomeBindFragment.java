@@ -14,9 +14,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.home.FamilyMemberActivity;
 import net.treebear.kwifimanager.activity.home.WeekReportActivity;
+import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import net.treebear.kwifimanager.activity.home.mobile.AllMobileListActivity;
 import net.treebear.kwifimanager.activity.home.mobile.MobileDetailActivity;
-import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import net.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
 import net.treebear.kwifimanager.activity.home.parent.ParentControlActivity;
 import net.treebear.kwifimanager.activity.message.MessageListActivity;
@@ -29,7 +29,7 @@ import net.treebear.kwifimanager.bean.NoticeBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.util.Check;
-import net.treebear.kwifimanager.widget.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 import net.treebear.kwifimanager.widget.marquee.MarqueeTextView;
 
 import java.util.ArrayList;
@@ -255,5 +255,11 @@ public class HomeBindFragment extends BaseFragment {
     @OnClick(R.id.tv_look_more)
     public void onTvLookMoreClicked() {
         startActivity(AllMobileListActivity.class);
+    }
+
+    @Override
+    public void onDestroy() {
+        dismiss(modifyNameDialog);
+        super.onDestroy();
     }
 }

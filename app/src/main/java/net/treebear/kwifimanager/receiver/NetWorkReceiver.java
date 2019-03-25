@@ -33,7 +33,7 @@ public class NetWorkReceiver extends BroadcastReceiver {
             boolean isWifi = networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
             if (isWifi && !hasOnWifi) {
                 hasOnWifi = true;
-                if (NetWorkUtils.isConnectXiaoK(context)) {
+                if (NetWorkUtils.isSameLikeXiaoK(context)) {
                     ToastUtils.showShort(R.string.has_xiaok_connected);
                     WiFiHttpClient.xiaokOnline();
                 } else {

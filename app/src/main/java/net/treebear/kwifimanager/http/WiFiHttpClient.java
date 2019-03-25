@@ -182,8 +182,10 @@ public class WiFiHttpClient {
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.i(resultData);
                 if (resultData != null && resultData.getData() != null) {
+                    WifiDeviceInfo data = resultData.getData();
 //                    MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
-                    MyApplication.getAppContext().saveDeviceInfo(resultData.getData());
+                    data.setToken(apiToken);
+                    MyApplication.getAppContext().saveDeviceInfo(data);
                     if (callBack!=null) {
                         callBack.onSuccess(resultData);
                     }

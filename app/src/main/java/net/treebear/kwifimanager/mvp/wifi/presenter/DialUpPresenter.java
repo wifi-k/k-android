@@ -13,7 +13,7 @@ import net.treebear.kwifimanager.mvp.wifi.model.DialUpModel;
 /**
  * @author Administrator
  */
-public class DialUpPresenter extends BasePresenter<DialUpContract.IDialUpView, DialUpContract.IDialUpModel> implements DialUpContract.IDialUpPresenter {
+public class DialUpPresenter extends BasePresenter<DialUpContract.View, DialUpContract.Model> implements DialUpContract.Presenter {
     @Override
     public void setModel() {
         mModel = new DialUpModel();

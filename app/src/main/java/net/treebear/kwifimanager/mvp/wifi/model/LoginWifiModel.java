@@ -10,7 +10,7 @@ import okhttp3.RequestBody;
 /**
  * @author Administrator
  */
-public class LoginWifiModel extends BaseWifiModel implements LoginWifiContract.ILoginModel {
+public class LoginWifiModel extends BaseWifiModel implements LoginWifiContract.Model {
 
     @Override
     public void appLogin(RequestBody params, AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {

@@ -86,6 +86,7 @@ public interface HttpService {
      * 参数 header中的token
      */
     @POST("user/info/get")
+//    @POST("user/info/getext")
     Observable<BaseResponse<ServerUserInfo>> getUserInfo();
 
     /**

@@ -10,14 +10,14 @@ import okhttp3.RequestBody;
 
 public interface ModifyUserInfoContract {
 
-    interface IUserInfoView extends IView<Object> {
+    interface View extends IView<Object> {
 
         void onQiNiuTokenResponse(QiNiuUserBean result);
 
         void onModifyUserInfo();
     }
 
-    interface IUserInfoPresenter extends IPresenter<IUserInfoView> {
+    interface Presenter extends IPresenter<View> {
         /**
          * 获取七牛云token
          */
@@ -26,7 +26,7 @@ public interface ModifyUserInfoContract {
         void modifyUserInfo(String name, String picUrl);
     }
 
-    interface IUserInfoModel extends IModel {
+    interface Model extends IModel {
         /**
          * 获取七牛云token
          */

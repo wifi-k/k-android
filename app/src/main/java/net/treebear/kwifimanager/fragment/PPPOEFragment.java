@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.home.settings.ModifyWifiInfoActivity;
+import net.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity;
 import net.treebear.kwifimanager.base.BaseFragment;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
@@ -20,7 +20,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class PPPOEFragment extends BaseFragment<DialUpContract.IDialUpPresenter, WifiDeviceInfo> implements DynamicIpContract.IDynamicIpView {
+public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDeviceInfo> implements DynamicIpContract.View {
     @BindView(R.id.tv_broadband_account)
     EditText etBroadbandAccount;
     @BindView(R.id.et_broadband_password)

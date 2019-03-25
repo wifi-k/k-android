@@ -13,7 +13,7 @@ import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.BanAppPlanBean;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.test.BeanTest;
-import net.treebear.kwifimanager.widget.TInputDialog;
+import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 import java.util.ArrayList;
 
@@ -47,8 +47,7 @@ public class BanAppListActivity extends BaseActivity {
             currentModifyPosition = position;
             switch (view.getId()) {
                 case R.id.iv_ban_plan_edit:
-                    resetInputDialog();
-                    tInputDialog.show();
+                    showInputDialog();
                     break;
                 case R.id.iv_ban_plan_delete:
                     banAppPlanList.remove(position);
@@ -76,7 +75,7 @@ public class BanAppListActivity extends BaseActivity {
     /**
      * 修改名称弹窗
      */
-    private void resetInputDialog() {
+    private void showInputDialog() {
         if (tInputDialog == null) {
             tInputDialog = new TInputDialog(this);
             tInputDialog.setTitle(R.string.modify_name);
@@ -97,5 +96,12 @@ public class BanAppListActivity extends BaseActivity {
             });
         }
         tInputDialog.clearInputText();
+        tInputDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismiss(tInputDialog);
+        super.onDestroy();
     }
 }

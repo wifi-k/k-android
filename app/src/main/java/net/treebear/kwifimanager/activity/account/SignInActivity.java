@@ -2,13 +2,13 @@ package net.treebear.kwifimanager.activity.account;
 
 
 import android.text.Editable;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.MainActivity;
@@ -20,6 +20,8 @@ import net.treebear.kwifimanager.mvp.server.contract.PwdSignInContract;
 import net.treebear.kwifimanager.mvp.server.presenter.PwdSignInPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
+import net.treebear.kwifimanager.util.TLog;
+import net.treebear.kwifimanager.util.UserInfoUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,7 +29,7 @@ import butterknife.OnClick;
 /**
  * <h2>密码登录界面</h2>
  */
-public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPresenter, ServerUserInfo> implements PwdSignInContract.IPwdSignInView {
+public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, ServerUserInfo> implements PwdSignInContract.View {
 
     @BindView(R.id.et_sign_in_verify)
     EditText etSignInVerify;
@@ -48,7 +50,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
     }
 
     @Override
-    public PwdSignInContract.IPwdSignInPresenter getPresenter() {
+    public PwdSignInContract.Presenter getPresenter() {
         return new PwdSignInPresenter();
     }
 
@@ -69,7 +71,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
 
             @Override
             public void afterTextChanged(Editable s) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     updateConfirmBtnEnable();
                 }
@@ -97,9 +99,9 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignInPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignInPhone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignInPhone.setSelection(etSignInPhone.getText().length());
                     linePhone.setBackgroundColor(Config.Colors.MAIN);
@@ -108,9 +110,9 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
                 }
             }
         });
-        etSignInVerify.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSignInVerify.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onFocusChange(android.view.View v, boolean hasFocus) {
                 if (hasFocus) {
                     etSignInVerify.setSelection(etSignInVerify.getText().length());
                     linePassword.setBackgroundColor(Config.Colors.MAIN);
@@ -146,12 +148,14 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
     @Override
     public void onLoadData(ServerUserInfo resultData) {
         MyApplication.getAppContext().savedUser(resultData);
+        UserInfoUtil.getUserInfo().setToken(resultData.getToken());
         mPresenter.getUserInfo();
     }
 
     @Override
     public void onLoadFail(String resultMsg, int resultCode) {
         tvSignNext.setEnabled(true);
+        TLog.w(resultMsg);
         ToastUtils.showShort(resultMsg);
         hideLoading();
     }
@@ -167,11 +171,17 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.IPwdSignInPre
         if (bean != null) {
             bean.setToken(MyApplication.getAppContext().getUser().getToken());
             MyApplication.getAppContext().savedUser(bean);
+            UserInfoUtil.updateUserInfo(bean);
             hideLoading();
+            MyApplication.getAppContext().getUser().setNodeSize(bean.getNodeSize());
+            if(BuildConfig.DEBUG) {
+//                MyApplication.getAppContext().getUser().setNodeSize(1);
+            }
             ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);
             startActivity(MainActivity.class);
             ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
             ActivityStackUtils.finishAll(Config.Tags.TAG_LAUNCH_ROOT);
         }
     }
+
 }

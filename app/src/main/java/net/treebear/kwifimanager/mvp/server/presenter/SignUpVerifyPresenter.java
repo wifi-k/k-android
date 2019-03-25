@@ -16,7 +16,7 @@ import net.treebear.kwifimanager.util.TLog;
  * @date 2018/3/23.
  */
 
-public class SignUpVerifyPresenter extends BasePresenter<SignUpVerifyContract.ISignUpVerifyView, SignUpVerifyContract.ISignUpVerifyModel> implements SignUpVerifyContract.ISignUpVerifyPresenter {
+public class SignUpVerifyPresenter extends BasePresenter<SignUpVerifyContract.View, SignUpVerifyContract.Model> implements SignUpVerifyContract.Presenter {
 
     @Override
     public void setModel() {

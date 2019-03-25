@@ -10,7 +10,7 @@ import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.MessageConstract;
 import net.treebear.kwifimanager.mvp.server.model.MessageModel;
 
-public class MessagePresenter extends BasePresenter<MessageConstract.IMessageView, MessageConstract.IMessageModel> implements MessageConstract.IMessagePresenter {
+public class MessagePresenter extends BasePresenter<MessageConstract.View, MessageConstract.Model> implements MessageConstract.Presenter {
     @Override
     public void setModel() {
         mModel = new MessageModel();

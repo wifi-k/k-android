@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.activity.home.settings;
+package net.treebear.kwifimanager.activity.bindap.settings;
 
 import android.text.Editable;
 import android.text.method.HideReturnsTransformationMethod;
@@ -27,7 +27,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPresenter, WifiDeviceInfo> implements DialUpContract.IDialUpView {
+public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter, WifiDeviceInfo> implements DialUpContract.View {
 
     @BindView(R.id.et_net_account)
     EditText etNetAccount;
@@ -50,7 +50,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.IDialUpPre
     }
 
     @Override
-    public DialUpContract.IDialUpPresenter getPresenter() {
+    public DialUpContract.Presenter getPresenter() {
         return new DialUpPresenter();
     }
 

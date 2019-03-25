@@ -13,15 +13,15 @@ import okhttp3.RequestBody;
  */
 public interface ForgetPasswordContract {
 
-    interface IForgetPasswordView extends IView<Object> {
+    interface View extends IView<Object> {
 
     }
 
-    interface IForgetPasswordPresenter extends IPresenter<IForgetPasswordView> {
+    interface Presenter extends IPresenter<View> {
         void setPassword(String mobile, String vcode, String passwd);
     }
 
-    interface IForgetPasswordModel extends IModel {
+    interface Model extends IModel {
 
         void setPassword(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
     }
