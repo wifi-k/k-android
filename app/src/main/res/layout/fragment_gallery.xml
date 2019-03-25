@@ -32,32 +32,34 @@
         <RelativeLayout
             android:id="@+id/rl_tab_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="invisible">
 
             <TextView
                 android:id="@+id/tv_ai_gallery"
-                android:gravity="center"
-                android:text="@string/intelligence_gallery"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/intelligence_gallery" />
 
             <TextView
                 android:id="@+id/tv_all_gallery"
-                android:layout_toStartOf="@+id/tv_ai_gallery"
-                android:layout_marginEnd="16dp"
-                android:text="@string/newer_picture"
-                android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:layout_toStartOf="@+id/tv_ai_gallery"
+                android:gravity="center"
+                android:text="@string/newer_picture" />
+
             <TextView
                 android:id="@+id/tv_share_gallery"
-                android:layout_toEndOf="@+id/tv_ai_gallery"
-                android:layout_marginStart="16dp"
-                android:text="@string/share_gallery"
-                android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/tv_ai_gallery"
+                android:gravity="center"
+                android:text="@string/share_gallery" />
 
         </RelativeLayout>
 

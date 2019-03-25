@@ -156,14 +156,14 @@ public class WeekReportActivity extends BaseActivity {
             set1.setLineWidth(1f);
 
             // draw points as solid circles
-            set1.setDrawCircleHole(true);
+            set1.setDrawCircleHole(false);
 
             // customize legend entry
             set1.setFormLineWidth(1f);
 
             // text size of values
             set1.setDrawValues(false);
-            set1.setDrawCircles(true);
+            set1.setDrawCircles(false);
             // draw selection line as dashed
 //            set1.enableDashedHighlightLine(10f, 5f, 0f);
 

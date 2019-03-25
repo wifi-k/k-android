@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
-import net.treebear.kwifimanager.bean.DeviceBean;
+import net.treebear.kwifimanager.bean.NodeInfoDetail;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 
@@ -28,12 +28,12 @@ public class UpdateDeviceVersionActivity extends BaseActivity {
     TextView tvDeviceCurrentVersion;
     @BindView(R.id.tv_newer_version)
     TextView tvNewerVersion;
-    private DeviceBean deviceInfo;
+    private NodeInfoDetail.NodeBean deviceInfo;
 
     @Override
     public void initParams(Bundle params) {
         if (params != null) {
-            deviceInfo = (DeviceBean) params.getSerializable(Keys.DEVICE_INFO);
+            deviceInfo = (NodeInfoDetail.NodeBean) params.getSerializable(Keys.DEVICE_INFO);
         }
     }
 
@@ -47,12 +47,12 @@ public class UpdateDeviceVersionActivity extends BaseActivity {
         setTitleBack(R.string.update_version);
         if (deviceInfo != null) {
             tvDeviceName.setText(deviceInfo.getName());
-            tvDeviceCurrentVersion.setText(deviceInfo.getVersion());
-            tvNewerVersion.setText(deviceInfo.getUpdateVersion());
-            tvDeviceSerial.setText(deviceInfo.getSerialId());
-            tvOnline.setText(deviceInfo.isOnline() ? R.string.online : R.string.offline);
-            tvOnline.setTextColor(deviceInfo.isOnline() ? Color.WHITE : Config.Colors.DEVICE_K_OFFLINE);
-            tvOnline.setBackgroundResource(deviceInfo.isOnline() ? R.drawable.btn_green_to_cyan_r4 : R.drawable.bg_f7_r4);
+            tvDeviceCurrentVersion.setText(deviceInfo.getFirmware());
+            tvNewerVersion.setText(deviceInfo.getFirmwareUpgrade());
+            tvDeviceSerial.setText(deviceInfo.getNodeId());
+            tvOnline.setText(deviceInfo.getStatus() == 0 ? R.string.online : R.string.offline);
+            tvOnline.setTextColor(deviceInfo.getStatus() == 0  ? Color.WHITE : Config.Colors.DEVICE_K_OFFLINE);
+            tvOnline.setBackgroundResource(deviceInfo.getStatus() == 0 ? R.drawable.btn_green_to_cyan_r4 : R.drawable.bg_f7_r4);
         }
     }
 

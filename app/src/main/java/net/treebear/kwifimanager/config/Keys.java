@@ -50,4 +50,6 @@ public interface Keys {
 
     String QI_NIU_TOKEN = "mQiNiuToken";
 
+    String IS_MODIFY_PASSWORD = "is_modify_password";
+
 }

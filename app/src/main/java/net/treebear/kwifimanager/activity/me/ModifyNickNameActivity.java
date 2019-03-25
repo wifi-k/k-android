@@ -9,7 +9,10 @@ import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
+import net.treebear.kwifimanager.bean.QiNiuUserBean;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
+import net.treebear.kwifimanager.mvp.server.contract.ModifyUserInfoContract;
+import net.treebear.kwifimanager.mvp.server.presenter.ModifyUserInfoPresenter;
 import net.treebear.kwifimanager.util.Check;
 
 import butterknife.BindView;
@@ -18,7 +21,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class ModifyNickNameActivity extends BaseActivity {
+public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.IUserInfoPresenter, Object> implements ModifyUserInfoContract.IUserInfoView {
 
     @BindView(R.id.et_nick_name)
     EditText etNickName;
@@ -28,6 +31,11 @@ public class ModifyNickNameActivity extends BaseActivity {
     @Override
     public int layoutId() {
         return R.layout.activity_modify_nick_name;
+    }
+
+    @Override
+    public ModifyUserInfoContract.IUserInfoPresenter getPresenter() {
+        return new ModifyUserInfoPresenter();
     }
 
     @Override
@@ -51,4 +59,18 @@ public class ModifyNickNameActivity extends BaseActivity {
         etNickName.setText("");
     }
 
+    @Override
+    protected void onTitleRightClick() {
+        mPresenter.modifyUserInfo(etNickName.getText().toString(), null);
+    }
+
+    @Override
+    public void onQiNiuTokenResponse(QiNiuUserBean result) {
+//        此处不需要
+    }
+
+    @Override
+    public void onModifyUserInfo() {
+        onTitleLeftClick();
+    }
 }

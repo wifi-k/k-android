@@ -113,7 +113,13 @@ public class TimePickerPop {
     public void addTimeSelectListener(OnTimeSelectListener listener) {
         mTimeSelectListener = listener;
         if (mContentView != null) {
-            tvConfirm.setOnClickListener(v -> mTimeSelectListener.onSelected(String.format("%s:%s", mCurrentHour, mCurrentMinute)));
+            tvConfirm.setOnClickListener(v -> {
+                int delay = 1;
+                if (wheelHour.isLoop() || wheelMinute.isLoop()){
+                    delay = 500;
+                }
+                tvConfirm.postDelayed(() -> mTimeSelectListener.onSelected(String.format("%s:%s", mCurrentHour, mCurrentMinute)),delay);
+            });
             tvCancel.setOnClickListener(v -> mTimeSelectListener.onCancelClick());
             popupWindow.setOnDismissListener(() -> mTimeSelectListener.onDismiss());
         }

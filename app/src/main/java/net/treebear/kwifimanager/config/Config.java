@@ -215,6 +215,10 @@ public final class Config {
          */
         int HAS_SIGN_UP = 9;
         /**
+         * 节点被绑定
+         */
+        int NODE_HAS_BOUND = 10;
+        /**
          * // 26-无可用升级版本 27-正在升级
          */
         int FIRMWARE_NO_HIGHER_VERSION = 26;

@@ -21,7 +21,7 @@ import com.qiniu.android.storage.UpCompletionHandler;
 
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
-import net.treebear.kwifimanager.activity.account.ForgetPwdCodeActivity;
+import net.treebear.kwifimanager.activity.account.SetPasswordActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.QiNiuUserBean;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
@@ -48,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * @author Administrator
  */
-public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserInfoPresenter, QiNiuUserBean> implements ModifyUserInfoContract.IUserInfoView {
+public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserInfoPresenter, Object> implements ModifyUserInfoContract.IUserInfoView {
 
     @BindView(R.id.root_view)
     ConstraintLayout mRootView;
@@ -106,7 +106,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserI
     @OnClick(R.id.tv_modify_password)
     public void onTvModifyPasswordClicked() {
         // TODO: 2019/3/14 修改界面以兼容修改和重置
-        startActivity(ForgetPwdCodeActivity.class);
+        startActivity(SetPasswordActivity.class);
     }
 
     /**
@@ -259,11 +259,19 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserI
     }
 
     @Override
-    public void onLoadData(QiNiuUserBean resultData) {
-        mQiNiuToken = resultData.getToken();
+    public void onQiNiuTokenResponse(QiNiuUserBean result) {
+        mQiNiuToken = result.getToken();
         CacheDiskUtils.getInstance(MyApplication.getAppContext().getUser().getMobile())
                 .put(Keys.QI_NIU_TOKEN, mQiNiuToken, 60 * 3);
         uploadImage();
+    }
+
+    @Override
+    public void onModifyUserInfo() {
+        hideLoading();
+        MyApplication.getAppContext().setNeedUpdateUserInfo(false);
+        civHeaderPic.setImageBitmap(BitmapUtils.readBitmapAutoSize(picPath, 720, 960));
+        ToastUtils.showShort(R.string.user_info_update_success);
     }
 
     private void uploadImage() {
@@ -285,18 +293,11 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.IUserI
                         hideLoading();
                         ToastUtils.showShort(R.string.upload_error);
                     } else {
-                        mPresenter.setUserAvatar(tvNickName.getText().toString(), newFile.getName());
+                        mPresenter.modifyUserInfo(null, newFile.getName());
                     }
                 }
             }, null);
         }
     }
 
-    @Override
-    public void onUserAvatarUpload() {
-        hideLoading();
-        MyApplication.getAppContext().setNeedUpdateUserInfo(false);
-        civHeaderPic.setImageBitmap(BitmapUtils.readBitmapAutoSize(picPath, 720, 960));
-        ToastUtils.showShort(R.string.user_info_update_success);
-    }
 }

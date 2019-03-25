@@ -1,6 +1,7 @@
 package net.treebear.kwifimanager.activity.toolkit;
 
 import android.support.v7.widget.GridLayout;
+import android.util.ArrayMap;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -8,9 +9,11 @@ import com.blankj.utilcode.util.ToastUtils;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.wifi.model.WiFiSettingProxyModel;
 import net.treebear.kwifimanager.util.DensityUtil;
+import net.treebear.kwifimanager.util.RequestBodyUtils;
 import net.treebear.kwifimanager.widget.TInputDialog;
 import net.treebear.kwifimanager.widget.TipsDialog;
 
@@ -49,7 +52,6 @@ public class WifiToolkitActivity extends BaseActivity {
     private TipsDialog restartTipsDialog;
     private TipsDialog resetTipsDialog;
     private WiFiSettingProxyModel proxyModel;
-
 
     @Override
     public int layoutId() {
@@ -121,14 +123,32 @@ public class WifiToolkitActivity extends BaseActivity {
 
                 @Override
                 public void onRightClick(String s) {
-                    // TODO: 2019/3/12 修改名称
-                    ToastUtils.showShort(s);
                     nameModifyDialog.dismiss();
+                    modifyNameOrPassword(Keys.NAME, s);
                 }
             });
         }
         nameModifyDialog.clearInputText();
         nameModifyDialog.show();
+    }
+
+    private void modifyNameOrPassword(String key, String s) {
+        showLoading(R.string.commit_ing);
+        ArrayMap<String, Object> map = RequestBodyUtils.map();
+        map.put(key, s);
+        proxyModel.modifyWifiInfo(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<Object>>() {
+            @Override
+            public void onSuccess(BaseResponse<Object> resultData) {
+                hideLoading();
+                ToastUtils.showShort(R.string.modify_success);
+            }
+
+            @Override
+            public void onFailed(String resultMsg, int resultCode) {
+                hideLoading();
+                ToastUtils.showShort(R.string.modify_failed);
+            }
+        });
     }
 
     private void showPasswordInputDialog() {
@@ -144,15 +164,15 @@ public class WifiToolkitActivity extends BaseActivity {
 
                 @Override
                 public void onRightClick(String s) {
-                    // TODO: 2019/3/12 修改密码
-                    ToastUtils.showShort(s);
                     passwordModifyDialog.dismiss();
+                    modifyNameOrPassword(Keys.PASSWORD, s);
                 }
             });
         }
         passwordModifyDialog.clearInputText();
         passwordModifyDialog.show();
     }
+
 
     private void showRestartTipDialog() {
         if (restartTipsDialog == null) {
@@ -191,7 +211,7 @@ public class WifiToolkitActivity extends BaseActivity {
         });
     }
 
-    private void reset(){
+    private void reset() {
         proxyModel.reset(new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {

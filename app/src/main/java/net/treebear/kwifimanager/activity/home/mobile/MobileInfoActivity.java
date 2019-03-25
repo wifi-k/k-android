@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.activity.home.device;
+package net.treebear.kwifimanager.activity.home.mobile;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -15,7 +15,7 @@ import butterknife.BindView;
 /**
  * @author Administrator
  */
-public class DeviceInfoActivity extends BaseActivity {
+public class MobileInfoActivity extends BaseActivity {
 
     @BindView(R.id.tv_device_type)
     TextView tvDeviceType;

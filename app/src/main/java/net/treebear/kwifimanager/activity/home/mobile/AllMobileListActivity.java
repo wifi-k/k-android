@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.activity.home.device;
+package net.treebear.kwifimanager.activity.home.mobile;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +18,7 @@ import butterknife.BindView;
 /**
  * @author Administrator
  */
-public class AllDeviceListActivity extends BaseActivity {
+public class AllMobileListActivity extends BaseActivity {
 
     @BindView(R.id.tv_online_device_count)
     TextView tvOnlineDeviceCount;

@@ -44,6 +44,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.ISetPa
      * password 明文/密码状态
      */
     private boolean passwordVisible = false;
+    private boolean isModifyPassword;
 
     @Override
     public int layoutId() {

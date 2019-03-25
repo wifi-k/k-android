@@ -156,11 +156,11 @@ public class WiFiHttpClient {
                     updataApiToken(apiToken);
                     MyApplication.getAppContext().getDeviceInfo().setToken(apiToken);
                     needLogin = false;
-                    if (callBack != null) {
-                        callBack.onSuccess(resultData);
-                    }
+//                    if (callBack != null) {
+//                        callBack.onSuccess(resultData);
+//                    }
                     isLogin_ing = false;
-                    getDeviceSerialId();
+                    getDeviceSerialId(callBack);
 //                    getDeviceOnlineStatus();
                 }
             }
@@ -176,7 +176,7 @@ public class WiFiHttpClient {
         });
     }
 
-    private static void getDeviceSerialId() {
+    private static void getDeviceSerialId(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         wifiProxyClient.getNodeInfo(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
@@ -184,13 +184,19 @@ public class WiFiHttpClient {
                 if (resultData != null && resultData.getData() != null) {
 //                    MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
                     MyApplication.getAppContext().saveDeviceInfo(resultData.getData());
+                    if (callBack!=null) {
+                        callBack.onSuccess(resultData);
+                    }
                 }
-                getDeviceOnlineStatus();
+//                getDeviceOnlineStatus();
             }
 
             @Override
             public void onFailed(String resultMsg, int resultCode) {
                 TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
+                if (callBack != null) {
+                    callBack.onFailed(resultMsg, resultCode);
+                }
             }
         });
     }

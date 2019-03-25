@@ -1,4 +1,4 @@
-package net.treebear.kwifimanager.activity.home.device;
+package net.treebear.kwifimanager.activity.home.mobile;
 
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -23,7 +23,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class DeviceDetailActivity extends BaseActivity {
+public class MobileDetailActivity extends BaseActivity {
 
     @BindView(R.id.iv_device_type)
     ImageView ivDeviceType;
@@ -68,7 +68,7 @@ public class DeviceDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         statusTransparentFontWhite();
-        setTitle(R.mipmap.back, getString(R.string.device_detail), "", 0, false);
+        setTitle(R.mipmap.ic_line_arrow_left_white, getString(R.string.device_detail), "", 0, false);
         mobilePhoneBean = BeanTest.getMobilePhoneList(10).get(position);
         tvDeviceName.setText(mobilePhoneBean.getName());
         tvDeviceTime.setText(String.format("%s " + (mobilePhoneBean.isOnline() ? "上线" : "离线"),
@@ -118,7 +118,7 @@ public class DeviceDetailActivity extends BaseActivity {
     public void onTvDeviceInfoClicked() {
         Bundle bundle = new Bundle();
         bundle.putInt(Keys.POSITION, position);
-        startActivity(DeviceInfoActivity.class, bundle);
+        startActivity(MobileInfoActivity.class, bundle);
     }
 
     private void showModifyNameDialog() {

@@ -149,6 +149,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
 
     @Override
     protected void onDestroy() {
+        hideLoading();
         if (mPresenter != null) {
             mPresenter.dettachView();
         }

@@ -3,6 +3,7 @@ package net.treebear.kwifimanager.http;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.MessageInfoBean;
+import net.treebear.kwifimanager.bean.NodeInfoDetail;
 import net.treebear.kwifimanager.bean.NodeSSIDListBean;
 import net.treebear.kwifimanager.bean.QiNiuUserBean;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
@@ -199,6 +200,23 @@ public interface HttpService {
      */
     @POST("user/node/firmware/upgrade")
     Observable<BaseResponse<Object>> firmwareUpgrade(@Body RequestBody params);
+
+    /**
+     * 节点信息查询 /user/node/list
+     * <p>
+     * 说明
+     * 分页显示节点基本信息,按bind时间降序排列
+     * 显示总数(>=0)、异常(2,3)、离线(0) TODO
+     * req
+     * <p>
+     * 字段	类型	说明
+     * nodeId	str	nodeId不传或为空字符串时,查所有
+     * status	int[]	0-offline 1-normal 2-warn 3-error,status不传或为空时忽略这个条件
+     * pageNo	int	分页号,默认1
+     * pageSize	int	一页的数据,默认10,最多10
+     */
+    @POST("user/node/list")
+    Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody params);
 
     /**
      * 用户退出 /user/quit

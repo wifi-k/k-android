@@ -11,21 +11,25 @@ import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.home.settings.ChooseNetworkStyleActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
-import net.treebear.kwifimanager.mvp.IView;
+import net.treebear.kwifimanager.http.WiFiHttpClient;
+import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.server.contract.BindNodeConstract;
+import net.treebear.kwifimanager.mvp.server.presenter.BindNodePresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.CountObserver;
 import net.treebear.kwifimanager.util.CountUtil;
 import net.treebear.kwifimanager.util.NetWorkUtils;
-import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.LoadingProgressDialog;
 import net.treebear.kwifimanager.widget.TMessageDialog;
 
@@ -36,7 +40,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * @author Administrator
  */
-public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNodePresenter, Object> implements IView<Object> {
+public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNodePresenter, Object> implements BindNodeConstract.IBindNodeView {
 
     @BindView(R.id.tv_mid_info)
     TextView tvMidInfo;
@@ -60,6 +64,11 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
     }
 
     @Override
+    public BindNodeConstract.IBindNodePresenter getPresenter() {
+        return new BindNodePresenter();
+    }
+
+    @Override
     protected void initView() {
         setTitleBack(R.string.setting);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -69,37 +78,72 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
     @Override
     protected void onResume() {
         super.onResume();
+        if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
+            WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+                @Override
+                public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                    change2Bind();
+                }
+
+                @Override
+                public void onFailed(String resultMsg, int resultCode) {
+                    scanAgain();
+                }
+            });
+        } else {
+            change2Bind();
+        }
+    }
+
+    private void change2Bind() {
         if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
             tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，点击立即绑定设备", NetWorkUtils.getSSIDWhenWifi(this)));
             btnConfirm.setText(R.string.bind_now);
-        } else {
-            PermissionUtils.permission(PermissionConstants.LOCATION)
-                    .callback(new PermissionUtils.SimpleCallback() {
-                        @Override
-                        public void onGranted() {
-                            scanWifi();
-                        }
-
-                        @Override
-                        public void onDenied() {
-                        }
-                    }).request();
         }
+    }
+
+    private void scanAgain() {
+        PermissionUtils.permission(PermissionConstants.LOCATION)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                        scanWifi();
+                    }
+
+                    @Override
+                    public void onDenied() {
+                    }
+                }).request();
     }
 
     @OnClick(R.id.btn_bottom)
     public void onBtnBottomClicked() {
-        // TODO: 2019/3/21  test
-        MyApplication.getAppContext().getUser().setAuthStatus(1);
+        if (BuildConfig.DEBUG) {
+            // TODO: 2019/3/22  
+            MyApplication.getAppContext().getUser().setAuthStatus(1);
+        }
         if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
             showLoading();
             mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
         } else {
             if (NetWorkUtils.isWifiConnected(this)) {
+                WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+                    @Override
+                    public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                        showLoading();
+                        mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
+                    }
+
+                    @Override
+                    public void onFailed(String resultMsg, int resultCode) {
+
+                    }
+                });
+
                 String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
                 if (Check.hasContent(wifiSSID)) {
                     if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
-                        startActivity(ChooseNetworkStyleActivity.class);
+                        mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
                     } else {
                         ToastUtils.showShort(R.string.connect_xiaok_tips1);
                     }
@@ -113,14 +157,26 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.IBindNod
     @Override
     public void onLoadData(Object resultData) {
         ToastUtils.showShort(R.string.bind_success);
+        hideLoading();
         MyApplication.getAppContext().getUser().setAuthStatus(1);
         startActivity(ChooseNetworkStyleActivity.class);
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
         finish();
     }
 
+    @Override
+    public void onLoadFail(String resultMsg, int resultCode) {
+        switch (resultCode) {
+            case Config.ServerResponseCode.NODE_HAS_BOUND:
+                ToastUtils.showShort(R.string.this_node_has_bound);
+                break;
+            default:
+                ToastUtils.showShort(R.string.bind_fail_please_retry);
+                break;
+        }
+    }
+
     private void scanWifi() {
-        TLog.valueOf("-----------------" + NetWorkUtils.isConnectXiaoK(this));
         if (wifiManager != null) {
             wifiManager.startScan();
         }

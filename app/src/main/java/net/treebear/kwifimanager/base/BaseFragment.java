@@ -326,6 +326,10 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
         LoadingProgressDialog.showProgressDialog(mContext, msg);
     }
 
+    public void showLoading(int msg) {
+        LoadingProgressDialog.showProgressDialog(mContext, mContext.getResources().getString(msg));
+    }
+
     public void hideLoading() {
         LoadingProgressDialog.dismissProgressDialog();
     }

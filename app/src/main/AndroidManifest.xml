@@ -34,7 +34,7 @@
         <activity android:name=".activity.home.parent.NewEditTimeActivity" />
         <activity android:name=".activity.home.parent.LimitTimeControlActivity" />
         <activity android:name=".activity.home.parent.TimeControlPlanActivity" />
-        <activity android:name=".activity.home.parent.ChooseControlDeviceActivity" />
+        <activity android:name=".activity.home.parent.ChooseControlMobileActivity" />
         <activity android:name=".activity.home.parent.ChooseBanAppActivity" />
         <activity android:name=".activity.home.parent.BanAppPlanActivity" />
         <activity android:name=".activity.me.ModifyMobileActivity" />
@@ -42,9 +42,9 @@
         <activity android:name=".activity.me.UserInfoActivity" />
         <activity android:name=".activity.me.UpdateAppActivity" />
         <activity android:name=".activity.me.SettingsActivity" />
-        <activity android:name=".activity.home.device.DeviceInfoActivity" />
-        <activity android:name=".activity.home.device.DeviceDetailActivity" />
-        <activity android:name=".activity.home.device.AllDeviceListActivity" />
+        <activity android:name=".activity.home.mobile.MobileInfoActivity" />
+        <activity android:name=".activity.home.mobile.MobileDetailActivity" />
+        <activity android:name=".activity.home.mobile.AllMobileListActivity" />
         <activity android:name=".activity.toolkit.SeniorSettingItemActivity" />
         <activity android:name=".activity.toolkit.DHCPServerActivity" />
         <activity android:name=".activity.toolkit.LanSettingActivity" />

@@ -10,9 +10,11 @@ import com.blankj.utilcode.util.ToastUtils;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.adapter.MyDeviceAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
-import net.treebear.kwifimanager.bean.DeviceBean;
+import net.treebear.kwifimanager.bean.NodeInfoDetail;
 import net.treebear.kwifimanager.config.Keys;
-import net.treebear.kwifimanager.test.BeanTest;
+import net.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
+import net.treebear.kwifimanager.mvp.server.presenter.MyNodePresenter;
+import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.widget.TInputDialog;
 import net.treebear.kwifimanager.widget.TMessageDialog;
 
@@ -23,15 +25,15 @@ import butterknife.BindView;
 /**
  * @author Administrator
  */
-public class MyDeviceListActivity extends BaseActivity {
+public class MyDeviceListActivity extends BaseActivity<MyNodeContract.IMyNodePresenter, NodeInfoDetail> implements MyNodeContract.IMyNodeView {
 
     @BindView(R.id.recycler_view)
     RecyclerView rvDeviceList;
-    private ArrayList<DeviceBean> deviceList = new ArrayList<>();
     private MyDeviceAdapter deviceAdapter;
     private TInputDialog tInputDialog;
     private int currentModifyPosition;
     private TMessageDialog tMessageDialog;
+    ArrayList<NodeInfoDetail.NodeBean> nodeList = new ArrayList<>();
 
     @Override
     public int layoutId() {
@@ -39,12 +41,17 @@ public class MyDeviceListActivity extends BaseActivity {
     }
 
     @Override
+    public MyNodeContract.IMyNodePresenter getPresenter() {
+        return new MyNodePresenter();
+    }
+
+    @Override
     protected void initView() {
         setTitleBack(R.string.my_k_ap);
-        deviceList.addAll(BeanTest.getDeviceList());
-        deviceAdapter = new MyDeviceAdapter(deviceList);
+        deviceAdapter = new MyDeviceAdapter(nodeList);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(deviceAdapter);
+        mPresenter.getNodeList();
         deviceAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             currentModifyPosition = position;
             switch (view.getId()) {
@@ -56,7 +63,7 @@ public class MyDeviceListActivity extends BaseActivity {
                     break;
                 case R.id.tv_update_version:
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(Keys.DEVICE_INFO, deviceList.get(currentModifyPosition));
+                    bundle.putSerializable(Keys.DEVICE_INFO, nodeList.get(currentModifyPosition));
                     startActivity(UpdateDeviceVersionActivity.class, bundle);
                     break;
                 default:
@@ -69,7 +76,7 @@ public class MyDeviceListActivity extends BaseActivity {
         if (tMessageDialog == null) {
             tMessageDialog = new TMessageDialog(this).withoutMid()
                     .title(R.string.unbind_k)
-                    .content(String.format("是否确定解绑%s？", deviceList.get(currentModifyPosition).getName()), "#28354C")
+                    .content(String.format("是否确定解绑%s？", nodeList.get(currentModifyPosition).getName()), "#28354C")
                     .left(R.string.cancel)
                     .right(R.string.confirm)
                     .doClick(new TMessageDialog.DoClickListener() {
@@ -81,14 +88,11 @@ public class MyDeviceListActivity extends BaseActivity {
                         @Override
                         public void onClickRight(View view) {
                             tMessageDialog.dismiss();
-                            deviceList.remove(currentModifyPosition);
-                            deviceAdapter.notifyDataSetChanged();
-                            // TODO: 2019/3/11 删除设备
-                            ToastUtils.showShort("删除成功");
+                            mPresenter.unbindNode(nodeList.get(currentModifyPosition).getNodeId());
                         }
                     });
         }
-
+        tMessageDialog.show();
     }
 
     private void showModifyInputDialog() {
@@ -104,9 +108,8 @@ public class MyDeviceListActivity extends BaseActivity {
 
                 @Override
                 public void onRightClick(String s) {
-                    tInputDialog.dismiss();
-                    deviceList.get(currentModifyPosition).setName(s);
-                    deviceAdapter.notifyDataSetChanged();
+                    mPresenter.modifyNodeName(nodeList.get(currentModifyPosition).getNodeId(), s);
+                    nodeList.get(currentModifyPosition).setName(s);
                 }
             });
         }
@@ -116,4 +119,33 @@ public class MyDeviceListActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onLoadData(NodeInfoDetail resultData) {
+        if (Check.hasContent(resultData.getPage())) {
+            nodeList.clear();
+            nodeList.addAll(resultData.getPage());
+        }
+        deviceAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void modifyNodeNameResponse(int resultCode, String msg) {
+        if (resultCode == 0) {
+            tInputDialog.dismiss();
+            ToastUtils.showShort(R.string.modify_success);
+            deviceAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void unbindNodeResponse(int resultCode, String msg) {
+        nodeList.remove(currentModifyPosition);
+        deviceAdapter.notifyDataSetChanged();
+        ToastUtils.showShort("解绑成功");
+    }
+
+    @Override
+    public void upgardeNodeVersion(int resultCode, String msg) {
+
+    }
 }

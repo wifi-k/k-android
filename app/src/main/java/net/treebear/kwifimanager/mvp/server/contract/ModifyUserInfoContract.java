@@ -10,9 +10,11 @@ import okhttp3.RequestBody;
 
 public interface ModifyUserInfoContract {
 
-    interface IUserInfoView extends IView<QiNiuUserBean> {
-        void onUserAvatarUpload();
+    interface IUserInfoView extends IView<Object> {
 
+        void onQiNiuTokenResponse(QiNiuUserBean result);
+
+        void onModifyUserInfo();
     }
 
     interface IUserInfoPresenter extends IPresenter<IUserInfoView> {
@@ -21,7 +23,7 @@ public interface ModifyUserInfoContract {
          */
         void getQiNiuToken();
 
-        void setUserAvatar(String name,String picUrl);
+        void modifyUserInfo(String name, String picUrl);
     }
 
     interface IUserInfoModel extends IModel {

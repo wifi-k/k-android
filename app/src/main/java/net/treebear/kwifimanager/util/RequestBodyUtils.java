@@ -14,6 +14,22 @@ public class RequestBodyUtils {
     private RequestBodyUtils() {
     }
 
+    private static ArrayMap<String, Object> emptyMap = new ArrayMap<String, Object>();
+
+    /**
+     * 获取空map对象
+     *
+     * @return ArrayMap 用于承载参数的map
+     */
+    public static ArrayMap<String, Object> map() {
+        if (emptyMap == null) {
+            emptyMap = new ArrayMap<>(16);
+        } else {
+            emptyMap.clear();
+        }
+        return emptyMap;
+    }
+
     /**
      * 将Json转换为RequestBody
      *

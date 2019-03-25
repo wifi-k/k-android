@@ -20,7 +20,7 @@ import butterknife.BindView;
 /**
  * @author Administrator
  */
-public class ChooseControlDeviceActivity extends BaseActivity {
+public class ChooseControlMobileActivity extends BaseActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;

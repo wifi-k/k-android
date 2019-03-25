@@ -48,6 +48,9 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.IDialUpPresenter,
 
     @OnClick(R.id.tv_disconnect)
     public void onTvDisconnectClicked() {
+        showLoading(R.string.commit_ing);
+        mPresenter.dialUpSet(Config.Text.AP_NAME_START + etBroadbandAccount.getText().toString(),
+                Config.Text.AP_NAME_START + etBroadbandPassword.getText().toString());
     }
 
     @OnClick(R.id.tv_connect)
@@ -57,7 +60,7 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.IDialUpPresenter,
             return;
         }
         count = 0;
-        mPresenter.dialUpSet(etBroadbandAccount.getText().toString(),etBroadbandPassword.getText().toString());
+        mPresenter.dialUpSet(etBroadbandAccount.getText().toString(), etBroadbandPassword.getText().toString());
         showLoading();
     }
 
@@ -69,7 +72,6 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.IDialUpPresenter,
         MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
         hideLoading();
         startActivity(ModifyWifiInfoActivity.class);
-        ToastUtils.showShort(R.string.connect_success);
     }
 
     @Override

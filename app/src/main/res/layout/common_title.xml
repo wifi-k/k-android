@@ -38,9 +38,8 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:paddingLeft="10dp"
             android:maxEms="4"
-            android:paddingRight="10dp"
+            android:paddingEnd="16dp"
             android:textColor="@color/text_28354C" />
 
         <ImageView

@@ -14,8 +14,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.home.FamilyMemberActivity;
 import net.treebear.kwifimanager.activity.home.WeekReportActivity;
-import net.treebear.kwifimanager.activity.home.device.AllDeviceListActivity;
-import net.treebear.kwifimanager.activity.home.device.DeviceDetailActivity;
+import net.treebear.kwifimanager.activity.home.mobile.AllMobileListActivity;
+import net.treebear.kwifimanager.activity.home.mobile.MobileDetailActivity;
 import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import net.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
 import net.treebear.kwifimanager.activity.home.parent.ParentControlActivity;
@@ -153,7 +153,7 @@ public class HomeBindFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(Keys.POSITION, position);
-                startActivity(DeviceDetailActivity.class, bundle);
+                startActivity(MobileDetailActivity.class, bundle);
             }
         });
         mobilePhoneAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -209,8 +209,9 @@ public class HomeBindFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.tv_back_home)
-    public void onTvBackHomeClicked() {
+    @OnClick(R.id.tv_ap_name)
+    public void onTvApNameClicked() {
+        startActivity(MyDeviceListActivity.class);
     }
 
     @OnClick(R.id.tv_root_name)
@@ -253,6 +254,6 @@ public class HomeBindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_look_more)
     public void onTvLookMoreClicked() {
-        startActivity(AllDeviceListActivity.class);
+        startActivity(AllMobileListActivity.class);
     }
 }

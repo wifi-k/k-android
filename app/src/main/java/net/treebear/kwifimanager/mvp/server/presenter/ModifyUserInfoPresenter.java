@@ -22,22 +22,26 @@ public class ModifyUserInfoPresenter extends BasePresenter<ModifyUserInfoContrac
             @Override
             public void onSuccess(BaseResponse<QiNiuUserBean> resultData) {
                 if (Check.hasContent(resultData, mView)) {
-                    mView.onLoadData(resultData.getData());
+                    mView.onQiNiuTokenResponse(resultData.getData());
                 }
             }
         });
     }
 
     @Override
-    public void setUserAvatar(String name, String picUrl) {
+    public void modifyUserInfo(String name, String picUrl) {
         ArrayMap<String, Object> map = map();
-        map.put(Keys.NAME, name);
-        map.put(Keys.AVATAR, picUrl);
+        if (Check.hasContent(name)) {
+            map.put(Keys.NAME, name);
+        }
+        if (Check.hasContent(picUrl)) {
+            map.put(Keys.AVATAR, picUrl);
+        }
         mModel.setUserAvatar(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
-                if (mView!=null){
-                    mView.onUserAvatarUpload();
+                if (mView != null) {
+                    mView.onModifyUserInfo();
                 }
             }
         });

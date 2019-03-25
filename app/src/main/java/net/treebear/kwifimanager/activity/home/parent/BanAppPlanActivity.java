@@ -89,7 +89,7 @@ public class BanAppPlanActivity extends BaseActivity {
         if (needModifyPlan != null) {
             bundle.putParcelableArrayList(Keys.PARENT_CONTROL_DEVICE, needModifyPlan.getBanMobile());
         }
-        startActivityForResult(ChooseControlDeviceActivity.class, bundle, Values.REQUEST_EDIT_DEVICE);
+        startActivityForResult(ChooseControlMobileActivity.class, bundle, Values.REQUEST_EDIT_DEVICE);
     }
 
     private void showModifyNameDialog() {
