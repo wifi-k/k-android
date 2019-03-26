@@ -25,8 +25,11 @@ import net.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import net.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import net.treebear.kwifimanager.base.BaseFragment;
 import net.treebear.kwifimanager.bean.MobilePhoneBean;
+import net.treebear.kwifimanager.bean.NodeInfoDetail;
 import net.treebear.kwifimanager.bean.NoticeBean;
 import net.treebear.kwifimanager.config.Keys;
+import net.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
+import net.treebear.kwifimanager.mvp.server.presenter.BindHomePresenter;
 import net.treebear.kwifimanager.test.BeanTest;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.widget.dialog.TInputDialog;
@@ -42,7 +45,7 @@ import butterknife.OnClick;
  *
  * @author Administrator
  */
-public class HomeBindFragment extends BaseFragment {
+public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, NodeInfoDetail> implements BindHomeContract.View {
 
 
     @BindView(R.id.tv_title_text)
@@ -90,6 +93,7 @@ public class HomeBindFragment extends BaseFragment {
     private ArrayList<NoticeBean> noticeList = new ArrayList<>();
     private int currentModifyPosition;
     private TInputDialog modifyNameDialog;
+    private NodeInfoDetail.NodeBean nodeBean;
 
     public HomeBindFragment() {
 
@@ -101,7 +105,13 @@ public class HomeBindFragment extends BaseFragment {
     }
 
     @Override
+    public BindHomeContract.Presenter getPresenter() {
+        return new BindHomePresenter();
+    }
+
+    @Override
     protected void initData() {
+        mPresenter.getNodeList();
     }
 
     @Override
@@ -115,6 +125,15 @@ public class HomeBindFragment extends BaseFragment {
         setChildrenListAdapter();
 //       公告 及 其他
         updateOtherData();
+    }
+
+    @Override
+    public void onLoadData(NodeInfoDetail resultData) {
+        if (resultData.getPage() != null && resultData.getPage().size() > 0) {
+            nodeBean = resultData.getPage().get(0);
+            tvApName.setText(nodeBean.getName());
+            tvUserState.setText(nodeBean.getStatus() == 1 ? R.string.online : R.string.offline);
+        }
     }
 
     private void updateOtherData() {
@@ -216,7 +235,9 @@ public class HomeBindFragment extends BaseFragment {
 
     @OnClick(R.id.tv_root_name)
     public void onTvRootNameClicked() {
-        startActivity(FamilyMemberActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Keys.NODE_ID, nodeBean.getNodeId());
+        startActivity(FamilyMemberActivity.class, bundle);
     }
 
     @OnClick(R.id.tv_invite_member)

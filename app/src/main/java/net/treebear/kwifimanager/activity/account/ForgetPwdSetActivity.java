@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
@@ -29,7 +30,7 @@ import butterknife.OnClick;
  * <li>获取验证码界面</li>
  * <li>重设密码界面(本页)</li>
  */
-public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Presenter, Object> implements ForgetPasswordContract.View {
+public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Presenter, BaseResponse> implements ForgetPasswordContract.View {
 
     @BindView(R.id.et_password_again)
     EditText etPasswordAgain;
@@ -74,7 +75,7 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
     }
 
     @Override
-    public void onLoadData(Object resultData) {
+    public void onLoadData(BaseResponse resultData) {
         ToastUtils.showShort(R.string.find_password_success);
         ActivityStackUtils.finishAll(Config.Tags.TAG_FORGET_PASSWORD);
     }
@@ -109,8 +110,8 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
     }
 
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
-        super.onLoadFail(resultMsg, resultCode);
+    public void onLoadFail(BaseResponse data,String resultMsg, int resultCode) {
+        super.onLoadFail(data,resultMsg, resultCode);
         ToastUtils.showShort(resultMsg);
     }
 

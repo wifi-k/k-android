@@ -24,7 +24,7 @@ public class BeanTest {
     private static ArrayList<NoticeBean> result = null;
     private static ArrayList<MobilePhoneBean> mobilePhoneList = null;
     private static ArrayList<MobilePhoneBean> childrenMobile = null;
-    private static ArrayList<FamilyMemberBean> familyMemberBeans = null;
+    private static ArrayList< FamilyMemberBean> familyMemberBeans = null;
     public static ArrayList<BanAppPlanBean> banAppPlanBeans = null;
     private static ArrayList<TimeLimitBean> timeLimitBeans = null;
     private static ArrayList<DeviceBean> deviceBeans = null;
@@ -235,7 +235,7 @@ public class BeanTest {
         if (familyMemberBeans == null) {
             familyMemberBeans = new ArrayList<>();
             for (int i = 0; i < number; i++) {
-                familyMemberBeans.add(new FamilyMemberBean(createString(4), createMobile()));
+                familyMemberBeans.add(new  FamilyMemberBean(createString(4), createMobile()));
             }
         }
         return familyMemberBeans;

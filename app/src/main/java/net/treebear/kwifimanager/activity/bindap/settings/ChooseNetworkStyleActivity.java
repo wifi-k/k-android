@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Values;
@@ -94,7 +95,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
     }
 
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
                 if (++count > 4) {

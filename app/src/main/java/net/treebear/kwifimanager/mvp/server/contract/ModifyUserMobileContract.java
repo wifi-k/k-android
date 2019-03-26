@@ -9,7 +9,9 @@ import okhttp3.RequestBody;
 
 public interface ModifyUserMobileContract {
 
-    interface View extends IView<Object> {
+    interface View extends IView<String> {
+        void onMobileModifySuccess();
+        void onModifyFailed();
     }
 
     interface Presenter extends IPresenter<View> {
@@ -21,7 +23,7 @@ public interface ModifyUserMobileContract {
 
     interface Model extends IModel {
 
-        void getVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
+        void getVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack);
 
         void modifyMobileByVerify(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
 

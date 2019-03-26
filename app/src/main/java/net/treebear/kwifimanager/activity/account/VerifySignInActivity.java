@@ -11,7 +11,9 @@ import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
+import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.server.contract.CodeSignInContract;
@@ -96,7 +98,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
     }
 
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         ToastUtils.showShort(resultMsg);
         hideLoading();
     }
@@ -213,11 +215,13 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
     }
 
     @Override
-    public void onUserInfoLoaded(ServerUserInfo bean) {
+    public void onUserInfoLoaded(SUserCover bean) {
         if (bean != null) {
-            bean.setToken(MyApplication.getAppContext().getUser().getToken());
-            MyApplication.getAppContext().savedUser(bean);
-            UserInfoUtil.updateUserInfo(bean);
+            ServerUserInfo user = bean.getUser();
+            user.setToken(MyApplication.getAppContext().getUser().getToken());
+            user.setNodeSize(bean.getNodeSize());
+            MyApplication.getAppContext().savedUser(user);
+            UserInfoUtil.updateUserInfo(user);
             dispose(mCountDisposable);
             hideLoading();
             ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);

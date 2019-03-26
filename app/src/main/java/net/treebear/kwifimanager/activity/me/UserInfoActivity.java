@@ -25,12 +25,14 @@ import net.treebear.kwifimanager.activity.account.SetPasswordActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.QiNiuUserBean;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
+import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.GlideApp;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.http.ImageUploadManager;
 import net.treebear.kwifimanager.mvp.server.contract.ModifyUserInfoContract;
 import net.treebear.kwifimanager.mvp.server.presenter.ModifyUserInfoPresenter;
+import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.BitmapUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.FileUtils;
@@ -76,6 +78,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     @Override
     protected void initView() {
         setTitleBack(R.string.personal_info);
+        ActivityStackUtils.pressActivity(Config.Tags.TAG_MODIFY_USER_MOBILE, this);
         userInfo = MyApplication.getAppContext().getUser();
         tvNickName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile());
         tvMobileNumber.setText(userInfo.getMobile());
@@ -303,6 +306,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     @Override
     protected void onDestroy() {
         dismiss(choosePicTypePop);
+        ActivityStackUtils.popActivity(Config.Tags.TAG_MODIFY_USER_MOBILE, this);
         super.onDestroy();
     }
 }

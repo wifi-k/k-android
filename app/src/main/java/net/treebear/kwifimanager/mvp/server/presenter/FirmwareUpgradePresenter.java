@@ -27,7 +27,7 @@ public class FirmwareUpgradePresenter extends BasePresenter<FirmwareUpgradeContr
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                 if (mView != null) {
                     mView.upgradeNodeVersion(resultCode, resultMsg);
                 }

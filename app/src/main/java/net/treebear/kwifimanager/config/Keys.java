@@ -26,6 +26,10 @@ public interface Keys {
     String PAGE_NO = "pageNo";
     String PAGE_SIZE = "pageSize";
     String FREQ = "freq";
+    String FILTER = "filter";
+    String INVITE_CODE = "inviteCode";
+    String USER_NAME = "userName";
+    String USER_ID = "userId";
 
     /**
      * ----------------------intent传输key--------------------

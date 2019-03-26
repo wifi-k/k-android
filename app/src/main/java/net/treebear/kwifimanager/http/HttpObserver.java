@@ -40,14 +40,14 @@ public class HttpObserver {
                 if (Config.ServerResponseCode.RESPONSE_OK == response.getCode()) {
                     callBack.onSuccess(response);
                 } else {
-                    callBack.onFailed(response.getMsg(), response.getCode());
+                    callBack.onFailed(response, response.getMsg(), response.getCode());
                 }
                 TLog.i("OkHttp", "(HttpObserver.java:45) ~ onNext:" + response.toString());
             }
 
             @Override
             public void onError(Throwable e) {
-                callBack.onFailed(e.getMessage(), -1);
+                callBack.onFailed(null, e.getMessage(), -1);
             }
 
             @Override

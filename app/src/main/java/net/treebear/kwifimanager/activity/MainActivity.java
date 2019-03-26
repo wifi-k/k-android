@@ -12,12 +12,14 @@ import net.treebear.kwifimanager.base.BaseFragmentActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
+import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.fragment.GalleryFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import net.treebear.kwifimanager.fragment.MeFragment;
 import net.treebear.kwifimanager.http.WiFiHttpClient;
 import net.treebear.kwifimanager.mvp.IModel;
+import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.util.TLog;
@@ -67,6 +69,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     protected void initView() {
+        ActivityStackUtils.pressActivity(Config.Tags.TAG_MODIFY_USER_MOBILE,this);
         addFragments(fragments);
         if (MyApplication.getAppContext().hasBoundNode()) {
             statusWhiteFontBlack();
@@ -153,7 +156,7 @@ public class MainActivity extends BaseFragmentActivity {
                         }
 
                         @Override
-                        public void onFailed(String resultMsg, int resultCode) {
+                        public void onFailed(BaseResponse response,String resultMsg, int resultCode) {
                             isTryingSign = false;
                         }
                     });
@@ -167,7 +170,7 @@ public class MainActivity extends BaseFragmentActivity {
                         }
 
                         @Override
-                        public void onFailed(String resultMsg, int resultCode) {
+                        public void onFailed(BaseResponse response,String resultMsg, int resultCode) {
                             isTryingSign = false;
                         }
                     });

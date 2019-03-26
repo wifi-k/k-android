@@ -60,7 +60,7 @@ public class NetWorkReceiver extends BroadcastReceiver {
                     }
 
                     @Override
-                    public void onFailed(String resultMsg, int resultCode) {
+                    public void onFailed(BaseResponse response,String resultMsg, int resultCode) {
                         isTryingSign = false;
                     }
                 });

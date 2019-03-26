@@ -1,5 +1,7 @@
 package net.treebear.kwifimanager.mvp;
 
+import net.treebear.kwifimanager.base.BaseResponse;
+
 /**
  * @author Tinlone
  * @date 2018/3/23.
@@ -19,6 +21,6 @@ public interface IView<Data> {
      * @param resultMsg  失败返回信息
      * @param resultCode 失败返回码
      */
-    void onLoadFail(String resultMsg, int resultCode);
+    void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode);
 
 }

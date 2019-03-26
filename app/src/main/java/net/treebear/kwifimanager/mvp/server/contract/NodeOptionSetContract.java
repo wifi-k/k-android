@@ -9,7 +9,7 @@ import okhttp3.RequestBody;
 
 public interface NodeOptionSetContract {
 
-    interface View extends IView<Object> {
+    interface View extends IView<BaseResponse> {
         void onSSIDResponseOK();
 
         void onPwdResponseOK();

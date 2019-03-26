@@ -35,6 +35,7 @@ public final class Config {
         String TAG_FORGET_PASSWORD = "account.forget_password";
         String TAG_LAUNCH_ROOT = "account.launch_root";
         String TAG_FIRST_BIND_WIFI = "wifi.first_bind";
+        String TAG_MODIFY_USER_MOBILE = "user.modify_user_mobile";
     }
 
     /**

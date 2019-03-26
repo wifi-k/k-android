@@ -166,13 +166,14 @@ public class WiFiHttpClient {
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
                 TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
                 isLogin_ing = false;
                 if (callBack != null) {
-                    callBack.onFailed(resultMsg, resultCode);
+                    callBack.onFailed(resultData, resultMsg, resultCode);
                 }
             }
+
         });
     }
 
@@ -186,7 +187,7 @@ public class WiFiHttpClient {
 //                    MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
                     data.setToken(apiToken);
                     MyApplication.getAppContext().saveDeviceInfo(data);
-                    if (callBack!=null) {
+                    if (callBack != null) {
                         callBack.onSuccess(resultData);
                     }
                 }
@@ -194,10 +195,10 @@ public class WiFiHttpClient {
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse  data, String resultMsg, int resultCode) {
                 TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
                 if (callBack != null) {
-                    callBack.onFailed(resultMsg, resultCode);
+                    callBack.onFailed(data, resultMsg, resultCode);
                 }
             }
         });
@@ -212,7 +213,7 @@ public class WiFiHttpClient {
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse data, String resultMsg, int resultCode) {
                 TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
             }
         });

@@ -100,9 +100,9 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         public abstract void onSuccess(Data resultData);
 
         @Override
-        public void onFailed(String resultMsg, int resultCode) {
+        public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
             if (mView != null) {
-                mView.onLoadFail(resultMsg, resultCode);
+                mView.onLoadFail(resultData, resultMsg, resultCode);
             }
         }
     }

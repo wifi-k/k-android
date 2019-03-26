@@ -11,9 +11,12 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.activity.bindap.BindAction1Activity;
 import net.treebear.kwifimanager.base.BaseFragment;
+import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
+import net.treebear.kwifimanager.mvp.server.contract.UnbindHomeContract;
+import net.treebear.kwifimanager.mvp.server.presenter.UnbindHomePresenter;
 import net.treebear.kwifimanager.util.NetWorkUtils;
 import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 import net.treebear.kwifimanager.widget.dialog.TipsDialog;
@@ -26,7 +29,7 @@ import butterknife.OnClick;
  *
  * @author Administrator
  */
-public class HomeUnbindFragment extends BaseFragment {
+public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presenter, BaseResponse> implements UnbindHomeContract.View {
 
 
     @BindView(R.id.iv_bind)
@@ -46,6 +49,11 @@ public class HomeUnbindFragment extends BaseFragment {
     @Override
     public int layoutId() {
         return R.layout.fragment_home_unbind;
+    }
+
+    @Override
+    public UnbindHomeContract.Presenter getPresenter() {
+        return new UnbindHomePresenter();
     }
 
     @Override
@@ -89,17 +97,23 @@ public class HomeUnbindFragment extends BaseFragment {
 
                 @Override
                 public void onRightClick(String s) {
-                    // TODO: 2019/3/7 上传判断家庭码
-                    inputDialog.dismiss();
-                    if ("1234".equals(s)) {
-                        showSuccessTips();
-                    } else {
-                        showErrorTips();
-                    }
+                    mPresenter.joinFamily(s.trim());
                 }
             });
         }
         inputDialog.show();
+    }
+
+    @Override
+    public void onLoadData(BaseResponse resultData) {
+        dismiss(inputDialog);
+        showSuccessTips();
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse response,String resultMsg, int resultCode) {
+        dismiss(inputDialog);
+        showErrorTips();
     }
 
     private void showErrorTips() {

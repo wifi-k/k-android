@@ -25,9 +25,9 @@ public class DynamicIpPresenter extends BasePresenter<DynamicIpContract.View, Dy
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                 if (mView != null) {
-                    mView.onLoadFail(resultMsg, Config.ServerResponseCode.CUSTOM_ERROR);
+                    mView.onLoadFail(response, resultMsg, Config.ServerResponseCode.CUSTOM_ERROR);
                 }
             }
         });

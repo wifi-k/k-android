@@ -8,12 +8,12 @@ import okhttp3.RequestBody;
 
 public class ModifyUserMobileModel extends BaseServerModel implements ModifyUserMobileContract.Model {
     @Override
-    public void getVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack) {
-
+    public void getVerifyCode(RequestBody params, AsyncCallBack<BaseResponse<String>> callBack) {
+        bindObservable(mService.getVerifyByType(params), callBack);
     }
 
     @Override
     public void modifyMobileByVerify(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack) {
-
+        bindObservable(mService.modifyUserMobile(params), callBack);
     }
 }

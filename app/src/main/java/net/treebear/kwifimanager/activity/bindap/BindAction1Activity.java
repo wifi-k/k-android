@@ -10,7 +10,6 @@ import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
-import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.bindap.settings.ChooseNetworkStyleActivity;
@@ -100,7 +99,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                 }
 
                 @Override
-                public void onFailed(String resultMsg, int resultCode) {
+                public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                     scanAgain();
                 }
             });
@@ -132,10 +131,6 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @OnClick(R.id.btn_bottom)
     public void onBtnBottomClicked() {
-        if (BuildConfig.DEBUG) {
-            // TODO: 2019/3/22  
-            MyApplication.getAppContext().getUser().setNodeSize(1);
-        }
         if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
             showLoading();
             mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
@@ -149,7 +144,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                     }
 
                     @Override
-                    public void onFailed(String resultMsg, int resultCode) {
+                    public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
 
                     }
                 });
@@ -179,7 +174,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     }
 
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse response,String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.ServerResponseCode.NODE_HAS_BOUND:
                 ToastUtils.showShort(R.string.this_node_has_bound);

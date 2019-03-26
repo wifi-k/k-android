@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Presenter, Object> implements NodeOptionSetContract.View {
+public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Presenter, BaseResponse> implements NodeOptionSetContract.View {
 
     @BindView(R.id.tv_has_no_password)
     TextView tvHasNoPassword;
@@ -158,7 +158,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse response,String resultMsg, int resultCode) {
                 ToastUtils.showShort(R.string.option_failed);
             }
         });
@@ -221,7 +221,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse response,String resultMsg, int resultCode) {
                 dismiss(restartTipsDialog);
                 ToastUtils.showShort(R.string.wifi_restart_failed);
             }
@@ -237,7 +237,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse response,String resultMsg, int resultCode) {
                 dismiss(resetTipsDialog);
                 ToastUtils.showShort("恢复出厂设置失败");
             }

@@ -4,6 +4,7 @@ import android.util.ArrayMap;
 
 import net.treebear.kwifimanager.base.BasePresenter;
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.PwdSignInContract;
@@ -36,9 +37,9 @@ public class PwdSignInPresenter extends BasePresenter<PwdSignInContract.View, Pw
 
     @Override
     public void getUserInfo() {
-        mModel.getUserInfo(new BaseAsyncCallback<BaseResponse<ServerUserInfo>>() {
+        mModel.getUserInfo(new BaseAsyncCallback<BaseResponse<SUserCover>>() {
             @Override
-            public void onSuccess(BaseResponse<ServerUserInfo> resultData) {
+            public void onSuccess(BaseResponse<SUserCover> resultData) {
                 if (Check.hasContent(resultData, mView)) {
                     mView.onnUserInfoLoaded(resultData.getData());
                 }

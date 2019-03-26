@@ -5,12 +5,12 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.IModel;
@@ -55,18 +55,17 @@ public class launchAccountActivity extends BaseActivity {
 
     private void getNodeList() {
         showLoading("自动登录中...");
-        new GetUserInfoModel().getUserInfo(new IModel.AsyncCallBack<BaseResponse<ServerUserInfo>>() {
+        new GetUserInfoModel().getUserInfo(new IModel.AsyncCallBack<BaseResponse<SUserCover>>() {
             @Override
-            public void onSuccess(BaseResponse<ServerUserInfo> resultData) {
+            public void onSuccess(BaseResponse<SUserCover> resultData) {
                 hideLoading();
                 String token = MyApplication.getAppContext().getUser().getToken();
                 ServerUserInfo user;
                 if (resultData != null) {
-                    user = resultData.getData();
+                    user = resultData.getData().getUser();
+                    user.setNodeSize(resultData.getData().getNodeSize());
                     user.setToken(token);
-                    if (BuildConfig.DEBUG) {
-                        user.setNodeSize(1);
-                    }
+                    UserInfoUtil.updateUserInfo(user);
                     MyApplication.getAppContext().savedUser(user);
                     startActivity(MainActivity.class);
                     finish();
@@ -75,7 +74,7 @@ public class launchAccountActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailed(String resultMsg, int resultCode) {
+            public void onFailed(BaseResponse data, String resultMsg, int resultCode) {
                 if (btnSignin != null) {
                     btnSignin.setVisibility(View.VISIBLE);
                     btnSignup.setVisibility(View.VISIBLE);

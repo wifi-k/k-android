@@ -2,22 +2,22 @@ package net.treebear.kwifimanager.mvp.server.contract;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
-import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.IView;
 
-public interface GetUserInfoContract {
+import okhttp3.RequestBody;
 
-    interface View extends IView<SUserCover>{}
+public interface UnbindHomeContract {
+
+    interface View extends IView<BaseResponse> {}
 
     interface Presenter extends IPresenter<View>{
 
-        void getUserInfo();
+        void joinFamily(String inviteCode);
     }
 
     interface Model extends IModel{
-
-        void getUserInfo(AsyncCallBack<BaseResponse<SUserCover>> callBack);
+        void joinFamily(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
     }
 
 }

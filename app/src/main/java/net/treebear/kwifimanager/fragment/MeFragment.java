@@ -12,11 +12,13 @@ import net.treebear.kwifimanager.activity.me.MyChildrenListActivity;
 import net.treebear.kwifimanager.activity.me.SettingsActivity;
 import net.treebear.kwifimanager.activity.me.UserInfoActivity;
 import net.treebear.kwifimanager.base.BaseFragment;
+import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.GlideApp;
 import net.treebear.kwifimanager.mvp.server.contract.GetUserInfoContract;
 import net.treebear.kwifimanager.mvp.server.presenter.GetUserInfoPresenter;
 import net.treebear.kwifimanager.util.Check;
+import net.treebear.kwifimanager.util.UserInfoUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,7 +26,7 @@ import butterknife.OnClick;
 /**
  * @author Administrator
  */
-public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, ServerUserInfo> implements GetUserInfoContract.View {
+public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUserCover> implements GetUserInfoContract.View {
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
     @BindView(R.id.tv_user_mobile)
@@ -70,9 +72,11 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, Serv
     }
 
     @Override
-    public void onLoadData(ServerUserInfo resultData) {
-        userInfo = resultData;
-        MyApplication.getAppContext().savedUser(resultData);
+    public void onLoadData(SUserCover resultData) {
+        userInfo = resultData.getUser();
+        userInfo.setNodeSize(resultData.getNodeSize());
+        MyApplication.getAppContext().savedUser(userInfo);
+        UserInfoUtil.updateUserInfo(userInfo);
         updateUserInfo();
         MyApplication.getAppContext().setNeedUpdateUserInfo(false);
     }

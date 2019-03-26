@@ -316,7 +316,7 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
      * @param resultCode 失败返回码
      */
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         hideLoading();
         ToastUtils.showShort(resultMsg);
     }

@@ -4,7 +4,6 @@ package net.treebear.kwifimanager.http;
 import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.config.Config;
-import net.treebear.kwifimanager.util.SharedPreferencesUtil;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -72,35 +71,14 @@ public class HttpClient {
 //                        .addHeader("Accept", "application/json")
 //                        .addHeader("charset", "utf-8")
                         .addHeader("Api-Version", BuildConfig.VERSION_NAME);
-
-                String cookies[] = ((String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), "cookies", "")).split("-");
-                for (String cookie : cookies) {
-                    builder.addHeader("Cookie", cookie);
-                }
-
                 Request request = builder.build();
                 return chain.proceed(request);
             };
-
-            //增加cookie信息
-//            Interceptor cookieInterceptor = chain -> {
-//                okhttp3.Response originalResponse = chain.proceed(chain.request());
-//                if (!originalResponse.headers("Set-Cookie").isEmpty()) {
-//                    StringBuilder sb = new StringBuilder();
-//                    for (String cookie : originalResponse.headers("Set-Cookie")) {
-//                        sb.append(cookie).append("-");
-//                    }
-//                    SharedPreferencesUtil.setParam(MyApplication.getAppContext(), "cookies", sb.length() > 0 ? sb.subSequence(0, sb.length() - 1).toString() : "");
-//                }
-//
-//                return originalResponse;
-//            };
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(30, TimeUnit.SECONDS);
             builder.readTimeout(30, TimeUnit.SECONDS);
             builder.connectTimeout(30, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
-//            builder.addInterceptor(cookieInterceptor);
             if (BuildConfig.DEBUG) {
                 // Log信息拦截器
                 HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

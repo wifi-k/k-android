@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Config;
@@ -107,7 +108,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
     }
 
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.ServerResponseCode.HAS_SIGN_UP:
                 initSignMessageDialog();

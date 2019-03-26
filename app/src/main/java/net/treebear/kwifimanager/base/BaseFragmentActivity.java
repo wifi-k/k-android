@@ -473,7 +473,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * @param resultCode 失败返回码
      */
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse response,String resultMsg, int resultCode) {
         hideLoading();
         ToastUtils.showShort(resultMsg);
     }

@@ -2,10 +2,12 @@ package net.treebear.kwifimanager.http;
 
 
 import net.treebear.kwifimanager.base.BaseResponse;
+import net.treebear.kwifimanager.bean.FamilyMemberCover;
 import net.treebear.kwifimanager.bean.MessageInfoBean;
 import net.treebear.kwifimanager.bean.NodeInfoDetail;
 import net.treebear.kwifimanager.bean.NodeSSIDListBean;
 import net.treebear.kwifimanager.bean.QiNiuUserBean;
+import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 
 import io.reactivex.Observable;
@@ -85,9 +87,17 @@ public interface HttpService {
      * 获取用户信息
      * 参数 header中的token
      */
+    @Deprecated
     @POST("user/info/get")
-//    @POST("user/info/getext")
     Observable<BaseResponse<ServerUserInfo>> getUserInfo();
+
+    /**
+     * 获取用户信息
+     * 参数 header中的token
+     */
+//    @POST("user/info/get")
+    @POST("user/info/getext")
+    Observable<BaseResponse<SUserCover>> getUserInfoExt(@Body RequestBody params);
 
     /**
      * 设置用户信息
@@ -195,14 +205,6 @@ public interface HttpService {
     Observable<BaseResponse<Object>> quiteShare(@Body RequestBody params);
 
     /**
-     * 升级节点固件 /user/node/firmware/upgrade
-     *
-     * @param params * nodeId*	str
-     */
-    @POST("user/node/firmware/upgrade")
-    Observable<BaseResponse<Object>> firmwareUpgrade(@Body RequestBody params);
-
-    /**
      * 节点信息查询 /user/node/list
      * <p>
      * 说明
@@ -217,12 +219,57 @@ public interface HttpService {
      * pageSize	int	一页的数据,默认10,最多10
      */
     @POST("user/node/list")
+//    Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody params);
+//    @POST("user/node/listall")
     Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody params);
+
+    /**
+     * 升级节点固件 /user/node/firmware/upgrade
+     *
+     * @param params * nodeId*	str
+     */
+    @POST("user/node/firmware/upgrade")
+    Observable<BaseResponse<Object>> firmwareUpgrade(@Body RequestBody params);
 
     /**
      * 用户退出 /user/quit
      */
     @POST("user/quit")
     Observable<BaseResponse<Object>> userQuit();
+
+    /**
+     * 加入家庭 /user/node/family/join
+     * 字段	类型	说明
+     * inviteCode*	str	节点的邀请码
+     */
+    @POST("user/node/family/join")
+    Observable<BaseResponse<Object>> joinFamilyByCode(@Body RequestBody params);
+
+    /**
+     * 修改家庭成员信息 /user/node/family/set
+     * 字段	类型	说明
+     * nodeId*	str
+     * userName	str	修改昵称
+     */
+    @POST("user/node/family/set")
+    Observable<BaseResponse<Object>> setFamilyInfo(@Body RequestBody params);
+
+    /**
+     * 删除家庭成员 /user/node/family/quit
+     * 字段	类型	说明
+     * nodeId*	str
+     * userId*	long	删除的成员ID
+     */
+    @POST("user/node/family/quit")
+    Observable<BaseResponse<Object>> quitFamily(@Body RequestBody params);
+
+    /**
+     * 家庭成员列表 /user/node/family/list
+     * 这里不分页
+     * 字段	类型	说明
+     * nodeId*	str
+     */
+    @POST("user/node/family/list")
+    Observable<BaseResponse<FamilyMemberCover>> getFamilyMembers(@Body RequestBody params);
 
 }

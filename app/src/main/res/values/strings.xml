@@ -302,5 +302,10 @@
     <string name="option_success_restart">配置成功，WiFi即将重启</string>
     <string name="token_overdue_retry">登录信息过期，请自行登录</string>
     <string name="refuse_loaction_permission">获取和修改WiFi设置需要定位权限，拒绝该权限WiFi设置功能将无法工作</string>
+    <string name="input_correct_mobile">请输入正确手机号</string>
+    <string name="verify_code_send_failed_retry">验证码发送失败，请稍后重试</string>
+    <string name="modify_failed_retry">修改失败，请稍后重试</string>
+    <string name="modify_success_reload">修改成功，请重新登录</string>
+    <string name="delete_success">删除成功</string>
 
 </resources>

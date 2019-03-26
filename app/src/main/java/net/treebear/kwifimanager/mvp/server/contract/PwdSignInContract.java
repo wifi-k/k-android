@@ -2,6 +2,7 @@ package net.treebear.kwifimanager.mvp.server.contract;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
+import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.mvp.IView;
@@ -12,7 +13,7 @@ public interface PwdSignInContract {
 
     interface View extends IView<ServerUserInfo> {
 
-        void onnUserInfoLoaded(ServerUserInfo bean);
+        void onnUserInfoLoaded(SUserCover bean);
 
     }
 
@@ -28,6 +29,6 @@ public interface PwdSignInContract {
 
         void signInByVerifyPwd(RequestBody params, AsyncCallBack<BaseResponse<ServerUserInfo>> callBack);
 
-        void getUserInfo(AsyncCallBack<BaseResponse<ServerUserInfo>> callBack);
+        void getUserInfo(AsyncCallBack<BaseResponse<SUserCover>> callBack);
     }
 }

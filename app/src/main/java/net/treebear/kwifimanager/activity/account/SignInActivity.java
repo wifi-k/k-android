@@ -8,12 +8,13 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-import net.treebear.kwifimanager.BuildConfig;
 import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.MainActivity;
 import net.treebear.kwifimanager.base.BaseActivity;
+import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
+import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.server.contract.PwdSignInContract;
@@ -153,7 +154,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
     }
 
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse data, String resultMsg, int resultCode) {
         tvSignNext.setEnabled(true);
         TLog.w(resultMsg);
         ToastUtils.showShort(resultMsg);
@@ -167,16 +168,14 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
     }
 
     @Override
-    public void onnUserInfoLoaded(ServerUserInfo bean) {
+    public void onnUserInfoLoaded(SUserCover bean) {
         if (bean != null) {
-            bean.setToken(MyApplication.getAppContext().getUser().getToken());
-            MyApplication.getAppContext().savedUser(bean);
-            UserInfoUtil.updateUserInfo(bean);
+            ServerUserInfo user = bean.getUser();
+            user.setToken(MyApplication.getAppContext().getUser().getToken());
+            user.setNodeSize(bean.getNodeSize());
+            MyApplication.getAppContext().savedUser(user);
+            UserInfoUtil.updateUserInfo(user);
             hideLoading();
-            MyApplication.getAppContext().getUser().setNodeSize(bean.getNodeSize());
-            if(BuildConfig.DEBUG) {
-//                MyApplication.getAppContext().getUser().setNodeSize(1);
-            }
             ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);
             startActivity(MainActivity.class);
             ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);

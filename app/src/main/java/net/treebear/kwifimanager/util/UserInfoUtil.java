@@ -23,7 +23,8 @@ public class UserInfoUtil {
         synchronized (UserInfoUtil.class) {
             if (mUserInfo == null) {
                 Gson gson = new Gson();
-                String json = (String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), SharedPreferencesUtil.USER_INFO, "");
+                String json = (String) SharedPreferencesUtil.getParam(MyApplication.getAppContext(), SharedPreferencesUtil.USER_INFO, "{}");
+                TLog.w("OkHttp-json", json);
                 try {
                     mUserInfo = gson.fromJson(json, ServerUserInfo.class);
                 } catch (Exception e) {
@@ -46,9 +47,15 @@ public class UserInfoUtil {
         synchronized (UserInfoUtil.class) {
             Gson gson = new Gson();
             String json = gson.toJson(info);
+            TLog.w("OkHttp", json);
             SharedPreferencesUtil.setParam(MyApplication.getAppContext(), SharedPreferencesUtil.USER_INFO, json);
             mUserInfo = info;
         }
+    }
+
+    public static void clearUserInfo() {
+        TLog.w("OkHttp - clearUserInfo");
+        updateUserInfo(new ServerUserInfo());
     }
 
     public static boolean isLogin() {

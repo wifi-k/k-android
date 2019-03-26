@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".MyApplication"
@@ -29,30 +30,78 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.me.MyChildrenListActivity"></activity>
-        <activity android:name=".activity.home.WeekReportActivity" />
-        <activity android:name=".activity.home.parent.NewEditTimeActivity" />
-        <activity android:name=".activity.home.parent.LimitTimeControlActivity" />
-        <activity android:name=".activity.home.parent.TimeControlPlanActivity" />
-        <activity android:name=".activity.home.parent.ChooseControlMobileActivity" />
-        <activity android:name=".activity.home.parent.ChooseBanAppActivity" />
-        <activity android:name=".activity.home.parent.BanAppPlanActivity" />
-        <activity android:name=".activity.me.ModifyMobileActivity" />
-        <activity android:name=".activity.me.ModifyNickNameActivity" />
-        <activity android:name=".activity.me.UserInfoActivity" />
-        <activity android:name=".activity.me.UpdateAppActivity" />
-        <activity android:name=".activity.me.SettingsActivity" />
-        <activity android:name=".activity.home.mobile.MobileInfoActivity" />
-        <activity android:name=".activity.home.mobile.MobileDetailActivity" />
-        <activity android:name=".activity.home.mobile.AllMobileListActivity" />
-        <activity android:name=".activity.toolkit.SeniorSettingItemActivity" />
-        <activity android:name=".activity.toolkit.DHCPServerActivity" />
-        <activity android:name=".activity.toolkit.LanSettingActivity" />
-        <activity android:name=".activity.toolkit.OnlineSettingActivity" />
-        <activity android:name=".activity.toolkit.SeniorWifiSettingActivity" />
-        <activity android:name=".activity.toolkit.GuardDeviceJoinActivity" />
-        <activity android:name=".activity.toolkit.WifiToolkitActivity" />
-        <activity android:name=".activity.home.myk.UpdateDeviceVersionActivity" />
+        <activity
+            android:name=".activity.me.MyChildrenListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.WeekReportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.parent.NewEditTimeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.parent.LimitTimeControlActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.parent.TimeControlPlanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.parent.ChooseControlMobileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.parent.ChooseBanAppActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.parent.BanAppPlanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.me.ModifyMobileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.me.ModifyNickNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.me.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.me.UpdateAppActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.me.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.mobile.MobileInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.mobile.MobileDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.mobile.AllMobileListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.toolkit.SeniorSettingItemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.toolkit.DHCPServerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.toolkit.LanSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.toolkit.OnlineSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.toolkit.SeniorWifiSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.toolkit.GuardDeviceJoinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.toolkit.WifiToolkitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.myk.UpdateDeviceVersionActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.home.myk.MyDeviceListActivity"
             android:screenOrientation="portrait" />
@@ -115,7 +164,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.account.launchAccountActivity"

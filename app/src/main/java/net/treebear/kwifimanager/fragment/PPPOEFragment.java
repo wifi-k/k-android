@@ -9,6 +9,7 @@ import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity;
 import net.treebear.kwifimanager.base.BaseFragment;
+import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
@@ -75,7 +76,7 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
     }
 
     @Override
-    public void onLoadFail(String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         switch (resultCode) {
             case Config.WifiResponseCode.CONNECT_FAIL:
                 if (++count > 4) {

@@ -1,70 +1,98 @@
 package net.treebear.kwifimanager.bean;
 
 public class FamilyMemberBean {
+    /**
+     * userId : 11
+     * userName :
+     * userMobile :
+     * userAvatar :
+     * nodeId :
+     * nodeName :
+     * role : 0
+     */
 
-    private long id;
+    private int userId;
+    private String userName;
+    private String userMobile;
+    private String userAvatar;
+    private String nodeId;
+    private String nodeName;
+    private int role;
 
-    private String avatar;
-
-    private String name;
-
-    private String mobile;
-
-    private boolean isAdmin;
-
-    public FamilyMemberBean(String name, String mobile) {
-        this.name = name;
-        this.mobile = mobile;
+    public FamilyMemberBean() {
     }
 
-    public long getId() {
-        return id;
+    public FamilyMemberBean(String userName, String userMobile) {
+        this.userName = userName;
+        this.userMobile = userMobile;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public int getUserId() {
+        return userId;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getName() {
-        return name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getUserMobile() {
+        return userMobile;
     }
 
-    public String getMobile() {
-        return mobile;
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public String getUserAvatar() {
+        return userAvatar;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
         return "FamilyMemberBean{" +
-                "id=" + id +
-                ", avatar='" + avatar + '\'' +
-                ", name='" + name + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", isAdmin=" + isAdmin +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userMobile='" + userMobile + '\'' +
+                ", userAvatar='" + userAvatar + '\'' +
+                ", nodeId='" + nodeId + '\'' +
+                ", nodeName='" + nodeName + '\'' +
+                ", role=" + role +
                 '}';
     }
 }

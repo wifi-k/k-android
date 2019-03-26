@@ -61,7 +61,7 @@ public class UpdateDeviceVersionActivity extends BaseActivity<FirmwareUpgradeCon
             tvNewerVersion.setText(Check.hasContent(deviceInfo.getFirmwareUpgrade()) ?
                     deviceInfo.getFirmwareUpgrade() : deviceInfo.getFirmware());
             tvDeviceSerial.setText(deviceInfo.getNodeId());
-            tvOnline.setText(deviceInfo.getStatus() == 0 ? R.string.online : R.string.offline);
+            tvOnline.setText(deviceInfo.getStatus() == 1 ? R.string.online : R.string.offline);
             tvOnline.setTextColor(deviceInfo.getStatus() == 0 ? Color.WHITE : Config.Colors.DEVICE_K_OFFLINE);
             tvOnline.setBackgroundResource(deviceInfo.getStatus() == 0 ? R.drawable.btn_green_to_cyan_r4 : R.drawable.bg_f7_r4);
         }
