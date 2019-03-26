@@ -255,6 +255,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.WebsiteActivity" />
+        <activity android:name=".activity.home.myk.SelectXiaoKActivity" />
     </application>
 
 </manifest>

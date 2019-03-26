@@ -14,6 +14,8 @@ public class RecyclerViewDividerItemDecoration extends RecyclerView.ItemDecorati
 
     private int dividerHeight = 2;
     private Paint mPaint;
+    private int paddingStart = 0;
+    private int paddingEnd = 0;
 
     public RecyclerViewDividerItemDecoration() {
         mPaint = new Paint();
@@ -47,6 +49,15 @@ public class RecyclerViewDividerItemDecoration extends RecyclerView.ItemDecorati
         this.dividerHeight = dividerHeight;
     }
 
+    public RecyclerViewDividerItemDecoration(int color, int dividerHeight, int paddingStart, int paddingEnd) {
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(color);
+        this.paddingStart = paddingStart;
+        this.paddingEnd = paddingEnd;
+        this.dividerHeight = dividerHeight;
+    }
+
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
@@ -74,8 +85,8 @@ public class RecyclerViewDividerItemDecoration extends RecyclerView.ItemDecorati
             //坐标点
             int dividerTop = childView.getTop() - dividerHeight;
             int dividerButtom = childView.getTop();
-            int dividerLeft = parent.getPaddingLeft();
-            int dividerRight = parent.getWidth() - parent.getPaddingRight();
+            int dividerLeft = parent.getPaddingLeft() - paddingStart;
+            int dividerRight = parent.getWidth() - parent.getPaddingRight() - paddingEnd;
 
             c.drawRect(dividerLeft, dividerTop, dividerRight, dividerButtom, mPaint);
         }

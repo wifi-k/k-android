@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -23,6 +24,7 @@ import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author Administrator
@@ -31,6 +33,8 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @BindView(R.id.recycler_view)
     RecyclerView rvFamilyList;
+    @BindView(R.id.tv_add_family_member)
+    TextView tvAddFamilyMember;
     private ArrayList<FamilyMemberBean> familyMemberList = new ArrayList<>();
     private FamilyMemberAdapter familyMemberAdapter;
     private TInputDialog tInputDialog;
@@ -85,6 +89,12 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
             }
         });
     }
+
+    @OnClick(R.id.tv_add_family_member)
+    public void onAddFamilyMemberClicked() {
+        // TODO: 2019/3/26 分享添加家庭成员
+    }
+
 
     /**
      * 修改名称弹窗

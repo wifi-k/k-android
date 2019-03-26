@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -297,6 +298,19 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
         bundle.putBoolean(FULL_SCREEN, fullScreen);
         bundle.putBoolean(AUTO_TITLE, autoTitle);
         startActivity(WebsiteActivity.class, bundle);
+    }
+
+    public void startActivityForResult(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
+        if (noDoubleClick()) {
+            Intent intent = new Intent();
+            intent.setClass(mContext, clazz);
+            if (bundle == null) {
+                bundle = new Bundle();
+            }
+            intent.putExtras(bundle);
+            lastClick = System.currentTimeMillis();
+            startActivityForResult(intent, requestCode);
+        }
     }
 
     /**

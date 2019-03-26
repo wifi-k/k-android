@@ -1,7 +1,9 @@
 package net.treebear.kwifimanager.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.home.FamilyMemberActivity;
 import net.treebear.kwifimanager.activity.home.WeekReportActivity;
@@ -18,6 +21,7 @@ import net.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import net.treebear.kwifimanager.activity.home.mobile.AllMobileListActivity;
 import net.treebear.kwifimanager.activity.home.mobile.MobileDetailActivity;
 import net.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
+import net.treebear.kwifimanager.activity.home.myk.SelectXiaoKActivity;
 import net.treebear.kwifimanager.activity.home.parent.ParentControlActivity;
 import net.treebear.kwifimanager.activity.message.MessageListActivity;
 import net.treebear.kwifimanager.activity.toolkit.WifiToolkitActivity;
@@ -28,6 +32,7 @@ import net.treebear.kwifimanager.bean.MobilePhoneBean;
 import net.treebear.kwifimanager.bean.NodeInfoDetail;
 import net.treebear.kwifimanager.bean.NoticeBean;
 import net.treebear.kwifimanager.config.Keys;
+import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
 import net.treebear.kwifimanager.mvp.server.presenter.BindHomePresenter;
 import net.treebear.kwifimanager.test.BeanTest;
@@ -39,6 +44,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link BaseFragment} subclass.
@@ -111,7 +118,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @Override
     protected void initData() {
-        mPresenter.getNodeList();
+
     }
 
     @Override
@@ -125,6 +132,12 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         setChildrenListAdapter();
 //       公告 及 其他
         updateOtherData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.getNodeList();
     }
 
     @Override
@@ -167,23 +180,14 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         rvDeviceList.setLayoutManager(new LinearLayoutManager(mContext));
         mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList);
         rvDeviceList.setAdapter(mobilePhoneAdapter);
-        mobilePhoneAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(Keys.POSITION, position);
-                startActivity(MobileDetailActivity.class, bundle);
-            }
+        mobilePhoneAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(Keys.POSITION, position);
+            startActivity(MobileDetailActivity.class, bundle);
         });
-        mobilePhoneAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                currentModifyPosition = position;
-                switch (view.getId()) {
-                    default:
-                        showModifyNameDialog();
-                }
-            }
+        mobilePhoneAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            currentModifyPosition = position;
+            showModifyNameDialog();
         });
     }
 
@@ -230,14 +234,18 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R.id.tv_ap_name)
     public void onTvApNameClicked() {
-        startActivity(MyDeviceListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Keys.POSITION, 0);
+        startActivityForResult(SelectXiaoKActivity.class, bundle, Values.REQUEST_SELECT_NODE);
     }
 
     @OnClick(R.id.tv_root_name)
     public void onTvRootNameClicked() {
-        Bundle bundle = new Bundle();
-        bundle.putString(Keys.NODE_ID, nodeBean.getNodeId());
-        startActivity(FamilyMemberActivity.class, bundle);
+        if (nodeBean != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString(Keys.NODE_ID, nodeBean.getNodeId());
+            startActivity(FamilyMemberActivity.class, bundle);
+        }
     }
 
     @OnClick(R.id.tv_invite_member)
@@ -282,5 +290,23 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     public void onDestroy() {
         dismiss(modifyNameDialog);
         super.onDestroy();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            switch (requestCode) {
+                case Values.REQUEST_SELECT_NODE:
+                    int position = data.getIntExtra(Keys.POSITION, 0);
+                    String name = data.getStringExtra(Keys.NAME);
+                    String nodeId = data.getStringExtra(Keys.NODE_ID);
+                    tvApName.setText(name);
+                    MyApplication.getAppContext().setSelectNode(nodeId);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

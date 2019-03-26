@@ -76,7 +76,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
                 LoadingProgressDialog.showProgressDialog(this, getString(R.string.try_to_connect_wifi));
                 mPresenter.dynamicIpSet();
                 count = 0;
-                showLoading();
+                showLoading(R.string.option_ing);
                 // TODO: 2019/3/13
 //                startActivity(ModifyWifiInfoActivity.class);
                 break;

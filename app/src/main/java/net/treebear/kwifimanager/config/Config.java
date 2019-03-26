@@ -36,6 +36,7 @@ public final class Config {
         String TAG_LAUNCH_ROOT = "account.launch_root";
         String TAG_FIRST_BIND_WIFI = "wifi.first_bind";
         String TAG_MODIFY_USER_MOBILE = "user.modify_user_mobile";
+        String ALL = "application.all";
     }
 
     /**
@@ -60,6 +61,8 @@ public final class Config {
         int COLOR_D8 = Color.parseColor("#D8D8D8");
         @ColorInt
         int COLOR_F7 = Color.parseColor("#F7F7F7");
+        @ColorInt
+        int COLOR_EF = Color.parseColor("#EFEFEF");
         @ColorInt
         int COLOR_4A5A78 = Color.parseColor("#4A5A78");
         @ColorInt

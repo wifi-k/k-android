@@ -42,6 +42,10 @@ public interface Values {
      */
     int REQUEST_SYSTEM_GALLERY = 0x0012;
     /**
+     * request code 选择小k
+     */
+    int REQUEST_SELECT_NODE = 0x0002;
+    /**
      * 获取控制时间
      */
     int REQUEST_EDIT_TIME = 0x0002;

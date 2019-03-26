@@ -69,7 +69,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     protected void initView() {
-        ActivityStackUtils.pressActivity(Config.Tags.TAG_MODIFY_USER_MOBILE,this);
+        ActivityStackUtils.pressActivity(Config.Tags.TAG_MODIFY_USER_MOBILE, this);
         addFragments(fragments);
         if (MyApplication.getAppContext().hasBoundNode()) {
             statusWhiteFontBlack();
@@ -156,7 +156,7 @@ public class MainActivity extends BaseFragmentActivity {
                         }
 
                         @Override
-                        public void onFailed(BaseResponse response,String resultMsg, int resultCode) {
+                        public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                             isTryingSign = false;
                         }
                     });
@@ -170,7 +170,7 @@ public class MainActivity extends BaseFragmentActivity {
                         }
 
                         @Override
-                        public void onFailed(BaseResponse response,String resultMsg, int resultCode) {
+                        public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                             isTryingSign = false;
                         }
                     });
@@ -179,4 +179,5 @@ public class MainActivity extends BaseFragmentActivity {
             }
         }, 5000);
     }
+
 }

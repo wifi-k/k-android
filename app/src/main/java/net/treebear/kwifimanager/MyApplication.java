@@ -33,6 +33,8 @@ public class MyApplication extends MultiDexApplication {
 
     private boolean needUpdateUserInfo = true;
 
+    private String currentSelectNode;
+
     /**
      * 若不保存用户信息情况下，仅单次记录用户信息
      */
@@ -116,6 +118,14 @@ public class MyApplication extends MultiDexApplication {
 
     public void saveDeviceInfo(WifiDeviceInfo info) {
         this.info = info;
+    }
+
+    public String getCurrentSelectNode() {
+        return currentSelectNode;
+    }
+
+    public void setSelectNode(String node){
+        currentSelectNode = node;
     }
 
     /**

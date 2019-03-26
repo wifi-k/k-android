@@ -218,10 +218,19 @@ public interface HttpService {
      * pageNo	int	分页号,默认1
      * pageSize	int	一页的数据,默认10,最多10
      */
-    @POST("user/node/list")
+//    @POST("user/node/list")
 //    Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody params);
-//    @POST("user/node/listall")
+    @POST("user/node/listall")
     Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody params);
+
+    /**
+     * 用户选定节点 /user/node/select
+     * 这种交互实现不好
+     * 字段	类型	说明
+     * nodeId*	str	选择的节点ID
+     */
+    @POST("user/node/select")
+    Observable<BaseResponse<Object>> selectNode(@Body RequestBody params);
 
     /**
      * 升级节点固件 /user/node/firmware/upgrade

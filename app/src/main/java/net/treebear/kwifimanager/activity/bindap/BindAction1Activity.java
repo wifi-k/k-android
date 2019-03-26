@@ -175,6 +175,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @Override
     public void onLoadFail(BaseResponse response,String resultMsg, int resultCode) {
+        hideLoading();
         switch (resultCode) {
             case Config.ServerResponseCode.NODE_HAS_BOUND:
                 ToastUtils.showShort(R.string.this_node_has_bound);

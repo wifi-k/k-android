@@ -28,6 +28,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.WebsiteActivity;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.IView;
+import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import net.treebear.kwifimanager.widget.dialog.TDialog;
@@ -68,6 +69,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         initImmersionBar();
         statusWhiteFontBlack();
         unbinder = ButterKnife.bind(this);
+        ActivityStackUtils.pressActivity(Config.Tags.ALL, this);
         initParams(getIntent().getExtras());
         mPresenter = getPresenter();
         if (mPresenter != null) {
@@ -153,6 +155,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
     @Override
     protected void onDestroy() {
         hideLoading();
+        ActivityStackUtils.popActivity(Config.Tags.ALL, this);
         if (mPresenter != null) {
             mPresenter.dettachView();
         }
@@ -487,7 +490,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param resultCode 失败返回码
      */
     @Override
-    public void onLoadFail(BaseResponse resultData,String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
         hideLoading();
         ToastUtils.showShort(resultMsg);
     }

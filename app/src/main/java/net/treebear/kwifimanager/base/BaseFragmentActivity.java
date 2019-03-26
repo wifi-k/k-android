@@ -30,6 +30,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.activity.WebsiteActivity;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.IView;
+import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
@@ -82,6 +83,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         initImmersionBar();
         statusWhiteFontBlack();
         unbinder = ButterKnife.bind(this);
+        ActivityStackUtils.pressActivity(Config.Tags.ALL, this);
         fragmentManager = getSupportFragmentManager();
         initParams(getIntent().getExtras());
         mPresenter = getPresenter();
@@ -166,6 +168,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
 
     @Override
     protected void onDestroy() {
+        ActivityStackUtils.popActivity(Config.Tags.ALL, this);
         if (mPresenter != null) {
             mPresenter.dettachView();
         }
@@ -473,7 +476,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * @param resultCode 失败返回码
      */
     @Override
-    public void onLoadFail(BaseResponse response,String resultMsg, int resultCode) {
+    public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         hideLoading();
         ToastUtils.showShort(resultMsg);
     }
@@ -526,19 +529,17 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * @param newFragment 新fragment
      */
     protected void replaceFragment(int position, Fragment newFragment) {
-        if (mFragments.contains(newFragment)) {
-            return;
-        }
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.vp_fragments, newFragment);
         Fragment oldFragment = mFragments.get(position);
         fragmentTransaction.hide(oldFragment);
-        fragmentTransaction.remove(oldFragment);
-        mFragments.set(position, newFragment);
-        if (position == currentFragmentIndex) {
-            fragmentTransaction.show(newFragment);
+        if (!mFragments.contains(newFragment)) {
+            mFragments.add(newFragment);
+            fragmentTransaction.add(getFragmentHolderId(), newFragment);
         }
-        fragmentTransaction.commit();
+        mFragments.set(position, newFragment);
+        mFragments.set(mFragments.size() - 1, oldFragment);
+        fragmentTransaction.show(mFragments.get(currentFragmentIndex));
+        fragmentTransaction.commitNow();
     }
 
     /**
