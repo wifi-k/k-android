@@ -38,7 +38,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="09:30" />
+            android:text="@string/default_start_time" />
 
         <TextView
             android:id="@+id/tv2"
@@ -94,7 +94,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="15:30" />
+            android:text="@string/default_end_time" />
 
         <ImageView
             android:id="@+id/imageView9"

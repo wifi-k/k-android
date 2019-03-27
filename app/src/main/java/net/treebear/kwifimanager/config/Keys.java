@@ -30,6 +30,8 @@ public interface Keys {
     String INVITE_CODE = "inviteCode";
     String USER_NAME = "userName";
     String USER_ID = "userId";
+    String OP = "op";
+    String WIFI = "wifi";
 
     /**
      * ----------------------intent传输key--------------------
@@ -56,5 +58,11 @@ public interface Keys {
     String QI_NIU_TOKEN = "mQiNiuToken";
 
     String IS_MODIFY_PASSWORD = "is_modify_password";
+
+    String FIRST_IN = "first_in_app";
+
+    String START_TIME = "start_time";
+
+    String END_TIME = "end_time";
 
 }

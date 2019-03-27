@@ -1,5 +1,6 @@
 package net.treebear.kwifimanager.activity.home.time;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class ModifyTimeActivity extends BaseActivity {
     private TimeLimitBean timeLimit;
     private TimePickerPop startTimePop;
     private TimePickerPop endTimePop;
+    private int position = -1;
 
     @Override
     public int layoutId() {
@@ -34,15 +36,18 @@ public class ModifyTimeActivity extends BaseActivity {
     public void initParams(Bundle params) {
         if (params != null) {
             timeLimit = (TimeLimitBean) params.getSerializable(Keys.TIME_LIMIT_BEAN);
+            position = params.getInt(Keys.POSITION, -1);
         }
     }
 
     @Override
     protected void initView() {
-        setTitleBack(R.string.edit);
         if (timeLimit != null) {
+            setTitleBack(R.string.edit);
             tvStartTime.setText(timeLimit.getStartTime());
             tvEndTime.setText(timeLimit.getEndTime());
+        } else {
+            setTitleBack(R.string.increase);
         }
     }
 
@@ -62,8 +67,12 @@ public class ModifyTimeActivity extends BaseActivity {
 
     @OnClick(R.id.btn_confirm)
     public void onBtnConfirmClicked() {
-        // TODO: 2019/3/11 设置时间
-
+        Intent intent = new Intent();
+        intent.putExtra(Keys.POSITION, position);
+        intent.putExtra(Keys.START_TIME, tvStartTime.getText().toString());
+        intent.putExtra(Keys.END_TIME, tvEndTime.getText().toString());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void initStartTimePop() {
@@ -114,7 +123,7 @@ public class ModifyTimeActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        dismiss(endTimePop,startTimePop);
+        dismiss(endTimePop, startTimePop);
         super.onDestroy();
     }
 }

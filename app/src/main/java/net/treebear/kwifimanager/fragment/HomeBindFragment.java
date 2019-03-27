@@ -144,6 +144,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     public void onLoadData(NodeInfoDetail resultData) {
         if (resultData.getPage() != null && resultData.getPage().size() > 0) {
             nodeBean = resultData.getPage().get(0);
+            MyApplication.getAppContext().setSelectNode(nodeBean.getNodeId());
             tvApName.setText(nodeBean.getName());
             tvUserState.setText(nodeBean.getStatus() == 1 ? R.string.online : R.string.offline);
         }
@@ -264,7 +265,9 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R.id.tv_healthy_model)
     public void onTvHealthyModelClicked() {
-        startActivity(HealthyModelActivity.class);
+        if (Check.hasContent(MyApplication.getAppContext().getCurrentSelectNode())) {
+            startActivity(HealthyModelActivity.class);
+        }
     }
 
     @OnClick(R.id.tv_look_week_report)

@@ -120,6 +120,7 @@
         android:id="@+id/iv_password_eye"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:padding="8dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/et_sign_in_verify"
@@ -132,9 +133,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_password_eye"
         app:layout_constraintEnd_toStartOf="@+id/iv_password_eye"
-        app:layout_constraintTop_toTopOf="@+id/iv_password_eye"
+        app:layout_constraintTop_toTopOf="@+id/et_sign_in_verify"
         app:srcCompat="@mipmap/ic_edit_close" />
 
 

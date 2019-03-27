@@ -54,13 +54,14 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
 
     @Override
     protected void initView() {
+        setTitleBack(R.string.switch_xiaok);
         mPresenter.getXiaoKList(pageNo);
         adapter = new ChooseXiaoKAdapter(nodeBeans);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new RecyclerViewDividerItemDecoration(Config.Colors.COLOR_EF,
                 1, DensityUtil.dip2px(this, 18), 0));
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+        adapter.setOnItemClickListener((adapter, view, position) -> {
             mCurrentPosition = position;
             showLoading(R.string.change_node_ing);
             mPresenter.selectXiaoK(nodeBeans.get(position).getNodeId());

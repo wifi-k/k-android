@@ -3,6 +3,7 @@ package net.treebear.kwifimanager.http;
 
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.FamilyMemberCover;
+import net.treebear.kwifimanager.bean.HealthyModelBean;
 import net.treebear.kwifimanager.bean.MessageInfoBean;
 import net.treebear.kwifimanager.bean.NodeInfoDetail;
 import net.treebear.kwifimanager.bean.NodeSSIDListBean;
@@ -280,6 +281,26 @@ public interface HttpService {
      */
     @POST("user/node/family/list")
     Observable<BaseResponse<FamilyMemberCover>> getFamilyMembers(@Body RequestBody params);
+
+    /**
+     * 获取信号定时配置 /user/node/wifi/timer/get
+     * 说明
+     * 健康模式, rssi默认值=5
+     * wifi格式 [{“freq”:0-所有,”rssi”:5,”timer”:[{“startTime”:”23:00”,”endTime”:”06:00”},{}]},{}]
+     */
+    @POST("user/node/wifi/timer/get")
+    Observable<BaseResponse<HealthyModelBean>> getHealthyModelInfo(@Body RequestBody params);
+
+    /**
+     * 设置信号定时配置 /user/node/wifi/timer/set
+     * 字段	类型	说明
+     * nodeId*	str
+     * op*	int	“op”:1-开启 or 0-关闭
+     * wifi	str	不传时表示无任何配置，此时op=0
+     * * * * * wifi格式 [{“freq”:0-所有,”rssi”:5,”timer”:[{“startTime”:”23:00”,”endTime”:”06:00”},{}]},{}]
+     */
+    @POST("user/node/wifi/timer/set")
+    Observable<BaseResponse<Object>> setHealthyModelInfo(@Body RequestBody params);
 
     /**
      * 用户微信扫码注册登录 /user/signin/wechat //M1不做

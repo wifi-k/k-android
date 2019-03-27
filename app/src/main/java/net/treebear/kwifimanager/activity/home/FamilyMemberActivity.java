@@ -45,7 +45,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @Override
     public int layoutId() {
-        return R.layout.layout_title_recyclerview;
+        return R.layout.activity_family_member;
     }
 
     @Override

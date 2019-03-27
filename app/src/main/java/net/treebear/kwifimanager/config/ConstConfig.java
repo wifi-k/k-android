@@ -21,6 +21,12 @@ public interface ConstConfig {
     @interface DayCode {
     }
 
+    ArrayList<Integer> HOME_GUIDE_IMAGE_RESID = new ArrayList<Integer>() {{
+        add(0, R.drawable.guide_home_1);
+        add(1, R.drawable.guide_home_2);
+        add(2, R.drawable.guide_home_3);
+    }};
+
     ArrayList<Daybean> DAY_OF_WEEK = new ArrayList<Daybean>() {
         {
             add(new Daybean("一", Calendar.MONDAY));
@@ -33,7 +39,7 @@ public interface ConstConfig {
         }
     };
 
-    ArrayList<Integer> ONLINE_TIME_TYPE = new ArrayList<Integer>(){{
+    ArrayList<Integer> ONLINE_TIME_TYPE = new ArrayList<Integer>() {{
         add(R.string.auto_get_ip_address);
         add(R.string.static_ip_address);
         add(R.string.pppoe);

@@ -1,7 +1,9 @@
 package net.treebear.kwifimanager.activity;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chaychan.library.BottomBarLayout;
@@ -13,6 +15,8 @@ import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.IPresenter;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
 import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.config.ConstConfig;
+import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.fragment.GalleryFragment;
 import net.treebear.kwifimanager.fragment.HomeBindFragment;
 import net.treebear.kwifimanager.fragment.HomeUnbindFragment;
@@ -22,6 +26,7 @@ import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.NetWorkUtils;
+import net.treebear.kwifimanager.util.SharedPreferencesUtil;
 import net.treebear.kwifimanager.util.TLog;
 
 import java.util.ArrayList;
@@ -96,6 +101,24 @@ public class MainActivity extends BaseFragmentActivity {
                     break;
             }
         });
+        checkFirstIn();
+    }
+
+    private void checkFirstIn() {
+        if (!(boolean) SharedPreferencesUtil.getParam(Keys.FIRST_IN, false) && !MyApplication.getAppContext().hasBoundNode()) {
+            ImageView ivGuide = findViewById(R.id.iv_guide);
+            final int[] position = {0};
+            ivGuide.setVisibility(View.VISIBLE);
+            ivGuide.setImageResource(ConstConfig.HOME_GUIDE_IMAGE_RESID.get(position[0]));
+            ivGuide.setOnClickListener(v -> {
+                if ((++position[0]) < ConstConfig.HOME_GUIDE_IMAGE_RESID.size()) {
+                    ivGuide.setImageResource(ConstConfig.HOME_GUIDE_IMAGE_RESID.get(position[0]));
+                } else {
+                    ivGuide.setVisibility(View.GONE);
+                }
+            });
+            SharedPreferencesUtil.getParam(Keys.FIRST_IN, true);
+        }
     }
 
     @Override
