@@ -1,6 +1,7 @@
 package net.treebear.kwifimanager.activity.account;
 
 import android.text.Editable;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
+import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.server.contract.SignUpVerifyContract;
 import net.treebear.kwifimanager.mvp.server.presenter.SignUpVerifyPresenter;
@@ -55,6 +57,8 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
     TextView tvSignNext;
     @BindView(R.id.cb_signup_protocol)
     CheckBox cbSignupProtocol;
+    @BindView(R.id.iv_verify_clear)
+    ImageView ivVerifyClear;
     /**
      * 定时器订阅者
      */
@@ -110,9 +114,8 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
     @Override
     public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         switch (resultCode) {
-            case Config.ServerResponseCode.HAS_SIGN_UP:
-                initSignMessageDialog();
-                signDialog.show();
+            case ApiCode.DB_INSERT_ERROR:
+                showSignMessageDialog();
                 break;
             default:
                 ToastUtils.showShort(resultMsg);
@@ -146,19 +149,19 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
         cbSignupProtocol.setChecked(true);
     }
 
+    @OnClick(R.id.iv_verify_clear)
+    public void onIvVerifyClearClicked() {
+        etSignUpCode.setText("");
+    }
+
     /**
      * 配置EditText文本变化监听
      */
     private void listenTextChange() {
         etSignUpPhone.addTextChangedListener(new BaseTextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
-            }
-
-            @Override
             public void afterTextChanged(Editable s) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) && etSignUpPhone.hasFocus() ? View.VISIBLE : View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
@@ -171,6 +174,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
         etSignUpCode.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                ivVerifyClear.setVisibility(Check.hasContent(s) && etSignUpCode.hasFocus() ? View.VISIBLE : View.GONE);
                 updateConfirmBtnEnable();
             }
         });
@@ -188,26 +192,22 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignUpPhone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etSignUpPhone.setSelection(etSignUpPhone.getText().length());
-                    linePhoneNumber.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePhoneNumber.setBackgroundColor(Config.Colors.LINE);
-                }
+        etSignUpPhone.setOnFocusChangeListener((v, hasFocus) -> {
+            ivEditClear.setVisibility(Check.hasContent(etSignUpPhone) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etSignUpPhone.setSelection(etSignUpPhone.getText().length());
+                linePhoneNumber.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePhoneNumber.setBackgroundColor(Config.Colors.LINE);
             }
         });
-        etSignUpCode.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etSignUpCode.setSelection(etSignUpCode.getText().length());
-                    linePassword.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePassword.setBackgroundColor(Config.Colors.LINE);
-                }
+        etSignUpCode.setOnFocusChangeListener((v, hasFocus) -> {
+            ivVerifyClear.setVisibility(Check.hasContent(etSignUpCode) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etSignUpCode.setSelection(etSignUpCode.getText().length());
+                linePassword.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePassword.setBackgroundColor(Config.Colors.LINE);
             }
         });
     }
@@ -215,7 +215,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
     /**
      * 使用前初始化弹窗
      */
-    private void initSignMessageDialog() {
+    private void showSignMessageDialog() {
         if (signDialog == null) {
             signDialog = new TMessageDialog(this).withoutMid()
                     .title(Config.Text.TIPS)
@@ -224,19 +224,19 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
                     .right(Config.Text.SIGN_IN_NOW)
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
-                        public void onClickLeft(android.view.View view) {
+                        public void onClickLeft(View view) {
                             signDialog.dismiss();
                         }
 
                         @Override
-                        public void onClickRight(android.view.View view) {
+                        public void onClickRight(View view) {
                             startActivity(SignInActivity.class);
-//                            startActivity(SetPasswordActivity.class);
                             signDialog.dismiss();
                             finish();
                         }
                     });
         }
+        signDialog.show();
     }
 
     /**

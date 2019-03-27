@@ -281,4 +281,11 @@ public interface HttpService {
     @POST("user/node/family/list")
     Observable<BaseResponse<FamilyMemberCover>> getFamilyMembers(@Body RequestBody params);
 
+    /**
+     * 用户微信扫码注册登录 /user/signin/wechat //M1不做
+     * 说明 微信扫码注册登录
+     */
+    @POST("user/signin/wechat")
+    Observable<BaseResponse<ServerUserInfo>> wechatSignIn();
+
 }

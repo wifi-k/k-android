@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.NodeInfoDetail;
+import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.FirmwareUpgradeContract;
@@ -75,10 +76,10 @@ public class UpdateDeviceVersionActivity extends BaseActivity<FirmwareUpgradeCon
     @Override
     public void upgradeNodeVersion(int resultCode, String msg) {
         switch (resultCode) {
-            case Config.ServerResponseCode.FIRMWARE_NO_HIGHER_VERSION:
+            case ApiCode.NODE_FIRMWARE_LATEST:
                 ToastUtils.showShort(R.string.no_higher_version);
                 break;
-            case Config.ServerResponseCode.FIRMWARE_UPGRADE_ING:
+            case ApiCode.NODE_FIRMWARE_UPGRADING:
                 ToastUtils.showShort(R.string.update_ing);
                 break;
             default:

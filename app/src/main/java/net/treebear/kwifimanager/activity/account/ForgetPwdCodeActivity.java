@@ -2,6 +2,7 @@ package net.treebear.kwifimanager.activity.account;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
     TextView tvGetCode;
     @BindView(R.id.tv_sign_next)
     TextView tvSignNext;
+    @BindView(R.id.iv_verify_clear)
+    ImageView ivVerifyClear;
     /**
      * 倒计时订阅器
      */
@@ -76,6 +79,11 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
     @OnClick(R.id.iv_edit_clear)
     public void onIvEditClearClicked() {
         etPhone.setText(Config.Text.EMPTY);
+    }
+
+    @OnClick(R.id.iv_verify_clear)
+    public void onViewClicked() {
+        etVerify.setText(Config.Text.EMPTY);
     }
 
     @OnClick(R.id.tv_get_code)
@@ -113,13 +121,8 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
     private void listenTextChange() {
         etPhone.addTextChangedListener(new BaseTextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
-            }
-
-            @Override
             public void afterTextChanged(Editable s) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) && etPhone.hasFocus() ? View.VISIBLE : View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     tvGetCode.setTextColor(Config.Colors.MAIN);
                     updateConfirmBtnEnable();
@@ -131,6 +134,7 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
         etVerify.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                ivVerifyClear.setVisibility(Check.hasContent(s) && etVerify.hasFocus() ? View.VISIBLE : View.GONE);
                 updateConfirmBtnEnable();
             }
         });
@@ -148,26 +152,22 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etPhone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etPhone.setSelection(etPhone.getText().length());
-                    linePhone.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePhone.setBackgroundColor(Config.Colors.LINE);
-                }
+        etPhone.setOnFocusChangeListener((v, hasFocus) -> {
+            ivEditClear.setVisibility(Check.hasContent(etPhone) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etPhone.setSelection(etPhone.getText().length());
+                linePhone.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePhone.setBackgroundColor(Config.Colors.LINE);
             }
         });
-        etVerify.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etVerify.setSelection(etVerify.getText().length());
-                    linePassword.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePassword.setBackgroundColor(Config.Colors.LINE);
-                }
+        etVerify.setOnFocusChangeListener((v, hasFocus) -> {
+            ivVerifyClear.setVisibility(Check.hasContent(etVerify) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etVerify.setSelection(etVerify.getText().length());
+                linePassword.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePassword.setBackgroundColor(Config.Colors.LINE);
             }
         });
     }
@@ -205,4 +205,5 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
         super.onTitleLeftClick();
         ActivityStackUtils.popActivity(Config.Tags.TAG_FORGET_PASSWORD, this);
     }
+
 }

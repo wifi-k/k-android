@@ -5,7 +5,7 @@ import android.util.ArrayMap;
 import net.treebear.kwifimanager.base.BasePresenter;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.NodeInfoDetail;
-import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 import net.treebear.kwifimanager.mvp.server.model.MyNodeModel;
@@ -41,7 +41,7 @@ public class MyNodePresenter extends BasePresenter<MyNodeContract.View, MyNodeCo
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
                 if (mView != null) {
-                    mView.modifyNodeNameResponse(Config.ServerResponseCode.RESPONSE_OK, "修改成功");
+                    mView.modifyNodeNameResponse(ApiCode.SUCC, "修改成功");
                 }
             }
         });
@@ -55,7 +55,7 @@ public class MyNodePresenter extends BasePresenter<MyNodeContract.View, MyNodeCo
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
                 if (mView != null) {
-                    mView.unbindNodeResponse(Config.ServerResponseCode.RESPONSE_OK, "");
+                    mView.unbindNodeResponse(ApiCode.SUCC, "");
                 }
             }
         });

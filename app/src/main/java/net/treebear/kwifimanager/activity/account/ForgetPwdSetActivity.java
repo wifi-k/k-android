@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,9 +45,15 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
     ImageView ivPasswordState;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
+    @BindView(R.id.iv_password1_clear)
+    ImageView ivPassword1Clear;
+    @BindView(R.id.iv_password2_eye)
+    ImageView ivPassword2Eye;
+    @BindView(R.id.iv_password2_clear)
+    ImageView ivPassword2Clear;
     private String mobile;
     private String vcode;
-    private boolean passwordVisible = false;
+    private boolean password1Visible = false;
 
     @Override
     public int layoutId() {
@@ -82,21 +89,38 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
 
     @OnClick(R.id.iv_password_state)
     public void onIvPasswordStateClicked() {
-        passwordVisible = !passwordVisible;
-        if (passwordVisible) {
+        password1Visible = !password1Visible;
+        if (password1Visible) {
             ivPasswordState.setImageResource(R.mipmap.ic_edit_eye_open_gray);
-            //显示明文--设置为可见的密码
             etSignUpPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//          etSignUpPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         } else {
             ivPasswordState.setImageResource(R.mipmap.ic_edit_eye_close_gray);
-//            //显示密码--设置文本
             etSignUpPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//            要一起写才能起作用 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
-//            会改变字间距，故放弃此方法
-//          etSignUpPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
         etSignUpPassword.setSelection(etSignUpPassword.getText().length());
+    }
+
+    @OnClick(R.id.iv_password1_clear)
+    public void onIvPassword1ClearClicked() {
+        etSignUpPassword.setText("");
+    }
+
+    @OnClick(R.id.iv_password2_eye)
+    public void onIvPassword2EyeClicked() {
+        password1Visible = !password1Visible;
+        if (password1Visible) {
+            ivPassword2Eye.setImageResource(R.mipmap.ic_edit_eye_open_gray);
+            etPasswordAgain.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else {
+            ivPassword2Eye.setImageResource(R.mipmap.ic_edit_eye_close_main);
+            etPasswordAgain.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+        etPasswordAgain.setSelection(etPasswordAgain.getText().length());
+    }
+
+    @OnClick(R.id.iv_password2_clear)
+    public void onIvPassword2ClearClicked() {
+        etPasswordAgain.setText("");
     }
 
     @OnClick(R.id.btn_confirm)
@@ -110,8 +134,8 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
     }
 
     @Override
-    public void onLoadFail(BaseResponse data,String resultMsg, int resultCode) {
-        super.onLoadFail(data,resultMsg, resultCode);
+    public void onLoadFail(BaseResponse data, String resultMsg, int resultCode) {
+        super.onLoadFail(data, resultMsg, resultCode);
         ToastUtils.showShort(resultMsg);
     }
 
@@ -123,12 +147,16 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
 
             @Override
             public void afterTextChanged(Editable s) {
+                ivPassword1Clear.setVisibility(Check.hasContent(s) && etSignUpPassword.hasFocus() ? View.VISIBLE : View.GONE);
+                ivPasswordState.setVisibility(Check.hasContent(s) && etSignUpPassword.hasFocus() ? View.VISIBLE : View.GONE);
                 updateConfirmBtnEnable();
             }
         });
         etPasswordAgain.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                ivPassword2Clear.setVisibility(Check.hasContent(s) && etPasswordAgain.hasFocus() ? View.VISIBLE : View.GONE);
+                ivPassword2Eye.setVisibility(Check.hasContent(s) && etPasswordAgain.hasFocus() ? View.VISIBLE : View.GONE);
                 updateConfirmBtnEnable();
             }
         });
@@ -146,26 +174,24 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignUpPassword.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etSignUpPassword.setSelection(etSignUpPassword.getText().length());
-                    linePhone.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePhone.setBackgroundColor(Config.Colors.LINE);
-                }
+        etSignUpPassword.setOnFocusChangeListener((v, hasFocus) -> {
+            ivPassword1Clear.setVisibility(Check.hasContent(etSignUpPassword) && hasFocus ? View.VISIBLE : View.GONE);
+            ivPasswordState.setVisibility(Check.hasContent(etSignUpPassword) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etSignUpPassword.setSelection(etSignUpPassword.getText().length());
+                linePhone.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePhone.setBackgroundColor(Config.Colors.LINE);
             }
         });
-        etPasswordAgain.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etPasswordAgain.setSelection(etPasswordAgain.getText().length());
-                    linePassword.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePassword.setBackgroundColor(Config.Colors.LINE);
-                }
+        etPasswordAgain.setOnFocusChangeListener((v, hasFocus) -> {
+            ivPassword2Clear.setVisibility(Check.hasContent(etPasswordAgain) && hasFocus ? View.VISIBLE : View.GONE);
+            ivPassword2Eye.setVisibility(Check.hasContent(etPasswordAgain) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etPasswordAgain.setSelection(etPasswordAgain.getText().length());
+                linePassword.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePassword.setBackgroundColor(Config.Colors.LINE);
             }
         });
     }
@@ -175,4 +201,5 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
         super.onTitleLeftClick();
         ActivityStackUtils.popActivity(Config.Tags.TAG_FORGET_PASSWORD, this);
     }
+
 }

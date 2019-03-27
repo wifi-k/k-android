@@ -16,6 +16,7 @@ import net.treebear.kwifimanager.activity.bindap.settings.ChooseNetworkStyleActi
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
+import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.config.Values;
@@ -177,7 +178,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     public void onLoadFail(BaseResponse response,String resultMsg, int resultCode) {
         hideLoading();
         switch (resultCode) {
-            case Config.ServerResponseCode.NODE_HAS_BOUND:
+            case ApiCode.INVALID_PARAM:
                 ToastUtils.showShort(R.string.this_node_has_bound);
                 break;
             default:

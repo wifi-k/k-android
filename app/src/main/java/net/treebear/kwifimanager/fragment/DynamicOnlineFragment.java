@@ -9,6 +9,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseFragment;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
+import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 import net.treebear.kwifimanager.mvp.wifi.presenter.DynamicIpPresenter;
@@ -82,7 +83,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
                     }
                 }, 2000);
                 break;
-            case Config.ServerResponseCode.CUSTOM_ERROR:
+            case ApiCode.CUSTOM_ERROR:
                 hideLoading();
                 ToastUtils.showShort(R.string.dynamic_ip_set_fail);
                 break;

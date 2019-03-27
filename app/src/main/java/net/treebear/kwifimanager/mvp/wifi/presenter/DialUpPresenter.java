@@ -5,6 +5,7 @@ import android.util.ArrayMap;
 import net.treebear.kwifimanager.base.BasePresenter;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
+import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
@@ -33,7 +34,7 @@ public class DialUpPresenter extends BasePresenter<DialUpContract.View, DialUpCo
             @Override
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                 if (mView != null) {
-                    mView.onLoadFail(response, resultMsg, Config.ServerResponseCode.CUSTOM_ERROR);
+                    mView.onLoadFail(response, resultMsg, ApiCode.CUSTOM_ERROR);
                 }
             }
         });

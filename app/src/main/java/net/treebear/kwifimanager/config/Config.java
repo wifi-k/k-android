@@ -161,8 +161,6 @@ public final class Config {
         String SIGN_IN_NOW = "立即登录";
         String SIGN_IN = "登录";
         String AP_NAME_START = "xiaok-";
-//        String AP_NAME_START = "Xiaomi";
-
         String XIAO_K_WIFI_PASSOWRD = "123456";
     }
 
@@ -196,47 +194,10 @@ public final class Config {
 
     }
 
-    /**
-     * 响应代码
-     */
-    public interface ServerResponseCode {
-        /**
-         * 请求成功
-         */
-        int RESPONSE_OK = 0;
-
-        int RESPONSE_ERR_1 = 1;
-        /**
-         * TOKEN异常
-         */
-        int TOKEN_ERROR = 2;
-        /**
-         * 自定义使用的error
-         */
-        int CUSTOM_ERROR = 9;
-        /**
-         * 已注册
-         */
-        int HAS_SIGN_UP = 9;
-        /**
-         * 节点被绑定
-         */
-        int NODE_HAS_BOUND = 10;
-        /**
-         * // 26-无可用升级版本 27-正在升级
-         */
-        int FIRMWARE_NO_HIGHER_VERSION = 26;
-        /**
-         * // 26-无可用升级版本 27-正在升级
-         */
-        int FIRMWARE_UPGRADE_ING = 27;
-    }
-
     public interface WifiResponseCode {
         //        0-连接成功 1-连接失败 2-正在连接
         int CONNECT_SUCCESS = 0;
         int CONNECT_FAIL = 1;
-        int CONNECTING = 2;
     }
 
     /**

@@ -3,6 +3,7 @@ package net.treebear.kwifimanager.activity.account;
 import android.text.Editable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,11 +40,18 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
     TextView linePassword;
     @BindView(R.id.line_phone)
     TextView linePhoneNumber;
+    @BindView(R.id.iv_password1_clear)
+    ImageView ivPassword1Clear;
+    @BindView(R.id.iv_password2_eye)
+    ImageView ivPassword2Eye;
+    @BindView(R.id.iv_password2_clear)
+    ImageView ivPassword2Clear;
     /**
      * password 明文/密码状态
      */
-    private boolean passwordVisible = false;
+    private boolean password1Visible = false;
     private boolean isModifyPassword;
+    private boolean password2Visible = false;
 
     @Override
     public int layoutId() {
@@ -71,12 +79,16 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
         etSignUpPassword.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                ivPassword1Clear.setVisibility(etSignUpPassword.hasFocus() && Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivPasswordState.setVisibility(etSignUpPassword.hasFocus() && Check.hasContent(s) ? View.VISIBLE : View.GONE);
                 updateConfirmBtnEnable();
             }
         });
         etPasswordAgain.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                ivPassword2Clear.setVisibility(etPasswordAgain.hasFocus() && Check.hasContent(s) ? View.VISIBLE : View.GONE);
+                ivPassword2Eye.setVisibility(etPasswordAgain.hasFocus() && Check.hasContent(s) ? View.VISIBLE : View.GONE);
                 updateConfirmBtnEnable();
             }
         });
@@ -95,47 +107,61 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignUpPassword.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etSignUpPassword.setSelection(etSignUpPassword.getText().length());
-                    linePhoneNumber.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePhoneNumber.setBackgroundColor(Config.Colors.LINE);
-                }
+        etSignUpPassword.setOnFocusChangeListener((v, hasFocus) -> {
+            ivPassword1Clear.setVisibility(hasFocus && Check.hasContent(etSignUpPassword) ? View.VISIBLE : View.GONE);
+            ivPasswordState.setVisibility(hasFocus && Check.hasContent(etSignUpPassword) ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etSignUpPassword.setSelection(etSignUpPassword.getText().length());
+                linePhoneNumber.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePhoneNumber.setBackgroundColor(Config.Colors.LINE);
             }
         });
-        etPasswordAgain.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etPasswordAgain.setSelection(etPasswordAgain.getText().length());
-                    linePassword.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePassword.setBackgroundColor(Config.Colors.LINE);
-                }
+        etPasswordAgain.setOnFocusChangeListener((v, hasFocus) -> {
+            ivPassword2Clear.setVisibility(hasFocus && Check.hasContent(etPasswordAgain) ? View.VISIBLE : View.GONE);
+            ivPassword2Eye.setVisibility(hasFocus && Check.hasContent(etPasswordAgain) ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etPasswordAgain.setSelection(etPasswordAgain.getText().length());
+                linePassword.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePassword.setBackgroundColor(Config.Colors.LINE);
             }
         });
     }
 
     @OnClick(R.id.iv_password_state)
     public void onIvEditClearClicked() {
-        passwordVisible = !passwordVisible;
-        if (passwordVisible) {
+        password1Visible = !password1Visible;
+        if (password1Visible) {
             ivPasswordState.setImageResource(R.mipmap.ic_edit_eye_open_gray);
-            //显示明文--设置为可见的密码
             etSignUpPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//          etSignUpPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         } else {
-            ivPasswordState.setImageResource(R.mipmap.ic_edit_eye_close_gray);
-//            //显示密码--设置文本
+            ivPasswordState.setImageResource(R.mipmap.ic_edit_eye_close_main);
             etSignUpPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//            要一起写才能起作用 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
-//            会改变字间距，故放弃此方法
-//          etSignUpPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
         etSignUpPassword.setSelection(etSignUpPassword.getText().length());
+    }
+
+    @OnClick(R.id.iv_password1_clear)
+    public void onIvPassword1ClearClicked() {
+        etPasswordAgain.setText("");
+    }
+
+    @OnClick(R.id.iv_password2_eye)
+    public void onIvPassword2EyeClicked() {
+        password2Visible = !password2Visible;
+        if (password2Visible) {
+            ivPassword2Eye.setImageResource(R.mipmap.ic_edit_eye_open_gray);
+            etPasswordAgain.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else {
+            ivPassword2Eye.setImageResource(R.mipmap.ic_edit_eye_close_main);
+            etPasswordAgain.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+        etPasswordAgain.setSelection(etPasswordAgain.getText().length());
+    }
+
+    @OnClick(R.id.iv_password2_clear)
+    public void onIvPassword2ClearClicked() {
     }
 
     @OnClick(R.id.btn_confirm)

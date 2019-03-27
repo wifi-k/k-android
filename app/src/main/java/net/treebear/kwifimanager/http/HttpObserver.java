@@ -1,7 +1,6 @@
 package net.treebear.kwifimanager.http;
 
 import net.treebear.kwifimanager.base.BaseResponse;
-import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.mvp.IModel;
 import net.treebear.kwifimanager.util.TLog;
 
@@ -37,7 +36,7 @@ public class HttpObserver {
             @Override
             public void onNext(BaseResponse<T> response) {
                 // 此处统一处理网络请求状态
-                if (Config.ServerResponseCode.RESPONSE_OK == response.getCode()) {
+                if (ApiCode.SUCC == response.getCode()) {
                     callBack.onSuccess(response);
                 } else {
                     callBack.onFailed(response, response.getMsg(), response.getCode());

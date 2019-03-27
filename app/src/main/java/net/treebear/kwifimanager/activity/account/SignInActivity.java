@@ -2,6 +2,9 @@ package net.treebear.kwifimanager.activity.account;
 
 
 import android.text.Editable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,12 +20,13 @@ import net.treebear.kwifimanager.base.BaseTextWatcher;
 import net.treebear.kwifimanager.bean.SUserCover;
 import net.treebear.kwifimanager.bean.ServerUserInfo;
 import net.treebear.kwifimanager.config.Config;
+import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.mvp.server.contract.PwdSignInContract;
 import net.treebear.kwifimanager.mvp.server.presenter.PwdSignInPresenter;
 import net.treebear.kwifimanager.util.ActivityStackUtils;
 import net.treebear.kwifimanager.util.Check;
-import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.util.UserInfoUtil;
+import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,6 +48,12 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
     TextView tvSignNext;
     @BindView(R.id.iv_edit_clear)
     ImageView ivEditClear;
+    @BindView(R.id.iv_password_eye)
+    ImageView ivPasswordEye;
+    @BindView(R.id.iv_password_clear)
+    ImageView ivPasswordClear;
+    private boolean passwordVisible = false;
+    private TMessageDialog noSignDialog;
 
     @Override
     public int layoutId() {
@@ -72,7 +82,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
 
             @Override
             public void afterTextChanged(Editable s) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) && etSignInPhone.hasFocus() ? View.VISIBLE : View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     updateConfirmBtnEnable();
                 }
@@ -81,6 +91,8 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
         etSignInVerify.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                ivPasswordClear.setVisibility(Check.hasContent(s) && etSignInVerify.hasFocus() ? View.VISIBLE : View.GONE);
+                ivPasswordEye.setVisibility(Check.hasContent(s) && etSignInVerify.hasFocus() ? View.VISIBLE : View.GONE);
                 updateConfirmBtnEnable();
             }
         });
@@ -100,26 +112,23 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignInPhone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etSignInPhone.setSelection(etSignInPhone.getText().length());
-                    linePhone.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePhone.setBackgroundColor(Config.Colors.LINE);
-                }
+        etSignInPhone.setOnFocusChangeListener((v, hasFocus) -> {
+            ivEditClear.setVisibility(Check.hasContent(etSignInPhone) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etSignInPhone.setSelection(etSignInPhone.getText().length());
+                linePhone.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePhone.setBackgroundColor(Config.Colors.LINE);
             }
         });
-        etSignInVerify.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etSignInVerify.setSelection(etSignInVerify.getText().length());
-                    linePassword.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePassword.setBackgroundColor(Config.Colors.LINE);
-                }
+        etSignInVerify.setOnFocusChangeListener((v, hasFocus) -> {
+            ivPasswordClear.setVisibility(Check.hasContent(etSignInVerify) && hasFocus ? View.VISIBLE : View.GONE);
+            ivPasswordEye.setVisibility(Check.hasContent(etSignInVerify) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etSignInVerify.setSelection(etSignInVerify.getText().length());
+                linePassword.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePassword.setBackgroundColor(Config.Colors.LINE);
             }
         });
     }
@@ -146,6 +155,24 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
         etSignInPhone.setText("");
     }
 
+    @OnClick(R.id.iv_password_eye)
+    public void onIvPasswordEyeClicked() {
+        passwordVisible = !passwordVisible;
+        if (passwordVisible) {
+            ivPasswordEye.setImageResource(R.mipmap.ic_edit_eye_open_gray);
+            etSignInVerify.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else {
+            ivPasswordEye.setImageResource(R.mipmap.ic_edit_eye_close_gray);
+            etSignInVerify.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+        etSignInVerify.setSelection(etSignInVerify.getText().length());
+    }
+
+    @OnClick(R.id.iv_password_clear)
+    public void onIvPasswordClearClicked() {
+        etSignInVerify.setText("");
+    }
+
     @Override
     public void onLoadData(ServerUserInfo resultData) {
         MyApplication.getAppContext().savedUser(resultData);
@@ -156,9 +183,39 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
     @Override
     public void onLoadFail(BaseResponse data, String resultMsg, int resultCode) {
         tvSignNext.setEnabled(true);
-        TLog.w(resultMsg);
-        ToastUtils.showShort(resultMsg);
         hideLoading();
+        switch (resultCode) {
+            case ApiCode.DB_NOT_FOUND_RECORD:
+                showNoSignDialog();
+                break;
+            default:
+                ToastUtils.showShort(R.string.info_error_check_input);
+                break;
+        }
+    }
+
+    private void showNoSignDialog() {
+        if (noSignDialog == null) {
+            noSignDialog = new TMessageDialog(this).withoutMid()
+                    .title(R.string.tips)
+                    .content(R.string.mobile_not_sign_up)
+                    .left(R.string.cancel)
+                    .right(R.string.sign_up_now)
+                    .doClick(new TMessageDialog.DoClickListener() {
+                        @Override
+                        public void onClickLeft(View view) {
+                            noSignDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickRight(View view) {
+                            noSignDialog.dismiss();
+                            startActivity(SignUpActivity.class);
+                            finish();
+                        }
+                    });
+        }
+        noSignDialog.show();
     }
 
     @Override

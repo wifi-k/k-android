@@ -9,6 +9,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.WifiDeviceInfo;
+import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Values;
 import net.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
@@ -115,7 +116,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
                 startActivity(ModifyWifiInfoActivity.class);
                 ToastUtils.showShort(R.string.connect_success);
                 break;
-            case Config.ServerResponseCode.CUSTOM_ERROR:
+            case ApiCode.CUSTOM_ERROR:
                 hideLoading();
                 ToastUtils.showShort(R.string.dynamic_ip_set_fail);
                 break;

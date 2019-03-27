@@ -110,12 +110,32 @@
         android:id="@+id/iv_edit_clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        android:src="@mipmap/ic_edit_close"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/et_sign_in_phone"
         app:layout_constraintEnd_toEndOf="@+id/et_sign_in_phone"
-        app:layout_constraintTop_toTopOf="@+id/et_sign_in_phone"
-        android:src="@mipmap/ic_edit_close" />
+        app:layout_constraintTop_toTopOf="@+id/et_sign_in_phone" />
+
+    <ImageView
+        android:id="@+id/iv_password_eye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/et_sign_in_verify"
+        app:layout_constraintTop_toTopOf="@+id/et_sign_in_verify"
+        app:srcCompat="@mipmap/ic_edit_eye_close_main" />
+
+    <ImageView
+        android:id="@+id/iv_password_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_password_eye"
+        app:layout_constraintEnd_toStartOf="@+id/iv_password_eye"
+        app:layout_constraintTop_toTopOf="@+id/iv_password_eye"
+        app:srcCompat="@mipmap/ic_edit_close" />
 
 
 </android.support.constraint.ConstraintLayout>

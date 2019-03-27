@@ -1,6 +1,7 @@
 package net.treebear.kwifimanager.activity.account;
 
 import android.text.Editable;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,8 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
     TextView tvGetCode;
     @BindView(R.id.tv_sign_next)
     TextView tvSignNext;
+    @BindView(R.id.iv_verify_clear)
+    ImageView ivVerifyClear;
     /**
      * 系统下发验证码，用于本地验证
      */
@@ -90,6 +93,11 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
         }
     }
 
+    @OnClick(R.id.iv_verify_clear)
+    public void onViewClicked() {
+        etSignInVerify.setText("");
+    }
+
     @Override
     public void onLoadData(String resultData) {
         mVerifyCode = resultData;
@@ -119,16 +127,11 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
      */
     private void listenTextChange() {
         etSignInPhone.addTextChangedListener(new BaseTextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
-            }
 
             @Override
             public void afterTextChanged(Editable s) {
-                ivEditClear.setVisibility(Check.hasContent(s) ? android.view.View.VISIBLE : android.view.View.GONE);
+                ivEditClear.setVisibility(Check.hasContent(s) && etSignInPhone.hasFocus() ? View.VISIBLE : View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
-                    // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
                     updateConfirmBtnEnable();
                 } else {
@@ -139,6 +142,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
         etSignInVerify.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                ivVerifyClear.setVisibility(Check.hasContent(s) && etSignInVerify.hasFocus() ? View.VISIBLE : View.GONE);
                 updateConfirmBtnEnable();
             }
         });
@@ -156,26 +160,22 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
-        etSignInPhone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etSignInPhone.setSelection(etSignInPhone.getText().length());
-                    linePhone.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePhone.setBackgroundColor(Config.Colors.LINE);
-                }
+        etSignInPhone.setOnFocusChangeListener((v, hasFocus) -> {
+            ivEditClear.setVisibility(Check.hasContent(etSignInPhone) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etSignInPhone.setSelection(etSignInPhone.getText().length());
+                linePhone.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePhone.setBackgroundColor(Config.Colors.LINE);
             }
         });
-        etSignInVerify.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(android.view.View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etSignInVerify.setSelection(etSignInVerify.getText().length());
-                    linePassword.setBackgroundColor(Config.Colors.MAIN);
-                } else {
-                    linePassword.setBackgroundColor(Config.Colors.LINE);
-                }
+        etSignInVerify.setOnFocusChangeListener((v, hasFocus) -> {
+            ivVerifyClear.setVisibility(Check.hasContent(etSignInVerify) && hasFocus ? View.VISIBLE : View.GONE);
+            if (hasFocus) {
+                etSignInVerify.setSelection(etSignInVerify.getText().length());
+                linePassword.setBackgroundColor(Config.Colors.MAIN);
+            } else {
+                linePassword.setBackgroundColor(Config.Colors.LINE);
             }
         });
     }
