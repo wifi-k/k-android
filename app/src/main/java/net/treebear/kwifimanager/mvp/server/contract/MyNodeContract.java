@@ -20,7 +20,7 @@ public interface MyNodeContract {
     }
 
     interface Presenter extends IPresenter<View> {
-        void getNodeList();
+        void getNodeList(int pageNo);
 
         void modifyNodeName(String nodeId, String name);
 

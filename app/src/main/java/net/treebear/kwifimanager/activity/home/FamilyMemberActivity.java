@@ -1,6 +1,7 @@
 package net.treebear.kwifimanager.activity.home;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
+import net.treebear.kwifimanager.MyApplication;
 import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.adapter.FamilyMemberAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
@@ -17,6 +19,7 @@ import net.treebear.kwifimanager.bean.FamilyMemberCover;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.FamilyMemberContract;
 import net.treebear.kwifimanager.mvp.server.presenter.FamilyMemberPresenter;
+import net.treebear.kwifimanager.util.Check;
 import net.treebear.kwifimanager.util.TLog;
 import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
@@ -35,6 +38,8 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
     RecyclerView rvFamilyList;
     @BindView(R.id.tv_add_family_member)
     TextView tvAddFamilyMember;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
     private ArrayList<FamilyMemberBean> familyMemberList = new ArrayList<>();
     private FamilyMemberAdapter familyMemberAdapter;
     private TInputDialog tInputDialog;
@@ -57,6 +62,9 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
     public void initParams(Bundle params) {
         if (params != null) {
             nodeId = params.getString(Keys.NODE_ID, "");
+        }
+        if (!Check.hasContent(nodeId)) {
+            nodeId = MyApplication.getAppContext().getCurrentSelectNode();
         }
     }
 
@@ -86,6 +94,12 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
                     break;
                 default:
                     break;
+            }
+        });
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getFamilyMembers(nodeId);
             }
         });
     }
@@ -148,6 +162,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @Override
     public void onLoadData(FamilyMemberCover resultData) {
+        refreshLayout.setRefreshing(false);
         familyMemberList.clear();
         familyMemberList.addAll(resultData.getPage());
         familyMemberAdapter.notifyDataSetChanged();

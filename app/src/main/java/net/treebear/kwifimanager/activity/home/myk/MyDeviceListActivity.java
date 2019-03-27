@@ -1,8 +1,11 @@
 package net.treebear.kwifimanager.activity.home.myk;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -11,6 +14,7 @@ import net.treebear.kwifimanager.R;
 import net.treebear.kwifimanager.adapter.MyDeviceAdapter;
 import net.treebear.kwifimanager.base.BaseActivity;
 import net.treebear.kwifimanager.bean.NodeInfoDetail;
+import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 import net.treebear.kwifimanager.mvp.server.presenter.MyNodePresenter;
@@ -19,6 +23,7 @@ import net.treebear.kwifimanager.widget.dialog.TInputDialog;
 import net.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -29,11 +34,16 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
 
     @BindView(R.id.recycler_view)
     RecyclerView rvDeviceList;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.tv_empty_view)
+    TextView emptyView;
     private MyDeviceAdapter deviceAdapter;
     private TInputDialog tInputDialog;
     private int currentModifyPosition;
     private TMessageDialog tMessageDialog;
     ArrayList<NodeInfoDetail.NodeBean> nodeList = new ArrayList<>();
+    private int pageNo = 1;
 
     @Override
     public int layoutId() {
@@ -51,7 +61,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
         deviceAdapter = new MyDeviceAdapter(nodeList);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(deviceAdapter);
-        mPresenter.getNodeList();
+        mPresenter.getNodeList(pageNo);
         deviceAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             currentModifyPosition = position;
             switch (view.getId()) {
@@ -70,6 +80,11 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
                     break;
             }
         });
+        refreshLayout.setOnRefreshListener(() -> {
+            pageNo = 1;
+            mPresenter.getNodeList(pageNo);
+        });
+        deviceAdapter.setOnLoadMoreListener(() -> mPresenter.getNodeList(++pageNo), rvDeviceList);
     }
 
     private void showUnbindDeviceDialog() {
@@ -121,9 +136,25 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
 
     @Override
     public void onLoadData(NodeInfoDetail resultData) {
-        if (Check.hasContent(resultData.getPage())) {
+        refreshLayout.setRefreshing(false);
+        if (pageNo == 1) {
             nodeList.clear();
-            nodeList.addAll(resultData.getPage());
+        }
+        List<NodeInfoDetail.NodeBean> page = resultData.getPage();
+        if (Check.hasContent(page)) {
+            if (page.size() < Config.Numbers.PAGE_SIZE) {
+                deviceAdapter.setEnableLoadMore(false);
+                deviceAdapter.loadMoreEnd();
+            } else {
+                deviceAdapter.loadMoreComplete();
+            }
+            nodeList.addAll(page);
+        }
+        if (nodeList.size() == 0) {
+            deviceAdapter.setEnableLoadMore(false);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
         }
         deviceAdapter.notifyDataSetChanged();
     }

@@ -65,6 +65,8 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     TextView tvUserState;
     @BindView(R.id.tv_root_name)
     TextView tvRootName;
+    @BindView(R.id.tv_user_role)
+    TextView tvUserRole;
     @BindView(R.id.tv_invite_member)
     TextView tvInviteMember;
     @BindView(R.id.tv_my_k)
@@ -151,6 +153,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     }
 
     private void updateOtherData() {
+        tvUserRole.setText(MyApplication.getAppContext().getUser().getRole()== 0?getString(R.string.admin):getString(R.string.member));
         marqueeNotice.initMarqueeTextView(BeanTest.getNoticeFromBean(noticeList), (view, position) -> startActivity(MessageListActivity.class));
         tvUserState.setText(R.string.online);
         tvApName.setText("xiaok123-4567");

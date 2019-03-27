@@ -5,6 +5,7 @@ import android.util.ArrayMap;
 import net.treebear.kwifimanager.base.BasePresenter;
 import net.treebear.kwifimanager.base.BaseResponse;
 import net.treebear.kwifimanager.bean.NodeInfoDetail;
+import net.treebear.kwifimanager.config.Config;
 import net.treebear.kwifimanager.http.ApiCode;
 import net.treebear.kwifimanager.config.Keys;
 import net.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
@@ -18,10 +19,10 @@ public class MyNodePresenter extends BasePresenter<MyNodeContract.View, MyNodeCo
     }
 
     @Override
-    public void getNodeList() {
+    public void getNodeList(int pageNo) {
         ArrayMap<String, Object> map = map();
-        map.put(Keys.PAGE_NO, 1);
-        map.put(Keys.PAGE_SIZE, 99);
+        map.put(Keys.PAGE_NO, pageNo);
+        map.put(Keys.PAGE_SIZE, Config.Numbers.PAGE_SIZE);
         mModel.getNodeList(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<NodeInfoDetail>>() {
             @Override
             public void onSuccess(BaseResponse<NodeInfoDetail> resultData) {

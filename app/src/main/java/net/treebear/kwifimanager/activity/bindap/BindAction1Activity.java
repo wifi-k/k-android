@@ -111,7 +111,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     private void change2Bind() {
         if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
-            tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，点击立即绑定设备", NetWorkUtils.getSSIDWhenWifi(this)));
+            tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，点击立即绑定设备", NetWorkUtils.getRealSSIDWhenWifi(this)));
             btnConfirm.setText(R.string.bind_now);
         }
     }
