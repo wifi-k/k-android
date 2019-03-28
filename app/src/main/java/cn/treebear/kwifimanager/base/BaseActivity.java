@@ -23,6 +23,9 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.umeng.message.PushAgent;
+import com.umeng.message.inapp.IUmengInAppMsgCloseCallback;
+import com.umeng.message.inapp.InAppMessageManager;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -32,6 +35,7 @@ import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.IView;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import cn.treebear.kwifimanager.widget.dialog.TDialog;
 import cn.treebear.kwifimanager.widget.pop.TPop;
@@ -68,6 +72,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         initImmersionBar();
         statusWhiteFontBlack();
         unbinder = ButterKnife.bind(this);
+        PushAgent.getInstance(this).onAppStart();
         ActivityStackUtils.pressActivity(Config.Tags.ALL, this);
         initParams(getIntent().getExtras());
         mPresenter = getPresenter();
@@ -76,6 +81,16 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         }
         initView();
         initData();
+        setUmengOption();
+    }
+
+    private void setUmengOption() {
+        InAppMessageManager.getInstance(this).showCardMessage(this, "activity", new IUmengInAppMsgCloseCallback() {
+            @Override
+            public void onClose() {
+                TLog.i("InAppMessageManager . close()");
+            }
+        });
     }
 
     @Override

@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.umeng.message.PushAgent;
 
 import java.util.ArrayList;
 
@@ -82,6 +83,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         initImmersionBar();
         statusWhiteFontBlack();
         unbinder = ButterKnife.bind(this);
+        PushAgent.getInstance(this).onAppStart();
         ActivityStackUtils.pressActivity(Config.Tags.ALL, this);
         fragmentManager = getSupportFragmentManager();
         initParams(getIntent().getExtras());

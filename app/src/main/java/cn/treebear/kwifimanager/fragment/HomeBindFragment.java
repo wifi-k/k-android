@@ -41,6 +41,7 @@ import cn.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.BindHomePresenter;
 import cn.treebear.kwifimanager.test.BeanTest;
 import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.util.UMShareUtils;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.marquee.MarqueeTextView;
 
@@ -253,6 +254,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R.id.tv_invite_member)
     public void onTvInviteMemberClicked() {
+        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.logo, null);
     }
 
     @OnClick(R.id.tv_my_k)

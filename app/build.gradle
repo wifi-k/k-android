@@ -15,12 +15,15 @@ android {
         versionName "V1.0.0"
         multiDexEnabled true
         buildConfigField "String", "APP_NAME", '"小K管家"'
+        buildConfigField "String", "UMENG_APPKEY", '"5c9c305a3fc1958d800010fc"'
+        buildConfigField "String", "UMENG_MESSAGE_SECRET", '"17f28a2b0dac46d22c16065a7163f41f"'
+        buildConfigField "String", "WX_APPKEY", '"WX_APPKEY"'
+        buildConfigField "String", "WX_APP_SECRET", '"WX_APP_SECRET"'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 UMENG_CHANNEL       : "treebear-cloud",
                 UMENG_APPKEY        : "5c9c305a3fc1958d800010fc",
-                UMENG_MESSAGE_SECRET: "32位secret",
-                BAIDU_MAP_APIKEY    : "32位key"
+                UMENG_MESSAGE_SECRET: "17f28a2b0dac46d22c16065a7163f41f",
         ]
 
         ndk {

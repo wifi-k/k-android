@@ -25,6 +25,7 @@ import cn.treebear.kwifimanager.mvp.server.contract.FamilyMemberContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.FamilyMemberPresenter;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.util.UMShareUtils;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
@@ -35,7 +36,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @BindView(R.id.recycler_view)
     RecyclerView rvFamilyList;
-    @BindView(R.id.tv_add_family_member)
+    @BindView(R.id.tv_bottom_button)
     TextView tvAddFamilyMember;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
@@ -49,7 +50,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @Override
     public int layoutId() {
-        return R.layout.activity_family_member;
+        return R.layout.layout_title_recycler_botton;
     }
 
     @Override
@@ -70,6 +71,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
     @Override
     protected void initView() {
         setTitleBack(R.string.family_member);
+        tvAddFamilyMember.setText(R.string._add_family_member);
         mPresenter.getFamilyMembers(nodeId);
         rvFamilyList.setLayoutManager(new LinearLayoutManager(this));
         familyMemberAdapter = new FamilyMemberAdapter(familyMemberList);
@@ -95,17 +97,12 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
                     break;
             }
         });
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.getFamilyMembers(nodeId);
-            }
-        });
+        refreshLayout.setOnRefreshListener(() -> mPresenter.getFamilyMembers(nodeId));
     }
 
-    @OnClick(R.id.tv_add_family_member)
+    @OnClick(R.id.tv_bottom_button)
     public void onAddFamilyMemberClicked() {
-        // TODO: 2019/3/26 分享添加家庭成员
+        UMShareUtils.shareWxLink(this, "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.logo, null);
     }
 
 

@@ -12,11 +12,10 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Utils;
 
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.util.TLog;
 
 /**
  * Custom implementation of the MarkerView.
- *
- * @author Philipp Jahoda
  */
 @SuppressLint("ViewConstructor")
 public class MyMarkerView extends MarkerView {
@@ -40,15 +39,15 @@ public class MyMarkerView extends MarkerView {
 
             tvContent.setText(Utils.formatNumber(ce.getHigh(), 0, true));
         } else {
-
+            TLog.i(Utils.formatNumber(e.getY(), 0, true));
             tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
         }
 
-        super.refreshContent(e, highlight);
+//        super.refreshContent(e, highlight);
     }
 
     @Override
     public MPPointF getOffset() {
-        return new MPPointF(-(getWidth() / 2), -getHeight());
+        return new MPPointF(-24, -getHeight() + 10);
     }
 }

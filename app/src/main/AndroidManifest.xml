@@ -167,6 +167,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name="cn.treebear.kwifimanager.activity.WebsiteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.treebear.kwifimanager.activity.home.myk.SelectXiaoKActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="cn.treebear.kwifimanager.activity.account.launchAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme">
@@ -186,9 +192,6 @@
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
             android:value="${UMENG_MESSAGE_SECRET}" />
-        <meta-data
-            android:name="BAIDU_MAP_APIKEY"
-            android:value="${BAIDU_MAP_APIKEY}" />
 
         <receiver
             android:name="cn.treebear.kwifimanager.receiver.OpenFileReceiver"
@@ -254,8 +257,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="cn.treebear.kwifimanager.activity.WebsiteActivity" />
-        <activity android:name="cn.treebear.kwifimanager.activity.home.myk.SelectXiaoKActivity" />
     </application>
 
 </manifest>

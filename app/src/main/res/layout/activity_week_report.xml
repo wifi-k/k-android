@@ -43,9 +43,18 @@
                 android:background="@drawable/bg_home_join_wrapper8">
 
                 <com.github.mikephil.charting.charts.LineChart
+                    android:padding="4dp"
                     android:id="@+id/chart_week_report"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+                <View
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="26dp"
+                    android:background="@android:color/white"
+                    android:layout_marginBottom="9dp"
+                    android:layout_width="10dp"
+                    android:layout_height="2dp"/>
 
             </FrameLayout>
 

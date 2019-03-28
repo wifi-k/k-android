@@ -40,7 +40,7 @@ public class WeekReportActivity extends BaseActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private String[] values = {"a", "b", "c", "d", "e", "f", "g"};
+    private String[] values = {"3-24", "3-25", "3-26", "3-27", "3-28", "3-29", "3-30"};
     private ArrayList<AppBean> appList = new ArrayList<>();
     private ActiveAppAdapter activeAppAdapter;
 
@@ -97,11 +97,11 @@ public class WeekReportActivity extends BaseActivity {
         x.setDrawAxisLine(false);
         x.setDrawGridLines(false);
         //显示个数
-        x.setLabelCount(7);
+        x.setLabelCount(7, true);
         x.setValueFormatter(formatter);
         x.setAxisLineColor(Color.TRANSPARENT);
+        x.setAvoidFirstLastClipping(false);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
-
         YAxis y = chart.getAxisLeft();
         y.setLabelCount(6, false);
         y.setTextColor(Color.parseColor("#83889B"));
@@ -109,7 +109,7 @@ public class WeekReportActivity extends BaseActivity {
         y.setAxisLineColor(Color.parseColor("#36D2F3"));
         y.setAxisMinimum(0);
         y.setAxisMaximum(24);
-        setData(8, 15);
+        setData(7, 23);
         // draw points over time
         chart.animateX(300);
 
@@ -144,9 +144,11 @@ public class WeekReportActivity extends BaseActivity {
             // create a dataset and give it a type
             set1 = new LineDataSet(values, null);
             set1.setDrawIcons(false);
+            set1.setDrawValues(false);
             set1.setCubicIntensity(0.2f);
             set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-
+            // TODO: 2019/3/28
+            set1.setHighLightColor(Color.TRANSPARENT);
             // black lines and points
             set1.setColor(Color.parseColor("#36D2F3"));
             set1.setCircleColor(Color.parseColor("#36D2F3"));
