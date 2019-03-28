@@ -162,7 +162,7 @@ public class TLog {
     }
 
     @SuppressLint("HardwareIds")
-    private static void phoneInfo(Context context) {
+    public static void phoneInfo(Context context) {
         try {
             ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             int heapSize = manager != null ? manager.getMemoryClass() : 0;

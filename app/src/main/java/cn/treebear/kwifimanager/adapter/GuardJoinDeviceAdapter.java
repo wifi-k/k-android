@@ -9,36 +9,52 @@ import com.suke.widget.SwitchButton;
 import java.util.List;
 
 import cn.treebear.kwifimanager.R;
-import cn.treebear.kwifimanager.bean.MobilePhoneBean;
-import cn.treebear.kwifimanager.config.Config;
-import cn.treebear.kwifimanager.util.DateTimeUtils;
+import cn.treebear.kwifimanager.bean.MobileListBean;
 
 /**
  * @author Administrator
  */
-public class GuardJoinDeviceAdapter extends BaseQuickAdapter<MobilePhoneBean, BaseViewHolder> {
-    public GuardJoinDeviceAdapter(@Nullable List<MobilePhoneBean> data) {
+public class GuardJoinDeviceAdapter extends BaseQuickAdapter<MobileListBean.MobileBean, BaseViewHolder> {
+    private OnCheckedChangeListener mListener;
+
+    public GuardJoinDeviceAdapter(@Nullable List<MobileListBean.MobileBean> data) {
         super(R.layout.layout_item_ban_device, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MobilePhoneBean item) {
+    protected void convert(BaseViewHolder helper, MobileListBean.MobileBean item) {
+        boolean isOnline = item.getStatus() == 1;
         helper.setText(R.id.tv_device_name, item.getName())
-                .setText(R.id.tv_device_time, DateTimeUtils.createTimeInfoByStatusLength(item.isOnline(),
-                        item.isOnline() ? item.getOnlineTime() : item.getOfflineTime()))
-                .setChecked(R.id.sw_guard_device, item.isBanOnline());
-        switch (item.getType()) {
-            case Config.Types.APPLE:
-                helper.setImageResource(R.id.iv_phone_type, R.mipmap.ic_device_apple);
-                break;
-            case Config.Types.ANDROID:
-                helper.setImageResource(R.id.iv_phone_type, R.mipmap.ic_device_android);
-                break;
-            default:
-                helper.setImageResource(R.id.iv_phone_type, R.mipmap.ic_device_pad);
-                break;
+                .setText(R.id.tv_device_time, isOnline ? item.getOnTime() : item.getOffTime())
+                .setChecked(R.id.sw_guard_device, isOnline);
+//        switch (item.getType()) {
+//            case Config.Types.APPLE:
+//                helper.setImageResource(R.id.iv_phone_type, R.mipmap.ic_device_apple);
+//                break;
+//            case Config.Types.ANDROID:
+//                helper.setImageResource(R.id.iv_phone_type, R.mipmap.ic_device_android);
+//                break;
+//            default:
+//                helper.setImageResource(R.id.iv_phone_type, R.mipmap.ic_device_pad);
+//                break;
+//        }
+        if (mListener != null) {
+            SwitchButton sb = helper.getView(R.id.sw_guard_device);
+            sb.setOnCheckedChangeListener((view, isChecked) -> mListener.onCheckedChanged(sb, isChecked, item));
         }
-        SwitchButton sb = helper.getView(R.id.sw_guard_device);
-        sb.setOnCheckedChangeListener((view, isChecked) -> item.setBanOnline(isChecked));
     }
+
+    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+        mListener = listener;
+    }
+
+    public abstract static class OnCheckedChangeListener implements SwitchButton.OnCheckedChangeListener {
+        @Override
+        public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+
+        }
+
+        public abstract void onCheckedChanged(SwitchButton view, boolean isCheck, MobileListBean.MobileBean item);
+    }
+
 }

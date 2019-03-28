@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -67,18 +68,24 @@ public class MyApplication extends MultiDexApplication {
         dealUncaughtException();
         initSDKs();
         registerReceivers();
+        if (BuildConfig.DEBUG){
+            TLog.phoneInfo(this);
+        }
     }
 
     private void initSDKs() {
         Realm.init(this);
         UMConfigure.init(this, BuildConfig.UMENG_APPKEY, PhoneStateUtil.getChannel(this),
                 UMConfigure.DEVICE_TYPE_PHONE, BuildConfig.UMENG_MESSAGE_SECRET);
-        InAppMessageManager.getInstance(this).setInAppMsgDebugMode(BuildConfig.DEBUG);
-        PlatformConfig.setWeixin(BuildConfig.WX_APPKEY, BuildConfig.WX_APP_SECRET);
         initUmeng();
     }
 
     private void initUmeng() {
+        InAppMessageManager.getInstance(this).setInAppMsgDebugMode(BuildConfig.DEBUG);
+        PlatformConfig.setWeixin(BuildConfig.WX_APPKEY, BuildConfig.WX_APP_SECRET);
+        // 选用AUTO页面采集模式
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+
         //获取消息推送代理示例
         PushAgent mPushAgent = PushAgent.getInstance(this);
 //注册推送服务，每次调用register方法都会回调该接口

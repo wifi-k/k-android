@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -78,6 +79,23 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
         return mRootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(this.getClass().getSimpleName());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(this.getClass().getSimpleName());
+    }
+
+    @Override
+    public void onDestroyView() {
+        hideLoading();
+        super.onDestroyView();
+    }
 
     @Override
     public void onDestroy() {
@@ -350,24 +368,8 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
         LoadingProgressDialog.dismissProgressDialog();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
     protected boolean noDoubleClick() {
         return System.currentTimeMillis() - lastClick >= Config.Numbers.CLICK_LIMIT;
-    }
-
-    @Override
-    public void onDestroyView() {
-        hideLoading();
-        super.onDestroyView();
     }
 
     protected void dismiss(@Size(min = 1) TDialog... dialogs) {

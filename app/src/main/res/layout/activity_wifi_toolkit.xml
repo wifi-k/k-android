@@ -144,11 +144,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView34">
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_guard_join_net"-->
-                    <!--style="@style/senior_setting_view"-->
-                    <!--android:drawableTop="@mipmap/ic_toolkit_guard_join_net"-->
-                    <!--android:text="@string/toolkit_guard_join_net" />-->
+                <TextView
+                    android:id="@+id/tv_guard_join_net"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_guard_join_net"
+                    android:text="@string/toolkit_guard_join_net" />
 
                 <!--<TextView-->
                     <!--android:id="@+id/tv_senior_settings"-->

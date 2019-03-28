@@ -581,4 +581,8 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         }
     }
 
+    protected void onEvent(String eventID, String label){
+
+    }
+
 }

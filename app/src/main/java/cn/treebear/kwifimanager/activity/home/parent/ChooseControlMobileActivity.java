@@ -12,9 +12,9 @@ import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.MobilePhoneBean;
 import cn.treebear.kwifimanager.config.Keys;
-import cn.treebear.kwifimanager.test.BeanTest;
 
 /**
  * @author Administrator
@@ -23,7 +23,7 @@ public class ChooseControlMobileActivity extends BaseActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    ArrayList<MobilePhoneBean> mobileList = new ArrayList<>();
+    ArrayList<MobileListBean.MobileBean> mobileList = new ArrayList<>();
     private GuardJoinDeviceAdapter adapter;
 
     @Override
@@ -34,17 +34,17 @@ public class ChooseControlMobileActivity extends BaseActivity {
     @Override
     public void initParams(Bundle params) {
         List<MobilePhoneBean> banMobile = params.getParcelableArrayList(Keys.PARENT_CONTROL_DEVICE);
-        ArrayList<MobilePhoneBean> mobilePhoneList = BeanTest.getMobilePhoneList(10);
-        if (banMobile != null) {
-            for (MobilePhoneBean bean : banMobile) {
-                for (MobilePhoneBean phone : mobilePhoneList) {
-                    if (phone.getName().equals(bean.getName())) {
-                        phone.setBanOnline(true);
-                    }
-                }
-            }
-        }
-        mobileList.addAll(mobilePhoneList);
+//        ArrayList<MobilePhoneBean> mobilePhoneList = BeanTest.getMobilePhoneList(10);
+//        if (banMobile != null) {
+//            for (MobilePhoneBean bean : banMobile) {
+//                for (MobilePhoneBean phone : mobilePhoneList) {
+//                    if (phone.getName().equals(bean.getName())) {
+//                        phone.setBanOnline(true);
+//                    }
+//                }
+//            }
+//        }
+//        mobileList.addAll(mobilePhoneList);
     }
 
     @Override
@@ -65,10 +65,10 @@ public class ChooseControlMobileActivity extends BaseActivity {
         onTitleLeftClick();
     }
 
-    private ArrayList<MobilePhoneBean> convert(List<MobilePhoneBean> data) {
-        ArrayList<MobilePhoneBean> result = new ArrayList<>();
-        for (MobilePhoneBean datum : data) {
-            if (datum.isBanOnline()) {
+    private ArrayList<MobileListBean.MobileBean> convert( List<MobileListBean.MobileBean> data) {
+        ArrayList<MobileListBean.MobileBean> result = new ArrayList<>();
+        for (MobileListBean.MobileBean datum : data) {
+            if (datum.getBlock() == 1) {
                 result.add(datum);
             }
         }

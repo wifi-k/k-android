@@ -5,6 +5,7 @@ import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.FamilyMemberCover;
 import cn.treebear.kwifimanager.bean.HealthyModelBean;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
+import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.bean.NodeWifiListBean;
 import cn.treebear.kwifimanager.bean.QiNiuUserBean;
@@ -307,5 +308,26 @@ public interface HttpService {
      */
     @POST("user/signin/wechat")
     Observable<BaseResponse<ServerUserInfo>> wechatSignIn();
+
+    /**
+     * 获取上网设备 /user/node/device/list
+     * 字段	类型	说明
+     * nodeId*	str
+     * pageNo	int	分页号,默认1
+     * pageSize	int	一页的数据,默认10
+     */
+    @POST("user/node/device/list")
+    Observable<BaseResponse<MobileListBean>> getNodeDeviceList(@Body RequestBody params);
+
+    /**
+     * 修改设备信息 /user/node/device/set
+     * 字段	类型	说明
+     * nodeId*	str
+     * mac*	str
+     * note	str	备注名
+     * block	int	0-allow or 1-block
+     */
+    @POST("user/node/device/set")
+    Observable<BaseResponse<Object>> setNodeDevice(@Body RequestBody params);
 
 }

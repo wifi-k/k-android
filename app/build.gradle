@@ -105,7 +105,7 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.7'
     //    图表
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
-
+    // 七牛
     implementation 'com.qiniu:qiniu-android-sdk:7.3.15'
 
     implementation 'com.github.nanchen2251:CompressHelper:1.0.5'

@@ -93,11 +93,11 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         showPasswordInputDialog();
     }
 
-//    @OnClick(R.id.tv_guard_join_net)
-//    public void onTvGuardJoinNetClicked() {
-//        startActivity(GuardDeviceJoinActivity.class);
-//    }
-//
+    @OnClick(R.id.tv_guard_join_net)
+    public void onTvGuardJoinNetClicked() {
+        startActivity(GuardDeviceJoinActivity.class);
+    }
+
 //    @OnClick(R.id.tv_senior_settings)
 //    public void onTvSeniorSettingsClicked() {
 //        startActivity(SeniorWifiSettingActivity.class);

@@ -32,6 +32,9 @@ public interface Keys {
     String USER_ID = "userId";
     String OP = "op";
     String WIFI = "wifi";
+    String MAC = "mac";
+    String NOTE = "note";
+    String BLOCK = "block";
 
     /**
      * ----------------------intent传输key--------------------
