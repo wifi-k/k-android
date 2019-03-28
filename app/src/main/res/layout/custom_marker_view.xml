@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="40dp"
-    android:background="@drawable/marker2"
+    android:background="@mipmap/ic_maker_point"
     tools:ignore="Overdraw">
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_marginTop="7dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="-4dp"
         android:text=""
         android:textSize="12sp"
         android:textColor="@android:color/white"

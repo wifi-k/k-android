@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="net.treebear.kwifimanager">
+    package="cn.treebear.kwifimanager">
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 联网权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 存储权限 -->
@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name=".MyApplication"
+        android:name="cn.treebear.kwifimanager.MyApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -31,143 +31,143 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity
-            android:name=".activity.me.MyChildrenListActivity"
+            android:name="cn.treebear.kwifimanager.activity.me.MyChildrenListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.WeekReportActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.WeekReportActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.NewEditTimeActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.NewEditTimeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.LimitTimeControlActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.LimitTimeControlActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.TimeControlPlanActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.TimeControlPlanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.ChooseControlMobileActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.ChooseControlMobileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.ChooseBanAppActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.ChooseBanAppActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.BanAppPlanActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.BanAppPlanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.me.ModifyMobileActivity"
+            android:name="cn.treebear.kwifimanager.activity.me.ModifyMobileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.me.ModifyNickNameActivity"
+            android:name="cn.treebear.kwifimanager.activity.me.ModifyNickNameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.me.UserInfoActivity"
+            android:name="cn.treebear.kwifimanager.activity.me.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.me.UpdateAppActivity"
+            android:name="cn.treebear.kwifimanager.activity.me.UpdateAppActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.me.SettingsActivity"
+            android:name="cn.treebear.kwifimanager.activity.me.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.mobile.MobileInfoActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.mobile.MobileInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.mobile.MobileDetailActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.mobile.MobileDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.mobile.AllMobileListActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.mobile.AllMobileListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.toolkit.SeniorSettingItemActivity"
+            android:name="cn.treebear.kwifimanager.activity.toolkit.SeniorSettingItemActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.toolkit.DHCPServerActivity"
+            android:name="cn.treebear.kwifimanager.activity.toolkit.DHCPServerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.toolkit.LanSettingActivity"
+            android:name="cn.treebear.kwifimanager.activity.toolkit.LanSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.toolkit.OnlineSettingActivity"
+            android:name="cn.treebear.kwifimanager.activity.toolkit.OnlineSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.toolkit.SeniorWifiSettingActivity"
+            android:name="cn.treebear.kwifimanager.activity.toolkit.SeniorWifiSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.toolkit.GuardDeviceJoinActivity"
+            android:name="cn.treebear.kwifimanager.activity.toolkit.GuardDeviceJoinActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.toolkit.WifiToolkitActivity"
+            android:name="cn.treebear.kwifimanager.activity.toolkit.WifiToolkitActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.myk.UpdateDeviceVersionActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.myk.UpdateDeviceVersionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.myk.MyDeviceListActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.time.ModifyTimeActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.time.ModifyTimeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.healthy.HealthyModelActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.TimeControlListActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.TimeControlListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.BanAppListActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.BanAppListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.parent.ParentControlActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.parent.ParentControlActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.message.MessageListActivity"
+            android:name="cn.treebear.kwifimanager.activity.message.MessageListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.FamilyMemberActivity"
+            android:name="cn.treebear.kwifimanager.activity.home.FamilyMemberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.bindap.settings.ModifyWifiInfoActivity"
+            android:name="cn.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.bindap.settings.StaticIpOnlineActivity"
+            android:name="cn.treebear.kwifimanager.activity.bindap.settings.StaticIpOnlineActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.bindap.settings.DialUpOnlineActivity"
+            android:name="cn.treebear.kwifimanager.activity.bindap.settings.DialUpOnlineActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.bindap.settings.ChooseNetworkStyleActivity"
+            android:name="cn.treebear.kwifimanager.activity.bindap.settings.ChooseNetworkStyleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.bindap.BindAction1Activity"
+            android:name="cn.treebear.kwifimanager.activity.bindap.BindAction1Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.account.ForgetPwdSetActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.ForgetPwdSetActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.account.ForgetPwdCodeActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.ForgetPwdCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.account.VerifySignInActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.VerifySignInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.account.GetVerifyActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.GetVerifyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.account.SetPasswordActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.SetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.account.SignUpActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.account.SignInActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.SignInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name="cn.treebear.kwifimanager.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.account.launchAccountActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.launchAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme">
             <intent-filter>
@@ -191,7 +191,7 @@
             android:value="${BAIDU_MAP_APIKEY}" />
 
         <receiver
-            android:name=".receiver.OpenFileReceiver"
+            android:name="cn.treebear.kwifimanager.receiver.OpenFileReceiver"
             android:permission="android.permission.READ_EXTERNAL_STORAGE">
             <intent-filter>
                 <action android:name="${applicationId}.open_file" />
@@ -199,7 +199,7 @@
         </receiver>
 
         <provider
-            android:name=".util.MyFileProvider"
+            android:name="cn.treebear.kwifimanager.util.MyFileProvider"
             android:authorities="${applicationId}.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -208,7 +208,7 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
-        <service android:name=".service.ODownloadService" />
+        <service android:name="cn.treebear.kwifimanager.service.ODownloadService" />
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -228,7 +228,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="cn.treebear.kwifimanager.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -254,8 +254,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WebsiteActivity" />
-        <activity android:name=".activity.home.myk.SelectXiaoKActivity" />
+        <activity android:name="cn.treebear.kwifimanager.activity.WebsiteActivity" />
+        <activity android:name="cn.treebear.kwifimanager.activity.home.myk.SelectXiaoKActivity" />
     </application>
 
 </manifest>

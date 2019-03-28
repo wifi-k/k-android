@@ -8,7 +8,7 @@ realm {
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "net.treebear.kwifimanager"
+        applicationId "cn.treebear.kwifimanager"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -17,8 +17,8 @@ android {
         buildConfigField "String", "APP_NAME", '"小K管家"'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
-                UMENG_CHANNEL       : "xxxx",
-                UMENG_APPKEY        : "24位key",
+                UMENG_CHANNEL       : "treebear-cloud",
+                UMENG_APPKEY        : "5c9c305a3fc1958d800010fc",
                 UMENG_MESSAGE_SECRET: "32位secret",
                 BAIDU_MAP_APIKEY    : "32位key"
         ]

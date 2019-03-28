@@ -52,7 +52,7 @@
                     app:layout_constraintTop_toTopOf="@+id/marquee_notice"
                     tools:layout_editor_absoluteX="28dp" />
 
-                <net.treebear.kwifimanager.widget.marquee.MarqueeTextView
+                <cn.treebear.kwifimanager.widget.marquee.MarqueeTextView
                     android:id="@+id/marquee_notice"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
@@ -61,7 +61,7 @@
                     app:layout_constraintStart_toEndOf="@+id/imageView4"
                     tools:layout_editor_absoluteY="255dp">
 
-                </net.treebear.kwifimanager.widget.marquee.MarqueeTextView>
+                </cn.treebear.kwifimanager.widget.marquee.MarqueeTextView>
             </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
