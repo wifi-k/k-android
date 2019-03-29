@@ -9,12 +9,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
-import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
@@ -219,7 +217,7 @@ public class WebsiteActivity extends BaseActivity {
         wvWebsite.loadUrl(javaScript);
     }
 
-    private class MyWebViewClient extends WebViewClient {
+    private static class MyWebViewClient extends WebViewClient {
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
@@ -274,19 +272,6 @@ public class WebsiteActivity extends BaseActivity {
         @Override
         public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
             return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
-        }
-    }
-
-    @Keep
-    private class JavaScriptInterface {
-        @Keep
-        @JavascriptInterface
-        public void toApp(Object object) {
-            Log.i(TAG, String.valueOf(object));
-        }
-
-        public String fromApp() {
-            return TAG;
         }
     }
 

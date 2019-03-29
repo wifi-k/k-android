@@ -27,7 +27,7 @@ import cn.treebear.kwifimanager.util.UserInfoUtil;
  * 可加入渐显动画
  * Let life be beautiful like summer flowers and death like autumn leaves.
  */
-public class launchAccountActivity extends BaseActivity {
+public class LaunchAccountActivity extends BaseActivity {
 
     @BindView(R.id.btn_signup)
     TextView btnSignup;
@@ -39,6 +39,10 @@ public class launchAccountActivity extends BaseActivity {
         return R.layout.activity_launch_account;
     }
 
+    @Override
+    protected boolean inAll() {
+        return false;
+    }
 
     @Override
     protected void initView() {
@@ -64,7 +68,6 @@ public class launchAccountActivity extends BaseActivity {
                     user = resultData.getData().getUser();
                     user.setNodeSize(resultData.getData().getNodeSize());
                     user.setToken(token);
-                    UserInfoUtil.updateUserInfo(user);
                     MyApplication.getAppContext().savedUser(user);
                     startActivity(MainActivity.class);
                     finish();

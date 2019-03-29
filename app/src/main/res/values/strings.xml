@@ -248,6 +248,8 @@
     <string name="add_new_ban_app">+ 新增禁用APP</string>
     <string name="add_new_limit_time">+ 新增时间段</string>
     <string name="increase">新增</string>
+    <string name="append">添加</string>
+    <string name="append_xiaok">添加小K</string>
     <string name="modify">修改</string>
     <string name="choose_ban_app_and_device">先选择禁用的APP，然后选择控制的设备，则该设备上的禁用APP将无法访问网络</string>
     <string name="choose_ban_time_and_device">先选择控制的时间，然后选择控制的设备，则该 设备只有在允许上网的时间才能访问网络</string>
@@ -325,5 +327,10 @@
     <string name="no_data">暂无数据</string>
     <string name="has_set_password">已设置密码</string>
     <string name="xiaok_xxxx">xiaok-****</string>
+    <string name="you_has_bound_this_try_other">您已绑定过该设备，请连接新设备后绑定</string>
+    <string name="goto_connect">前往连接</string>
+    <string name="join_new_family">加入新家庭</string>
+    <string name="join_family_success">加入家庭成功</string>
+    <string name="online_device_get_failed">联网设备获取失败</string>
 
 </resources>

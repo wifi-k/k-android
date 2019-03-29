@@ -37,6 +37,7 @@ public final class Config {
         String TAG_FIRST_BIND_WIFI = "wifi.first_bind";
         String TAG_MODIFY_USER_MOBILE = "user.modify_user_mobile";
         String ALL = "application.all";
+        String ME_SETTING = "application.me_setting";
     }
 
     /**
@@ -95,6 +96,9 @@ public final class Config {
          * 单页数据量
          */
         int PAGE_SIZE = 10;
+        int HOME_NOTICE_PAGE_SIZE = 3;
+
+        int HOME_MOBILE_PAGE_SIZE = 3;
         /**
          * 开屏页保持时间
          */

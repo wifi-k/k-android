@@ -26,6 +26,9 @@ public interface ConstConfig {
         add(1, R.drawable.guide_home_2);
         add(2, R.drawable.guide_home_3);
     }};
+    ArrayList<String> EMPTY_NOTICE = new ArrayList<String>() {{
+        add("暂无消息");
+    }};
 
     ArrayList<Daybean> DAY_OF_WEEK = new ArrayList<Daybean>() {
         {

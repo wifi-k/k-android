@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,15 +34,19 @@ import cn.treebear.kwifimanager.activity.toolkit.WifiToolkitActivity;
 import cn.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import cn.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import cn.treebear.kwifimanager.base.BaseFragment;
+import cn.treebear.kwifimanager.base.BaseResponse;
+import cn.treebear.kwifimanager.bean.MessageInfoBean;
+import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.MobilePhoneBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
-import cn.treebear.kwifimanager.bean.NoticeBean;
+import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.BindHomePresenter;
 import cn.treebear.kwifimanager.test.BeanTest;
 import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.util.UMShareUtils;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.marquee.MarqueeTextView;
@@ -53,7 +59,6 @@ import static android.app.Activity.RESULT_OK;
  * @author Administrator
  */
 public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, NodeInfoDetail> implements BindHomeContract.View {
-
 
     @BindView(R.id.tv_title_text)
     TextView tvTitleText;
@@ -95,14 +100,14 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     TextView tvLookMore;
     @BindView(R.id.rv_children_device)
     RecyclerView rvChildrenDevice;
-    private ArrayList<MobilePhoneBean> mobilePhoneList = new ArrayList<>();
+    private ArrayList<MobileListBean.MobileBean> mobilePhoneList = new ArrayList<>();
     private MobilePhoneAdapter mobilePhoneAdapter;
-
     private ArrayList<MobilePhoneBean> childrenPhoneList = new ArrayList<>();
-    private ArrayList<NoticeBean> noticeList = new ArrayList<>();
+
     private int currentModifyPosition;
     private TInputDialog modifyNameDialog;
     private NodeInfoDetail.NodeBean nodeBean;
+    private ArrayList<MessageInfoBean.PageBean> messageList = new ArrayList<>();
 
     public HomeBindFragment() {
 
@@ -126,40 +131,53 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     @Override
     protected void initView() {
         setTitle(R.string.app_name);
-//        设备列表模拟数据
-        testData();
 //      设备列表适配器配置
         setMobileListAdapter();
+        testData();
 //      儿童设备
         setChildrenListAdapter();
 //       公告 及 其他
         updateOtherData();
+        TLog.i(MyApplication.getAppContext().getUser());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.getNodeList();
+        if (MyApplication.getAppContext().isNeedUpdateNodeInfo()) {
+            mPresenter.getNodeList();
+        }
+        mPresenter.getMessageList(1);
     }
 
     @Override
     public void onLoadData(NodeInfoDetail resultData) {
         if (resultData.getPage() != null && resultData.getPage().size() > 0) {
-            nodeBean = resultData.getPage().get(0);
+            nodeBean = searchSelectNode(resultData.getPage());
+            if (nodeBean == null) {
+                return;
+            }
             MyApplication.getAppContext().setSelectNode(nodeBean.getNodeId());
             tvApName.setText(nodeBean.getName());
             tvUserState.setText(nodeBean.getStatus() == 1 ? R.string.online : R.string.offline);
+            mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
         }
     }
 
     private void updateOtherData() {
         tvUserRole.setText(MyApplication.getAppContext().getUser().getRole() == 0 ? getString(R.string.admin) : getString(R.string.member));
-        marqueeNotice.initMarqueeTextView(BeanTest.getNoticeFromBean(noticeList), (view, position) -> startActivity(MessageListActivity.class));
+        tvRootName.setText(MyApplication.getAppContext().getUser().getName());
         tvUserState.setText(R.string.online);
         tvApName.setText("xiaok123-4567");
         tvHasNoBackup.setText("您有10张新的照片未备份，是否现在备份?");
-        tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速1000k/下行网速2.4M”", Check.onlineSum(mobilePhoneList)));
-        tvLookMore.setVisibility(mobilePhoneList.size() >= 3 ? View.VISIBLE : View.GONE);
+    }
+
+    private List<String> convertMessage(ArrayList<MessageInfoBean.PageBean> messageList) {
+        ArrayList<String> result = new ArrayList<>();
+        for (MessageInfoBean.PageBean bean : messageList) {
+            result.add(bean.getContent());
+        }
+        return result;
     }
 
     private void setChildrenListAdapter() {
@@ -196,12 +214,8 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     }
 
     private void testData() {
-        mobilePhoneList.clear();
-        mobilePhoneList.addAll(BeanTest.getHomeMobileList());
         childrenPhoneList.clear();
         childrenPhoneList.addAll(BeanTest.getChildrenPhoneList(1));
-        noticeList.clear();
-        noticeList.addAll(BeanTest.getNoticeList());
     }
 
     private void showModifyNameDialog() {
@@ -217,10 +231,10 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
                 @Override
                 public void onRightClick(String s) {
-                    // TODO: 2019/3/13 修改信息
-                    modifyNameDialog.dismiss();
-                    mobilePhoneList.get(currentModifyPosition).setName(s);
-                    mobilePhoneAdapter.notifyDataSetChanged();
+                    MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
+                    mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode()
+                            , bean.getMac(), s, bean.getBlock());
+                    bean.setName(s);
                 }
             });
         }
@@ -315,5 +329,58 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
                     break;
             }
         }
+    }
+
+    @Override
+    public void onMessageListResponse(MessageInfoBean data) {
+        messageList.clear();
+        messageList.addAll(data.getPage());
+        if (messageList.size() > 0) {
+            marqueeNotice.initMarqueeTextView(convertMessage(messageList), (view, position) -> startActivity(MessageListActivity.class));
+        } else {
+            marqueeNotice.initMarqueeTextView(ConstConfig.EMPTY_NOTICE, (view, position) -> {
+            });
+        }
+    }
+
+    @Override
+    public void onMessageListError(BaseResponse error) {
+        marqueeNotice.initMarqueeTextView(ConstConfig.EMPTY_NOTICE, (view, position) -> {
+        });
+    }
+
+    @Override
+    public void onMobileListResponse(MobileListBean data) {
+        mobilePhoneList.clear();
+        mobilePhoneList.addAll(data.getPage());
+        mobilePhoneAdapter.notifyDataSetChanged();
+        tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%s/下行网速%s”", 2, nodeBean.getUpstream(), nodeBean.getDownstream()));
+        tvLookMore.setVisibility(mobilePhoneList.size() >= 3 ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onModifyMobileInfoResponse(BaseResponse response) {
+        if (response != null && response.getCode() == 0) {
+            modifyNameDialog.dismiss();
+            mobilePhoneAdapter.notifyDataSetChanged();
+            ToastUtils.showShort(R.string.modify_success);
+        } else {
+            ToastUtils.showShort(R.string.modify_failed);
+        }
+    }
+
+    @Override
+    public void onMobileListError(BaseResponse error) {
+        ToastUtils.showShort(R.string.online_device_get_failed);
+    }
+
+    private NodeInfoDetail.NodeBean searchSelectNode(List<NodeInfoDetail.NodeBean> page) {
+        for (NodeInfoDetail.NodeBean bean : page) {
+            if (bean.getIsSelect() == 1) {
+                MyApplication.getAppContext().setCurrentNode(bean);
+                return bean;
+            }
+        }
+        return null;
     }
 }

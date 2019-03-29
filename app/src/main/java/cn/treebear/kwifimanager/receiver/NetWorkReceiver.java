@@ -34,7 +34,6 @@ public class NetWorkReceiver extends BroadcastReceiver {
             if (isWifi && !hasOnWifi) {
                 hasOnWifi = true;
                 if (NetWorkUtils.isSameLikeXiaoK(context)) {
-                    ToastUtils.showShort(R.string.has_xiaok_connected);
                     WiFiHttpClient.xiaokOnline();
                 } else {
                     ToastUtils.showShort(R.string.has_wifi_connected);

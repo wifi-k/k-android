@@ -69,5 +69,13 @@ public interface Values {
      * 频率 -- 5G
      */
     int FREQ_5_G = 2;
+    /**
+     * 第一次绑定设备
+     */
+    int TYPE_FIRST_INCREASE_NODE = 0;
+    /**
+     * 我的小K绑定设备
+     */
+    int TYPE_APPEND_NODE = 1;
 
 }

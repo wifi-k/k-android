@@ -15,7 +15,8 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.inapp.InAppMessageManager;
 import com.umeng.socialize.PlatformConfig;
 
-import cn.treebear.kwifimanager.activity.account.launchAccountActivity;
+import cn.treebear.kwifimanager.activity.account.LaunchAccountActivity;
+import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.http.HttpClient;
@@ -23,6 +24,7 @@ import cn.treebear.kwifimanager.receiver.NetWorkReceiver;
 import cn.treebear.kwifimanager.receiver.OpenFileReceiver;
 import cn.treebear.kwifimanager.util.PhoneStateUtil;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.util.UserInfoUtil;
 import io.realm.Realm;
 
 /**
@@ -39,9 +41,11 @@ public class MyApplication extends MultiDexApplication {
     }
 
     private boolean needUpdateUserInfo = true;
+    private boolean needUpdateNodeInfo = true;
 
     private String currentSelectNode;
 
+    private NodeInfoDetail.NodeBean currentNode;
     /**
      * 若不保存用户信息情况下，仅单次记录用户信息
      */
@@ -68,7 +72,7 @@ public class MyApplication extends MultiDexApplication {
         dealUncaughtException();
         initSDKs();
         registerReceivers();
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             TLog.phoneInfo(this);
         }
     }
@@ -87,8 +91,8 @@ public class MyApplication extends MultiDexApplication {
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
 
         //获取消息推送代理示例
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-//注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent = PushAgent.getInstance(this);
+        //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {
             @Override
             public void onSuccess(String deviceToken) {
@@ -107,7 +111,7 @@ public class MyApplication extends MultiDexApplication {
         registerReceiver(new OpenFileReceiver(), new IntentFilter(BuildConfig.APPLICATION_ID + ".open_file"));
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-//        intentFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
+        //        intentFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
         NetWorkReceiver mNetWorkReceiver = new NetWorkReceiver();
         registerReceiver(mNetWorkReceiver, intentFilter);
     }
@@ -119,7 +123,7 @@ public class MyApplication extends MultiDexApplication {
             if (BuildConfig.DEBUG) {
                 TLog.e(e);
             } else {
-                Intent intent = new Intent(mContext, launchAccountActivity.class);
+                Intent intent = new Intent(mContext, LaunchAccountActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
                 android.os.Process.killProcess(android.os.Process.myPid());
@@ -130,6 +134,7 @@ public class MyApplication extends MultiDexApplication {
     public void savedUser(ServerUserInfo user) {
         this.user = user;
         HttpClient.updataApiToken(user.getToken());
+        UserInfoUtil.updateUserInfo(user);
     }
 
     public ServerUserInfo getUser() {
@@ -175,5 +180,21 @@ public class MyApplication extends MultiDexApplication {
      */
     public boolean hasBoundNode() {
         return getUser().getNodeSize() > 0;
+    }
+
+    public NodeInfoDetail.NodeBean getCurrentNode() {
+        return currentNode;
+    }
+
+    public void setCurrentNode(NodeInfoDetail.NodeBean currentNode) {
+        this.currentNode = currentNode;
+    }
+
+    public boolean isNeedUpdateNodeInfo() {
+        return needUpdateNodeInfo;
+    }
+
+    public void setNeedUpdateNodeInfo(boolean needUpdateNodeInfo) {
+        this.needUpdateNodeInfo = needUpdateNodeInfo;
     }
 }

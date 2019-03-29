@@ -173,7 +173,7 @@
             android:name="cn.treebear.kwifimanager.activity.home.myk.SelectXiaoKActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="cn.treebear.kwifimanager.activity.account.launchAccountActivity"
+            android:name="cn.treebear.kwifimanager.activity.account.LaunchAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme">
             <intent-filter>

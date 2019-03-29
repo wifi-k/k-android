@@ -26,6 +26,5 @@ public class UnbindHomePresenter extends BasePresenter<UnbindHomeContract.View, 
                 }
             }
         });
-
     }
 }

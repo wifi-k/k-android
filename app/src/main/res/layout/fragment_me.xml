@@ -9,7 +9,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
-        android:layout_height="170dp"
+        android:layout_height="190dp"
         android:background="@drawable/bg_me_2e"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,18 +19,18 @@
             android:id="@+id/iv_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="52dp"
             android:layout_marginEnd="24dp"
+            android:src="@mipmap/ic_setting_white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@mipmap/ic_setting_white" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,4 +99,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_my_k" />
+
+    <TextView
+        android:id="@+id/tv_into_new_family"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@mipmap/ic_me_mykid"
+        android:drawableEnd="@mipmap/ic_line_arrow_right_black"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:paddingStart="23dp"
+        android:paddingEnd="23dp"
+        android:text="@string/join_new_family"
+        android:textColor="#6C6C6C"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_my_kid" />
 </android.support.constraint.ConstraintLayout>

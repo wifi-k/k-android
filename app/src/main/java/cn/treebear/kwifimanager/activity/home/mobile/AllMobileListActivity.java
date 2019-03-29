@@ -4,20 +4,27 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
-import cn.treebear.kwifimanager.bean.MobilePhoneBean;
-import cn.treebear.kwifimanager.test.BeanTest;
+import cn.treebear.kwifimanager.base.BaseResponse;
+import cn.treebear.kwifimanager.bean.MobileListBean;
+import cn.treebear.kwifimanager.bean.NodeInfoDetail;
+import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
+import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 /**
  * @author Administrator
  */
-public class AllMobileListActivity extends BaseActivity {
+public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Presenter, MobileListBean> implements AllMobileListContract.View {
 
     @BindView(R.id.tv_online_device_count)
     TextView tvOnlineDeviceCount;
@@ -27,10 +34,12 @@ public class AllMobileListActivity extends BaseActivity {
     TextView tvDownloadSpeed;
     @BindView(R.id.rv_device_list)
     RecyclerView rvDeviceList;
-    private ArrayList<MobilePhoneBean> mobilePhoneList = new ArrayList<>();
+    private ArrayList<MobileListBean.MobileBean> mobilePhoneList = new ArrayList<>();
     private MobilePhoneAdapter mobilePhoneAdapter;
     private int currentModifyPosition;
     private TInputDialog modifyNameDialog;
+    private int pageNo = 1;
+    private NodeInfoDetail.NodeBean currentNode;
 
     @Override
     public int layoutId() {
@@ -38,12 +47,18 @@ public class AllMobileListActivity extends BaseActivity {
     }
 
     @Override
+    public AllMobileListContract.Presenter getPresenter() {
+        return new AllMobileListPresenter();
+    }
+
+    @Override
     protected void initView() {
         setTitleBack(R.string.conn_device);
-        tvOnlineDeviceCount.setText("20");
-        tvDownloadSpeed.setText("3.4");
-        tvUploadSpeed.setText("1000");
-        mobilePhoneList.addAll(BeanTest.getMobilePhoneList(6));
+        currentNode = MyApplication.getAppContext().getCurrentNode();
+        tvOnlineDeviceCount.setText(String.valueOf(currentNode.getDisk()));
+        tvDownloadSpeed.setText(String.valueOf(currentNode.getDownstream()));
+        tvUploadSpeed.setText(String.valueOf(currentNode.getUpstream()));
+        mPresenter.getMobileList(currentNode.getNodeId(), pageNo);
         mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(mobilePhoneAdapter);
@@ -55,6 +70,7 @@ public class AllMobileListActivity extends BaseActivity {
                     break;
             }
         });
+        mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo), rvDeviceList);
     }
 
     private void showModifyNameDialog() {
@@ -70,10 +86,9 @@ public class AllMobileListActivity extends BaseActivity {
 
                 @Override
                 public void onRightClick(String s) {
-                    // TODO: 2019/3/13 修改信息
-                    modifyNameDialog.dismiss();
-                    mobilePhoneList.get(currentModifyPosition).setName(s);
-                    mobilePhoneAdapter.notifyDataSetChanged();
+                    MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
+                    mPresenter.setNodeMobileInfo(currentNode.getNodeId(), bean.getMac(), bean.getNote(), bean.getBlock());
+                    bean.setName(s);
                 }
             });
         }
@@ -85,5 +100,33 @@ public class AllMobileListActivity extends BaseActivity {
     protected void onDestroy() {
         dismiss(modifyNameDialog);
         super.onDestroy();
+    }
+
+    @Override
+    public void onLoadData(MobileListBean resultData) {
+        mobilePhoneAdapter.loadMoreComplete();
+        if (pageNo == 1) {
+            mobilePhoneList.clear();
+        }
+        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
+            mobilePhoneAdapter.loadMoreEnd();
+        }
+        mobilePhoneList.addAll(resultData.getPage());
+        mobilePhoneAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        ToastUtils.showShort(R.string.online_device_get_failed);
+    }
+
+    @Override
+    public void onModifyMobileInfoResponse(BaseResponse response) {
+        if (response != null && response.getCode() == 0) {
+            modifyNameDialog.dismiss();
+            mobilePhoneAdapter.notifyDataSetChanged();
+        } else {
+            ToastUtils.showShort(R.string.modify_failed);
+        }
     }
 }

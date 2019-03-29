@@ -15,11 +15,13 @@ import java.util.List;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.activity.bindap.BindAction1Activity;
 import cn.treebear.kwifimanager.adapter.MyDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.MyNodePresenter;
 import cn.treebear.kwifimanager.util.Check;
@@ -43,6 +45,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     private TMessageDialog tMessageDialog;
     ArrayList<NodeInfoDetail.NodeBean> nodeList = new ArrayList<>();
     private int pageNo = 1;
+    private boolean needRefresh = false;
 
     @Override
     public int layoutId() {
@@ -56,7 +59,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
 
     @Override
     protected void initView() {
-        setTitleBack(R.string.my_k_ap);
+        setTitleBack(R.string.my_k_ap, R.string.append);
         deviceAdapter = new MyDeviceAdapter(nodeList);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(deviceAdapter);
@@ -79,11 +82,78 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
                     break;
             }
         });
-        refreshLayout.setOnRefreshListener(() -> {
-            pageNo = 1;
-            mPresenter.getNodeList(pageNo);
-        });
+        refreshLayout.setOnRefreshListener(this::refresh);
         deviceAdapter.setOnLoadMoreListener(() -> mPresenter.getNodeList(++pageNo), rvDeviceList);
+    }
+
+    private void refresh() {
+        pageNo = 1;
+        mPresenter.getNodeList(pageNo);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (needRefresh) {
+            refresh();
+        }
+    }
+
+    @Override
+    public void onLoadData(NodeInfoDetail resultData) {
+        refreshLayout.setRefreshing(false);
+        needRefresh = false;
+        if (pageNo == 1) {
+            nodeList.clear();
+        }
+        List<NodeInfoDetail.NodeBean> page = resultData.getPage();
+        if (Check.hasContent(page)) {
+            if (page.size() < Config.Numbers.PAGE_SIZE) {
+                deviceAdapter.setEnableLoadMore(false);
+                deviceAdapter.loadMoreEnd();
+            } else {
+                deviceAdapter.loadMoreComplete();
+            }
+            nodeList.addAll(page);
+        }
+        if (nodeList.size() == 0) {
+            deviceAdapter.setEnableLoadMore(false);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
+        deviceAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onTitleRightClick() {
+        Bundle bundle = new Bundle();
+        needRefresh = true;
+        bundle.putInt(Keys.TYPE, Values.TYPE_APPEND_NODE);
+        startActivity(BindAction1Activity.class, bundle);
+    }
+
+    @Override
+    public void modifyNodeNameResponse(int resultCode, String msg) {
+        if (resultCode == 0) {
+            tInputDialog.dismiss();
+            ToastUtils.showShort(R.string.modify_success);
+            deviceAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void unbindNodeResponse(int resultCode, String msg) {
+        needRefresh = true;
+        nodeList.remove(currentModifyPosition);
+        MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
+        deviceAdapter.notifyDataSetChanged();
+        ToastUtils.showShort("解绑成功");
+    }
+
+    @Override
+    public void upgradeNodeVersion(int resultCode, String msg) {
+
     }
 
     private void showUnbindDeviceDialog() {
@@ -131,53 +201,6 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
             tInputDialog.clearInputText();
             tInputDialog.show();
         }
-    }
-
-    @Override
-    public void onLoadData(NodeInfoDetail resultData) {
-        refreshLayout.setRefreshing(false);
-        if (pageNo == 1) {
-            nodeList.clear();
-        }
-        List<NodeInfoDetail.NodeBean> page = resultData.getPage();
-        if (Check.hasContent(page)) {
-            if (page.size() < Config.Numbers.PAGE_SIZE) {
-                deviceAdapter.setEnableLoadMore(false);
-                deviceAdapter.loadMoreEnd();
-            } else {
-                deviceAdapter.loadMoreComplete();
-            }
-            nodeList.addAll(page);
-        }
-        if (nodeList.size() == 0) {
-            deviceAdapter.setEnableLoadMore(false);
-            emptyView.setVisibility(View.VISIBLE);
-        } else {
-            emptyView.setVisibility(View.GONE);
-        }
-        deviceAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void modifyNodeNameResponse(int resultCode, String msg) {
-        if (resultCode == 0) {
-            tInputDialog.dismiss();
-            ToastUtils.showShort(R.string.modify_success);
-            deviceAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void unbindNodeResponse(int resultCode, String msg) {
-        nodeList.remove(currentModifyPosition);
-        MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
-        deviceAdapter.notifyDataSetChanged();
-        ToastUtils.showShort("解绑成功");
-    }
-
-    @Override
-    public void upgradeNodeVersion(int resultCode, String msg) {
-
     }
 
     @Override

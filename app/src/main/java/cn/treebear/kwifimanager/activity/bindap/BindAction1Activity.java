@@ -3,6 +3,7 @@ package cn.treebear.kwifimanager.activity.bindap;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -44,10 +45,11 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     TextView tvMidInfo;
     @BindView(R.id.btn_bottom)
     Button btnConfirm;
-    private int wifiState;
+    private int bindType;
     private TMessageDialog tMessageDialog;
     private WifiManager wifiManager;
     private Disposable mDisposable;
+    private TMessageDialog hasBindDialog;
 
     @Override
     public int layoutId() {
@@ -57,7 +59,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     @Override
     public void initParams(Bundle params) {
         if (params != null) {
-            wifiState = params.getInt(Keys.TYPE, Values.CONNECT_WIFI_NONE);
+            bindType = params.getInt(Keys.TYPE, Values.TYPE_FIRST_INCREASE_NODE);
         }
     }
 
@@ -68,7 +70,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @Override
     protected void initView() {
-        setTitleBack(R.string.setting);
+        setTitleBack(bindType == 1 ? R.string.append_xiaok : R.string.setting);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
@@ -76,6 +78,9 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     @Override
     protected void onResume() {
         super.onResume();
+        if (NetWorkUtils.isWifiConnected(this)) {
+            WiFiHttpClient.tryToSignInWifi(null);
+        }
         PermissionUtils.permission(PermissionConstants.LOCATION)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
@@ -158,7 +163,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                     }
                 }
             } else {
-                ToastUtils.showShort(R.string.connect_xiaok_tips1);
+                notXiaoKDialog();
             }
         }
     }
@@ -168,8 +173,9 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
         ToastUtils.showShort(R.string.bind_success);
         hideLoading();
         MyApplication.getAppContext().getUser().setNodeSize(1);
-        startActivity(ChooseNetworkStyleActivity.class);
-        ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
+        if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
+            startActivity(ChooseNetworkStyleActivity.class);
+        }
         finish();
     }
 
@@ -180,12 +186,44 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
             case ApiCode.INVALID_PARAM:
                 ToastUtils.showShort(R.string.this_node_has_bound);
                 break;
+            case ApiCode.USR_INVALID:
+                showHasBindDialog();
+                break;
             default:
                 ToastUtils.showShort(R.string.bind_fail_please_retry);
                 break;
         }
     }
 
+    /**
+     * 已绑定过当前设备
+     */
+    private void showHasBindDialog() {
+        if (hasBindDialog == null) {
+            hasBindDialog = new TMessageDialog(this).withoutMid()
+                    .title(R.string.tips)
+                    .content(R.string.you_has_bound_this_try_other)
+                    .left(R.string.cancel)
+                    .right(R.string.goto_connect)
+                    .doClick(new TMessageDialog.DoClickListener() {
+                        @Override
+                        public void onClickLeft(View view) {
+                            hasBindDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickRight(View view) {
+                            NetWorkUtils.gotoWifiSetting(BindAction1Activity.this);
+                            hasBindDialog.dismiss();
+                        }
+                    });
+        }
+        hasBindDialog.show();
+    }
+
+    /**
+     * 扫描Wifi
+     */
     private void scanWifi() {
         if (wifiManager != null) {
             wifiManager.startScan();
@@ -205,28 +243,18 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
         });
     }
 
+    /**
+     * 没有小K的处理
+     */
     private void whenNotXiaoK() {
         // 非小K的处理
         if (NetWorkUtils.searchXiaoKInAround(this) > 0) {
 //                周围有小K
-            initMessageDialog();
-            tMessageDialog.content(String.format("请前往设置连接名称为“xiaok-XXXX”的WiFi，然后再绑定设备。"))
-                    .doClick(new TMessageDialog.DoClickListener() {
-                        @Override
-                        public void onClickLeft(android.view.View view) {
-                            tMessageDialog.dismiss();
-                        }
-
-                        @Override
-                        public void onClickRight(android.view.View view) {
-                            NetWorkUtils.gotoWifiSetting(BindAction1Activity.this);
-                            tMessageDialog.dismiss();
-                        }
-                    }).show();
+            notXiaoKDialog();
         } else {
 //                周围没有小K
             initMessageDialog();
-            tMessageDialog.content(String.format("暂时没有发现wifi名称为“xiaok-XXXX”的设备,请先启动设备。"))
+            tMessageDialog.content(String.format("暂时没有发现wifi名称为“xiaok-XXXX”的设备,请先启动并连接设备。"))
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(android.view.View view) {
@@ -237,14 +265,32 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                         @Override
                         public void onClickRight(android.view.View view) {
                             tMessageDialog.dismiss();
-                            // todo test
-                            startActivity(ChooseNetworkStyleActivity.class);
-//                            ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
+                            NetWorkUtils.gotoWifiSetting(BindAction1Activity.this);
                         }
                     }).show();
         }
     }
 
+    private void notXiaoKDialog() {
+        initMessageDialog();
+        tMessageDialog.content(String.format("请前往设置连接名称为“xiaok-XXXX”的WiFi，然后再绑定设备。"))
+                .doClick(new TMessageDialog.DoClickListener() {
+                    @Override
+                    public void onClickLeft(android.view.View view) {
+                        tMessageDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onClickRight(android.view.View view) {
+                        NetWorkUtils.gotoWifiSetting(BindAction1Activity.this);
+                        tMessageDialog.dismiss();
+                    }
+                }).show();
+    }
+
+    /**
+     * 初始化通用弹窗
+     */
     private void initMessageDialog() {
         if (tMessageDialog == null) {
             tMessageDialog = new TMessageDialog(this).withoutMid()
@@ -268,14 +314,14 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @Override
     protected void onDestroy() {
-        dismiss(tMessageDialog);
+        dismiss(tMessageDialog, hasBindDialog);
         dispose(mDisposable);
+        ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
         super.onDestroy();
     }
 
     @Override
     protected void onTitleLeftClick() {
         super.onTitleLeftClick();
-        ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 }

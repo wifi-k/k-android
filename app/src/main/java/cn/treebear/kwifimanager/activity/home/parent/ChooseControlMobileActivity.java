@@ -13,7 +13,6 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.MobileListBean;
-import cn.treebear.kwifimanager.bean.MobilePhoneBean;
 import cn.treebear.kwifimanager.config.Keys;
 
 /**
@@ -33,7 +32,7 @@ public class ChooseControlMobileActivity extends BaseActivity {
 
     @Override
     public void initParams(Bundle params) {
-        List<MobilePhoneBean> banMobile = params.getParcelableArrayList(Keys.PARENT_CONTROL_DEVICE);
+//        List<MobilePhoneBean> banMobile = params.getParcelableArrayList(Keys.PARENT_CONTROL_DEVICE);
 //        ArrayList<MobilePhoneBean> mobilePhoneList = BeanTest.getMobilePhoneList(10);
 //        if (banMobile != null) {
 //            for (MobilePhoneBean bean : banMobile) {
@@ -65,7 +64,7 @@ public class ChooseControlMobileActivity extends BaseActivity {
         onTitleLeftClick();
     }
 
-    private ArrayList<MobileListBean.MobileBean> convert( List<MobileListBean.MobileBean> data) {
+    private ArrayList<MobileListBean.MobileBean> convert(List<MobileListBean.MobileBean> data) {
         ArrayList<MobileListBean.MobileBean> result = new ArrayList<>();
         for (MobileListBean.MobileBean datum : data) {
             if (datum.getBlock() == 1) {

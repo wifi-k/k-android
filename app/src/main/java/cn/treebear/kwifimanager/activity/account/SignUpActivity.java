@@ -25,7 +25,6 @@ import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.CountObserver;
 import cn.treebear.kwifimanager.util.CountUtil;
-import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import io.reactivex.disposables.Disposable;
 
@@ -276,8 +275,8 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
     @Override
     public void onSignUpOk(ServerUserInfo bean) {
         MyApplication.getAppContext().savedUser(bean);
-        UserInfoUtil.updateUserInfo(bean);
         dispose(mCountDisposable);
+        MyApplication.getAppContext().setNeedUpdateUserInfo(true);
         startActivity(SetPasswordActivity.class);
     }
 

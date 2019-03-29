@@ -21,6 +21,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -122,12 +123,11 @@ public class WeekReportActivity extends BaseActivity {
     }
 
     private void setData(int count, int range) {
-
+        Random random = new Random();
         ArrayList<Entry> values = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-
-            float val = (float) (new Random().nextInt(range));
+            float val = (float) (random.nextInt(range));
             values.add(new Entry(i, val));
         }
 
@@ -197,20 +197,17 @@ public class WeekReportActivity extends BaseActivity {
         }
     }
 
-    public class XAxisFormatter implements IAxisValueFormatter {
+    public static class XAxisFormatter implements IAxisValueFormatter {
 
-        private String[] mValues;
+        private ArrayList<String> mValues = new ArrayList<>();
 
         public XAxisFormatter(String[] values) {
-            this.mValues = values;
+            this.mValues.addAll(Arrays.asList(values));
         }
-
-        private static final String TAG = "XAxisFormatter";
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            // "value" represents the position of the label on the axis (x or y)
-            return mValues[(int) value % mValues.length];
+            return mValues.get((int) value % mValues.size());
         }
     }
 

@@ -10,6 +10,7 @@ import java.util.List;
 
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.MobileListBean;
+import cn.treebear.kwifimanager.util.DateTimeUtils;
 
 /**
  * @author Administrator
@@ -25,7 +26,9 @@ public class GuardJoinDeviceAdapter extends BaseQuickAdapter<MobileListBean.Mobi
     protected void convert(BaseViewHolder helper, MobileListBean.MobileBean item) {
         boolean isOnline = item.getStatus() == 1;
         helper.setText(R.id.tv_device_name, item.getName())
-                .setText(R.id.tv_device_time, isOnline ? item.getOnTime() : item.getOffTime())
+                .setText(R.id.tv_device_time, isOnline ?
+                        DateTimeUtils.createTimeInfoByStatusLength(isOnline, item.getOnTime()) :
+                        DateTimeUtils.createTimeInfoByStatusLength(isOnline, item.getOffTime()))
                 .setChecked(R.id.sw_guard_device, isOnline);
 //        switch (item.getType()) {
 //            case Config.Types.APPLE:

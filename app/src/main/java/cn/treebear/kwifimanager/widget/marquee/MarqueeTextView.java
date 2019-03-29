@@ -83,7 +83,11 @@ public class MarqueeTextView extends LinearLayout {
                 viewFlipper.addView(textView, lp);
                 i++;
             }
-            viewFlipper.startFlipping();
+            if (textArrays.size() == 1) {
+                viewFlipper.stopFlipping();
+            } else {
+                viewFlipper.startFlipping();
+            }
         }
     }
 

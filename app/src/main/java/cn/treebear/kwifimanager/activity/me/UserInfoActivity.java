@@ -30,6 +30,7 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.activity.account.SetPasswordActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.QiNiuUserBean;
+import cn.treebear.kwifimanager.bean.SUserCover;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.GlideApp;
@@ -49,7 +50,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * @author Administrator
  */
-public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presenter, Object> implements ModifyUserInfoContract.View {
+public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presenter, SUserCover> implements ModifyUserInfoContract.View {
 
     @BindView(R.id.root_view)
     ConstraintLayout mRootView;
@@ -78,16 +79,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     protected void initView() {
         setTitleBack(R.string.personal_info);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_MODIFY_USER_MOBILE, this);
-        userInfo = MyApplication.getAppContext().getUser();
-        tvNickName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile());
-        tvMobileNumber.setText(userInfo.getMobile());
-        GlideApp.with(mRootView)
-                .load(userInfo.getAvatar())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.ic_me_header)
-                .error(R.mipmap.ic_me_header)
-                .circleCrop()
-                .into(civHeaderPic);
+        mPresenter.getUserInfo();
     }
 
     @OnClick(R.id.civ_header_pic)
@@ -109,6 +101,25 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     public void onTvModifyPasswordClicked() {
         // TODO: 2019/3/14 修改界面以兼容修改和重置
         startActivity(SetPasswordActivity.class);
+    }
+
+    @Override
+    public void onLoadData(SUserCover resultData) {
+        if (resultData.getUser()!=null){
+            userInfo = resultData.getUser();
+            userInfo.setToken(MyApplication.getAppContext().getUser().getToken());
+            userInfo.setNodeSize(resultData.getNodeSize());
+            MyApplication.getAppContext().savedUser(userInfo);
+            tvNickName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile());
+            tvMobileNumber.setText(userInfo.getMobile());
+            GlideApp.with(mRootView)
+                    .load(userInfo.getAvatar())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.mipmap.ic_me_header)
+                    .error(R.mipmap.ic_me_header)
+                    .circleCrop()
+                    .into(civHeaderPic);
+        }
     }
 
     /**
@@ -279,11 +290,17 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     private void uploadImage() {
         if (Check.hasContent(picPath)) {
             File file = new File(picPath);
+            String name;
+            if (file.getName().contains(".")) {
+                name = file.getName().split(".")[0];
+            } else {
+                name = file.getName();
+            }
             File newFile = new CompressHelper.Builder(this)
                     .setMaxWidth(720)  // 默认最大宽度为720
                     .setMaxHeight(960) // 默认最大高度为960
                     .setQuality(80)    // 默认压缩质量为80
-                    .setFileName(file.getName().split(".")[0]) // 设置你需要修改的文件名
+                    .setFileName(name) // 设置你需要修改的文件名
                     .setCompressFormat(Bitmap.CompressFormat.JPEG) // 设置默认压缩为jpg格式
                     .setDestinationDirectoryPath(FileUtils.getPublicDiskSafe())
                     .build()

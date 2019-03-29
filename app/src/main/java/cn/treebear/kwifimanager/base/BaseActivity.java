@@ -73,7 +73,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         statusWhiteFontBlack();
         unbinder = ButterKnife.bind(this);
         PushAgent.getInstance(this).onAppStart();
-        ActivityStackUtils.pressActivity(Config.Tags.ALL, this);
+        pressThis(inAll());
         initParams(getIntent().getExtras());
         mPresenter = getPresenter();
         if (mPresenter != null) {
@@ -82,6 +82,16 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         initView();
         initData();
         setUmengOption();
+    }
+
+    protected boolean inAll() {
+        return true;
+    }
+
+    protected void pressThis(boolean inAll) {
+        if (inAll) {
+            ActivityStackUtils.pressActivity(Config.Tags.ALL, this);
+        }
     }
 
     private void setUmengOption() {
@@ -581,7 +591,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         }
     }
 
-    protected void onEvent(String eventID, String label){
+    protected void onEvent(String eventID, String label) {
 
     }
 

@@ -7,29 +7,27 @@ import cn.treebear.kwifimanager.mvp.IModel;
 import cn.treebear.kwifimanager.mvp.IView;
 import okhttp3.RequestBody;
 
-public interface NodeMobileContract {
+public interface AllMobileListContract {
 
     interface View extends IView<MobileListBean> {
 
-        void setNodeMobileSuccess();
+        void onModifyMobileInfoResponse(BaseResponse response);
 
-        void setNodeMobileFail();
     }
 
     interface Presenter extends IPresenter<View> {
 
-        void getNodeMobileList(String nodeId, int pageNo);
-
         void setNodeMobileInfo(String nodeId, String mac, String note, int block);
 
+        void getMobileList(String nodeId, int pageNo);
     }
 
     interface Model extends IModel {
 
-        void getNodeMobileList(RequestBody params, AsyncCallBack<BaseResponse<MobileListBean>> callBack);
+        void setMobileInfo(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
 
-        void setNodeMobileInfo(RequestBody params, AsyncCallBack<BaseResponse<Object>> callBack);
-
+        void getMobileList(RequestBody params, AsyncCallBack<BaseResponse<MobileListBean>> callBack);
     }
+
 
 }

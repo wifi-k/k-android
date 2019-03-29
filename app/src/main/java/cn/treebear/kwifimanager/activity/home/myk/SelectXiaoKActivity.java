@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.adapter.ChooseXiaoKAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
@@ -88,6 +89,7 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
         hideLoading();
         ToastUtils.showShort(String.format("已切换至%s", nodeBeans.get(mCurrentPosition).getName()));
         Intent intent = new Intent();
+        MyApplication.getAppContext().setNeedUpdateNodeInfo(true);
         intent.putExtra(Keys.POSITION, mCurrentPosition);
         intent.putExtra(Keys.NAME, nodeBeans.get(mCurrentPosition).getName());
         intent.putExtra(Keys.NODE_ID, nodeBeans.get(mCurrentPosition).getNodeId());

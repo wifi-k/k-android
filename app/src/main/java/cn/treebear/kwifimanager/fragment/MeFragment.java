@@ -3,6 +3,7 @@ package cn.treebear.kwifimanager.fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import butterknife.BindView;
@@ -14,13 +15,14 @@ import cn.treebear.kwifimanager.activity.me.MyChildrenListActivity;
 import cn.treebear.kwifimanager.activity.me.SettingsActivity;
 import cn.treebear.kwifimanager.activity.me.UserInfoActivity;
 import cn.treebear.kwifimanager.base.BaseFragment;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.SUserCover;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.config.GlideApp;
 import cn.treebear.kwifimanager.mvp.server.contract.GetUserInfoContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.GetUserInfoPresenter;
 import cn.treebear.kwifimanager.util.Check;
-import cn.treebear.kwifimanager.util.UserInfoUtil;
+import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 /**
  * @author Administrator
@@ -32,7 +34,9 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
     TextView tvUserMobile;
     @BindView(R.id.iv_me_user_header)
     ImageView ivMeUserHeader;
+
     private ServerUserInfo userInfo;
+    private TInputDialog inputDialog;
 
     @Override
     public int layoutId() {
@@ -75,7 +79,6 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
         userInfo = resultData.getUser();
         userInfo.setNodeSize(resultData.getNodeSize());
         MyApplication.getAppContext().savedUser(userInfo);
-        UserInfoUtil.updateUserInfo(userInfo);
         updateUserInfo();
         MyApplication.getAppContext().setNeedUpdateUserInfo(false);
     }
@@ -98,5 +101,47 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
     @OnClick(R.id.tv_my_kid)
     public void onTvMyKidClicked() {
         startActivity(MyChildrenListActivity.class);
+    }
+
+    @OnClick(R.id.tv_into_new_family)
+    public void onTvAddNewFamilyClicked() {
+        showFamilyCodeDialog();
+    }
+
+    @Override
+    public void onJoinFamilySuccess() {
+        dismiss(inputDialog);
+        ToastUtils.showShort(R.string.join_family_success);
+    }
+
+    @Override
+    public void onJoinFamilyFailed(BaseResponse response) {
+        ToastUtils.showShort(R.string.family_code_error);
+    }
+
+    private void showFamilyCodeDialog() {
+        if (inputDialog == null) {
+            inputDialog = new TInputDialog(mContext);
+            inputDialog.setTitle(R.string.input_family_code_into_family);
+            inputDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
+
+                @Override
+                public void onLeftClick(String s) {
+                    inputDialog.dismiss();
+                }
+
+                @Override
+                public void onRightClick(String s) {
+                    mPresenter.joinFamily(s.trim());
+                }
+            });
+        }
+        inputDialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        dismiss(inputDialog);
+        super.onDestroy();
     }
 }

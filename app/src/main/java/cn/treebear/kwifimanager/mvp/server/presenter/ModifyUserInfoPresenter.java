@@ -5,6 +5,7 @@ import android.util.ArrayMap;
 import cn.treebear.kwifimanager.base.BasePresenter;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.QiNiuUserBean;
+import cn.treebear.kwifimanager.bean.SUserCover;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.ModifyUserInfoContract;
 import cn.treebear.kwifimanager.mvp.server.model.ModifyUserInfoModel;
@@ -14,6 +15,18 @@ public class ModifyUserInfoPresenter extends BasePresenter<ModifyUserInfoContrac
     @Override
     public void setModel() {
         mModel = new ModifyUserInfoModel();
+    }
+
+    @Override
+    public void getUserInfo() {
+        mModel.getUserInfo(new BaseAsyncCallback<BaseResponse<SUserCover>>() {
+            @Override
+            public void onSuccess(BaseResponse<SUserCover> resultData) {
+                if (Check.hasContent(resultData, mView)) {
+                    mView.onLoadData(resultData.getData());
+                }
+            }
+        });
     }
 
     @Override

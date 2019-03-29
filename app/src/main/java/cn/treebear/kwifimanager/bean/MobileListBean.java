@@ -48,8 +48,8 @@ public class MobileListBean implements Serializable {
         private String nodeId;
         private String mac;
         private String name;
-        private String onTime;
-        private String offTime;
+        private long onTime;
+        private long offTime;
         private String note;
         private int status;
         private int block;
@@ -78,19 +78,19 @@ public class MobileListBean implements Serializable {
             this.name = name;
         }
 
-        public String getOnTime() {
+        public long getOnTime() {
             return onTime;
         }
 
-        public void setOnTime(String onTime) {
+        public void setOnTime(long onTime) {
             this.onTime = onTime;
         }
 
-        public String getOffTime() {
+        public long getOffTime() {
             return offTime;
         }
 
-        public void setOffTime(String offTime) {
+        public void setOffTime(long offTime) {
             this.offTime = offTime;
         }
 
@@ -129,8 +129,8 @@ public class MobileListBean implements Serializable {
             dest.writeString(this.nodeId);
             dest.writeString(this.mac);
             dest.writeString(this.name);
-            dest.writeString(this.onTime);
-            dest.writeString(this.offTime);
+            dest.writeLong(this.onTime);
+            dest.writeLong(this.offTime);
             dest.writeString(this.note);
             dest.writeInt(this.status);
             dest.writeInt(this.block);
@@ -143,8 +143,8 @@ public class MobileListBean implements Serializable {
             this.nodeId = in.readString();
             this.mac = in.readString();
             this.name = in.readString();
-            this.onTime = in.readString();
-            this.offTime = in.readString();
+            this.onTime = in.readLong();
+            this.offTime = in.readLong();
             this.note = in.readString();
             this.status = in.readInt();
             this.block = in.readInt();

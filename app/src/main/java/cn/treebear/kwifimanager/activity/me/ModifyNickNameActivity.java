@@ -11,6 +11,7 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.bean.QiNiuUserBean;
+import cn.treebear.kwifimanager.bean.SUserCover;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.mvp.server.contract.ModifyUserInfoContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.ModifyUserInfoPresenter;
@@ -19,7 +20,7 @@ import cn.treebear.kwifimanager.util.Check;
 /**
  * @author Administrator
  */
-public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.Presenter, Object> implements ModifyUserInfoContract.View {
+public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.Presenter, SUserCover> implements ModifyUserInfoContract.View {
 
     @BindView(R.id.et_nick_name)
     EditText etNickName;

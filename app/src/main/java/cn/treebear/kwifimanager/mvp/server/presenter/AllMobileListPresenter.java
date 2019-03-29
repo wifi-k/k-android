@@ -4,52 +4,18 @@ import android.util.ArrayMap;
 
 import cn.treebear.kwifimanager.base.BasePresenter;
 import cn.treebear.kwifimanager.base.BaseResponse;
-import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.bean.MobileListBean;
-import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.IModel;
-import cn.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
-import cn.treebear.kwifimanager.mvp.server.model.BindHomeModel;
+import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
+import cn.treebear.kwifimanager.mvp.server.model.AllMobileListModel;
 import cn.treebear.kwifimanager.util.Check;
 
-public class BindHomePresenter extends BasePresenter<BindHomeContract.View, BindHomeContract.Model> implements BindHomeContract.Presenter {
+public class AllMobileListPresenter extends BasePresenter<AllMobileListContract.View, AllMobileListContract.Model> implements AllMobileListContract.Presenter {
     @Override
     public void setModel() {
-        mModel = new BindHomeModel();
-    }
-
-    @Override
-    public void getNodeList() {
-        ArrayMap<String, Object> map = map();
-        map.put(Keys.PAGE_NO, 1);
-        map.put(Keys.PAGE_SIZE, 1);
-        mModel.getNodeList(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<NodeInfoDetail>>() {
-            @Override
-            public void onSuccess(BaseResponse<NodeInfoDetail> resultData) {
-                if (Check.hasContent(resultData, mView)) {
-                    mView.onLoadData(resultData.getData());
-                }
-            }
-        });
-
-
-    }
-
-    @Override
-    public void getMessageList(int pageNo) {
-        ArrayMap<String, Object> map = map();
-        map.put(Keys.PAGE_NO, pageNo);
-        map.put(Keys.PAGE_SIZE, Config.Numbers.HOME_NOTICE_PAGE_SIZE);
-        mModel.getMessageList(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<MessageInfoBean>>() {
-            @Override
-            public void onSuccess(BaseResponse<MessageInfoBean> resultData) {
-                if (mView != null) {
-                    mView.onMessageListResponse(resultData.getData());
-                }
-            }
-        });
+        mModel = new AllMobileListModel();
     }
 
     @Override
@@ -86,7 +52,7 @@ public class BindHomePresenter extends BasePresenter<BindHomeContract.View, Bind
             @Override
             public void onSuccess(BaseResponse<MobileListBean> resultData) {
                 if (Check.hasContent(resultData, mView)) {
-                    mView.onMobileListResponse(resultData.getData());
+                    mView.onLoadData(resultData.getData());
                 }
             }
         });

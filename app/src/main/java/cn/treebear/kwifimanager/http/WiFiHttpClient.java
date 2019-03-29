@@ -115,6 +115,7 @@ public class WiFiHttpClient {
      */
     public static void xiaokOffline() {
         needLogin = true;
+        MyApplication.getAppContext().setSelectNode("");
     }
 
     /**

@@ -27,6 +27,7 @@ import cn.treebear.kwifimanager.mvp.server.contract.PwdSignInContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.PwdSignInPresenter;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
@@ -229,8 +230,8 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
             ServerUserInfo user = bean.getUser();
             user.setToken(MyApplication.getAppContext().getUser().getToken());
             user.setNodeSize(bean.getNodeSize());
+            TLog.i(user);
             MyApplication.getAppContext().savedUser(user);
-            UserInfoUtil.updateUserInfo(user);
             hideLoading();
             ToastUtils.showShort(Config.Tips.SIGN_IN_SUCCESS);
             startActivity(MainActivity.class);
