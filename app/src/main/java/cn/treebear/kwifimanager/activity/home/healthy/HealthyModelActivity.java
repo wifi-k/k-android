@@ -119,8 +119,8 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == Values.REQUEST_EDIT_TIME && data != null) {
             int position = data.getIntExtra(Keys.POSITION, -1);
-            String startTime = data.getStringExtra(Keys.START_TIME);
-            String endTime = data.getStringExtra(Keys.END_TIME);
+            String startTime = data.getStringExtra(Keys.IT_START_TIME);
+            String endTime = data.getStringExtra(Keys.IT_END_TIME);
 
             HealthyModelBean.WifiBean.TimerBean timerBean = new HealthyModelBean.WifiBean.TimerBean();
             timerBean.setStartTime(startTime);

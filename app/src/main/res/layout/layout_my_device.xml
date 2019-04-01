@@ -16,7 +16,7 @@
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="小k管家-84594" />
+        tools:text="小k云管家-84594" />
 
     <TextView
         android:id="@+id/textView26"

@@ -68,8 +68,8 @@ public class ModifyTimeActivity extends BaseActivity {
     public void onBtnConfirmClicked() {
         Intent intent = new Intent();
         intent.putExtra(Keys.POSITION, position);
-        intent.putExtra(Keys.START_TIME, tvStartTime.getText().toString());
-        intent.putExtra(Keys.END_TIME, tvEndTime.getText().toString());
+        intent.putExtra(Keys.IT_START_TIME, tvStartTime.getText().toString());
+        intent.putExtra(Keys.IT_END_TIME, tvEndTime.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }

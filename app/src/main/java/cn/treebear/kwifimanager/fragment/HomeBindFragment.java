@@ -200,7 +200,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     private void setMobileListAdapter() {
         rvDeviceList.setLayoutManager(new LinearLayoutManager(mContext));
-        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList);
+        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 6);
         rvDeviceList.setAdapter(mobilePhoneAdapter);
         mobilePhoneAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
@@ -233,8 +233,9 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
                 public void onRightClick(String s) {
                     MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
                     mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode()
-                            , bean.getMac(), s, bean.getBlock());
+                            , bean.getMac(), s, bean.getIsBlock());
                     bean.setName(s);
+                    bean.setNote(s);
                 }
             });
         }
@@ -268,7 +269,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R.id.tv_invite_member)
     public void onTvInviteMemberClicked() {
-        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.logo, null);
+        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.ic_test_logo, null);
     }
 
     @OnClick(R.id.tv_my_k)

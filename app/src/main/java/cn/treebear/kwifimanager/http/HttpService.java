@@ -11,6 +11,7 @@ import cn.treebear.kwifimanager.bean.NodeWifiListBean;
 import cn.treebear.kwifimanager.bean.QiNiuUserBean;
 import cn.treebear.kwifimanager.bean.SUserCover;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
+import cn.treebear.kwifimanager.bean.TimeControlbean;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -25,64 +26,64 @@ public interface HttpService {
     /**
      * 获取验证码
      *
-     * @param params 请求体数据包装类
-     *               * type*	int	1-注册，2-忘记密码,3-修改手机号 4-登录
-     *               * mobile*	str
+     * @param body 请求体数据包装类
+     *             * type*	int	1-注册，2-忘记密码,3-修改手机号 4-登录
+     *             * mobile*	str
      */
     @POST("user/vcode/getv2")
-    Observable<BaseResponse<String>> getVerifyByType(@Body RequestBody params);
+    Observable<BaseResponse<String>> getVerifyByType(@Body RequestBody body);
 
     /**
      * 通过验证码注册
      *
-     * @param params 请求体数据包装类
-     *               * mobile*	str	手机号
-     *               * vcode*	str	手机验证码
+     * @param body 请求体数据包装类
+     *             * mobile*	str	手机号
+     *             * vcode*	str	手机验证码
      */
     @POST("user/signup/vcode")
-    Observable<BaseResponse<ServerUserInfo>> signUpByVerifyCode(@Body RequestBody params);
+    Observable<BaseResponse<ServerUserInfo>> signUpByVerifyCode(@Body RequestBody body);
 
     /**
      * 设置/更改密码
      *
-     * @param params 请求体数据包装类
-     *               * passwd*	str	新密码
+     * @param body 请求体数据包装类
+     *             * passwd*	str	新密码
      */
     @POST("user/passwd/reset")
-    Observable<BaseResponse<Object>> setUserPassword(@Body RequestBody params);
+    Observable<BaseResponse<Object>> setUserPassword(@Body RequestBody body);
 
     /**
      * 验证码登录
      *
-     * @param params 请求体数据包装类
-     *               * mobile*	str	手机号
-     *               * vcode*	str	手机验证码
+     * @param body 请求体数据包装类
+     *             * mobile*	str	手机号
+     *             * vcode*	str	手机验证码
      */
     @POST("user/signin/vcode")
-    Observable<BaseResponse<ServerUserInfo>> signInByCode(@Body RequestBody params);
+    Observable<BaseResponse<ServerUserInfo>> signInByCode(@Body RequestBody body);
 
     /**
      * 密码登录
      *
-     * @param params 请求体数据包装类
-     *               * mobile*	str	手机号
-     *               * passwd*	str	md5后的值
-     *               * imgCodeId*	str	图像验证码临时Id
-     *               * imgCode*	str	图像验证码，图片和数字
+     * @param body 请求体数据包装类
+     *             * mobile*	str	手机号
+     *             * passwd*	str	md5后的值
+     *             * imgCodeId*	str	图像验证码临时Id
+     *             * imgCode*	str	图像验证码，图片和数字
      */
     @POST("user/signin/passwd")
-    Observable<BaseResponse<ServerUserInfo>> signinByPassword(@Body RequestBody params);
+    Observable<BaseResponse<ServerUserInfo>> signinByPassword(@Body RequestBody body);
 
     /**
      * 忘记密码
      *
-     * @param params 请求体数据包装类
-     *               * mobile*	str
-     *               * vcode*	str	手机验证码
-     *               * passwd*	str	新密码
+     * @param body 请求体数据包装类
+     *             * mobile*	str
+     *             * vcode*	str	手机验证码
+     *             * passwd*	str	新密码
      */
     @POST("user/passwd/forget")
-    Observable<BaseResponse<Object>> forgetPassword(@Body RequestBody params);
+    Observable<BaseResponse<Object>> forgetPassword(@Body RequestBody body);
 
     /**
      * 获取用户信息
@@ -98,36 +99,36 @@ public interface HttpService {
      */
 //    @POST("user/info/get")
     @POST("user/info/getext")
-    Observable<BaseResponse<SUserCover>> getUserInfoExt(@Body RequestBody params);
+    Observable<BaseResponse<SUserCover>> getUserInfoExt(@Body RequestBody body);
 
     /**
      * 设置用户信息
      *
-     * @param params 请求数据包装
-     *               *   name	str
-     *               * avatar	str	头像地址，先不做
+     * @param body 请求数据包装
+     *             *   name	str
+     *             * avatar	str	头像地址，先不做
      */
     @POST("user/info/set")
-    Observable<BaseResponse<Object>> setUserInfo(@Body RequestBody params);
+    Observable<BaseResponse<Object>> setUserInfo(@Body RequestBody body);
 
     /**
      * 更新用户手机号
      *
-     * @param params 请求数据包装
-     *               * mobile*	str
-     *               * vcode*	str
+     * @param body 请求数据包装
+     *             * mobile*	str
+     *             * vcode*	str
      */
     @POST("user/mobile/verify")
-    Observable<BaseResponse<Object>> modifyUserMobile(@Body RequestBody params);
+    Observable<BaseResponse<Object>> modifyUserMobile(@Body RequestBody body);
 
     /**
      * 绑定节点
      *
-     * @param params 请求数据包装
-     *               * nodeId   str
+     * @param body 请求数据包装
+     *             * nodeId   str
      */
     @POST("user/node/bind")
-    Observable<BaseResponse<Object>> bindNode(@Body RequestBody params);
+    Observable<BaseResponse<Object>> bindNode(@Body RequestBody body);
 
     /**
      * 获取七牛云的token'
@@ -138,20 +139,20 @@ public interface HttpService {
     /**
      * 查询用户消息
      *
-     * @param params 分页
-     *               * pageNo	int	分页号,默认1
-     *               * pageSize	int	一页的数据,默认10
+     * @param body 分页
+     *             * pageNo	int	分页号,默认1
+     *             * pageSize	int	一页的数据,默认10
      */
     @POST("user/message/list")
-    Observable<BaseResponse<MessageInfoBean>> getMessageList(@Body RequestBody params);
+    Observable<BaseResponse<MessageInfoBean>> getMessageList(@Body RequestBody body);
 
     /**
      * 获取节点的ssid user/node/wifi/list
      *
-     * @param params * nodeId*	str
+     * @param body * nodeId*	str
      */
     @POST("user/node/wifi/list")
-    Observable<BaseResponse<NodeWifiListBean>> getNodeSSIDList(@Body RequestBody params);
+    Observable<BaseResponse<NodeWifiListBean>> getNodeSSIDList(@Body RequestBody body);
 
     /**
      * 设置节点ssid /user/node/ssid/set
@@ -159,39 +160,39 @@ public interface HttpService {
      * 说明
      * freq=0时,表示更新节点下所有的ssid或passwd
      *
-     * @param params * nodeId*	str
-     *               * freq*	int	1-2.4G,2-5G
-     *               * ssid	str	新的ssid名称
-     *               * passwd	str	新的md5密码
-     *               * rssi	int	信号强度, [0,-100]dbm,好>=-50,强>=-70,中<-70,差<-80
+     * @param body * nodeId*	str
+     *             * freq*	int	1-2.4G,2-5G
+     *             * ssid	str	新的ssid名称
+     *             * passwd	str	新的md5密码
+     *             * rssi	int	信号强度, [0,-100]dbm,好>=-50,强>=-70,中<-70,差<-80
      */
     @POST("user/node/wifi/set")
-    Observable<BaseResponse<Object>> setNodeSsid(@Body RequestBody params);
+    Observable<BaseResponse<Object>> setNodeSsid(@Body RequestBody body);
 
     /**
      * 节点解绑 /user/node/unbind
      *
-     * @param params * nodeId*	str
+     * @param body * nodeId*	str
      */
     @POST("user/node/unbind")
-    Observable<BaseResponse<Object>> unbindNode(@Body RequestBody params);
+    Observable<BaseResponse<Object>> unbindNode(@Body RequestBody body);
 
     /**
      * 节点信息修改 /user/node/info/set
      *
-     * @param params * nodeId*	str
-     *               * name	str	节点名称
+     * @param body * nodeId*	str
+     *             * name	str	节点名称
      */
     @POST("user/node/info/set")
-    Observable<BaseResponse<Object>> setNodeInfo(@Body RequestBody params);
+    Observable<BaseResponse<Object>> setNodeInfo(@Body RequestBody body);
 
     /**
      * 节点加入共享计划 /user/node/share/join
      *
-     * @param params * nodeId*	str
+     * @param body * nodeId*	str
      */
     @POST("user/node/share/join")
-    Observable<BaseResponse<Object>> joinShare(@Body RequestBody params);
+    Observable<BaseResponse<Object>> joinShare(@Body RequestBody body);
 
     /**
      * 离开共享计划 /user/node/share/quit
@@ -200,10 +201,10 @@ public interface HttpService {
      * 提前预约3天离开
      * 产生一个系统通知给我们
      *
-     * @param params * nodeId*	str
+     * @param body * nodeId*	str
      */
     @POST("user/node/share/quit")
-    Observable<BaseResponse<Object>> quiteShare(@Body RequestBody params);
+    Observable<BaseResponse<Object>> quiteShare(@Body RequestBody body);
 
     /**
      * 节点信息查询 /user/node/list
@@ -220,9 +221,9 @@ public interface HttpService {
      * pageSize	int	一页的数据,默认10,最多10
      */
 //    @POST("user/node/list")
-//    Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody params);
+//    Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody body);
     @POST("user/node/listall")
-    Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody params);
+    Observable<BaseResponse<NodeInfoDetail>> getNodeList(@Body RequestBody body);
 
     /**
      * 用户选定节点 /user/node/select
@@ -231,15 +232,15 @@ public interface HttpService {
      * nodeId*	str	选择的节点ID
      */
     @POST("user/node/select")
-    Observable<BaseResponse<Object>> selectNode(@Body RequestBody params);
+    Observable<BaseResponse<Object>> selectNode(@Body RequestBody body);
 
     /**
      * 升级节点固件 /user/node/firmware/upgrade
      *
-     * @param params * nodeId*	str
+     * @param body * nodeId*	str
      */
     @POST("user/node/firmware/upgrade")
-    Observable<BaseResponse<Object>> firmwareUpgrade(@Body RequestBody params);
+    Observable<BaseResponse<Object>> firmwareUpgrade(@Body RequestBody body);
 
     /**
      * 用户退出 /user/quit
@@ -253,7 +254,7 @@ public interface HttpService {
      * inviteCode*	str	节点的邀请码
      */
     @POST("user/node/family/join")
-    Observable<BaseResponse<Object>> joinFamilyByCode(@Body RequestBody params);
+    Observable<BaseResponse<Object>> joinFamilyByCode(@Body RequestBody body);
 
     /**
      * 修改家庭成员信息 /user/node/family/set
@@ -262,7 +263,7 @@ public interface HttpService {
      * userName	str	修改昵称
      */
     @POST("user/node/family/set")
-    Observable<BaseResponse<Object>> setFamilyInfo(@Body RequestBody params);
+    Observable<BaseResponse<Object>> setFamilyInfo(@Body RequestBody body);
 
     /**
      * 删除家庭成员 /user/node/family/quit
@@ -271,7 +272,7 @@ public interface HttpService {
      * userId*	long	删除的成员ID
      */
     @POST("user/node/family/quit")
-    Observable<BaseResponse<Object>> quitFamily(@Body RequestBody params);
+    Observable<BaseResponse<Object>> quitFamily(@Body RequestBody body);
 
     /**
      * 家庭成员列表 /user/node/family/list
@@ -280,7 +281,7 @@ public interface HttpService {
      * nodeId*	str
      */
     @POST("user/node/family/list")
-    Observable<BaseResponse<FamilyMemberCover>> getFamilyMembers(@Body RequestBody params);
+    Observable<BaseResponse<FamilyMemberCover>> getFamilyMembers(@Body RequestBody body);
 
     /**
      * 获取信号定时配置 /user/node/wifi/timer/get
@@ -289,7 +290,7 @@ public interface HttpService {
      * wifi格式 [{“freq”:0-所有,”rssi”:5,”timer”:[{“startTime”:”23:00”,”endTime”:”06:00”},{}]},{}]
      */
     @POST("user/node/wifi/timer/get")
-    Observable<BaseResponse<HealthyModelBean>> getHealthyModelInfo(@Body RequestBody params);
+    Observable<BaseResponse<HealthyModelBean>> getHealthyModelInfo(@Body RequestBody body);
 
     /**
      * 设置信号定时配置 /user/node/wifi/timer/set
@@ -300,7 +301,7 @@ public interface HttpService {
      * * * * * wifi格式 [{“freq”:0-所有,”rssi”:5,”timer”:[{“startTime”:”23:00”,”endTime”:”06:00”},{}]},{}]
      */
     @POST("user/node/wifi/timer/set")
-    Observable<BaseResponse<Object>> setHealthyModelInfo(@Body RequestBody params);
+    Observable<BaseResponse<Object>> setHealthyModelInfo(@Body RequestBody body);
 
     /**
      * 用户微信扫码注册登录 /user/signin/wechat //M1不做
@@ -317,7 +318,7 @@ public interface HttpService {
      * pageSize	int	一页的数据,默认10
      */
     @POST("user/node/device/list")
-    Observable<BaseResponse<MobileListBean>> getNodeDeviceList(@Body RequestBody params);
+    Observable<BaseResponse<MobileListBean>> getNodeDeviceList(@Body RequestBody body);
 
     /**
      * 修改设备信息 /user/node/device/set
@@ -328,6 +329,35 @@ public interface HttpService {
      * block	int	0-allow or 1-block
      */
     @POST("user/node/device/set")
-    Observable<BaseResponse<Object>> setNodeDevice(@Body RequestBody params);
+    Observable<BaseResponse<Object>> setNodeDevice(@Body RequestBody body);
+
+    /**
+     * 设置设备允许上网配置 /user/node/device/allow/set
+     * 说明
+     * 限制最多100个
+     * mac最多10个
+     * wt定义 1-Mon Tue-2 Wen-4 Thu-8 Fri-16 Sat-32 Sun-64
+     */
+    @POST("user/node/device/allow/set")
+    Observable<BaseResponse<Object>> setAllowDevice(@Body RequestBody body);
+
+    /**
+     * 获取设备上网配置 /user/node/device/allow/list
+     * 说明
+     * 这里不分页,最多返回100个
+     * 字段	类型	说明
+     * nodeId*
+     */
+    @POST("user/node/device/allow/list")
+    Observable<BaseResponse<TimeControlbean>> getAllowDevice(@Body RequestBody body);
+
+    /**
+     * 删除设备上网配置 /user/node/device/allow/del
+     * 字段	类型	说明
+     * nodeId*	str
+     * id*	long	配置id
+     */
+    @POST("user/node/device/allow/del")
+    Observable<BaseResponse<Object>> delAllowDevice(@Body RequestBody body);
 
 }

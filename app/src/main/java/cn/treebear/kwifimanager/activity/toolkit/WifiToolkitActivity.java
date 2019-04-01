@@ -210,7 +210,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
     private void showRestartTipDialog() {
         if (restartTipsDialog == null) {
             restartTipsDialog = new TipsDialog(this)
-                    .icon(R.mipmap.logo)
+                    .icon(R.mipmap.ic_test_logo)
                     .title(R.string.confirm_restart_please)
                     .content(R.string.tips_device_restart)
                     .doClick(new TipsDialog.DoClickListener() {
@@ -264,7 +264,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     private void showResetTipDialog() {
         if (resetTipsDialog == null) {
-            resetTipsDialog = new TipsDialog(this).icon(R.mipmap.logo)
+            resetTipsDialog = new TipsDialog(this).icon(R.mipmap.ic_test_logo)
                     .title(R.string.confirm_reset_please)
                     .content(R.string.tips_device_reset)
                     .doClick(new TipsDialog.DoClickListener() {

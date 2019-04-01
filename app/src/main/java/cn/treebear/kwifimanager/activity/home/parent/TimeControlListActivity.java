@@ -6,32 +6,42 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.adapter.BanTimeAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
-import cn.treebear.kwifimanager.bean.BanAppPlanBean;
+import cn.treebear.kwifimanager.base.BaseResponse;
+import cn.treebear.kwifimanager.bean.TimeControlbean;
 import cn.treebear.kwifimanager.config.Keys;
-import cn.treebear.kwifimanager.test.BeanTest;
+import cn.treebear.kwifimanager.http.ApiCode;
+import cn.treebear.kwifimanager.mvp.server.contract.TimeControlContract;
+import cn.treebear.kwifimanager.mvp.server.presenter.TimeControlPresenter;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
+import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 /**
  * @author Administrator
  */
-public class TimeControlListActivity extends BaseActivity {
+public class TimeControlListActivity extends BaseActivity<TimeControlContract.Presenter, TimeControlbean> implements TimeControlContract.View {
 
     @BindView(R.id.tv_tips)
     TextView tvTips;
     @BindView(R.id.rv_ban_app)
     RecyclerView recyclerView;
-    private ArrayList<BanAppPlanBean> timeLimitList;
+    @BindView(R.id.tv_add_ban_app_plan)
+    TextView tvAddTimeControl;
+    private ArrayList<TimeControlbean.TimeControl> timeLimitList = new ArrayList<>();
     private int currentModifyPosition;
     private TInputDialog tInputDialog;
     private BanTimeAdapter banTimeAdapter;
+    private TMessageDialog deleteDialog;
 
     @Override
     public int layoutId() {
@@ -39,10 +49,15 @@ public class TimeControlListActivity extends BaseActivity {
     }
 
     @Override
+    public TimeControlContract.Presenter getPresenter() {
+        return new TimeControlPresenter();
+    }
+
+    @Override
     protected void initView() {
         setTitleBack(R.string.online_time_control);
         tvTips.setText(R.string.ban_time_tips);
-        timeLimitList = BeanTest.getBanAppPlanList();
+        tvAddTimeControl.setText(R.string.increase_new_time_control);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         banTimeAdapter = new BanTimeAdapter(timeLimitList);
         recyclerView.setAdapter(banTimeAdapter);
@@ -56,8 +71,7 @@ public class TimeControlListActivity extends BaseActivity {
                         tInputDialog.show();
                         break;
                     case R.id.iv_ban_plan_delete:
-                        timeLimitList.remove(position);
-                        banTimeAdapter.notifyDataSetChanged();
+                        showDeleteDialog();
                         break;
                     default:
                         break;
@@ -68,10 +82,43 @@ public class TimeControlListActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putParcelable(Keys.BAN_APP_PLAN, timeLimitList.get(position));
+                bundle.putSerializable(Keys.BAN_APP_PLAN, timeLimitList.get(position));
                 startActivity(TimeControlPlanActivity.class, bundle);
             }
         });
+    }
+
+    private void showDeleteDialog() {
+        if (deleteDialog == null) {
+            deleteDialog = new TMessageDialog(this).withoutMid()
+                    .title(R.string.tips)
+                    .content("确认删除时间控制计划？")
+                    .left(R.string.cancel)
+                    .right(R.string.confirm)
+                    .doClick(new TMessageDialog.DoClickListener() {
+                        @Override
+                        public void onClickLeft(View view) {
+                            super.onClickLeft(view);
+                        }
+
+                        @Override
+                        public void onClickRight(View view) {
+                            mPresenter.deleteTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode(), timeLimitList.get(currentModifyPosition).getId());
+                        }
+                    });
+        }
+        deleteDialog.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode());
+    }
+
+    @OnClick(R.id.tv_add_ban_app_plan)
+    public void onTvAddNewTCClick() {
+        startActivity(TimeControlPlanActivity.class);
     }
 
     /**
@@ -102,7 +149,51 @@ public class TimeControlListActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        dismiss(tInputDialog);
+        dismiss(tInputDialog, deleteDialog);
         super.onDestroy();
+    }
+
+    @Override
+    public void onLoadData(TimeControlbean resultData) {
+        hideLoading();
+        if (resultData == null) {
+            return;
+        }
+        timeLimitList.clear();
+        timeLimitList.addAll(resultData.getPage());
+        banTimeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        super.onLoadFail(resultData, resultMsg, resultCode);
+        ToastUtils.showShort(R.string.get_option_failed);
+    }
+
+    @Override
+    public void onSetAllowTimeResponse(BaseResponse response) {
+        switch (response.getCode()) {
+            case ApiCode.SUCC:
+                ToastUtils.showShort(R.string.modify_success);
+                break;
+            default:
+                ToastUtils.showShort(R.string.modify_failed_retry);
+                break;
+        }
+    }
+
+    @Override
+    public void onDeleteAllowTimeResponse(BaseResponse response) {
+        switch (response.getCode()) {
+            case ApiCode.SUCC:
+                timeLimitList.remove(currentModifyPosition);
+                banTimeAdapter.notifyDataSetChanged();
+                dismiss(deleteDialog);
+                ToastUtils.showShort(R.string.delete_success);
+                break;
+            default:
+                ToastUtils.showShort(R.string.delete_failed_retry);
+                break;
+        }
     }
 }

@@ -5,7 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -37,7 +37,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
     @BindView(R.id.recycler_view)
     RecyclerView rvFamilyList;
     @BindView(R.id.tv_bottom_button)
-    TextView tvAddFamilyMember;
+    Button tvAddFamilyMember;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     private ArrayList<FamilyMemberBean> familyMemberList = new ArrayList<>();
@@ -102,7 +102,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @OnClick(R.id.tv_bottom_button)
     public void onAddFamilyMemberClicked() {
-        UMShareUtils.shareWxLink(this, "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.logo, null);
+        UMShareUtils.shareWxLink(this, "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.ic_test_logo, null);
     }
 
 

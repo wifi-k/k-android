@@ -21,7 +21,7 @@ public class FamilyMemberAdapter extends BaseQuickAdapter<FamilyMemberBean, Base
     @Override
     protected void convert(BaseViewHolder helper, FamilyMemberBean item) {
         CircleImageView header = helper.getView(R.id.iv_member_header);
-        GlideApp.with(helper.itemView).load(item.getUserAvatar()).placeholder(R.mipmap.logo).error(R.mipmap.logo)
+        GlideApp.with(helper.itemView).load(item.getUserAvatar()).placeholder(R.mipmap.ic_test_logo).error(R.mipmap.ic_test_logo)
                 .diskCacheStrategy(DiskCacheStrategy.ALL).circleCrop().into(header);
         helper.setText(R.id.tv_member_nickname, item.getUserName())
                 .setText(R.id.tv_member_mobile, String.format("手机号：%s", item.getUserMobile()))

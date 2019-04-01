@@ -34,7 +34,11 @@ public interface Keys {
     String WIFI = "wifi";
     String MAC = "mac";
     String NOTE = "note";
-    String BLOCK = "block";
+    String BLOCK = "isBlock";
+    String ID = "id";
+    String START_TIME = "st";
+    String END_TIME = "et";
+    String WHICH_TIME = "wt";
 
     /**
      * ----------------------intent传输key--------------------
@@ -64,8 +68,8 @@ public interface Keys {
 
     String FIRST_IN = "first_in_app";
 
-    String START_TIME = "start_time";
+    String IT_START_TIME = "start_time";
 
-    String END_TIME = "end_time";
+    String IT_END_TIME = "end_time";
 
 }

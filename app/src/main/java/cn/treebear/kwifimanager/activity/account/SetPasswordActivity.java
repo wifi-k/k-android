@@ -106,6 +106,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
+        etSignUpPassword.requestFocus();
         etSignUpPassword.setOnFocusChangeListener((v, hasFocus) -> {
             ivPassword1Clear.setVisibility(hasFocus && Check.hasContent(etSignUpPassword) ? View.VISIBLE : View.GONE);
             ivPasswordState.setVisibility(hasFocus && Check.hasContent(etSignUpPassword) ? View.VISIBLE : View.GONE);

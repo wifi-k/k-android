@@ -1,6 +1,7 @@
 package cn.treebear.kwifimanager.adapter;
 
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -10,6 +11,7 @@ import java.util.List;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
 
 /**
@@ -17,8 +19,11 @@ import cn.treebear.kwifimanager.util.DateTimeUtils;
  */
 public class MobilePhoneAdapter extends BaseQuickAdapter<MobileListBean.MobileBean, BaseViewHolder> {
 
-    public MobilePhoneAdapter(@Nullable List<MobileListBean.MobileBean> data) {
+    private int mEmsLimit;
+
+    public MobilePhoneAdapter(@Nullable List<MobileListBean.MobileBean> data, int maxEms) {
         super(R.layout.layout_item_mobile_home, data);
+        mEmsLimit = maxEms;
     }
 
     @Override
@@ -35,7 +40,9 @@ public class MobilePhoneAdapter extends BaseQuickAdapter<MobileListBean.MobileBe
 //                break;
 //        }
         boolean isOnline = item.getStatus() == 1;
-        helper.setText(R.id.tv_phone_name, item.getName())
+        TextView view = helper.getView(R.id.tv_phone_name);
+        view.setMaxEms(mEmsLimit);
+        helper.setText(R.id.tv_phone_name, Check.hasContent(item.getNote()) ? item.getNote() : item.getName())
                 .setText(R.id.tv_onoff_time, String.format((isOnline ? "上线" : "离线")
                                 + "时间:%s",
                         DateTimeUtils.formatMDHmm(isOnline ? item.getOnTime() : item.getOffTime())))

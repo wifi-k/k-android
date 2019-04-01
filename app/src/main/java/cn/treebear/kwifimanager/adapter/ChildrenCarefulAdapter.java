@@ -1,9 +1,9 @@
 package cn.treebear.kwifimanager.adapter;
 
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.support.v7.widget.GridLayout;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -14,7 +14,9 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.AppBean;
 import cn.treebear.kwifimanager.bean.MobilePhoneBean;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.config.GlideApp;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
+import cn.treebear.kwifimanager.util.DensityUtil;
 
 public class ChildrenCarefulAdapter extends BaseQuickAdapter<MobilePhoneBean, BaseViewHolder> {
     public ChildrenCarefulAdapter(@Nullable List<MobilePhoneBean> data) {
@@ -38,11 +40,16 @@ public class ChildrenCarefulAdapter extends BaseQuickAdapter<MobilePhoneBean, Ba
                 .setText(R.id.tv_average_use_time, String.format("上周平均每日活跃时长：%s", DateTimeUtils.mill2Time(item.getAverageTime())))
                 .setText(R.id.tv_use_time_rank, String.format("超过%s%%同龄人上网时长", item.getRank()))
                 .addOnClickListener(R.id.tv_look_week_report);
-        LinearLayout llAppWrapper = helper.getView(R.id.ll_active_app_wrapper);
+        GridLayout llAppWrapper = helper.getView(R.id.ll_active_app_wrapper);
+        llAppWrapper.removeAllViews();
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(DensityUtil.dip2px(mContext, 52), DensityUtil.dip2px(mContext, 36));
         for (AppBean appBean : item.getActiveApp()) {
-            ImageView appIcon = (ImageView) LayoutInflater.from(mContext).inflate(R.layout.item_app_icon, null);
+            ImageView appIcon = new ImageView(mContext);
+            appIcon.setLayoutParams(layoutParams);
+            appIcon.setPadding(0, 0, DensityUtil.dip2px(mContext, 16), 0);
             // TODO: 2019/3/7 替换默认图标
-            appIcon.setImageResource(R.mipmap.ic_launcher);
+//            appIcon.setImageResource(R.mipmap.ic_launcher);
+            GlideApp.with(helper.itemView).load(R.mipmap.ic_launcher).circleCrop().into(appIcon);
             llAppWrapper.addView(appIcon);
         }
 

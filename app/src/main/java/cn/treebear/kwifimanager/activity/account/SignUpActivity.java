@@ -190,6 +190,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
+        etSignUpPhone.requestFocus();
         etSignUpPhone.setOnFocusChangeListener((v, hasFocus) -> {
             ivEditClear.setVisibility(Check.hasContent(etSignUpPhone) && hasFocus ? View.VISIBLE : View.GONE);
             if (hasFocus) {

@@ -159,6 +159,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
      * 配置EditText焦点变化监听
      */
     private void listenFocus() {
+        etSignInPhone.requestFocus();
         etSignInPhone.setOnFocusChangeListener((v, hasFocus) -> {
             ivEditClear.setVisibility(Check.hasContent(etSignInPhone) && hasFocus ? View.VISIBLE : View.GONE);
             if (hasFocus) {

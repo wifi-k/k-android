@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -15,9 +16,10 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.adapter.SelectDaysAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.Daybean;
-import cn.treebear.kwifimanager.bean.TimeLimitBean;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.util.NumberUtil;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.pop.TimePickerPop;
 
 /**
@@ -31,11 +33,14 @@ public class NewEditTimeActivity extends BaseActivity {
     TextView tvEndTime;
     @BindView(R.id.rv_days)
     RecyclerView recyclerView;
-    private TimeLimitBean timeLimitBean;
     private List<Daybean> days = new ArrayList<>();
     private TimePickerPop startTimePop;
     private TimePickerPop endTimePop;
     private SelectDaysAdapter adapter;
+    private String startTime = "";
+    private String endTime = "";
+    private int whichTime = 0;
+    private boolean[] WEEK;
 
     @Override
     public int layoutId() {
@@ -45,20 +50,15 @@ public class NewEditTimeActivity extends BaseActivity {
     @Override
     public void initParams(Bundle params) {
         if (params != null) {
-            ArrayList<TimeLimitBean> times = params.getParcelableArrayList(Keys.TIME_LIMIT_TIME);
+            startTime = params.getString(Keys.START_TIME);
+            endTime = params.getString(Keys.END_TIME);
+            whichTime = params.getInt(Keys.WHICH_TIME, 0);
             days.addAll(ConstConfig.DAY_OF_WEEK);
-            if (times == null || times.size() == 0) {
-                return;
-            }
-            timeLimitBean = times.get(0);
-            if (timeLimitBean.getDays() == null) {
-                return;
-            }
-            for (Daybean d : timeLimitBean.getDays()) {
-                for (Daybean day : days) {
-                    if (day.getCode() == d.getCode()) {
-                        day.setChecked(true);
-                    }
+            TLog.i("startTime", Arrays.toString(WEEK));
+            WEEK = NumberUtil.encodeBinary(whichTime);
+            for (int i = 0; i < WEEK.length; i++) {
+                if (i < WEEK.length - 1) {
+                    days.get(i).setChecked(WEEK[i + 1]);
                 }
             }
         }
@@ -67,10 +67,8 @@ public class NewEditTimeActivity extends BaseActivity {
     @Override
     protected void initView() {
         setTitleBack(R.string.edit_time, R.string.save);
-        if (timeLimitBean != null) {
-            tvStartTime.setText(timeLimitBean.getStartTime());
-            tvEndTime.setText(timeLimitBean.getEndTime());
-        }
+        tvStartTime.setText(startTime);
+        tvEndTime.setText(endTime);
         adapter = new SelectDaysAdapter(days);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 7));
         recyclerView.setAdapter(adapter);
@@ -88,23 +86,23 @@ public class NewEditTimeActivity extends BaseActivity {
 
     @Override
     protected void onTitleRightClick() {
+        updateWeek();
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        timeLimitBean.setDays(filter(adapter.getData()));
-        bundle.putParcelable(Keys.TIME_LIMIT_TIME, timeLimitBean);
+        bundle.putString(Keys.START_TIME, tvStartTime.getText().toString());
+        bundle.putString(Keys.END_TIME, tvEndTime.getText().toString());
+        bundle.putInt(Keys.WHICH_TIME, NumberUtil.decodeBinary(WEEK));
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
         onTitleLeftClick();
     }
 
-    private ArrayList<Daybean> filter(List<Daybean> data) {
-        ArrayList<Daybean> result = new ArrayList<>();
-        for (Daybean datum : data) {
-            if (datum.isChecked()) {
-                result.add(datum);
-            }
+    private void updateWeek() {
+        List<Daybean> data = adapter.getData();
+        for (int i = 0; i < data.size(); i++) {
+            WEEK[i + 1] = data.get(i).isChecked();
         }
-        return result;
+        TLog.i("startTime", Arrays.toString(WEEK));
     }
 
     private void showModifyStartTimePop() {
@@ -118,7 +116,7 @@ public class NewEditTimeActivity extends BaseActivity {
 
                 @Override
                 public void onSelected(String time) {
-                    timeLimitBean.setStartTime(time);
+                    startTime = time;
                     tvStartTime.setText(time);
                     startTimePop.dismiss();
                 }
@@ -144,7 +142,7 @@ public class NewEditTimeActivity extends BaseActivity {
 
                 @Override
                 public void onSelected(String time) {
-                    timeLimitBean.setEndTime(time);
+                    endTime = time;
                     tvEndTime.setText(time);
                     endTimePop.dismiss();
                 }

@@ -9,7 +9,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
-        android:layout_height="190dp"
+        android:layout_height="180dp"
         android:background="@drawable/bg_me_2e"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
             android:id="@+id/iv_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="42dp"
             android:layout_marginEnd="24dp"
             android:src="@mipmap/ic_setting_white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,13 +55,11 @@
             android:id="@+id/iv_me_user_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
             android:src="@mipmap/ic_me_header"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_user_mobile"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_user_name"
+            app:layout_constraintTop_toBottomOf="@+id/iv_settings"
             app:srcCompat="@mipmap/ic_me_header" />
     </android.support.constraint.ConstraintLayout>
 
@@ -96,6 +94,7 @@
         android:text="@string/my_kid"
         android:textColor="#6C6C6C"
         android:textSize="17sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_my_k" />
@@ -104,7 +103,6 @@
         android:id="@+id/tv_into_new_family"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        android:layout_marginTop="8dp"
         android:drawableStart="@mipmap/ic_me_mykid"
         android:drawableEnd="@mipmap/ic_line_arrow_right_black"
         android:drawablePadding="10dp"

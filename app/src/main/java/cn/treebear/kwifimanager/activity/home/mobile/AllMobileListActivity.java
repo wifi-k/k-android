@@ -1,10 +1,13 @@
 package cn.treebear.kwifimanager.activity.home.mobile;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 
@@ -17,6 +20,7 @@ import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
@@ -59,7 +63,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
         tvDownloadSpeed.setText(String.valueOf(currentNode.getDownstream()));
         tvUploadSpeed.setText(String.valueOf(currentNode.getUpstream()));
         mPresenter.getMobileList(currentNode.getNodeId(), pageNo);
-        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList);
+        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 8);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(mobilePhoneAdapter);
         mobilePhoneAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -68,6 +72,14 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
                 default:
                     showModifyNameDialog();
                     break;
+            }
+        });
+        mobilePhoneAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString(Keys.ID, mobilePhoneList.get(position).getMac());
+                startActivity(MobileDetailActivity.class);
             }
         });
         mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo), rvDeviceList);
@@ -87,8 +99,9 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
                 @Override
                 public void onRightClick(String s) {
                     MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
-                    mPresenter.setNodeMobileInfo(currentNode.getNodeId(), bean.getMac(), bean.getNote(), bean.getBlock());
+                    mPresenter.setNodeMobileInfo(currentNode.getNodeId(), bean.getMac(), bean.getNote(), bean.getIsBlock());
                     bean.setName(s);
+                    bean.setNote(s);
                 }
             });
         }

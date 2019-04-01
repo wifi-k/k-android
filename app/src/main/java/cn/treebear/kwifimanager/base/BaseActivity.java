@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.umeng.message.PushAgent;
 import com.umeng.message.inapp.IUmengInAppMsgCloseCallback;
@@ -516,7 +515,6 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
         hideLoading();
-        ToastUtils.showShort(resultMsg);
     }
 
     /**

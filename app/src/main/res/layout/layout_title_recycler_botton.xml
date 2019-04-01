@@ -33,7 +33,7 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
+    <Button
         android:id="@+id/tv_bottom_button"
         style="@style/confirm_button"
         android:text="@string/_add_family_member"

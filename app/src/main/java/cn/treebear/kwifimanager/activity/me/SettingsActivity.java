@@ -61,7 +61,7 @@ public class SettingsActivity extends BaseActivity<SignOutContract.Presenter, Ba
         if (signOutDialog == null) {
             signOutDialog = new TMessageDialog(this).withoutMid()
                     .title("退出登录")
-                    .content("确认退出小k管家吗？")
+                    .content("确认退出小k云管家吗？")
                     .left("取消")
                     .right("确认")
                     .doClick(new TMessageDialog.DoClickListener() {

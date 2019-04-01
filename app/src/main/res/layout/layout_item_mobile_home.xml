@@ -10,7 +10,7 @@
         android:id="@+id/iv_phoneType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,21 +18,27 @@
 
     <TextView
         android:id="@+id/tv_phone_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxEms="6"
+        android:singleLine="true"
         android:textColor="#2B3852"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/iv_phoneType"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="孩子的手机" />
+        tools:text="111111111111111111111111111" />
 
     <TextView
         android:id="@+id/tv_remark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:padding="4dp"
+        android:singleLine="true"
         android:text="@string/remark"
         android:textColor="#038CFF"
         android:textSize="10sp"
@@ -67,4 +73,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="在线" />
+
 </android.support.constraint.ConstraintLayout>

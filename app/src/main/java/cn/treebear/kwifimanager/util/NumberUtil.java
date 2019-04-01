@@ -1,11 +1,46 @@
 package cn.treebear.kwifimanager.util;
 
+import android.support.annotation.IntRange;
 import android.support.annotation.Size;
 import android.text.TextUtils;
 
 import java.text.DecimalFormat;
 
 public class NumberUtil {
+
+//    public static void main(String[] args) {
+//        System.out.println(Arrays.toString(encodeBinary( 0)));
+//        System.out.println(decodeBinary(encodeBinary(0)));
+//    }
+
+    /**
+     * 获取8位二进制数每位是否为1
+     *
+     * @param binary 二进制数十进制值
+     * @return 位真表
+     */
+    public static boolean[] encodeBinary(@IntRange(from = 0, to = 127) int binary) {
+        boolean[] binaryArr = {false, false, false, false, false, false, false, false};
+        int a = binary & 0xff;
+        for (int i = 0; i < binaryArr.length; i++) {
+            binaryArr[i] = (int) (a / Math.pow(2, binaryArr.length - 1 - i)) % 2 == 1;
+        }
+        return binaryArr;
+    }
+
+    /**
+     *
+     * @param byteB
+     * @return
+     */
+    public static int decodeBinary(@Size(min = 1) boolean[] byteB) {
+        int binary = 0;
+        for (int i = 0; i < byteB.length; i++) {
+            binary += (byteB[i] ? 1 : 0) << (byteB.length - 1 - i);
+        }
+        return binary;
+    }
+
 
     /**
      * 金额格式化

@@ -11,7 +11,7 @@ public class MobileListBean implements Serializable {
 
     /**
      * total : 2
-     * page : [{"nodeId":"","mac":"","name":"主机名","onTime":"最近在线时间戳","offTime":"最近离线时间戳","note":"设备备注名","status":0,"block":0},{}]
+     * page : [{"nodeId":"","mac":"","name":"主机名","onTime":"最近在线时间戳","offTime":"最近离线时间戳","note":"设备备注名","status":0,"isBlock":0},{}]
      */
 
     private int total;
@@ -42,7 +42,7 @@ public class MobileListBean implements Serializable {
          * offTime : 最近离线时间戳
          * note : 设备备注名
          * status : 0
-         * block : 0
+         * isBlock : 0
          */
 
         private String nodeId;
@@ -52,7 +52,7 @@ public class MobileListBean implements Serializable {
         private long offTime;
         private String note;
         private int status;
-        private int block;
+        private int isBlock;
 
         public String getNodeId() {
             return nodeId;
@@ -110,12 +110,12 @@ public class MobileListBean implements Serializable {
             this.status = status;
         }
 
-        public int getBlock() {
-            return block;
+        public int getIsBlock() {
+            return isBlock;
         }
 
-        public void setBlock(int block) {
-            this.block = block;
+        public void setIsBlock(int isBlock) {
+            this.isBlock = isBlock;
         }
 
 
@@ -133,7 +133,7 @@ public class MobileListBean implements Serializable {
             dest.writeLong(this.offTime);
             dest.writeString(this.note);
             dest.writeInt(this.status);
-            dest.writeInt(this.block);
+            dest.writeInt(this.isBlock);
         }
 
         public MobileBean() {
@@ -147,7 +147,7 @@ public class MobileListBean implements Serializable {
             this.offTime = in.readLong();
             this.note = in.readString();
             this.status = in.readInt();
-            this.block = in.readInt();
+            this.isBlock = in.readInt();
         }
 
         public static final Creator<MobileBean> CREATOR = new Creator<MobileBean>() {
@@ -172,7 +172,7 @@ public class MobileListBean implements Serializable {
                     ", offTime='" + offTime + '\'' +
                     ", note='" + note + '\'' +
                     ", status=" + status +
-                    ", block=" + block +
+                    ", isBlock=" + isBlock +
                     '}';
         }
     }

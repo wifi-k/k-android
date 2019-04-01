@@ -78,6 +78,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
      * 配置EditText文本变化监听
      */
     private void listenTextChange() {
+        etSignInPhone.requestFocus();
         etSignInPhone.addTextChangedListener(new BaseTextWatcher() {
 
             @Override

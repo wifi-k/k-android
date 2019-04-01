@@ -23,8 +23,9 @@ import cn.treebear.kwifimanager.MyApplication;
  */
 public class TLog {
 
-    private static String TAG = "KKkkkkkKKKK";
-    private static boolean showLog = BuildConfig.DEBUG;
+    private static String TAG = "K_K_K_K";
+    private static boolean showLog = true;
+//    private static boolean showLog = BuildConfig.DEBUG;
 
     private TLog() {
     }
