@@ -2,6 +2,9 @@ package cn.treebear.kwifimanager.mvp.server.presenter;
 
 import android.util.ArrayMap;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 
 import cn.treebear.kwifimanager.base.BasePresenter;
@@ -13,9 +16,13 @@ import cn.treebear.kwifimanager.mvp.server.contract.TimeControlContract;
 import cn.treebear.kwifimanager.mvp.server.model.TimeCotrolModel;
 
 public class TimeControlPresenter extends BasePresenter<TimeControlContract.View, TimeControlContract.Model> implements TimeControlContract.Presenter {
+
+    private Gson gson;
+
     @Override
     public void setModel() {
         mModel = new TimeCotrolModel();
+        gson = new GsonBuilder().create();
     }
 
     @Override
@@ -41,7 +48,7 @@ public class TimeControlPresenter extends BasePresenter<TimeControlContract.View
         map.put(Keys.START_TIME, startTime);
         map.put(Keys.END_TIME, endTime);
         map.put(Keys.WHICH_TIME, repeat);
-        map.put(Keys.MAC, mac);
+        map.put(Keys.MAC, gson.toJson(mac));
         mModel.setTimeControlPlan(convertRequestBody(map), new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {

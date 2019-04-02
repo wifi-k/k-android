@@ -7,9 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,6 +26,8 @@ import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.TimeControlContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.TimeControlPresenter;
+import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
@@ -61,30 +66,25 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         banTimeAdapter = new BanTimeAdapter(timeLimitList);
         recyclerView.setAdapter(banTimeAdapter);
-        banTimeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                currentModifyPosition = position;
-                switch (view.getId()) {
-                    case R.id.iv_ban_plan_edit:
-                        resetInputDialog();
-                        tInputDialog.show();
-                        break;
-                    case R.id.iv_ban_plan_delete:
-                        showDeleteDialog();
-                        break;
-                    default:
-                        break;
-                }
+        banTimeAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            currentModifyPosition = position;
+            switch (view.getId()) {
+                case R.id.iv_ban_plan_edit:
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Keys.BAN_APP_PLAN, timeLimitList.get(position));
+                    startActivity(TimeControlPlanActivity.class, bundle);
+                    break;
+                case R.id.iv_ban_plan_delete:
+                    showDeleteDialog();
+                    break;
+                default:
+                    break;
             }
         });
-        banTimeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Keys.BAN_APP_PLAN, timeLimitList.get(position));
-                startActivity(TimeControlPlanActivity.class, bundle);
-            }
+        banTimeAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Keys.BAN_APP_PLAN, timeLimitList.get(position));
+            startActivity(TimeControlPlanActivity.class, bundle);
         });
     }
 
@@ -137,7 +137,6 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
 
                 @Override
                 public void onRightClick(String s) {
-                    // TODO: 2019/3/8 编辑成员信息
                     timeLimitList.get(currentModifyPosition).setName(s);
                     tInputDialog.dismiss();
                     banTimeAdapter.notifyDataSetChanged();
@@ -159,14 +158,37 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
         if (resultData == null) {
             return;
         }
-        timeLimitList.clear();
-        timeLimitList.addAll(resultData.getPage());
-        banTimeAdapter.notifyDataSetChanged();
+        dealData(resultData);
+    }
+
+    private void dealData(TimeControlbean resultData) {
+            List<TimeControlbean.TimeControl> page = resultData.getPage();
+            for (TimeControlbean.TimeControl control : page) {
+                String mac = control.getMac();
+                if (Check.maxThen(mac, 2)) {
+                    try {
+                    ArrayList<String> m = new ArrayList<>();
+                    JSONArray jsonArray = new JSONArray(mac);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        m.add(String.valueOf(jsonArray.get(i)));
+                    }
+                        TLog.i(m);
+                        control.setsMac(m);
+                    } catch (JSONException e) {
+                        TLog.e(e);
+                    }
+                }
+            }
+            timeLimitList.clear();
+            timeLimitList.addAll(page);
+            banTimeAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
         super.onLoadFail(resultData, resultMsg, resultCode);
+        TLog.i(resultMsg);
         ToastUtils.showShort(R.string.get_option_failed);
     }
 

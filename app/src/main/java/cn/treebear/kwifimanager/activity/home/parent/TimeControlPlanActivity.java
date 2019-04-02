@@ -60,10 +60,12 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
         if (params != null) {
             needModifyPlan = (TimeControlbean.TimeControl) params.getSerializable(Keys.BAN_APP_PLAN);
         }
+        TLog.w(needModifyPlan);
         isIncrease = needModifyPlan == null;
         if (needModifyPlan == null) {
             needModifyPlan = new TimeControlbean.TimeControl(0, 1);
         }
+        TLog.w(needModifyPlan);
     }
 
     @Override
@@ -92,7 +94,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
         mPresenter.setTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode(),
                 needModifyPlan.getId(), tvBanAppName.getText().toString(),
                 needModifyPlan.getSt(), needModifyPlan.getEt(), needModifyPlan.getWt(),
-                needModifyPlan.getMac());
+                needModifyPlan.getsMac());
     }
 
     @OnClick(R.id.tv_modify_name)
@@ -112,7 +114,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
     @OnClick(R.id.tv_control_device)
     public void onTvControlDeviceClicked() {
         Bundle bundle = new Bundle();
-        bundle.putStringArrayList(Keys.PARENT_CONTROL_DEVICE, needModifyPlan.getMac());
+        bundle.putStringArrayList(Keys.PARENT_CONTROL_DEVICE, needModifyPlan.getsMac());
         startActivityForResult(ChooseControlMobileActivity.class, bundle, Values.REQUEST_EDIT_DEVICE);
     }
 
@@ -129,6 +131,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
 
                 @Override
                 public void onRightClick(String s) {
+                    hasModify = true;
                     tvBanAppName.setText(s);
                     if (needModifyPlan != null) {
                         needModifyPlan.setName(s);
@@ -145,6 +148,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
+            hasModify = true;
             Bundle bundle = data.getExtras();
             if (bundle == null) {
                 return;
@@ -161,8 +165,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
                     break;
                 case Values.REQUEST_EDIT_DEVICE:
                     ArrayList<String> stringArrayList = bundle.getStringArrayList(Keys.PARENT_CONTROL_DEVICE);
-                    needModifyPlan.getMac().clear();
-                    needModifyPlan.getMac().addAll(stringArrayList);
+                    needModifyPlan.setsMac(stringArrayList);
                     TLog.i(stringArrayList);
                     break;
                 default:
@@ -218,7 +221,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
                             mPresenter.setTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode(),
                                     needModifyPlan.getId(), tvBanAppName.getText().toString(),
                                     needModifyPlan.getSt(), needModifyPlan.getEt(), needModifyPlan.getWt(),
-                                    needModifyPlan.getMac());
+                                    needModifyPlan.getsMac());
                         }
                     });
         }

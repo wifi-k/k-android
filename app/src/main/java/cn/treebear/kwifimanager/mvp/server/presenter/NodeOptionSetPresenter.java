@@ -8,7 +8,6 @@ import cn.treebear.kwifimanager.bean.NodeWifiListBean;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.NodeOptionSetContract;
 import cn.treebear.kwifimanager.mvp.server.model.NodeOptionSetModel;
-import cn.treebear.kwifimanager.util.Check;
 
 public class NodeOptionSetPresenter extends BasePresenter<NodeOptionSetContract.View, NodeOptionSetContract.Model> implements NodeOptionSetContract.Presenter {
     @Override
@@ -23,7 +22,7 @@ public class NodeOptionSetPresenter extends BasePresenter<NodeOptionSetContract.
         mModel.getNodeSsid(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<NodeWifiListBean>>() {
             @Override
             public void onSuccess(BaseResponse<NodeWifiListBean> resultData) {
-                if (Check.hasContent(resultData, mView)) {
+                if (mView != null) {
                     mView.onLoadData(resultData.getData());
                 }
             }

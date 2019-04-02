@@ -31,6 +31,15 @@ public final class Check {
         return text != null && text.toString().trim().length() > 0;
     }
 
+
+    public static boolean maxThen(String text, int size) {
+        return Check.hasContent(text) && text.length() > size;
+    }
+
+    public static boolean maxThen(Collection list, int size) {
+        return Check.hasContent(list) && list.size() > size;
+    }
+
     /**
      * 判断集合
      *

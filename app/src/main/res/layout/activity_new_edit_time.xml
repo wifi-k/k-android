@@ -40,12 +40,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="23dp"
             android:fontFamily="sans-serif-medium"
+            android:text="@string/default_start_time"
             android:textColor="#4A5A78"
             android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="13:00" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv4"
@@ -96,12 +96,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="23dp"
             android:fontFamily="sans-serif-medium"
+            android:text="@string/default_end_time"
             android:textColor="#4A5A78"
             android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="16:00" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView9"

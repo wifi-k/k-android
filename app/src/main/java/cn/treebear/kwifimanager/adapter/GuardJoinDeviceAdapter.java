@@ -24,7 +24,7 @@ public class GuardJoinDeviceAdapter extends BaseQuickAdapter<MobileListBean.Mobi
 
     @Override
     protected void convert(BaseViewHolder helper, MobileListBean.MobileBean item) {
-        boolean isOnline = item.getStatus() == 1;
+        boolean isOnline = item.getIsBlock() == 1;
         helper.setText(R.id.tv_device_name, item.getName())
                 .setText(R.id.tv_device_time, isOnline ?
                         DateTimeUtils.createTimeInfoByStatusLength(isOnline, item.getOnTime()) :

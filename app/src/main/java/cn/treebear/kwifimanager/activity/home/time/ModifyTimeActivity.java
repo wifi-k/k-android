@@ -8,7 +8,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseActivity;
-import cn.treebear.kwifimanager.bean.TimeLimitBean;
+import cn.treebear.kwifimanager.bean.HealthyModelBean;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.widget.pop.TimePickerPop;
 
@@ -21,7 +21,7 @@ public class ModifyTimeActivity extends BaseActivity {
     TextView tvStartTime;
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
-    private TimeLimitBean timeLimit;
+    private HealthyModelBean.WifiBean.TimerBean timeLimit;
     private TimePickerPop startTimePop;
     private TimePickerPop endTimePop;
     private int position = -1;
@@ -34,7 +34,7 @@ public class ModifyTimeActivity extends BaseActivity {
     @Override
     public void initParams(Bundle params) {
         if (params != null) {
-            timeLimit = (TimeLimitBean) params.getSerializable(Keys.TIME_LIMIT_BEAN);
+            timeLimit = (HealthyModelBean.WifiBean.TimerBean) params.getSerializable(Keys.TIME_LIMIT_BEAN);
             position = params.getInt(Keys.POSITION, -1);
         }
     }
@@ -84,6 +84,11 @@ public class ModifyTimeActivity extends BaseActivity {
                 }
 
                 @Override
+                public void onChoose(String time) {
+
+                }
+
+                @Override
                 public void onSelected(String time) {
                     tvStartTime.setText(time);
                     startTimePop.dismiss();
@@ -104,6 +109,11 @@ public class ModifyTimeActivity extends BaseActivity {
                 @Override
                 public void onCancelClick() {
                     endTimePop.dismiss();
+                }
+
+                @Override
+                public void onChoose(String time) {
+
                 }
 
                 @Override

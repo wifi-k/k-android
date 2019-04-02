@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.suke.widget.SwitchButton;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
@@ -18,6 +19,7 @@ import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
+import cn.treebear.kwifimanager.util.TLog;
 
 /**
  * @author Administrator
@@ -48,6 +50,7 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
             if (list != null) {
                 macs.addAll(list);
             }
+            TLog.w(macs);
         }
     }
 
@@ -58,26 +61,28 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo);
+        adapter.setOnCheckedChangeListener(new GuardJoinDeviceAdapter.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isCheck, MobileListBean.MobileBean item) {
+                if (isCheck) {
+                    if (!macs.contains(item.getMac())) {
+                        macs.add(item.getMac());
+                    }
+                } else {
+                    macs.remove(item.getMac());
+                }
+            }
+        });
     }
 
     @Override
     protected void onTitleRightClick() {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putStringArrayList(Keys.PARENT_CONTROL_DEVICE, convert(adapter.getData()));
+        bundle.putStringArrayList(Keys.PARENT_CONTROL_DEVICE, macs);
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
         onTitleLeftClick();
-    }
-
-    private ArrayList<String> convert(List<MobileListBean.MobileBean> data) {
-        ArrayList<String> result = new ArrayList<>();
-        for (MobileListBean.MobileBean datum : data) {
-            if (datum.getIsBlock() == 1) {
-                result.add(datum.getMac());
-            }
-        }
-        return result;
     }
 
     @Override
@@ -86,6 +91,13 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
             mobileList.clear();
         }
         mobileList.addAll(resultData.getPage());
+        for (MobileListBean.MobileBean bean : mobileList) {
+            for (String mac : macs) {
+                if (bean.getMac().equals(mac)){
+                    bean.setIsBlock(1);
+                }
+            }
+        }
         adapter.notifyDataSetChanged();
     }
 

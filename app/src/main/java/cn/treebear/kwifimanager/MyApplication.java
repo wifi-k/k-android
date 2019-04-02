@@ -2,7 +2,6 @@ package cn.treebear.kwifimanager;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.support.multidex.MultiDex;
@@ -15,7 +14,6 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.inapp.InAppMessageManager;
 import com.umeng.socialize.PlatformConfig;
 
-import cn.treebear.kwifimanager.activity.account.LaunchAccountActivity;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -120,14 +118,15 @@ public class MyApplication extends MultiDexApplication {
     private void dealUncaughtException() {
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             //开发期间打印报错日志
-            if (BuildConfig.DEBUG) {
-                TLog.e(e);
-            } else {
-                Intent intent = new Intent(mContext, LaunchAccountActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-                android.os.Process.killProcess(android.os.Process.myPid());
-            }
+            TLog.e(e);
+//            if (BuildConfig.DEBUG) {
+//                TLog.e(e);
+//            } else {
+//                Intent intent = new Intent(mContext, LaunchAccountActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                mContext.startActivity(intent);
+//                android.os.Process.killProcess(android.os.Process.myPid());
+//            }
         });
     }
 

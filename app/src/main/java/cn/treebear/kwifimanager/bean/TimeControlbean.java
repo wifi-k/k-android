@@ -11,7 +11,7 @@ public class TimeControlbean {
 
     /**
      * total : 2
-     * page : [{"id":111111111111,"nodeId":"","name":"","st":"","et":"","wt":5,"mac":"","op":1}]
+     * page : [{"id":111111111111,"nodeId":"","name":"","st":"","et":"","wt":5,"sMac":"","op":1}]
      */
 
     private int total;
@@ -41,7 +41,7 @@ public class TimeControlbean {
          * st :
          * et :
          * wt : 5
-         * mac :
+         * sMac :
          * op : 1
          */
 
@@ -51,8 +51,17 @@ public class TimeControlbean {
         private String st;
         private String et;
         private int wt;
-        private ArrayList<String> mac;
+        private String mac;
+        private ArrayList<String> sMac;
         private int op;
+
+        public String getMac() {
+            return mac;
+        }
+
+        public void setMac(String mac) {
+            this.mac = mac;
+        }
 
         public long getId() {
             return id;
@@ -102,12 +111,12 @@ public class TimeControlbean {
             this.wt = wt;
         }
 
-        public ArrayList<String> getMac() {
-            return mac;
+        public ArrayList<String> getsMac() {
+            return sMac;
         }
 
-        public void setMac(ArrayList<String> mac) {
-            this.mac = mac;
+        public void setsMac(ArrayList<String> sMac) {
+            this.sMac = sMac;
         }
 
         public int getOp() {
@@ -127,7 +136,7 @@ public class TimeControlbean {
                     ", st='" + st + '\'' +
                     ", et='" + et + '\'' +
                     ", wt=" + wt +
-                    ", mac='" + mac + '\'' +
+                    ", sMac='" + sMac + '\'' +
                     ", op=" + op +
                     '}';
         }
@@ -146,7 +155,7 @@ public class TimeControlbean {
             dest.writeString(this.st);
             dest.writeString(this.et);
             dest.writeInt(this.wt);
-            dest.writeStringList(this.mac);
+            dest.writeStringList(this.sMac);
             dest.writeInt(this.op);
         }
 
@@ -165,7 +174,7 @@ public class TimeControlbean {
             this.st = in.readString();
             this.et = in.readString();
             this.wt = in.readInt();
-            this.mac = in.createStringArrayList();
+            this.sMac = in.createStringArrayList();
             this.op = in.readInt();
         }
 
@@ -180,5 +189,13 @@ public class TimeControlbean {
                 return new TimeControl[size];
             }
         };
+    }
+
+    @Override
+    public String toString() {
+        return "TimeControlbean{" +
+                "total=" + total +
+                ", page=" + page +
+                '}';
     }
 }

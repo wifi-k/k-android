@@ -86,7 +86,7 @@ public class BanAppPlanActivity extends BaseActivity {
     public void onTvControlDeviceClicked() {
         Bundle bundle = new Bundle();
         if (needModifyPlan != null) {
-            bundle.putParcelableArrayList(Keys.PARENT_CONTROL_DEVICE, needModifyPlan.getBanMobile());
+//            bundle.getStringArrayList(Keys.PARENT_CONTROL_DEVICE, needModifyPlan.getBanMobile());
         }
         startActivityForResult(ChooseControlMobileActivity.class, bundle, Values.REQUEST_EDIT_DEVICE);
     }

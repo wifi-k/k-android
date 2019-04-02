@@ -115,6 +115,10 @@ public class NewEditTimeActivity extends BaseActivity {
                 }
 
                 @Override
+                public void onChoose(String time) {
+                }
+
+                @Override
                 public void onSelected(String time) {
                     startTime = time;
                     tvStartTime.setText(time);
@@ -138,6 +142,10 @@ public class NewEditTimeActivity extends BaseActivity {
                 @Override
                 public void onCancelClick() {
                     endTimePop.dismiss();
+                }
+
+                @Override
+                public void onChoose(String time) {
                 }
 
                 @Override

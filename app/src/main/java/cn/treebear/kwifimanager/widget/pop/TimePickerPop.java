@@ -33,7 +33,27 @@ public class TimePickerPop implements TPop {
     private ArrayList<String> minutes;
     private String mCurrentHour = "12";
     private String mCurrentMinute = "30";
-    private OnTimeSelectListener mTimeSelectListener;
+    private OnTimeSelectListener mTimeSelectListener = new OnTimeSelectListener() {
+        @Override
+        public void onCancelClick() {
+
+        }
+
+        @Override
+        public void onChoose(String time) {
+
+        }
+
+        @Override
+        public void onSelected(String time) {
+
+        }
+
+        @Override
+        public void onDismiss() {
+
+        }
+    };
     private TextView tvTitle;
 
     public TimePickerPop(Context context) {
@@ -99,11 +119,23 @@ public class TimePickerPop implements TPop {
         wheelHour.setDividerType(WheelView.DividerType.FILL);
         wheelMinute.setDividerType(WheelView.DividerType.FILL);
 //        wheelHour.setItems(hours);
-        wheelHour.setAdapter(new ArrayWheelAdapter(hours));
+        wheelHour.setAdapter(new ArrayWheelAdapter<String>(hours));
 //        wheelMinute.setItems(minutes);
-        wheelMinute.setAdapter(new ArrayWheelAdapter(minutes));
-        wheelHour.setOnItemSelectedListener(index -> mCurrentHour = String.format("%s", hours.get(index)));
-        wheelMinute.setOnItemSelectedListener(index -> mCurrentMinute = String.format("%s", minutes.get(index)));
+        wheelMinute.setAdapter(new ArrayWheelAdapter<String>(minutes));
+        wheelHour.setOnItemSelectedListener(index -> {
+            mCurrentHour = String.format("%s", hours.get(index));
+            mTimeSelectListener.onChoose(String.format("%s:%s",
+                    hours.get(wheelHour.getCurrentItem()),
+                    minutes.get(wheelMinute.getCurrentItem())
+            ));
+        });
+        wheelMinute.setOnItemSelectedListener(index -> {
+            mCurrentMinute = String.format("%s", minutes.get(index));
+            mTimeSelectListener.onChoose(String.format("%s:%s",
+                    hours.get(wheelHour.getCurrentItem()),
+                    minutes.get(wheelMinute.getCurrentItem())
+            ));
+        });
     }
 
     public void setTitleText(@StringRes int textId) {
@@ -113,13 +145,9 @@ public class TimePickerPop implements TPop {
     public void addTimeSelectListener(OnTimeSelectListener listener) {
         mTimeSelectListener = listener;
         if (mContentView != null) {
-            tvConfirm.setOnClickListener(v -> {
-                int delay = 1;
-                if (wheelHour.isLoop() || wheelMinute.isLoop()) {
-                    delay = 500;
-                }
-                tvConfirm.postDelayed(() -> mTimeSelectListener.onSelected(String.format("%s:%s", mCurrentHour, mCurrentMinute)), delay);
-            });
+            tvConfirm.setOnClickListener(v -> tvConfirm.postDelayed(() -> mTimeSelectListener.onSelected(String.format("%s:%s",
+                    hours.get(wheelHour.getCurrentItem()), minutes.get(wheelMinute.getCurrentItem()))),
+                    200));
             tvCancel.setOnClickListener(v -> mTimeSelectListener.onCancelClick());
             popupWindow.setOnDismissListener(() -> mTimeSelectListener.onDismiss());
         }
@@ -142,6 +170,8 @@ public class TimePickerPop implements TPop {
 
     public interface OnTimeSelectListener {
         void onCancelClick();
+
+        void onChoose(String time);
 
         /**
          * 确认选中数据

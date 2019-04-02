@@ -130,6 +130,9 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     @Override
     public void onLoadData(NodeWifiListBean resultData) {
+        if (resultData == null){
+            return;
+        }
         wifiList = resultData.getPage();
         if (Check.hasContent(wifiList)) {
             NodeWifiListBean.WifiBean wifiBean = wifiList.get(0);
