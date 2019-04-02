@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">小k云管家</string>
+    <string name="app_name" translatable="false">小K云管家</string>
 
     <!--友盟-->
     <string name="umeng_socialize_sharetosina">分享到新浪微博</string>
@@ -222,8 +222,6 @@
     <string name="download">下载</string>
     <string name="type">类型</string>
     <string name="android">安卓</string>
-    <string name="apple">苹果</string>
-    <string name="other">其他</string>
     <string name="brand">品牌</string>
     <string name="mac_address">MAC地址</string>
     <string name="my_kid">我的孩子</string>
@@ -328,12 +326,23 @@
     <string name="no_data">暂无数据</string>
     <string name="has_set_password">已设置密码</string>
     <string name="xiaok_xxxx">xiaok-****</string>
-    <string name="you_has_bound_this_try_other">您已绑定过该设备，请连接新设备后绑定</string>
+    <string name="you_has_bound_this_try_other">您或他人已绑定过该设备，请连接新设备后绑定</string>
     <string name="goto_connect">前往连接</string>
     <string name="join_new_family">加入新家庭</string>
     <string name="join_family_success">加入家庭成功</string>
     <string name="online_device_get_failed">联网设备获取失败</string>
     <string name="get_option_failed">获取配置失败</string>
     <string name="increase_new_time_control">+ 新增上网时间控制</string>
+    <string name="has_option">已设置</string>
+
+    <!--手机品牌-->
+    <string name="other">其他</string>
+    <string name="apple">苹果</string>
+    <string name="huawei">华为</string>
+    <string name="meizu">魅族</string>
+    <string name="xiaomi">小米</string>
+    <string name="oppo">OPPO</string>
+    <string name="vivo">VIVO</string>
+    <string name="samsung">三星</string>
 
 </resources>

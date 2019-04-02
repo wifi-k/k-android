@@ -16,6 +16,7 @@ import cn.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.MobileListBean;
+import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
@@ -60,7 +61,7 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
         adapter = new GuardJoinDeviceAdapter(mobileList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo);
+        mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo, Config.Numbers.PAGE_SIZE);
         adapter.setOnCheckedChangeListener(new GuardJoinDeviceAdapter.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isCheck, MobileListBean.MobileBean item) {
@@ -92,8 +93,9 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
         }
         mobileList.addAll(resultData.getPage());
         for (MobileListBean.MobileBean bean : mobileList) {
+            bean.setIsBlock(0);
             for (String mac : macs) {
-                if (bean.getMac().equals(mac)){
+                if (bean.getMac().equals(mac)) {
                     bean.setIsBlock(1);
                 }
             }

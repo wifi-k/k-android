@@ -12,11 +12,12 @@ import android.widget.TextView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.util.DensityUtil;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.widget.Dismissable;
 
 /**
  * @author Administrator
  */
-public class TChooseOnlineTypePop implements TPop {
+public class TChooseOnlineTypePop implements Dismissable {
 
     private final Context mContext;
     private PopupWindow popupWindow;
@@ -93,7 +94,6 @@ public class TChooseOnlineTypePop implements TPop {
         popupWindow.dismiss();
     }
 
-    @Override
     public void show(View parent) {
         if (popupWindow == null) {
             initPopupWindow();

@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.util.DensityUtil;
+import cn.treebear.kwifimanager.widget.Dismissable;
 
 
 /**
@@ -29,7 +30,7 @@ import cn.treebear.kwifimanager.util.DensityUtil;
  * 定制化多按键
  * 包含水平进度条，默认不展示
  */
-public class TipsDialog implements TDialog {
+public class TipsDialog implements Dismissable {
 
     private Context mContext;
     private Dialog mDialog;
@@ -246,7 +247,6 @@ public class TipsDialog implements TDialog {
         return this;
     }
 
-    @Override
     public void show() {
         if (!mDialog.isShowing()) {
             mDialog.show();

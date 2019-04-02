@@ -2,6 +2,7 @@ package cn.treebear.kwifimanager.activity.home.time;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -10,6 +11,7 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.HealthyModelBean;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import cn.treebear.kwifimanager.widget.pop.TimePickerPop;
 
 /**
@@ -25,6 +27,8 @@ public class ModifyTimeActivity extends BaseActivity {
     private TimePickerPop startTimePop;
     private TimePickerPop endTimePop;
     private int position = -1;
+    private TMessageDialog unsavedDialog;
+    private boolean hasModify;
 
     @Override
     public int layoutId() {
@@ -131,8 +135,46 @@ public class ModifyTimeActivity extends BaseActivity {
     }
 
     @Override
+    protected void onTitleLeftClick() {
+        if (hasModify) {
+            showUnsavedDialog();
+        } else {
+            super.onTitleLeftClick();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        onTitleLeftClick();
+    }
+
+    private void showUnsavedDialog() {
+        if (unsavedDialog == null) {
+            unsavedDialog = new TMessageDialog(this).withoutMid()
+                    .title(R.string.tips)
+                    .content("您有修改的配置尚未保存，是否立即保存？")
+                    .left("放弃")
+                    .right("保存")
+                    .doClick(new TMessageDialog.DoClickListener() {
+                        @Override
+                        public void onClickLeft(View view) {
+                            hasModify = false;
+                            onTitleLeftClick();
+                        }
+
+                        @Override
+                        public void onClickRight(View view) {
+                            onBtnConfirmClicked();
+                        }
+                    });
+        }
+        unsavedDialog.show();
+    }
+
+    @Override
     protected void onDestroy() {
         dismiss(endTimePop, startTimePop);
+        dismiss(unsavedDialog);
         super.onDestroy();
     }
 }

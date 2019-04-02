@@ -22,6 +22,7 @@ import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.TimeControlContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.TimeControlPresenter;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
@@ -39,6 +40,10 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
     TextView tvModifyName;
     @BindView(R.id.tv_limited_online_time)
     TextView tvLimitedTime;
+    @BindView(R.id.tv_has_option_time)
+    TextView tvHasOptionTime;
+    @BindView(R.id.tv_has_option_device)
+    TextView tvHasOptionDevice;
     private TimeControlbean.TimeControl needModifyPlan;
     private TInputDialog modifyNameDialog;
     private boolean isIncrease;
@@ -75,6 +80,8 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
         } else {
             change2IncreaseDisplay();
         }
+        tvHasOptionTime.setVisibility(Check.hasContent(needModifyPlan.getSt()) ? View.VISIBLE : View.GONE);
+        tvHasOptionDevice.setVisibility(Check.hasContent(needModifyPlan.getsMac()) ? View.VISIBLE : View.GONE);
         tvLimitedTime.setText(R.string.limited_online_time);
         tvBanAppTips.setText(R.string.choose_ban_time_and_device);
     }
@@ -180,6 +187,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
             case ApiCode.SUCC:
                 hasModify = false;
                 ToastUtils.showShort(R.string.set_option_success);
+                dismiss(unsavedDialog);
                 onTitleLeftClick();
                 break;
             default:
@@ -229,7 +237,9 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
     }
 
     @Override
-    public void onBackPressed() {
-        onTitleLeftClick();
+    protected void onDestroy() {
+        dismiss(unsavedDialog);
+        super.onDestroy();
     }
+
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -27,6 +28,7 @@ import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.mvp.server.contract.HealthyModelContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.HealthyModelPresenter;
 import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
 /**
  * @author Administrator
@@ -42,6 +44,8 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
     private ArrayList<HealthyModelBean.WifiBean.TimerBean> timeLimitList = new ArrayList<>();
     private HealthyModelAdapter healthyModelAdapter;
     private HealthyModelBean healthyModelInfo;
+    private TMessageDialog unsavedDialog;
+    private boolean hasModify;
 
     @Override
     public int layoutId() {
@@ -68,7 +72,7 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
             Bundle bundle = new Bundle();
             bundle.putInt(Keys.POSITION, position);
             bundle.putSerializable(Keys.TIME_LIMIT_BEAN, timeLimitList.get(position));
-            startActivity(ModifyTimeActivity.class, bundle);
+            startActivityForResult(ModifyTimeActivity.class, bundle, Values.REQUEST_EDIT_TIME);
         });
     }
 
@@ -106,7 +110,7 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
     @Override
     public void onSetInfoSuccess() {
         ToastUtils.showShort(R.string.set_option_success);
-        finish();
+//        finish();
     }
 
     @Override
@@ -118,10 +122,10 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == Values.REQUEST_EDIT_TIME && data != null) {
+            hasModify = true;
             int position = data.getIntExtra(Keys.POSITION, -1);
             String startTime = data.getStringExtra(Keys.IT_START_TIME);
             String endTime = data.getStringExtra(Keys.IT_END_TIME);
-
             HealthyModelBean.WifiBean.TimerBean timerBean = new HealthyModelBean.WifiBean.TimerBean();
             timerBean.setStartTime(startTime);
             timerBean.setEndTime(endTime);
@@ -132,6 +136,38 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
             }
             healthyModelAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected void onTitleLeftClick() {
+        if (hasModify) {
+            showUnsavedDialog();
+        } else {
+            super.onTitleLeftClick();
+        }
+    }
+
+    private void showUnsavedDialog() {
+        if (unsavedDialog == null) {
+            unsavedDialog = new TMessageDialog(this).withoutMid()
+                    .title(R.string.tips)
+                    .content("您有修改的配置尚未保存，是否立即保存？")
+                    .left("放弃")
+                    .right("保存")
+                    .doClick(new TMessageDialog.DoClickListener() {
+                        @Override
+                        public void onClickLeft(View view) {
+                            hasModify = false;
+                            onTitleLeftClick();
+                        }
+
+                        @Override
+                        public void onClickRight(View view) {
+                            onTitleRightClick();
+                        }
+                    });
+        }
+        unsavedDialog.show();
     }
 
 }

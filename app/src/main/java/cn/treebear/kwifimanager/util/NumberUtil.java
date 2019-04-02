@@ -29,7 +29,7 @@ public class NumberUtil {
     }
 
     /**
-     *
+     * n位二进制数位 转值
      * @param byteB
      * @return
      */

@@ -36,8 +36,7 @@ import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
-import cn.treebear.kwifimanager.widget.dialog.TDialog;
-import cn.treebear.kwifimanager.widget.pop.TPop;
+import cn.treebear.kwifimanager.widget.Dismissable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -573,18 +572,10 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         getWindow().setAttributes(lp);
     }
 
-    protected void dismiss(@Size(min = 1) TDialog... dialogs) {
-        for (TDialog dialog : dialogs) {
+    protected void dismiss(@Size(min = 1) Dismissable... dialogs) {
+        for (Dismissable dialog : dialogs) {
             if (dialog != null) {
                 dialog.dismiss();
-            }
-        }
-    }
-
-    protected void dismiss(@Size(min = 1) TPop... pops) {
-        for (TPop pop : pops) {
-            if (pop != null) {
-                pop.dismiss();
             }
         }
     }

@@ -22,6 +22,7 @@ import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.SelectXiaoKContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.SelectXiaoKPresenter;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.DensityUtil;
 import cn.treebear.kwifimanager.widget.divider.RecyclerViewDividerItemDecoration;
 
@@ -80,8 +81,10 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
             nodeBeans.clear();
         }
         adapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
-        nodeBeans.addAll(resultData.getPage());
-        adapter.notifyDataSetChanged();
+        if (searchSelectNode(resultData.getPage()) != -1) {
+            nodeBeans.addAll(resultData.getPage());
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -95,5 +98,19 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
         intent.putExtra(Keys.NODE_ID, nodeBeans.get(mCurrentPosition).getNodeId());
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private int searchSelectNode(List<NodeInfoDetail.NodeBean> page) {
+        if (!Check.hasContent(page)) {
+            return -1;
+        }
+        for (int i = 0; i < page.size(); i++) {
+            if (page.get(i).getIsSelect() == 1) {
+                return i;
+            }
+        }
+        page.get(0).setIsSelect(1);
+        MyApplication.getAppContext().setCurrentNode(page.get(0));
+        return 0;
     }
 }

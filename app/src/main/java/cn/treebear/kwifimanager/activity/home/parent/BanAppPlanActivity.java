@@ -29,6 +29,10 @@ public class BanAppPlanActivity extends BaseActivity {
     TextView tvBanApp;
     @BindView(R.id.tv_ban_app_tips)
     TextView tvBanAppTips;
+    @BindView(R.id.tv_has_option_time)
+    TextView tvHasOptionTime;
+    @BindView(R.id.tv_has_option_device)
+    TextView tvHasOptionDevice;
     private BanAppPlanBean needModifyPlan;
     private TInputDialog modifyNameDialog;
 
@@ -51,6 +55,8 @@ public class BanAppPlanActivity extends BaseActivity {
         } else {
             change2IncreaseDisplay();
         }
+//        tvHasOptionTime.setVisibility(Check.hasContent(needModifyPlan.getSt()) ? View.VISIBLE : View.GONE);
+//        tvHasOptionDevice.setVisibility(Check.hasContent(needModifyPlan.getsMac()) ? View.VISIBLE : View.GONE);
         tvBanApp.setText(R.string.ban_app_ban_app);
         tvBanAppTips.setText(R.string.choose_ban_app_and_device);
     }

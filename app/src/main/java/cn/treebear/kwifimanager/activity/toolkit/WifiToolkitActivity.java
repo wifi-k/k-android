@@ -130,7 +130,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     @Override
     public void onLoadData(NodeWifiListBean resultData) {
-        if (resultData == null){
+        if (resultData == null) {
             return;
         }
         wifiList = resultData.getPage();
@@ -154,7 +154,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
                 @Override
                 public void onRightClick(String s) {
-                    if (NetWorkUtils.isXiaoKSignIn()) {
+                    if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
                         modifyNameLocal(s, "");
                     } else {
                         mPresenter.modifySsid(MyApplication.getAppContext().getDeviceInfo().getId(), Values.FREQ_ALL, s);

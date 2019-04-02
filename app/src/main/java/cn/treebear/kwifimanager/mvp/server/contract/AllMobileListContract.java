@@ -19,7 +19,7 @@ public interface AllMobileListContract {
 
         void setNodeMobileInfo(String nodeId, String mac, String note, int block);
 
-        void getMobileList(String nodeId, int pageNo);
+        void getMobileList(String nodeId, int pageNo,int pageSize);
     }
 
     interface Model extends IModel {

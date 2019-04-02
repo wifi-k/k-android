@@ -16,8 +16,9 @@ import android.widget.TextView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.util.DensityUtil;
+import cn.treebear.kwifimanager.widget.Dismissable;
 
-public class TInputDialog implements TDialog {
+public class TInputDialog implements Dismissable {
     private Context mContext;
     private Dialog mDialog;
     private View view;
@@ -48,7 +49,6 @@ public class TInputDialog implements TDialog {
         return mDialog.isShowing();
     }
 
-    @Override
     public void show() {
         if (mDialog == null) {
             initDialog();

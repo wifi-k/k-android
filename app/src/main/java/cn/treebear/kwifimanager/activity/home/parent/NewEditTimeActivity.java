@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +21,10 @@ import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.Daybean;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.NumberUtil;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import cn.treebear.kwifimanager.widget.pop.TimePickerPop;
 
 /**
@@ -41,6 +46,8 @@ public class NewEditTimeActivity extends BaseActivity {
     private String endTime = "";
     private int whichTime = 0;
     private boolean[] WEEK;
+    private boolean hasModify;
+    private TMessageDialog unsavedDialog;
 
     @Override
     public int layoutId() {
@@ -67,11 +74,12 @@ public class NewEditTimeActivity extends BaseActivity {
     @Override
     protected void initView() {
         setTitleBack(R.string.edit_time, R.string.save);
-        tvStartTime.setText(startTime);
-        tvEndTime.setText(endTime);
+        tvStartTime.setText(Check.hasContent(startTime) ? startTime : getString(R.string.default_start_time));
+        tvEndTime.setText(Check.hasContent(endTime) ? endTime : getString(R.string.default_end_time));
         adapter = new SelectDaysAdapter(days);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 7));
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener((adapter, view, position) -> hasModify = true);
     }
 
     @OnClick(R.id.start_time_wrapper)
@@ -86,7 +94,10 @@ public class NewEditTimeActivity extends BaseActivity {
 
     @Override
     protected void onTitleRightClick() {
-        updateWeek();
+        if (!updateChooseWeek()) {
+            ToastUtils.showShort("至少选中一天");
+            return;
+        }
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putString(Keys.START_TIME, tvStartTime.getText().toString());
@@ -97,12 +108,15 @@ public class NewEditTimeActivity extends BaseActivity {
         onTitleLeftClick();
     }
 
-    private void updateWeek() {
+    private boolean updateChooseWeek() {
+        int count = 0;
         List<Daybean> data = adapter.getData();
         for (int i = 0; i < data.size(); i++) {
             WEEK[i + 1] = data.get(i).isChecked();
+            count++;
         }
         TLog.i("startTime", Arrays.toString(WEEK));
+        return count > 0;
     }
 
     private void showModifyStartTimePop() {
@@ -120,6 +134,7 @@ public class NewEditTimeActivity extends BaseActivity {
 
                 @Override
                 public void onSelected(String time) {
+                    hasModify = true;
                     startTime = time;
                     tvStartTime.setText(time);
                     startTimePop.dismiss();
@@ -150,6 +165,7 @@ public class NewEditTimeActivity extends BaseActivity {
 
                 @Override
                 public void onSelected(String time) {
+                    hasModify = true;
                     endTime = time;
                     tvEndTime.setText(time);
                     endTimePop.dismiss();
@@ -166,8 +182,40 @@ public class NewEditTimeActivity extends BaseActivity {
     }
 
     @Override
+    protected void onTitleLeftClick() {
+        if (hasModify) {
+            showUnsavedDialog();
+        } else {
+            super.onTitleLeftClick();
+        }
+    }
+
+    private void showUnsavedDialog() {
+        if (unsavedDialog == null) {
+            unsavedDialog = new TMessageDialog(this).withoutMid()
+                    .title(R.string.tips)
+                    .content("您有修改的配置尚未保存，是否立即保存？")
+                    .left("放弃")
+                    .right("保存")
+                    .doClick(new TMessageDialog.DoClickListener() {
+                        @Override
+                        public void onClickLeft(View view) {
+                            hasModify = false;
+                            onTitleLeftClick();
+                        }
+
+                        @Override
+                        public void onClickRight(View view) {
+                            onTitleRightClick();
+                        }
+                    });
+        }
+        unsavedDialog.show();
+    }
+
+    @Override
     protected void onDestroy() {
-        dismiss(endTimePop, startTimePop);
+        dismiss(endTimePop, startTimePop, unsavedDialog);
         super.onDestroy();
     }
 }

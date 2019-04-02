@@ -2,10 +2,12 @@ package cn.treebear.kwifimanager.config;
 
 
 import android.support.annotation.IntDef;
+import android.support.v4.util.ArrayMap;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.Daybean;
 
@@ -28,6 +30,20 @@ public interface ConstConfig {
     }};
     ArrayList<String> EMPTY_NOTICE = new ArrayList<String>() {{
         add("暂无消息");
+        if (BuildConfig.DEBUG) {
+            add("暂无消息");
+        }
+    }};
+
+    ArrayMap<String, Integer> PHONE_BRAND = new ArrayMap<String, Integer>() {{
+        put("apple", R.string.apple);
+        put("default", R.string.other);
+        put("huawei", R.string.huawei);
+        put("meizu", R.string.meizu);
+        put("xiaomi", R.string.xiaomi);
+        put("oppo", R.string.oppo);
+        put("samsung", R.string.samsung);
+        put("vivo", R.string.vivo);
     }};
 
     ArrayList<Daybean> DAY_OF_WEEK = new ArrayList<Daybean>() {

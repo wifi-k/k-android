@@ -6,10 +6,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseActivity;
-import cn.treebear.kwifimanager.bean.MobilePhoneBean;
-import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.bean.MobileListBean;
+import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
-import cn.treebear.kwifimanager.test.BeanTest;
 
 /**
  * @author Administrator
@@ -24,7 +23,7 @@ public class MobileInfoActivity extends BaseActivity {
     TextView tvMacAddress;
     @BindView(R.id.tv_ip_address)
     TextView tvIpAddress;
-    private int position;
+    private MobileListBean.MobileBean mobilePhoneBean;
 
     @Override
     public int layoutId() {
@@ -34,27 +33,22 @@ public class MobileInfoActivity extends BaseActivity {
     @Override
     public void initParams(Bundle params) {
         if (params != null) {
-            position = params.getInt(Keys.POSITION, 0);
+            mobilePhoneBean = ((MobileListBean.MobileBean) params.getSerializable(Keys.MOBILE));
         }
     }
 
     @Override
     protected void initView() {
         setTitleBack(R.string.device_info);
-        MobilePhoneBean mobilePhoneBean = BeanTest.getMobilePhoneList(10).get(position);
-        switch (mobilePhoneBean.getType()) {
-            case Config.Types
-                    .ANDROID:
-                tvDeviceType.setText(R.string.android);
-                break;
-            case Config.Types.APPLE:
-                tvDeviceType.setText(R.string.apple);
-                break;
-            default:
-                tvDeviceType.setText(R.string.other);
-                break;
+        String macVendor = mobilePhoneBean.getMacVendor();
+        Integer stringRes = ConstConfig.PHONE_BRAND.get(macVendor.toLowerCase());
+        try {
+            if (stringRes != null && stringRes != 0) {
+                tvPhoneBrand.setText(stringRes);
+            }
+        } catch (Exception e) {
+            tvPhoneBrand.setText(macVendor);
         }
-        tvPhoneBrand.setText(mobilePhoneBean.getBrand());
         tvMacAddress.setText(mobilePhoneBean.getMac());
         tvIpAddress.setText(mobilePhoneBean.getIp());
     }

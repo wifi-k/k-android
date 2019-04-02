@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.activity.home.FamilyMemberActivity;
 import cn.treebear.kwifimanager.activity.home.WeekReportActivity;
 import cn.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
@@ -155,6 +156,10 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         if (resultData.getPage() != null && resultData.getPage().size() > 0) {
             nodeBean = searchSelectNode(resultData.getPage());
             if (nodeBean == null) {
+                MyApplication.getAppContext().setCurrentNode(new NodeInfoDetail.NodeBean());
+                if (mContext instanceof MainActivity) {
+                    ((MainActivity) mContext).updateHomeFragment();
+                }
                 return;
             }
             MyApplication.getAppContext().setSelectNode(nodeBean.getNodeId());
@@ -204,7 +209,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         rvDeviceList.setAdapter(mobilePhoneAdapter);
         mobilePhoneAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
-            bundle.putInt(Keys.POSITION, position);
+            bundle.putSerializable(Keys.MOBILE, mobilePhoneList.get(position));
             startActivity(MobileDetailActivity.class, bundle);
         });
         mobilePhoneAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -376,12 +381,16 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     }
 
     private NodeInfoDetail.NodeBean searchSelectNode(List<NodeInfoDetail.NodeBean> page) {
+        if (!Check.hasContent(page)) {
+            return null;
+        }
         for (NodeInfoDetail.NodeBean bean : page) {
             if (bean.getIsSelect() == 1) {
                 MyApplication.getAppContext().setCurrentNode(bean);
                 return bean;
             }
         }
-        return null;
+        MyApplication.getAppContext().setCurrentNode(page.get(0));
+        return page.get(0);
     }
 }

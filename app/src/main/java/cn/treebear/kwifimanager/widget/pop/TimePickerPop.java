@@ -19,8 +19,9 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.util.DensityUtil;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.widget.Dismissable;
 
-public class TimePickerPop implements TPop {
+public class TimePickerPop implements Dismissable {
 
     private final Context mContext;
     private PopupWindow popupWindow;
@@ -153,7 +154,6 @@ public class TimePickerPop implements TPop {
         }
     }
 
-    @Override
     public void show(View parent) {
         if (popupWindow == null) {
             initPopupWindow();

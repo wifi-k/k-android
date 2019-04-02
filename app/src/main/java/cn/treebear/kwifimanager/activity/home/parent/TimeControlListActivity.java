@@ -8,11 +8,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,7 +22,6 @@ import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.TimeControlContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.TimeControlPresenter;
-import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
@@ -158,32 +153,34 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
         if (resultData == null) {
             return;
         }
-        dealData(resultData);
+        timeLimitList.clear();
+        timeLimitList.addAll(resultData.getPage());
+        banTimeAdapter.notifyDataSetChanged();
     }
 
-    private void dealData(TimeControlbean resultData) {
-            List<TimeControlbean.TimeControl> page = resultData.getPage();
-            for (TimeControlbean.TimeControl control : page) {
-                String mac = control.getMac();
-                if (Check.maxThen(mac, 2)) {
-                    try {
-                    ArrayList<String> m = new ArrayList<>();
-                    JSONArray jsonArray = new JSONArray(mac);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        m.add(String.valueOf(jsonArray.get(i)));
-                    }
-                        TLog.i(m);
-                        control.setsMac(m);
-                    } catch (JSONException e) {
-                        TLog.e(e);
-                    }
-                }
-            }
-            timeLimitList.clear();
-            timeLimitList.addAll(page);
-            banTimeAdapter.notifyDataSetChanged();
-
-    }
+//    private void dealData(TimeControlbean resultData) {
+//            List<TimeControlbean.TimeControl> page = resultData.getPage();
+//            for (TimeControlbean.TimeControl control : page) {
+//                String mac = control.getMac();
+//                if (Check.maxThen(mac, 2)) {
+//                    try {
+//                    ArrayList<String> m = new ArrayList<>();
+//                    JSONArray jsonArray = new JSONArray(mac);
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        m.add(String.valueOf(jsonArray.get(i)));
+//                    }
+//                        TLog.i(m);
+//                        control.setsMac(m);
+//                    } catch (JSONException e) {
+//                        TLog.e(e);
+//                    }
+//                }
+//            }
+//            timeLimitList.clear();
+//            timeLimitList.addAll(page);
+//            banTimeAdapter.notifyDataSetChanged();
+//
+//    }
 
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {

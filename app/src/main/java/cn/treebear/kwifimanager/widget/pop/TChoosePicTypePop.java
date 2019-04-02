@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.widget.Dismissable;
 
 /**
  * @author Administrator
  */
-public class TChoosePicTypePop implements TPop {
+public class TChoosePicTypePop implements Dismissable {
 
     private final Context mContext;
     private PopupWindow popupWindow;
@@ -90,7 +91,6 @@ public class TChoosePicTypePop implements TPop {
         tvCancel.setOnClickListener(v -> mListener.onCancelClick());
     }
 
-    @Override
     public void show(View parent) {
         if (popupWindow == null) {
             initPopupWindow();

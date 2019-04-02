@@ -3,6 +3,8 @@ package cn.treebear.kwifimanager.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,17 +53,18 @@ public class TimeControlbean {
         private String st;
         private String et;
         private int wt;
-        private String mac;
+//        private String mac;
+        @SerializedName("mac")
         private ArrayList<String> sMac;
         private int op;
 
-        public String getMac() {
-            return mac;
-        }
-
-        public void setMac(String mac) {
-            this.mac = mac;
-        }
+//        public String getMac() {
+//            return mac;
+//        }
+//
+//        public void setMac(String mac) {
+//            this.mac = mac;
+//        }
 
         public long getId() {
             return id;

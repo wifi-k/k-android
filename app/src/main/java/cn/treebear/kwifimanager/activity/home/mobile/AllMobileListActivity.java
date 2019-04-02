@@ -62,7 +62,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
         tvOnlineDeviceCount.setText(String.valueOf(currentNode.getDisk()));
         tvDownloadSpeed.setText(String.valueOf(currentNode.getDownstream()));
         tvUploadSpeed.setText(String.valueOf(currentNode.getUpstream()));
-        mPresenter.getMobileList(currentNode.getNodeId(), pageNo);
+        mPresenter.getMobileList(currentNode.getNodeId(), pageNo, Config.Numbers.PAGE_SIZE);
         mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 8);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(mobilePhoneAdapter);
@@ -78,11 +78,11 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString(Keys.ID, mobilePhoneList.get(position).getMac());
-                startActivity(MobileDetailActivity.class);
+                bundle.putSerializable(Keys.MOBILE, mobilePhoneList.get(position));
+                startActivity(MobileDetailActivity.class, bundle);
             }
         });
-        mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo), rvDeviceList);
+        mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo, Config.Numbers.PAGE_SIZE), rvDeviceList);
     }
 
     private void showModifyNameDialog() {

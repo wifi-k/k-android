@@ -1,6 +1,7 @@
 package cn.treebear.kwifimanager.adapter;
 
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,6 +12,7 @@ import java.util.List;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.config.GlideApp;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
 
@@ -28,17 +30,11 @@ public class MobilePhoneAdapter extends BaseQuickAdapter<MobileListBean.MobileBe
 
     @Override
     protected void convert(BaseViewHolder helper, MobileListBean.MobileBean item) {
-//        switch (item.getType()) {
-//            case Config.Types.APPLE:
-//                helper.setImageResource(R.id.iv_phoneType, R.mipmap.ic_device_apple);
-//                break;
-//            case Config.Types.ANDROID:
-//                helper.setImageResource(R.id.iv_phoneType, R.mipmap.ic_device_android);
-//                break;
-//            default:
-        helper.setImageResource(R.id.iv_phoneType, R.mipmap.ic_device_pad);
-//                break;
-//        }
+        ImageView ivPhone = helper.getView(R.id.iv_phoneType);
+        GlideApp.with(helper.itemView)
+                .load(item.getMacIcon())
+                .placeholder(R.mipmap.ic_device_pad).error(R.mipmap.ic_device_pad)
+                .into(ivPhone);
         boolean isOnline = item.getStatus() == 1;
         TextView view = helper.getView(R.id.tv_phone_name);
         view.setMaxEms(mEmsLimit);

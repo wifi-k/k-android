@@ -5,7 +5,6 @@ import android.util.ArrayMap;
 import cn.treebear.kwifimanager.base.BasePresenter;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.MobileListBean;
-import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.IModel;
 import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
@@ -43,11 +42,11 @@ public class AllMobileListPresenter extends BasePresenter<AllMobileListContract.
     }
 
     @Override
-    public void getMobileList(String nodeId, int pageNo) {
+    public void getMobileList(String nodeId, int pageNo, int pageSize) {
         ArrayMap<String, Object> map = map();
         map.put(Keys.NODE_ID, nodeId);
         map.put(Keys.PAGE_NO, pageNo);
-        map.put(Keys.PAGE_SIZE, Config.Numbers.HOME_MOBILE_PAGE_SIZE);
+        map.put(Keys.PAGE_SIZE, pageSize);
         mModel.getMobileList(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<MobileListBean>>() {
             @Override
             public void onSuccess(BaseResponse<MobileListBean> resultData) {

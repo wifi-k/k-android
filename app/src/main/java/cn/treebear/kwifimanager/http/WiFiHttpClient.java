@@ -41,6 +41,7 @@ public class WiFiHttpClient {
     private static String apiToken = "";
     private static boolean needLogin = true;
     private static boolean isLogin_ing = false;
+    private static BaseResponse<WifiDeviceInfo> resultData;
 
     private WiFiHttpClient() {
 
@@ -132,6 +133,9 @@ public class WiFiHttpClient {
     public static void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         // 保证全局单次连接wifi只登录一次
         if (!needLogin) {
+            if (callBack != null && resultData != null) {
+                callBack.onSuccess(resultData);
+            }
             TLog.w("Current device has logged in !");
             return;
         }

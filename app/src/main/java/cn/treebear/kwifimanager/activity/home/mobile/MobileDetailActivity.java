@@ -6,23 +6,28 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.suke.widget.SwitchButton;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseSeekBarChangeListener;
-import cn.treebear.kwifimanager.bean.MobilePhoneBean;
+import cn.treebear.kwifimanager.bean.MobileListBean;
+import cn.treebear.kwifimanager.config.GlideApp;
 import cn.treebear.kwifimanager.config.Keys;
-import cn.treebear.kwifimanager.test.BeanTest;
+import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
+import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 /**
  * @author Administrator
  */
-public class MobileDetailActivity extends BaseActivity {
+public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Presenter, MobileListBean> implements AllMobileListContract.View {
 
     @BindView(R.id.iv_device_type)
     ImageView ivDeviceType;
@@ -48,9 +53,8 @@ public class MobileDetailActivity extends BaseActivity {
     TextView tvDeviceTime;
     @BindView(R.id.sw_online_children)
     SwitchButton swbOnlineChildren;
-    private int position;
-    private MobilePhoneBean mobilePhoneBean;
     private TInputDialog modifyNameDialog;
+    private MobileListBean.MobileBean mobilePhoneBean;
 
     @Override
     public int layoutId() {
@@ -58,9 +62,14 @@ public class MobileDetailActivity extends BaseActivity {
     }
 
     @Override
+    public AllMobileListContract.Presenter getPresenter() {
+        return new AllMobileListPresenter();
+    }
+
+    @Override
     public void initParams(Bundle params) {
         if (params != null) {
-            position = params.getInt(Keys.POSITION, 0);
+            mobilePhoneBean = (MobileListBean.MobileBean) params.getSerializable(Keys.MOBILE);
         }
     }
 
@@ -68,27 +77,31 @@ public class MobileDetailActivity extends BaseActivity {
     protected void initView() {
         statusTransparentFontWhite();
         setTitle(R.mipmap.ic_line_arrow_left_white, getString(R.string.device_detail), "", 0, false);
-        mobilePhoneBean = BeanTest.getMobilePhoneList(10).get(position);
         tvDeviceName.setText(mobilePhoneBean.getName());
-        tvDeviceTime.setText(String.format("%s " + (mobilePhoneBean.isOnline() ? "上线" : "离线"),
-                DateTimeUtils.formatMDHmm(mobilePhoneBean.isOnline() ? mobilePhoneBean.getOnlineTime() : mobilePhoneBean.getOfflineTime())));
-        swbOnlineChildren.setChecked(mobilePhoneBean.isChildren());
-        swbOnlineAlarm.setChecked(mobilePhoneBean.isOnlineAlarm());
-        swbBlacklisting.setChecked(mobilePhoneBean.isBanOnline());
-        swbSpeedLimit.setChecked(mobilePhoneBean.isLimitSpeed());
-        sbDownloadSpeed.setEnabled(!mobilePhoneBean.isLimitSpeed());
-        sbUploadSpeed.setEnabled(!mobilePhoneBean.isLimitSpeed());
+        boolean isOnline = mobilePhoneBean.getStatus() == 1;
+        tvDeviceTime.setText(String.format("%s " + (isOnline ? "上线" : "离线"),
+                DateTimeUtils.formatMDHmm(isOnline ? mobilePhoneBean.getOnTime() : mobilePhoneBean.getOffTime())));
+//        swbOnlineChildren.setChecked(mobilePhoneBean.isChildren());
+//        swbOnlineAlarm.setChecked(mobilePhoneBean.isOnlineAlarm());
+        GlideApp.with(this).load(mobilePhoneBean.getMacIcon())
+                .placeholder(R.mipmap.ic_device_pad).error(R.mipmap.ic_device_pad).into(ivDeviceType);
+        swbBlacklisting.setChecked(mobilePhoneBean.getIsBlock() == 1);
+        swbSpeedLimit.setChecked(false);
+        sbDownloadSpeed.setEnabled(false);
+        sbUploadSpeed.setEnabled(false);
 
-        tvUploadSpeed.setText(mobilePhoneBean.isLimitSpeed() ? String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d) : "不限速");
-        tvDownloadSpeed.setText(mobilePhoneBean.isLimitSpeed() ? String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d) : "不限速");
-        sbDownloadSpeed.setEnabled(mobilePhoneBean.isLimitSpeed());
-        sbUploadSpeed.setEnabled(mobilePhoneBean.isLimitSpeed());
-        swbOnlineChildren.setOnCheckedChangeListener((view, isChecked) -> BeanTest.getMobilePhoneList(10).get(position).setChildren(isChecked));
-        swbOnlineAlarm.setOnCheckedChangeListener((view, isChecked) -> BeanTest.getMobilePhoneList(10).get(position).setOnlineAlarm(isChecked));
-        swbBlacklisting.setOnCheckedChangeListener((view, isChecked) -> BeanTest.getMobilePhoneList(10).get(position).setBanOnline(isChecked));
+        tvUploadSpeed.setText(true ? String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d) : "不限速");
+        tvDownloadSpeed.setText(true ? String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d) : "不限速");
+        sbDownloadSpeed.setEnabled(false);
+        sbUploadSpeed.setEnabled(false);
+        swbOnlineChildren.setOnCheckedChangeListener((view, isChecked) -> {
+        });
+        swbOnlineAlarm.setOnCheckedChangeListener((view, isChecked) -> {
+        });
+        swbBlacklisting.setOnCheckedChangeListener((view, isChecked) -> {
+        });
         swbSpeedLimit.setOnCheckedChangeListener((view, isChecked) -> {
-            BeanTest.getMobilePhoneList(10).get(position).setLimitSpeed(isChecked);
-            mobilePhoneBean.setLimitSpeed(isChecked);
+//            mobilePhoneBean.setLimitSpeed(isChecked);
             sbDownloadSpeed.setEnabled(isChecked);
             sbUploadSpeed.setEnabled(isChecked);
             tvUploadSpeed.setText(isChecked ? String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d) : "不限速");
@@ -116,7 +129,7 @@ public class MobileDetailActivity extends BaseActivity {
     @OnClick(R.id.tv_device_info)
     public void onTvDeviceInfoClicked() {
         Bundle bundle = new Bundle();
-        bundle.putInt(Keys.POSITION, position);
+        bundle.putSerializable(Keys.MOBILE, mobilePhoneBean);
         startActivity(MobileInfoActivity.class, bundle);
     }
 
@@ -133,11 +146,9 @@ public class MobileDetailActivity extends BaseActivity {
 
                 @Override
                 public void onRightClick(String s) {
-                    // TODO: 2019/3/13 修改名称
-                    modifyNameDialog.dismiss();
-                    mobilePhoneBean.setName(s);
-                    tvDeviceName.setText(s);
-                    BeanTest.getMobilePhoneList(10).get(position).setName(s);
+                    mobilePhoneBean.setNote(s);
+                    mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
+                            mobilePhoneBean.getMac(), s, mobilePhoneBean.getIsBlock());
                 }
             });
         }
@@ -149,5 +160,16 @@ public class MobileDetailActivity extends BaseActivity {
     protected void onDestroy() {
         dismiss(modifyNameDialog);
         super.onDestroy();
+    }
+
+    @Override
+    public void onModifyMobileInfoResponse(BaseResponse response) {
+        if (response != null && response.getCode() == 0) {
+            modifyNameDialog.dismiss();
+            mobilePhoneBean.setName(mobilePhoneBean.getNote());
+            tvDeviceName.setText(mobilePhoneBean.getNote());
+        } else {
+            ToastUtils.showShort(R.string.modify_failed);
+        }
     }
 }

@@ -60,7 +60,6 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
                 mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(), item.getMac(), item.getNote(), item.getIsBlock());
             }
         });
-        emptyViewWrapper.setVisibility(guardDeviceList.size() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @OnClick(R.id.tv_add_join)
@@ -76,6 +75,8 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
                 guardDeviceList.clear();
             }
             guardDeviceList.addAll(resultData.getPage());
+//            emptyViewWrapper.setVisibility(guardDeviceList.size() == 0 ? View.VISIBLE : View.GONE);
+            emptyViewWrapper.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
         }
     }
