@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.umeng.message.inapp.IUmengInAppMsgCloseCallback;
 import com.umeng.message.inapp.InAppMessageManager;
@@ -35,8 +36,8 @@ import cn.treebear.kwifimanager.mvp.IView;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
-import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import cn.treebear.kwifimanager.widget.Dismissable;
+import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -580,8 +581,8 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         }
     }
 
-    protected void onEvent(String eventID, String label) {
-
+    protected void onCountEvent(String eventID) {
+        MobclickAgent.onEvent(this, eventID);
     }
 
 }

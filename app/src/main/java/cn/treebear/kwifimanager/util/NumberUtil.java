@@ -9,8 +9,8 @@ import java.text.DecimalFormat;
 public class NumberUtil {
 
 //    public static void main(String[] args) {
-//        System.out.println(Arrays.toString(encodeBinary( 0)));
-//        System.out.println(decodeBinary(encodeBinary(0)));
+//        System.out.println(Arrays.toString(encodeBinary(64)));
+//        System.out.println(decodeBinary(encodeBinary(64)));
 //    }
 
     /**
@@ -23,20 +23,23 @@ public class NumberUtil {
         boolean[] binaryArr = {false, false, false, false, false, false, false, false};
         int a = binary & 0xff;
         for (int i = 0; i < binaryArr.length; i++) {
-            binaryArr[i] = (int) (a / Math.pow(2, binaryArr.length - 1 - i)) % 2 == 1;
+//            binaryArr[i] = (int) (a / Math.pow(2, binaryArr.length - 1 - i)) % 2 == 1;
+            binaryArr[i] = (int) (a / Math.pow(2, i)) % 2 == 1;
         }
         return binaryArr;
     }
 
     /**
      * n位二进制数位 转值
+     *
      * @param byteB
      * @return
      */
     public static int decodeBinary(@Size(min = 1) boolean[] byteB) {
         int binary = 0;
         for (int i = 0; i < byteB.length; i++) {
-            binary += (byteB[i] ? 1 : 0) << (byteB.length - 1 - i);
+//            binary += (byteB[i] ? 1 : 0) << (byteB.length - 1 - i);
+            binary += (byteB[i] ? 1 : 0) << i;
         }
         return binary;
     }

@@ -63,10 +63,8 @@ public class NewEditTimeActivity extends BaseActivity {
             days.addAll(ConstConfig.DAY_OF_WEEK);
             TLog.i("startTime", Arrays.toString(WEEK));
             WEEK = NumberUtil.encodeBinary(whichTime);
-            for (int i = 0; i < WEEK.length; i++) {
-                if (i < WEEK.length - 1) {
-                    days.get(i).setChecked(WEEK[i + 1]);
-                }
+            for (int i = 0; i < days.size(); i++) {
+                days.get(i).setChecked(WEEK[i]);
             }
         }
     }
@@ -105,14 +103,14 @@ public class NewEditTimeActivity extends BaseActivity {
         bundle.putInt(Keys.WHICH_TIME, NumberUtil.decodeBinary(WEEK));
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
-        onTitleLeftClick();
+        finish();
     }
 
     private boolean updateChooseWeek() {
         int count = 0;
         List<Daybean> data = adapter.getData();
         for (int i = 0; i < data.size(); i++) {
-            WEEK[i + 1] = data.get(i).isChecked();
+            WEEK[i] = data.get(i).isChecked();
             count++;
         }
         TLog.i("startTime", Arrays.toString(WEEK));
