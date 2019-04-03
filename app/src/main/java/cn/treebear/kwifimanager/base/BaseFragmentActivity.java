@@ -38,8 +38,8 @@ import cn.treebear.kwifimanager.mvp.IView;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
-import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import cn.treebear.kwifimanager.widget.Dismissable;
+import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -538,6 +538,8 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         }
         mFragments.set(position, newFragment);
         mFragments.set(mFragments.size() - 1, oldFragment);
+        mFragments.remove(oldFragment);
+        fragmentTransaction.remove(oldFragment);
         fragmentTransaction.show(mFragments.get(currentFragmentIndex));
         fragmentTransaction.commitNow();
     }
@@ -572,11 +574,11 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     protected void addFragments(Fragment... fragments) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
-            for (int i = 0; i < fragments.length; i++) {
-                if (!mFragments.contains(fragments[i])) {
-                    mFragments.add(fragments[i]);
-                    fragmentTransaction.add(getFragmentHolderId(), fragments[i], String.valueOf(i));
-                    fragmentTransaction.hide(fragments[i]);
+            for (Fragment fragment : fragments) {
+                if (!mFragments.contains(fragment)) {
+                    mFragments.add(fragment);
+                    fragmentTransaction.add(getFragmentHolderId(), fragment, fragment.getClass().getSimpleName());
+                    fragmentTransaction.hide(fragment);
                 }
             }
             currentFragmentIndex = 0;
@@ -591,11 +593,11 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     protected void addFragments(ArrayList<Fragment> fragments) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
-            for (int i = 0; i < fragments.size(); i++) {
-                if (!mFragments.contains(fragments.get(i))) {
-                    mFragments.add(fragments.get(i));
-                    fragmentTransaction.add(getFragmentHolderId(), fragments.get(i), String.valueOf(i));
-                    fragmentTransaction.hide(fragments.get(i));
+            for (Fragment fragment : fragments) {
+                if (!mFragments.contains(fragment)) {
+                    mFragments.add(fragment);
+                    fragmentTransaction.add(getFragmentHolderId(), fragment, fragment.getClass().getSimpleName());
+                    fragmentTransaction.hide(fragment);
                 }
             }
             currentFragmentIndex = 0;
