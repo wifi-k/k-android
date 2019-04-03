@@ -91,7 +91,7 @@ public class MainActivity extends BaseFragmentActivity {
                     }
                     break;
                 case 1:
-                    statusTransparentFontWhite();
+                    statusWhiteFontBlack();
                     break;
                 case 2:
                     statusTransparentFontWhite();

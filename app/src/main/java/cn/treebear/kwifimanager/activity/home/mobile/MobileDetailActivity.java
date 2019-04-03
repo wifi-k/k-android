@@ -98,8 +98,9 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         });
         swbOnlineAlarm.setOnCheckedChangeListener((view, isChecked) -> {
         });
-        swbBlacklisting.setOnCheckedChangeListener((view, isChecked) -> {
-        });
+        swbBlacklisting.setOnCheckedChangeListener((view, isChecked) ->
+                mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
+                        mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), isChecked ? 1 : 0));
         swbSpeedLimit.setOnCheckedChangeListener((view, isChecked) -> {
 //            mobilePhoneBean.setLimitSpeed(isChecked);
             sbDownloadSpeed.setEnabled(isChecked);

@@ -15,6 +15,7 @@ public class DateTimeUtils {
     public static final long MINUTE = 60 * SECONDS;
     public static final long HOUR = 60 * MINUTE;
     public static final long DAY = 24 * HOUR;
+    public static final long YEAR = 365 * DAY;
 
     private static final String S_MILL = "毫秒";
     private static final String S_SECENDS = "秒";
@@ -88,6 +89,36 @@ public class DateTimeUtils {
         calendar.setTimeInMillis(mills);
         return sdfMdHmm.format(calendar.getTime());
     }
+
+    /**
+     * 格式化时间
+     *
+     * @param mills 时间毫秒值
+     * @return MD_Hmm格式时间
+     */
+    public static String formatYmd(long mills) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfMdHmm = new SimpleDateFormat("yyyy年M月d日");
+        GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
+        calendar.setTimeInMillis(mills);
+        return sdfMdHmm.format(calendar.getTime());
+    }
+
+    /**
+     * 格式化时间
+     *
+     * @param mills 时间毫秒值
+     * @return MD_Hmm格式时间
+     */
+    public static String formatYMD4Gallery(long mills) {
+        if (mills < DAY * 365) {
+            mills *= 1000;
+        }
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfMdHmm = new SimpleDateFormat("yyyy年M月d日");
+        GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
+        calendar.setTimeInMillis(mills);
+        return sdfMdHmm.format(calendar.getTime());
+    }
+
 
     /**
      * 格式化时间

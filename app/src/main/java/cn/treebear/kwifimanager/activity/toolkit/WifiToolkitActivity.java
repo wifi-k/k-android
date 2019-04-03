@@ -52,8 +52,8 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 //    TextView tvLanSetting;
     @BindView(R.id.tv_restart_device)
     TextView tvRestartDevice;
-    @BindView(R.id.tv_dhcp_server)
-    TextView tvDhcpServer;
+//    @BindView(R.id.tv_dhcp_server)
+//    TextView tvDhcpServer;
     @BindView(R.id.tv_reset_device)
     TextView tvResetDevice;
     @BindView(R.id.gl_senior_setting_wrapper)
@@ -118,10 +118,10 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         showRestartTipDialog();
     }
 
-    @OnClick(R.id.tv_dhcp_server)
-    public void onTvDhcpServerClicked() {
-        startActivity(DHCPServerActivity.class);
-    }
+//    @OnClick(R.id.tv_dhcp_server)
+//    public void onTvDhcpServerClicked() {
+//        startActivity(DHCPServerActivity.class);
+//    }
 
     @OnClick(R.id.tv_reset_device)
     public void onTvResetDeviceClicked() {

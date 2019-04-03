@@ -8,6 +8,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import cn.treebear.kwifimanager.util.DensityUtil;
+
 
 /**
  * @author Administrator
@@ -51,8 +53,8 @@ public class RecyclerViewGridDividerItemDecoration extends RecyclerView.ItemDeco
         } catch (Exception e) {
             mPaint.setColor(Color.parseColor("#898989"));
         }
-        this.dividerWidth = dividerWidth;
-        this.dividerHeight = dividerHeight;
+        this.dividerWidth = DensityUtil.dip2px(dividerWidth);
+        this.dividerHeight = DensityUtil.dip2px(dividerHeight);
     }
 
     @Override

@@ -175,11 +175,11 @@
                     android:drawableTop="@mipmap/ic_toolkit_restart_device"
                     android:text="@string/toolkit_restart_device" />
 
-                <TextView
-                    android:id="@+id/tv_dhcp_server"
-                    style="@style/senior_setting_view"
-                    android:drawableTop="@mipmap/ic_toolkit_dhcp_server"
-                    android:text="@string/toolkit_dhcp_server" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_dhcp_server"-->
+                    <!--style="@style/senior_setting_view"-->
+                    <!--android:drawableTop="@mipmap/ic_toolkit_dhcp_server"-->
+                    <!--android:text="@string/toolkit_dhcp_server" />-->
 
                 <TextView
                     android:id="@+id/tv_reset_device"

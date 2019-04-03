@@ -47,7 +47,7 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
 
     protected P mPresenter;
     protected Context mContext;
-    protected View mRootView;
+    protected ViewGroup mRootView;
     /**
      * 限制666ms内多次跳转同一界面
      */
@@ -65,7 +65,7 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         if (mRootView == null) {
-            mRootView = inflater.inflate(layoutId(), container, false);
+            mRootView = (ViewGroup) inflater.inflate(layoutId(), container, false);
         }
         unbinder = ButterKnife.bind(this, mRootView);
         mPresenter = getPresenter();

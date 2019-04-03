@@ -107,6 +107,10 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     // 七牛
     implementation 'com.qiniu:qiniu-android-sdk:7.3.15'
-
+    // 照片压缩
     implementation 'com.github.nanchen2251:CompressHelper:1.0.5'
+    // 带title的adapter
+    implementation 'com.truizlop.sectionedrecyclerview:library:1.2.0'
+    // 分割线
+    implementation 'com.karumi:dividers:1.0.1'
 }

@@ -66,6 +66,9 @@ public class NewEditTimeActivity extends BaseActivity {
             for (int i = 0; i < days.size(); i++) {
                 days.get(i).setChecked(WEEK[i]);
             }
+            if (!updateChooseWeek()) {
+                days.get(0).setChecked(true);
+            }
         }
     }
 
@@ -111,7 +114,9 @@ public class NewEditTimeActivity extends BaseActivity {
         List<Daybean> data = adapter.getData();
         for (int i = 0; i < data.size(); i++) {
             WEEK[i] = data.get(i).isChecked();
-            count++;
+            if (data.get(i).isChecked()) {
+                count++;
+            }
         }
         TLog.i("startTime", Arrays.toString(WEEK));
         return count > 0;

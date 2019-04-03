@@ -293,8 +293,8 @@
     <string name="reset_device_success">恢复出厂设置成功</string>
     <string name="gallery_lab">照片库</string>
     <string name="newer_picture">最新照片</string>
-    <string name="intelligence_gallery">智能相册</string>
-    <string name="share_gallery">共享相册</string>
+    <string name="intelligence_gallery">智能照片</string>
+    <string name="share_gallery">共享照片</string>
     <string name="upload_ing">上传中…</string>
     <string name="upload_error">图片上传失败</string>
     <string name="user_info_update_success">信息更新成功</string>

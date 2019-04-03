@@ -57,7 +57,7 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked, MobileListBean.MobileBean item) {
                 item.setIsBlock(isChecked ? 1 : 0);
-                mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(), item.getMac(), item.getNote(), item.getIsBlock());
+                mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(), item.getMac(), item.getNote(), isChecked ? 1 : 0);
             }
         });
     }
