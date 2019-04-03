@@ -48,8 +48,6 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
     @Override
     protected void initView() {
         setTitleBack(R.string.toolkit_guard_join_net);
-        showLoading();
-        mPresenter.getNodeMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo);
         adapter = new GuardJoinDeviceAdapter(guardDeviceList);
         rvGuardDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvGuardDeviceList.setAdapter(adapter);
@@ -60,6 +58,12 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
                 mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(), item.getMac(), item.getNote(), isChecked ? 1 : 0);
             }
         });
+        showLoading();
+        refresh();
+    }
+
+    private void refresh() {
+        mPresenter.getNodeMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo);
     }
 
     @OnClick(R.id.tv_add_join)
@@ -89,5 +93,6 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
     @Override
     public void setNodeMobileFail() {
         ToastUtils.showShort(R.string.option_failed);
+        refresh();
     }
 }

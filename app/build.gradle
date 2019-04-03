@@ -26,9 +26,9 @@ android {
                 UMENG_MESSAGE_SECRET: "17f28a2b0dac46d22c16065a7163f41f",
         ]
 
-        ndk {
-            abiFilters 'armeabi', 'x86', "armeabi-v7a"
-        }
+//        ndk {
+//            abiFilters 'armeabi', 'x86', "armeabi-v7a"
+//        }
     }
 
     compileOptions {

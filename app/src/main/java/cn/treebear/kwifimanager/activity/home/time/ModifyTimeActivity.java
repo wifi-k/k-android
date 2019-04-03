@@ -145,7 +145,7 @@ public class ModifyTimeActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        onTitleLeftClick();
+        super.onBackPressed();
     }
 
     private void showUnsavedDialog() {

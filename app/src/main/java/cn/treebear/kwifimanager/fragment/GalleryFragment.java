@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -62,10 +63,15 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     private GalleryAdapter galleryAdapter;
     private View header;
     private ImageView ivNewerPic;
+    private TextView tvNewerPic;
     private ImageView ivSmartPic;
+    private TextView tvSmartPic;
     private ImageView ivSharePic;
+    private TextView tvSharePic;
     private TextView tvHasNotBackup;
     private TextView tvToBackup;
+    LinearLayout llPicWrapper;
+    LinearLayout llTextWrapper;
 
     @Override
     public int layoutId() {
@@ -97,9 +103,14 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     }
 
     private void findHeaderView() {
+        llPicWrapper = header.findViewById(R.id.ll_pic_wrapper);
+        llTextWrapper = header.findViewById(R.id.ll_text_wrapper);
         ivNewerPic = header.findViewById(R.id.iv_newer_pic);
+        tvNewerPic = header.findViewById(R.id.tv_newer_pic);
         ivSmartPic = header.findViewById(R.id.iv_smart_pic);
+        tvSmartPic = header.findViewById(R.id.tv_smart_pic);
         ivSharePic = header.findViewById(R.id.iv_share_pic);
+        tvSharePic = header.findViewById(R.id.tv_share_pic);
         tvHasNotBackup = header.findViewById(R.id.tv_has_no_backup);
     }
 
@@ -123,6 +134,13 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     }
 
     private void listenScroll() {
+        int[] y = {0};
+        tvNewerPic.post(new Runnable() {
+            @Override
+            public void run() {
+                y[0] = (int) (tvNewerPic.getY() - tvNewerPic.getHeight());
+            }
+        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -132,7 +150,8 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                TLog.i("dx = %s, dy = %s", dx, dy);
+                rlTabWrapper.setAlpha(tvNewerPic.getY() / (float) y[0]);
+
                 // 获取header坐标y , 一直header height
                 // 坐标 (height - y) / height = 比例
                 // 比例 * 1 = alpha
@@ -175,7 +194,9 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
                     date *= 1000;
                 }
                 String filepath = cursor.getString(pathIndex);
-                imageBeans.add(new LocalImageBean(thumbPath, date, DateTimeUtils.formatYMD4Gallery(date), filepath));
+                LocalImageBean imageBean = new LocalImageBean(thumbPath, date, DateTimeUtils.formatYMD4Gallery(date), filepath);
+                imageBeans.add(imageBean);
+                TLog.w(imageBean);
             } while (cursor.moveToNext());
             image2Section();
         }

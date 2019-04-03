@@ -61,6 +61,13 @@ public class LoadingProgressDialog {
         }
     }
 
+    public static boolean isShowing() {
+        if (dialog != null) {
+            return dialog.isShowing();
+        }
+        return false;
+    }
+
     /**
      * 让dialog消失
      */

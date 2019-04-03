@@ -550,7 +550,9 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
 
     @Override
     public void onBackPressed() {
-        onTitleLeftClick();
+        if (!LoadingProgressDialog.isShowing()) {
+            onTitleLeftClick();
+        }
     }
 
     /**
