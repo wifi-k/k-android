@@ -139,6 +139,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         setChildrenListAdapter();
 //       公告 及 其他
         updateOtherData();
+        mRootView.findViewById(R.id.constraintLayout).requestFocus();
         TLog.i(MyApplication.getAppContext().getUser());
     }
 

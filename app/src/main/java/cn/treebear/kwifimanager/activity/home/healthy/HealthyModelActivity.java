@@ -109,13 +109,19 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
 
     @Override
     public void onSetInfoSuccess() {
+        hasModify = false;
         ToastUtils.showShort(R.string.set_option_success);
-//        finish();
+        hideLoading();
+        if (unsavedDialog.isShowing()) {
+            dismiss(unsavedDialog);
+            finish();
+        }
     }
 
     @Override
     public void onSetInfoFailed(BaseResponse response) {
         ToastUtils.showShort(R.string.option_failed_retry);
+        hideLoading();
     }
 
     @Override
@@ -143,6 +149,7 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
         if (hasModify) {
             showUnsavedDialog();
         } else {
+            dismiss(unsavedDialog);
             super.onTitleLeftClick();
         }
     }

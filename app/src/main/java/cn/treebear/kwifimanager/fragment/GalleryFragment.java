@@ -4,11 +4,9 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +25,6 @@ import com.karumi.dividers.DividerItemDecoration;
 import com.karumi.dividers.Layer;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
@@ -35,8 +32,8 @@ import cn.treebear.kwifimanager.adapter.GalleryAdapter;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.bean.local.LocalImageSection;
-import cn.treebear.kwifimanager.util.Check;
-import cn.treebear.kwifimanager.util.DateTimeUtils;
+import cn.treebear.kwifimanager.config.GalleryHelper;
+import cn.treebear.kwifimanager.util.DensityUtil;
 import cn.treebear.kwifimanager.util.TLog;
 
 /**
@@ -134,11 +131,13 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     }
 
     private void listenScroll() {
-        int[] y = {0};
-        tvNewerPic.post(new Runnable() {
+        float[] y = {0, 0, 0, 0};
+        header.post(new Runnable() {
             @Override
             public void run() {
-                y[0] = (int) (tvNewerPic.getY() - tvNewerPic.getHeight());
+                y[0] = 0;
+                y[1] = (DensityUtil.getScreenWidth() - DensityUtil.dip2px(74)) / 2f;
+                y[2] = DensityUtil.dip2px(93);
             }
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -150,12 +149,21 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                rlTabWrapper.setAlpha(tvNewerPic.getY() / (float) y[0]);
-
-                // 获取header坐标y , 一直header height
-                // 坐标 (height - y) / height = 比例
-                // 比例 * 1 = alpha
-                // 比例 * （屏幕width / 1.2） = title右边距
+                y[0] += dy;
+                float percent = 0;
+                if (y[0] <= y[2] && y[0] >= 0 && y[2] != 0) {
+                    percent = (0 - y[0]) / y[2];
+                }
+                if (y[0] >= y[2] && y[2] != 0) {
+                    percent = -1;
+                }
+                TLog.w("dy = " + dy + "; y[0] = " + y[0] + "; y[1] = " + y[1] + ";percent = " + percent);
+                if (percent != y[3]) {
+                    tvTitle.setTranslationX(y[1] * percent);
+                    rlTabWrapper.setAlpha(0 - percent);
+                    rlTabWrapper.setEnabled(0 - percent >= 0.5f);
+                    y[3] = percent;
+                }
             }
         });
     }
@@ -163,61 +171,16 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
-        String[] STORE_IMAGES = {
-                MediaStore.Images.Media.DATA,
-                MediaStore.Images.Media.DATE_ADDED,
-                MediaStore.Images.Thumbnails.DATA
-        };
-        imageBeans.clear();
-        sections.clear();
-        return new CursorLoader(
-                mContext.getApplicationContext(),
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                STORE_IMAGES,
-                null,
-                null,
-                MediaStore.Images.Media.DATE_ADDED + " DESC");
+        return GalleryHelper.onCreateLoader();
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         imageBeans.clear();
         sections.clear();
-        if (cursor.moveToNext()) {
-            int thumbPathIndex = cursor.getColumnIndex(MediaStore.Images.Thumbnails.DATA);
-            int timeIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED);
-            int pathIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-            do {
-                String thumbPath = cursor.getString(thumbPathIndex);
-                long date = cursor.getLong(timeIndex);
-                if (date < DateTimeUtils.YEAR) {
-                    date *= 1000;
-                }
-                String filepath = cursor.getString(pathIndex);
-                LocalImageBean imageBean = new LocalImageBean(thumbPath, date, DateTimeUtils.formatYMD4Gallery(date), filepath);
-                imageBeans.add(imageBean);
-                TLog.w(imageBean);
-            } while (cursor.moveToNext());
-            image2Section();
-        }
-    }
-
-    private void image2Section() {
-        if (!Check.hasContent(imageBeans)) {
-            return;
-        }
-        sections.clear();
-        Collections.sort(imageBeans, (o1, o2) -> Long.compare(o2.getDateAdded(), o1.getDateAdded()));
-        TLog.i(imageBeans);
-        String date = imageBeans.get(0).getDate();
-        sections.add(new LocalImageSection(true, date));
-        for (LocalImageBean bean : imageBeans) {
-            if (!date.equals(bean.getDate())) {
-                date = bean.getDate();
-                sections.add(new LocalImageSection(true, date));
-            }
-            sections.add(new LocalImageSection(bean));
-        }
+        GalleryHelper.onLoadFinished(cursor);
+        imageBeans.addAll(GalleryHelper.getImageBeans());
+        sections.addAll(GalleryHelper.getSections());
         tvHasNotBackup.setText(String.format("检测到您有%s张未备份的照片，是否备份？", imageBeans.size()));
         galleryAdapter.notifyDataSetChanged();
     }
