@@ -2,6 +2,7 @@ package cn.treebear.kwifimanager.mvp.server.model;
 
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseServerModel;
+import cn.treebear.kwifimanager.bean.ChildrenListBean;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
@@ -27,5 +28,10 @@ public class BindHomeModel extends BaseServerModel implements BindHomeContract.M
     @Override
     public void getMobileList(RequestBody params, AsyncCallBack<BaseResponse<MobileListBean>> callBack) {
         bindObservable(mService.getNodeDeviceList(params), callBack);
+    }
+
+    @Override
+    public void getChildrenList(RequestBody params, AsyncCallBack<BaseResponse<ChildrenListBean>> callBack) {
+        bindObservable(mService.getChildrenList(params),callBack);
     }
 }

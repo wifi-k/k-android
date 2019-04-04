@@ -2,6 +2,7 @@ package cn.treebear.kwifimanager.http;
 
 
 import cn.treebear.kwifimanager.base.BaseResponse;
+import cn.treebear.kwifimanager.bean.ChildrenListBean;
 import cn.treebear.kwifimanager.bean.FamilyMemberCover;
 import cn.treebear.kwifimanager.bean.HealthyModelBean;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
@@ -359,5 +360,14 @@ public interface HttpService {
      */
     @POST("user/node/device/allow/del")
     Observable<BaseResponse<Object>> delAllowDevice(@Body RequestBody body);
+
+    /**
+     * 获取设备一周上网时长 /user/node/device/week/list
+     * 说明
+     * 返回开启上网关爱的设备统计
+     * App显示的文案用remark字段
+     */
+    @POST("user/node/device/week/list")
+    Observable<BaseResponse<ChildrenListBean>> getChildrenList(@Body RequestBody body);
 
 }

@@ -26,6 +26,7 @@ import cn.treebear.kwifimanager.activity.home.FamilyMemberActivity;
 import cn.treebear.kwifimanager.activity.home.WeekReportActivity;
 import cn.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import cn.treebear.kwifimanager.activity.home.mobile.AllMobileListActivity;
+import cn.treebear.kwifimanager.activity.home.mobile.ChildrenListActivity;
 import cn.treebear.kwifimanager.activity.home.mobile.MobileDetailActivity;
 import cn.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
 import cn.treebear.kwifimanager.activity.home.myk.SelectXiaoKActivity;
@@ -36,18 +37,16 @@ import cn.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import cn.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
+import cn.treebear.kwifimanager.bean.ChildrenListBean;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.bean.MobileListBean;
-import cn.treebear.kwifimanager.bean.MobilePhoneBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.BindHomePresenter;
-import cn.treebear.kwifimanager.test.BeanTest;
 import cn.treebear.kwifimanager.util.Check;
-import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.util.UMShareUtils;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.marquee.MarqueeTextView;
@@ -101,14 +100,17 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     TextView tvLookMore;
     @BindView(R.id.rv_children_device)
     RecyclerView rvChildrenDevice;
+    @BindView(R.id.tv_look_more_kid)
+    TextView tvLookMoreKid;
     private ArrayList<MobileListBean.MobileBean> mobilePhoneList = new ArrayList<>();
     private MobilePhoneAdapter mobilePhoneAdapter;
-    private ArrayList<MobilePhoneBean> childrenPhoneList = new ArrayList<>();
 
     private int currentModifyPosition;
     private TInputDialog modifyNameDialog;
     private NodeInfoDetail.NodeBean nodeBean;
     private ArrayList<MessageInfoBean.PageBean> messageList = new ArrayList<>();
+    private List<ChildrenListBean.ChildrenBean> childrenList = new ArrayList<>();
+    private ChildrenCarefulAdapter childrenCarefulAdapter;
 
     public HomeBindFragment() {
 
@@ -134,13 +136,11 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         setTitle(R.string.app_name);
 //      设备列表适配器配置
         setMobileListAdapter();
-        testData();
 //      儿童设备
         setChildrenListAdapter();
 //       公告 及 其他
         updateOtherData();
         mRootView.findViewById(R.id.constraintLayout).requestFocus();
-        TLog.i(MyApplication.getAppContext().getUser());
     }
 
     @Override
@@ -167,6 +167,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
             tvApName.setText(nodeBean.getName());
             tvUserState.setText(nodeBean.getStatus() == 1 ? R.string.online : R.string.offline);
             mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
+            mPresenter.getChildrenList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
         }
     }
 
@@ -188,7 +189,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     private void setChildrenListAdapter() {
         rvChildrenDevice.setLayoutManager(new LinearLayoutManager(mContext));
-        ChildrenCarefulAdapter childrenCarefulAdapter = new ChildrenCarefulAdapter(childrenPhoneList);
+        childrenCarefulAdapter = new ChildrenCarefulAdapter(childrenList);
         rvChildrenDevice.setAdapter(childrenCarefulAdapter);
         childrenCarefulAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -202,6 +203,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
                 }
             }
         });
+        tvLookMoreKid.setVisibility(childrenList.size() >= 3 ? View.VISIBLE : View.GONE);
     }
 
     private void setMobileListAdapter() {
@@ -219,10 +221,6 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         });
     }
 
-    private void testData() {
-        childrenPhoneList.clear();
-        childrenPhoneList.addAll(BeanTest.getChildrenPhoneList(1));
-    }
 
     private void showModifyNameDialog() {
         if (modifyNameDialog == null) {
@@ -247,14 +245,6 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         }
         modifyNameDialog.clearInputText();
         modifyNameDialog.show();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (!hasLoadData && isVisibleToUser) {
-            // TODO: 2019/3/4 加载数据 加载成功后将hasLoadData改为true
-        }
     }
 
     @OnClick(R.id.tv_ap_name)
@@ -297,7 +287,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R.id.tv_look_week_report)
     public void onTvLookWeekReportClicked() {
-        startActivity(WeekReportActivity.class);
+        startActivity(ChildrenListActivity.class);
     }
 
     @OnClick(R.id.tv_wifi_settings)
@@ -379,6 +369,18 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     @Override
     public void onMobileListError(BaseResponse error) {
         ToastUtils.showShort(R.string.online_device_get_failed);
+    }
+
+    @Override
+    public void onChildrenListResponse(ChildrenListBean data) {
+        childrenList.clear();
+        childrenList.addAll(data.getPage());
+        childrenCarefulAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildrenListError(BaseResponse error) {
+        // TODO: 2019/4/4 暂无儿童
     }
 
     private NodeInfoDetail.NodeBean searchSelectNode(List<NodeInfoDetail.NodeBean> page) {

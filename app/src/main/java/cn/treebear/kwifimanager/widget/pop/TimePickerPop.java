@@ -30,10 +30,15 @@ public class TimePickerPop implements Dismissable {
     private com.contrarywind.view.WheelView wheelMinute;
     private TextView tvCancel;
     private TextView tvConfirm;
-    private ArrayList<String> hours;
-    private ArrayList<String> minutes;
+    private TextView tvTitle;
+    private ArrayList<String> hours = new ArrayList<>();
+    private ArrayList<String> minutes = new ArrayList<>();
     private String mCurrentHour = "12";
     private String mCurrentMinute = "30";
+    private int hourPosition = 12;
+    private int minutePosition = 30;
+    private String mark = ":";
+    private String format = "%s" + mark + "%s";
     private OnTimeSelectListener mTimeSelectListener = new OnTimeSelectListener() {
         @Override
         public void onCancelClick() {
@@ -41,12 +46,12 @@ public class TimePickerPop implements Dismissable {
         }
 
         @Override
-        public void onChoose(String time) {
+        public void onChoose(String time, String hour, String minute) {
 
         }
 
         @Override
-        public void onSelected(String time) {
+        public void onSelected(String time, String hour, String minute) {
 
         }
 
@@ -55,7 +60,6 @@ public class TimePickerPop implements Dismissable {
 
         }
     };
-    private TextView tvTitle;
 
     public TimePickerPop(Context context) {
         mContext = context;
@@ -63,9 +67,28 @@ public class TimePickerPop implements Dismissable {
         initPopupWindow();
     }
 
+    public void setDefaultTime(int hourPosition, int minutePosition) {
+        this.hourPosition = hourPosition;
+        this.minutePosition = minutePosition;
+        mCurrentHour = hours.get(hourPosition);
+        mCurrentMinute = minutes.get(minutePosition);
+    }
+
+    public void setDefaultTime(String hour, String minute) {
+        this.hourPosition = hours.indexOf(hour) < 0 ? 0 : hours.indexOf(hour);
+        this.minutePosition = minutes.indexOf(minute) < 0 ? 0 : minutes.indexOf(minute);
+        mCurrentHour = hour;
+        mCurrentMinute = minute;
+    }
+
+    public void setMark(String mark) {
+        this.mark = mark;
+        format = "%s" + mark + "%s";
+    }
+
     private void initDefaultData() {
-        hours = new ArrayList<>();
-        minutes = new ArrayList<>();
+        hours.clear();
+        minutes.clear();
         for (int i = 0; i < 24; i++) {
             hours.add(i, String.valueOf(i < 10 ? "0" + i : i));
         }
@@ -113,8 +136,6 @@ public class TimePickerPop implements Dismissable {
         wheelMinute.setTextSize(20);
 //        wheelHour.setBackgroundColor(Config.Colors.COLOR_D8);
 //        wheelMinute.setBackgroundColor(Config.Colors.COLOR_D8);
-        wheelHour.setCurrentItem(12);
-        wheelMinute.setCurrentItem(30);
         wheelHour.setDividerColor(Config.Colors.COLOR_C0);
         wheelMinute.setDividerColor(Config.Colors.COLOR_C0);
         wheelHour.setDividerType(WheelView.DividerType.FILL);
@@ -125,17 +146,23 @@ public class TimePickerPop implements Dismissable {
         wheelMinute.setAdapter(new ArrayWheelAdapter<String>(minutes));
         wheelHour.setOnItemSelectedListener(index -> {
             mCurrentHour = String.format("%s", hours.get(index));
-            mTimeSelectListener.onChoose(String.format("%s:%s",
+            hourPosition = index;
+            mTimeSelectListener.onChoose(String.format(format,
+                    hours.get(wheelHour.getCurrentItem()),
+                    minutes.get(wheelMinute.getCurrentItem())),
                     hours.get(wheelHour.getCurrentItem()),
                     minutes.get(wheelMinute.getCurrentItem())
-            ));
+            );
         });
         wheelMinute.setOnItemSelectedListener(index -> {
             mCurrentMinute = String.format("%s", minutes.get(index));
-            mTimeSelectListener.onChoose(String.format("%s:%s",
+            minutePosition = index;
+            mTimeSelectListener.onChoose(String.format(format,
+                    hours.get(wheelHour.getCurrentItem()),
+                    minutes.get(wheelMinute.getCurrentItem())),
                     hours.get(wheelHour.getCurrentItem()),
                     minutes.get(wheelMinute.getCurrentItem())
-            ));
+            );
         });
     }
 
@@ -146,9 +173,12 @@ public class TimePickerPop implements Dismissable {
     public void addTimeSelectListener(OnTimeSelectListener listener) {
         mTimeSelectListener = listener;
         if (mContentView != null) {
-            tvConfirm.setOnClickListener(v -> tvConfirm.postDelayed(() -> mTimeSelectListener.onSelected(String.format("%s:%s",
-                    hours.get(wheelHour.getCurrentItem()), minutes.get(wheelMinute.getCurrentItem()))),
-                    200));
+            tvConfirm.setOnClickListener(v -> tvConfirm.postDelayed(() -> mTimeSelectListener.onSelected(
+                    String.format(format,
+                            hours.get(wheelHour.getCurrentItem()), minutes.get(wheelMinute.getCurrentItem())),
+                    hours.get(wheelHour.getCurrentItem()),
+                    minutes.get(wheelMinute.getCurrentItem())
+            ), 200));
             tvCancel.setOnClickListener(v -> mTimeSelectListener.onCancelClick());
             popupWindow.setOnDismissListener(() -> mTimeSelectListener.onDismiss());
         }
@@ -158,6 +188,8 @@ public class TimePickerPop implements Dismissable {
         if (popupWindow == null) {
             initPopupWindow();
         }
+        wheelHour.setCurrentItem(hourPosition);
+        wheelMinute.setCurrentItem(minutePosition);
         popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
     }
 
@@ -171,12 +203,12 @@ public class TimePickerPop implements Dismissable {
     public interface OnTimeSelectListener {
         void onCancelClick();
 
-        void onChoose(String time);
+        void onChoose(String time, String hour, String minute);
 
         /**
          * 确认选中数据
          */
-        void onSelected(String time);
+        void onSelected(String time, String hour, String minute);
 
         void onDismiss();
     }

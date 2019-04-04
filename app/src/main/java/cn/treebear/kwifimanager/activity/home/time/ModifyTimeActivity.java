@@ -11,6 +11,7 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.HealthyModelBean;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import cn.treebear.kwifimanager.widget.pop.TimePickerPop;
 
@@ -56,16 +57,12 @@ public class ModifyTimeActivity extends BaseActivity {
 
     @OnClick(R.id.start_time_wrapper)
     public void onStartTimeWrapperClicked() {
-        initStartTimePop();
-        backgroundAlpha(0.8f);
-        startTimePop.show(getWindow().getDecorView());
+        showStartTimePop();
     }
 
     @OnClick(R.id.end_time_wrapper)
     public void onEndTimeWrapperClicked() {
-        initEndTimePop();
-        backgroundAlpha(0.8f);
-        endTimePop.show(getWindow().getDecorView());
+        showEndTimePop();
     }
 
     @OnClick(R.id.btn_confirm)
@@ -78,7 +75,7 @@ public class ModifyTimeActivity extends BaseActivity {
         finish();
     }
 
-    private void initStartTimePop() {
+    private void showStartTimePop() {
         if (startTimePop == null) {
             startTimePop = new TimePickerPop(this);
             startTimePop.addTimeSelectListener(new TimePickerPop.OnTimeSelectListener() {
@@ -88,12 +85,13 @@ public class ModifyTimeActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onChoose(String time) {
+                public void onChoose(String time, String hour, String minute) {
 
                 }
 
                 @Override
-                public void onSelected(String time) {
+                public void onSelected(String time, String hour, String minute) {
+                    hasModify = true;
                     tvStartTime.setText(time);
                     startTimePop.dismiss();
                 }
@@ -104,9 +102,14 @@ public class ModifyTimeActivity extends BaseActivity {
                 }
             });
         }
+        backgroundAlpha(0.8f);
+        if (timeLimit != null && Check.hasContent(timeLimit.getStartTime())) {
+            startTimePop.setDefaultTime(timeLimit.getStartTime().split(":")[0], timeLimit.getStartTime().split(":")[1]);
+        }
+        startTimePop.show(getWindow().getDecorView());
     }
 
-    private void initEndTimePop() {
+    private void showEndTimePop() {
         if (endTimePop == null) {
             endTimePop = new TimePickerPop(this);
             endTimePop.addTimeSelectListener(new TimePickerPop.OnTimeSelectListener() {
@@ -116,12 +119,13 @@ public class ModifyTimeActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onChoose(String time) {
+                public void onChoose(String time, String hour, String minute) {
 
                 }
 
                 @Override
-                public void onSelected(String time) {
+                public void onSelected(String time, String hour, String minute) {
+                    hasModify = true;
                     tvEndTime.setText(time);
                     endTimePop.dismiss();
                 }
@@ -132,6 +136,11 @@ public class ModifyTimeActivity extends BaseActivity {
                 }
             });
         }
+        backgroundAlpha(0.8f);
+        if (timeLimit != null && Check.hasContent(timeLimit.getEndTime())) {
+            endTimePop.setDefaultTime(timeLimit.getEndTime().split(":")[0], timeLimit.getEndTime().split(":")[1]);
+        }
+        endTimePop.show(getWindow().getDecorView());
     }
 
     @Override

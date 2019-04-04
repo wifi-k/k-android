@@ -18,12 +18,13 @@ public class AllMobileListPresenter extends BasePresenter<AllMobileListContract.
     }
 
     @Override
-    public void setNodeMobileInfo(String nodeId, String mac, String note, int block) {
+    public void setNodeMobileInfo(String nodeId, String mac, String note, int block, int isRecord, int alarm) {
         ArrayMap<String, Object> map = map();
         map.put(Keys.NODE_ID, nodeId);
         map.put(Keys.MAC, mac);
         map.put(Keys.NOTE, note);
         map.put(Keys.BLOCK, block);
+        map.put(Keys.IS_RECORD,isRecord);
         mModel.setMobileInfo(convertRequestBody(map), new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {

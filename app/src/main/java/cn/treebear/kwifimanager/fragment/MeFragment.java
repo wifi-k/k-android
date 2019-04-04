@@ -1,6 +1,5 @@
 package cn.treebear.kwifimanager.fragment;
 
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -23,6 +22,7 @@ import cn.treebear.kwifimanager.mvp.server.contract.GetUserInfoContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.GetUserInfoPresenter;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * @author Administrator
@@ -33,7 +33,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
     @BindView(R.id.tv_user_mobile)
     TextView tvUserMobile;
     @BindView(R.id.iv_me_user_header)
-    ImageView ivMeUserHeader;
+    CircleImageView ivMeUserHeader;
 
     private ServerUserInfo userInfo;
     private TInputDialog inputDialog;

@@ -6,6 +6,6 @@
 
     <corners android:radius="@dimen/btn_login_radius" />
 
-    <solid android:color="@color/whitep85" />
+    <solid android:color="@color/white" />
 
 </shape>

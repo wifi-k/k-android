@@ -20,7 +20,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowBackground">@mipmap/bg_launch_login</item>
+        <item name="android:windowBackground">@drawable/bg_launch_login</item>
     </style>
 
 </resources>

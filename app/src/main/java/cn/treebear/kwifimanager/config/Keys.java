@@ -39,6 +39,7 @@ public interface Keys {
     String START_TIME = "st";
     String END_TIME = "et";
     String WHICH_TIME = "wt";
+    String IS_RECORD = "isRecord";
 
     /**
      * ----------------------intent传输key--------------------

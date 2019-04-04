@@ -44,6 +44,7 @@ public class HealthyModelPresenter extends BasePresenter<HealthyModelContract.Vi
         try {
             params.put(Keys.NODE_ID, nodeId);
             params.put(Keys.OP, op);
+//            params.put(Keys.FREQ,0);
             params.put(Keys.WIFI, new GsonBuilder().create().toJson(bean));
             mModel.setHealthyModelInfo(convertRequestBody(params), new IModel.AsyncCallBack<BaseResponse<Object>>() {
                 @Override

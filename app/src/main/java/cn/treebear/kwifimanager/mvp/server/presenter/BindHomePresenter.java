@@ -4,6 +4,7 @@ import android.util.ArrayMap;
 
 import cn.treebear.kwifimanager.base.BasePresenter;
 import cn.treebear.kwifimanager.base.BaseResponse;
+import cn.treebear.kwifimanager.bean.ChildrenListBean;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
@@ -42,11 +43,18 @@ public class BindHomePresenter extends BasePresenter<BindHomeContract.View, Bind
         ArrayMap<String, Object> map = map();
         map.put(Keys.PAGE_NO, pageNo);
         map.put(Keys.PAGE_SIZE, Config.Numbers.HOME_NOTICE_PAGE_SIZE);
-        mModel.getMessageList(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<MessageInfoBean>>() {
+        mModel.getMessageList(convertRequestBody(map), new IModel.AsyncCallBack<BaseResponse<MessageInfoBean>>() {
             @Override
             public void onSuccess(BaseResponse<MessageInfoBean> resultData) {
                 if (mView != null) {
                     mView.onMessageListResponse(resultData.getData());
+                }
+            }
+
+            @Override
+            public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
+                if (mView != null) {
+                    mView.onMessageListError(resultData);
                 }
             }
         });
@@ -82,11 +90,41 @@ public class BindHomePresenter extends BasePresenter<BindHomeContract.View, Bind
         map.put(Keys.NODE_ID, nodeId);
         map.put(Keys.PAGE_NO, pageNo);
         map.put(Keys.PAGE_SIZE, Config.Numbers.HOME_MOBILE_PAGE_SIZE);
-        mModel.getMobileList(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<MobileListBean>>() {
+        mModel.getMobileList(convertRequestBody(map), new IModel.AsyncCallBack<BaseResponse<MobileListBean>>() {
             @Override
             public void onSuccess(BaseResponse<MobileListBean> resultData) {
                 if (Check.hasContent(resultData, mView)) {
                     mView.onMobileListResponse(resultData.getData());
+                }
+            }
+
+            @Override
+            public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
+                if (mView != null) {
+                    mView.onMobileListError(resultData);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getChildrenList(String nodeId, int pageNo) {
+        ArrayMap<String, Object> map = map();
+        map.put(Keys.NODE_ID, nodeId);
+        map.put(Keys.PAGE_NO, pageNo);
+        map.put(Keys.PAGE_SIZE, Config.Numbers.HOME_MOBILE_PAGE_SIZE);
+        mModel.getChildrenList(convertRequestBody(map), new IModel.AsyncCallBack<BaseResponse<ChildrenListBean>>() {
+            @Override
+            public void onSuccess(BaseResponse<ChildrenListBean> resultData) {
+                if (Check.hasContent(resultData, mView)) {
+                    mView.onChildrenListResponse(resultData.getData());
+                }
+            }
+
+            @Override
+            public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
+                if (mView != null) {
+                    mView.onChildrenListError(resultData);
                 }
             }
         });

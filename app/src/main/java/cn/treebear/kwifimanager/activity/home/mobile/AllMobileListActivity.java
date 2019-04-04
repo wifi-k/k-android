@@ -99,7 +99,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
                 @Override
                 public void onRightClick(String s) {
                     MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
-                    mPresenter.setNodeMobileInfo(currentNode.getNodeId(), bean.getMac(), bean.getNote(), bean.getIsBlock());
+                    mPresenter.setNodeMobileInfo(currentNode.getNodeId(), bean.getMac(), bean.getNote(), bean.getIsBlock(), bean.getIsRecord(), 1);
                     bean.setName(s);
                     bean.setNote(s);
                 }
@@ -136,7 +136,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
     @Override
     public void onModifyMobileInfoResponse(BaseResponse response) {
         if (response != null && response.getCode() == 0) {
-            modifyNameDialog.dismiss();
+            dismiss(modifyNameDialog);
             mobilePhoneAdapter.notifyDataSetChanged();
         } else {
             ToastUtils.showShort(R.string.modify_failed);

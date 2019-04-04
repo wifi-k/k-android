@@ -69,10 +69,21 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(healthyModelAdapter);
         healthyModelAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt(Keys.POSITION, position);
-            bundle.putSerializable(Keys.TIME_LIMIT_BEAN, timeLimitList.get(position));
-            startActivityForResult(ModifyTimeActivity.class, bundle, Values.REQUEST_EDIT_TIME);
+            switch (view.getId()) {
+                case R.id.iv_healthy_edit:
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Keys.POSITION, position);
+                    bundle.putSerializable(Keys.TIME_LIMIT_BEAN, timeLimitList.get(position));
+                    startActivityForResult(ModifyTimeActivity.class, bundle, Values.REQUEST_EDIT_TIME);
+                    break;
+                case R.id.iv_delete:
+                    hasModify = true;
+                    timeLimitList.remove(position);
+                    adapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
+            }
         });
     }
 

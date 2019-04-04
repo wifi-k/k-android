@@ -90,17 +90,20 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         sbDownloadSpeed.setEnabled(false);
         sbUploadSpeed.setEnabled(false);
 
-        tvUploadSpeed.setText(true ? String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d) : "不限速");
-        tvDownloadSpeed.setText(true ? String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d) : "不限速");
+        tvUploadSpeed.setText(String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d));
+        tvDownloadSpeed.setText(String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d));
         sbDownloadSpeed.setEnabled(false);
         sbUploadSpeed.setEnabled(false);
-        swbOnlineChildren.setOnCheckedChangeListener((view, isChecked) -> {
-        });
-        swbOnlineAlarm.setOnCheckedChangeListener((view, isChecked) -> {
-        });
+        swbOnlineChildren.setOnCheckedChangeListener((view, isChecked) -> mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
+                mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), isChecked ? 1 : 0,
+                isChecked ? 1 : 0, swbOnlineAlarm.isChecked() ? 1 : 0));
+        swbOnlineAlarm.setOnCheckedChangeListener((view, isChecked) -> mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
+                mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), swbBlacklisting.isChecked() ? 1 : 0,
+                swbOnlineChildren.isChecked() ? 1 : 0, isChecked ? 1 : 0));
         swbBlacklisting.setOnCheckedChangeListener((view, isChecked) ->
                 mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
-                        mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), isChecked ? 1 : 0));
+                        mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), isChecked ? 1 : 0,
+                        swbOnlineChildren.isChecked() ? 1 : 0, swbOnlineAlarm.isChecked() ? 1 : 0));
         swbSpeedLimit.setOnCheckedChangeListener((view, isChecked) -> {
 //            mobilePhoneBean.setLimitSpeed(isChecked);
             sbDownloadSpeed.setEnabled(isChecked);
@@ -111,13 +114,17 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         sbUploadSpeed.setOnSeekBarChangeListener(new BaseSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvUploadSpeed.setText(String.format("%sMB/S", progress / 10d));
+                if (swbSpeedLimit.isChecked()) {
+                    tvUploadSpeed.setText(String.format("%sMB/S", progress / 10d));
+                }
             }
         });
         sbDownloadSpeed.setOnSeekBarChangeListener(new BaseSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvDownloadSpeed.setText(String.format("%sMB/S", progress / 10d));
+                if (swbSpeedLimit.isChecked()) {
+                    tvDownloadSpeed.setText(String.format("%sMB/S", progress / 10d));
+                }
             }
         });
     }
@@ -149,7 +156,8 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
                 public void onRightClick(String s) {
                     mobilePhoneBean.setNote(s);
                     mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
-                            mobilePhoneBean.getMac(), s, mobilePhoneBean.getIsBlock());
+                            mobilePhoneBean.getMac(), s, mobilePhoneBean.getIsBlock(),
+                            swbOnlineChildren.isChecked() ? 1 : 0, swbOnlineAlarm.isChecked() ? 1 : 0);
                 }
             });
         }

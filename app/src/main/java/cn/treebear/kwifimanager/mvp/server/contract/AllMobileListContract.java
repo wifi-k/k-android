@@ -17,9 +17,9 @@ public interface AllMobileListContract {
 
     interface Presenter extends IPresenter<View> {
 
-        void setNodeMobileInfo(String nodeId, String mac, String note, int block);
+        void setNodeMobileInfo(String nodeId, String mac, String note, int block, int isRecord, int alarm);
 
-        void getMobileList(String nodeId, int pageNo,int pageSize);
+        void getMobileList(String nodeId, int pageNo, int pageSize);
     }
 
     interface Model extends IModel {

@@ -57,6 +57,7 @@
     <string name="parent_control">家长控制</string>
     <string name="healthy_model">健康模式</string>
     <string name="look_week_report">查看周报</string>
+    <string name="children_list">儿童关爱列表</string>
     <string name="wifi_setting">WiFi设置</string>
     <string name="to_back_up">去备份</string>
     <string name="how_much_picture_backup">您有%s张新的照片未备份,是否现在备份?</string>

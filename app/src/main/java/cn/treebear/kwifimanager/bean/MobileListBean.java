@@ -62,9 +62,18 @@ public class MobileListBean implements Serializable {
         private long updateTime;
         private int isDelete;
         private int isBlock;
+        private int isRecord;
         private String macVendor;
         private String macIcon;
         String ip;
+
+        public int getIsRecord() {
+            return isRecord;
+        }
+
+        public void setIsRecord(int isRecord) {
+            this.isRecord = isRecord;
+        }
 
         public String getIp() {
             return ip;

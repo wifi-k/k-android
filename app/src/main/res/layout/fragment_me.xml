@@ -51,13 +51,15 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
             tools:text="13606657520" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_me_user_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="24dp"
             android:src="@mipmap/ic_me_header"
+            app:civ_border_width="0.5dp"
+            app:civ_border_color="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_settings"
             app:srcCompat="@mipmap/ic_me_header" />
@@ -103,7 +105,7 @@
         android:id="@+id/tv_into_new_family"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        android:drawableStart="@mipmap/ic_me_mykid"
+        android:drawableStart="@mipmap/ic_me_add_member"
         android:drawableEnd="@mipmap/ic_line_arrow_right_black"
         android:drawablePadding="10dp"
         android:gravity="center_vertical"

@@ -132,11 +132,11 @@ public class NewEditTimeActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onChoose(String time) {
+                public void onChoose(String time, String hour, String minute) {
                 }
 
                 @Override
-                public void onSelected(String time) {
+                public void onSelected(String time, String hour, String minute) {
                     hasModify = true;
                     startTime = time;
                     tvStartTime.setText(time);
@@ -150,6 +150,9 @@ public class NewEditTimeActivity extends BaseActivity {
             });
         }
         backgroundAlpha(0.8f);
+        if (Check.hasContent(startTime)) {
+            startTimePop.setDefaultTime(startTime.split(":")[0], startTime.split(":")[1]);
+        }
         startTimePop.show(getWindow().getDecorView());
     }
 
@@ -163,11 +166,11 @@ public class NewEditTimeActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onChoose(String time) {
+                public void onChoose(String time, String hour, String minute) {
                 }
 
                 @Override
-                public void onSelected(String time) {
+                public void onSelected(String time, String hour, String minute) {
                     hasModify = true;
                     endTime = time;
                     tvEndTime.setText(time);
@@ -181,6 +184,9 @@ public class NewEditTimeActivity extends BaseActivity {
             });
         }
         backgroundAlpha(0.8f);
+        if (Check.hasContent(endTime)) {
+            endTimePop.setDefaultTime(endTime.split(":")[0], endTime.split(":")[1]);
+        }
         endTimePop.show(getWindow().getDecorView());
     }
 

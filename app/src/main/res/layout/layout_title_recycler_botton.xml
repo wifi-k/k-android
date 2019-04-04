@@ -35,7 +35,7 @@
 
     <Button
         android:id="@+id/tv_bottom_button"
-        style="@style/confirm_button"
+        style="@style/confirm_button_rect_f"
         android:text="@string/_add_family_member"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

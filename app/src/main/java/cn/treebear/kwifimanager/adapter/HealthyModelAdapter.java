@@ -19,6 +19,7 @@ public class HealthyModelAdapter extends BaseQuickAdapter<HealthyModelBean.WifiB
     @Override
     protected void convert(BaseViewHolder helper, HealthyModelBean.WifiBean.TimerBean item) {
         helper.setText(R.id.tv_healthy_time, String.format("%s-%s", item.getStartTime(), item.getEndTime()))
-                .addOnClickListener(R.id.iv_healthy_edit);
+                .addOnClickListener(R.id.iv_healthy_edit)
+                .addOnClickListener(R.id.iv_delete);
     }
 }
