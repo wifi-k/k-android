@@ -75,8 +75,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //防止三方框架爆包
     implementation 'com.android.support:multidex:1.0.3'
     // util集合
@@ -113,4 +113,8 @@ dependencies {
     implementation 'com.truizlop.sectionedrecyclerview:library:1.2.0'
     // 分割线
     implementation 'com.karumi:dividers:1.0.1'
+    // 分页（粘性）滑动 recyclerView
+    implementation 'com.github.rubensousa:gravitysnaphelper-compat:2.0'
+
+    implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
 }

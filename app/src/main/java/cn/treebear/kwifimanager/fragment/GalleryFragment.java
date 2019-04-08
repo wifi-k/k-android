@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.karumi.dividers.DividerBuilder;
 import com.karumi.dividers.DividerItemDecoration;
 import com.karumi.dividers.Layer;
@@ -28,11 +29,13 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.activity.gallery.FullImageActivity;
 import cn.treebear.kwifimanager.adapter.GalleryAdapter;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.bean.local.LocalImageSection;
 import cn.treebear.kwifimanager.config.GalleryHelper;
+import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.util.DensityUtil;
 import cn.treebear.kwifimanager.util.TLog;
 
@@ -97,6 +100,19 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
         galleryAdapter.addHeaderView(header);
         recyclerView.setAdapter(galleryAdapter);
         rlTabWrapper.setEnabled(false);
+        galleryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            Bundle bundle = new Bundle();
+
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                int realImageIndex = GalleryHelper.getRealImageIndex(position);
+                if (realImageIndex != -1) {
+                    bundle.clear();
+                    bundle.putInt(Keys.POSITION, realImageIndex);
+                    startActivity(FullImageActivity.class, bundle);
+                }
+            }
+        });
     }
 
     private void findHeaderView() {

@@ -1,4 +1,4 @@
-package cn.treebear.kwifimanager.activity.home;
+package cn.treebear.kwifimanager.activity.home.report;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -26,6 +26,7 @@ import java.util.Random;
 
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.activity.home.MyMarkerView;
 import cn.treebear.kwifimanager.adapter.ActiveAppAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.AppBean;

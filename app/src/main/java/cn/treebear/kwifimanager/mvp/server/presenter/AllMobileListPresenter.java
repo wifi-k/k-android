@@ -25,6 +25,7 @@ public class AllMobileListPresenter extends BasePresenter<AllMobileListContract.
         map.put(Keys.NOTE, note);
         map.put(Keys.BLOCK, block);
         map.put(Keys.IS_RECORD,isRecord);
+        map.put(Keys.IS_ONLINE_ALARM,alarm);
         mModel.setMobileInfo(convertRequestBody(map), new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {

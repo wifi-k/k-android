@@ -57,6 +57,8 @@ public class MyApplication extends MultiDexApplication {
      */
     private PushAgent mPushAgent;
 
+    private String devToken = "";
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -70,9 +72,7 @@ public class MyApplication extends MultiDexApplication {
         dealUncaughtException();
         initSDKs();
         registerReceivers();
-        if (BuildConfig.DEBUG) {
-            TLog.phoneInfo(this);
-        }
+        TLog.phoneInfo(this);
     }
 
     private void initSDKs() {
@@ -95,6 +95,7 @@ public class MyApplication extends MultiDexApplication {
             @Override
             public void onSuccess(String deviceToken) {
                 //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
+                devToken = deviceToken;
                 TLog.i("注册成功：deviceToken：-------->  " + deviceToken);
             }
 
@@ -195,5 +196,9 @@ public class MyApplication extends MultiDexApplication {
 
     public void setNeedUpdateNodeInfo(boolean needUpdateNodeInfo) {
         this.needUpdateNodeInfo = needUpdateNodeInfo;
+    }
+
+    public String getDevToken() {
+        return devToken;
     }
 }

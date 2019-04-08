@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.home.WeekReportActivity">
+    tools:context=".activity.home.report.WeekReportActivity">
 
     <include
         android:id="@+id/include39"

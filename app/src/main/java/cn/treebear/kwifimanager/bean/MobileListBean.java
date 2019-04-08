@@ -47,6 +47,7 @@ public class MobileListBean implements Serializable {
          * updateTime : 1554199525220
          * isDelete : 0
          * isBlock : 0
+         * isOnline: 0 关闭
          * macVendor : huawei
          * macIcon : http://test.developer.qiniu.famwifi.com/ic_hw.png?e=1554200145&token=yl1JVmF9Vx6HuZ1dapbIEbZ4lb__T0Z71tXZ71zj:ce1wHNQWUHErKMYUwMJYNdZOY2Q=
          */
@@ -63,9 +64,10 @@ public class MobileListBean implements Serializable {
         private int isDelete;
         private int isBlock;
         private int isRecord;
+        private int isOnline;
         private String macVendor;
         private String macIcon;
-        String ip;
+        private String ip;
 
         public int getIsRecord() {
             return isRecord;
@@ -73,6 +75,14 @@ public class MobileListBean implements Serializable {
 
         public void setIsRecord(int isRecord) {
             this.isRecord = isRecord;
+        }
+
+        public int getIsOnline() {
+            return isOnline;
+        }
+
+        public void setIsOnline(int isOnline) {
+            this.isOnline = isOnline;
         }
 
         public String getIp() {

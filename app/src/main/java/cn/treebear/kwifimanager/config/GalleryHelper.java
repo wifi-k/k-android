@@ -2,6 +2,8 @@ package cn.treebear.kwifimanager.config;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.support.annotation.IntDef;
+import android.support.annotation.IntRange;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
@@ -20,6 +22,14 @@ public class GalleryHelper {
     private static ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
     private static ArrayList<LocalImageSection> sections = new ArrayList<>();
 
+    public static final int IMAGE_MODEL_DISPLAY = 0;
+    public static final int IMAGE_MODEL_SELECT = 1;
+
+    @IntDef({IMAGE_MODEL_DISPLAY, IMAGE_MODEL_SELECT})
+    public @interface AdapterModel {
+
+    }
+
     private GalleryHelper() {
     }
 
@@ -31,6 +41,11 @@ public class GalleryHelper {
         return sections;
     }
 
+    /**
+     * 创建资源游标
+     *
+     * @return CursorLoader
+     */
     public static Loader<Cursor> onCreateLoader() {
         String[] STORE_IMAGES = {
                 MediaStore.Images.Media.DATA,
@@ -48,6 +63,11 @@ public class GalleryHelper {
                 MediaStore.Images.Media.DATE_ADDED + " DESC");
     }
 
+    /**
+     * cursor加载完成后的回调
+     *
+     * @param cursor 资源游标
+     */
     public static void onLoadFinished(Cursor cursor) {
         imageBeans.clear();
         sections.clear();
@@ -70,13 +90,15 @@ public class GalleryHelper {
         }
     }
 
+    /**
+     * image按时间组成section
+     */
     private static void image2Section() {
         if (!Check.hasContent(imageBeans)) {
             return;
         }
         sections.clear();
         Collections.sort(imageBeans, (o1, o2) -> Long.compare(o2.getDateAdded(), o1.getDateAdded()));
-        TLog.i(imageBeans);
         String date = imageBeans.get(0).getDate();
         sections.add(new LocalImageSection(true, date));
         for (LocalImageBean bean : imageBeans) {
@@ -86,5 +108,45 @@ public class GalleryHelper {
             }
             sections.add(new LocalImageSection(bean));
         }
+    }
+
+    /**
+     * 获取真实的图片index
+     *
+     * @param bean 组员
+     * @return 真实图片index
+     */
+    public static int getRealImageIndex(LocalImageSection bean) {
+        if (!sections.contains(bean) || bean.isHeader) {
+            return -1;
+        }
+        int total = sections.indexOf(bean);
+        int header = 0;
+        for (int i = 0; i < total; i++) {
+            header += sections.get(i).isHeader ? 1 : 0;
+        }
+        return total - header;
+    }
+
+    /**
+     * 获取真实的图片index
+     *
+     * @param position 组员index
+     * @return 真实图片index
+     */
+    public static int getRealImageIndex(@IntRange(from = 0) int position) {
+        if (position >= sections.size()) {
+            return sections.size();
+        }
+        LocalImageSection bean = sections.get(position);
+        if (!sections.contains(bean) || bean.isHeader) {
+            return -1;
+        }
+        int total = sections.indexOf(bean);
+        int header = 0;
+        for (int i = 0; i < total; i++) {
+            header += sections.get(i).isHeader ? 1 : 0;
+        }
+        return total - header;
     }
 }

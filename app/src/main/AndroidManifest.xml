@@ -29,12 +29,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.home.mobile.ChildrenListActivity"></activity>
+        <activity android:name=".activity.gallery.FullImageActivity"></activity>
+        <activity android:name=".activity.home.report.ChildrenListActivity" />
         <activity
             android:name=".activity.me.MyChildrenListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.home.WeekReportActivity"
+            android:name=".activity.home.report.WeekReportActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.home.parent.NewEditTimeActivity"

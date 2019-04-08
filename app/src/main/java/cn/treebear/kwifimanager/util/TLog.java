@@ -172,6 +172,9 @@ public class TLog {
             keep("设备厂商：" + Build.BOARD + "  " + Build.MANUFACTURER);
             keep("包名：" + BuildConfig.APPLICATION_ID + "   版本号:" + BuildConfig.VERSION_NAME);
             keep(PhoneStateUtil.getDeviceId(MyApplication.getAppContext()));
+            keep(Build.ID + "  -   " + Build.DISPLAY);
+            keep(Build.DEVICE);
+            keep(Build.VERSION.RELEASE);
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 keep("Umeng_Channel:" + PhoneStateUtil.getChannel(MyApplication.getAppContext()));
                 TelephonyManager mTm = (TelephonyManager) (context.getSystemService(Context.TELEPHONY_SERVICE));

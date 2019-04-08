@@ -65,12 +65,12 @@
         </RelativeLayout>
         
         <ImageView
-            android:src="@mipmap/ic_member_delete"
+            android:src="@drawable/upload"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
 
     </RelativeLayout>
 

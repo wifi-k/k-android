@@ -118,7 +118,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="itemMarginTop">4dp</item>
-        <item name="itemTextSize">8sp</item>
+        <item name="itemTextSize">11sp</item>
         <item name="textColorNormal">@color/text_4a</item>
         <item name="textColorSelected">@color/colorAccent</item>
     </style>

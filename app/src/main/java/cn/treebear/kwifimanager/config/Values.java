@@ -78,4 +78,6 @@ public interface Values {
      */
     int TYPE_APPEND_NODE = 1;
 
+    int ANDROID = 2;
+
 }

@@ -11,6 +11,9 @@ public interface Keys {
     String TYPE = "type";
     String VERIFY_CODE = "vcode";
     String PASSWORD = "passwd";
+    String DEV_TOKEN = "devToken";
+    String DEV_TYPE = "devType";
+    String DEV_OS = "devOs";
     String NAME = "name";
     String SSID0 = "ssid0";
     String SSID = "ssid";
@@ -40,6 +43,7 @@ public interface Keys {
     String END_TIME = "et";
     String WHICH_TIME = "wt";
     String IS_RECORD = "isRecord";
+    String IS_ONLINE_ALARM = "isOnline";
 
     /**
      * ----------------------intent传输key--------------------

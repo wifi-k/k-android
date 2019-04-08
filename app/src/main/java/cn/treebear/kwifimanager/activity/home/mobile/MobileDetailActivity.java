@@ -77,23 +77,11 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     protected void initView() {
         statusTransparentFontWhite();
         setTitle(R.mipmap.ic_line_arrow_left_white, getString(R.string.device_detail), "", 0, false);
-        tvDeviceName.setText(mobilePhoneBean.getName());
-        boolean isOnline = mobilePhoneBean.getStatus() == 1;
-        tvDeviceTime.setText(String.format("%s " + (isOnline ? "上线" : "离线"),
-                DateTimeUtils.formatMDHmm(isOnline ? mobilePhoneBean.getOnTime() : mobilePhoneBean.getOffTime())));
-//        swbOnlineChildren.setChecked(mobilePhoneBean.isChildren());
-//        swbOnlineAlarm.setChecked(mobilePhoneBean.isOnlineAlarm());
-        GlideApp.with(this).load(mobilePhoneBean.getMacIcon())
-                .placeholder(R.mipmap.ic_device_pad).error(R.mipmap.ic_device_pad).into(ivDeviceType);
-        swbBlacklisting.setChecked(mobilePhoneBean.getIsBlock() == 1);
-        swbSpeedLimit.setChecked(false);
-        sbDownloadSpeed.setEnabled(false);
-        sbUploadSpeed.setEnabled(false);
+        updateView();
+        setListener();
+    }
 
-        tvUploadSpeed.setText(String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d));
-        tvDownloadSpeed.setText(String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d));
-        sbDownloadSpeed.setEnabled(false);
-        sbUploadSpeed.setEnabled(false);
+    private void setListener() {
         swbOnlineChildren.setOnCheckedChangeListener((view, isChecked) -> mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
                 mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), isChecked ? 1 : 0,
                 isChecked ? 1 : 0, swbOnlineAlarm.isChecked() ? 1 : 0));
@@ -127,6 +115,25 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
                 }
             }
         });
+    }
+
+    private void updateView() {
+        tvDeviceName.setText(mobilePhoneBean.getName());
+        boolean isOnline = mobilePhoneBean.getStatus() == 1;
+        tvDeviceTime.setText(String.format("%s " + (isOnline ? "上线" : "离线"),
+                DateTimeUtils.formatMDHmm(isOnline ? mobilePhoneBean.getOnTime() : mobilePhoneBean.getOffTime())));
+        swbOnlineChildren.setChecked(mobilePhoneBean.getIsRecord() == 1);
+        swbOnlineAlarm.setChecked(mobilePhoneBean.getIsOnline() == 1);
+        GlideApp.with(this).load(mobilePhoneBean.getMacIcon())
+                .placeholder(R.mipmap.ic_device_pad).error(R.mipmap.ic_device_pad).into(ivDeviceType);
+        swbBlacklisting.setChecked(mobilePhoneBean.getIsBlock() == 1);
+        swbSpeedLimit.setChecked(false);
+        sbDownloadSpeed.setEnabled(false);
+        sbUploadSpeed.setEnabled(false);
+        tvUploadSpeed.setText(String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d));
+        tvDownloadSpeed.setText(String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d));
+        sbDownloadSpeed.setEnabled(false);
+        sbUploadSpeed.setEnabled(false);
     }
 
     @OnClick(R.id.iv_modify_device_name)

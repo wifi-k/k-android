@@ -1,9 +1,10 @@
-package cn.treebear.kwifimanager.activity.home.mobile;
+package cn.treebear.kwifimanager.activity.home.report;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import java.util.List;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
-import cn.treebear.kwifimanager.activity.home.WeekReportActivity;
 import cn.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.ChildrenListBean;
@@ -45,7 +45,7 @@ public class ChildrenListActivity extends BaseActivity<ChildrenListContract.Pres
 
     @Override
     protected void initView() {
-        setTitle(R.string.children_list);
+        setTitleBack(R.string.children_list);
         setAdapters();
         refreshLayout.setOnRefreshListener(this::refresh);
         refresh();
@@ -81,5 +81,6 @@ public class ChildrenListActivity extends BaseActivity<ChildrenListContract.Pres
             adapter.loadMoreComplete();
         }
         adapter.notifyDataSetChanged();
+        tvEmptyView.setVisibility(childrenBeans.size() == 0 ? View.VISIBLE : View.GONE);
     }
 }
