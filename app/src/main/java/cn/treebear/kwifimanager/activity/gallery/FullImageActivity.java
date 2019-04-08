@@ -3,6 +3,7 @@ package cn.treebear.kwifimanager.activity.gallery;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
+import android.widget.TextView;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
@@ -18,6 +19,8 @@ public class FullImageActivity extends BaseActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerViewPager recyclerView;
+    @BindView(R.id.tv_title_text)
+    TextView tvTitle;
     private int imagePosition;
     private FullImageAdapter adapter;
 
@@ -36,7 +39,7 @@ public class FullImageActivity extends BaseActivity {
     @Override
     protected void initView() {
         statusTransparentFontWhite();
-        setTitle(R.mipmap.ic_line_arrow_left_white, GalleryHelper.getImageBeans().get(imagePosition).getDate(),"",0,false);
+        setTitle(R.mipmap.ic_line_arrow_left_white, GalleryHelper.getImageBeans().get(imagePosition).getDate(), "", 0, false);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         new LinearSnapHelper().attachToRecyclerView(recyclerView);
@@ -44,6 +47,15 @@ public class FullImageActivity extends BaseActivity {
         adapter = new FullImageAdapter(GalleryHelper.getImageBeans());
         manager.scrollToPosition(imagePosition);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
+            @Override
+            public void OnPageChanged(int i, int i1) {
+                if (i1 >= GalleryHelper.getImageBeans().size()) {
+                    return;
+                }
+                tvTitle.setText(GalleryHelper.getImageBeans().get(i1).getDate());
+            }
+        });
     }
 
     @OnClick(R.id.iv_share_pic)
