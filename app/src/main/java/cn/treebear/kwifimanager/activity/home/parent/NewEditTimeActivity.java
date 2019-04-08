@@ -66,9 +66,6 @@ public class NewEditTimeActivity extends BaseActivity {
             for (int i = 0; i < days.size(); i++) {
                 days.get(i).setChecked(WEEK[i]);
             }
-            if (!updateChooseWeek()) {
-                days.get(0).setChecked(true);
-            }
         }
     }
 
@@ -81,6 +78,9 @@ public class NewEditTimeActivity extends BaseActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 7));
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener((adapter, view, position) -> hasModify = true);
+        if (!updateChooseWeek()) {
+            days.get(0).setChecked(true);
+        }
     }
 
     @OnClick(R.id.start_time_wrapper)
