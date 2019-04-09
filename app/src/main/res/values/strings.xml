@@ -345,5 +345,6 @@
     <string name="oppo">OPPO</string>
     <string name="vivo">VIVO</string>
     <string name="samsung">三星</string>
+    <string name="message_error_check_retry">信息有误，请检查后重试</string>
 
 </resources>

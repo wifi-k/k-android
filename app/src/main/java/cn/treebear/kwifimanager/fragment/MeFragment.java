@@ -54,9 +54,9 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && MyApplication.getAppContext().isNeedUpdateUserInfo()) {
+    public void onResume() {
+        super.onResume();
+        if (MyApplication.getAppContext().isNeedUpdateUserInfo()) {
             mPresenter.getUserInfo();
         }
     }

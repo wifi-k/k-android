@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
@@ -197,6 +198,12 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
                 tvGetCode.setText(R.string.get_code);
             }
         });
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        super.onLoadFail(resultData, resultMsg, resultCode);
+        ToastUtils.showShort(R.string.message_error_check_retry);
     }
 
     @Override

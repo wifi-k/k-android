@@ -32,7 +32,7 @@ public class ActivityStackUtils {
      * @param activity 入栈界面
      */
     public static void pressActivity(String tag, Activity activity) {
-        requestStack(tag).add(activity);
+        requestStack(tag).add(0,activity);
     }
 
     /**

@@ -116,7 +116,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
                 showSignMessageDialog();
                 break;
             default:
-                ToastUtils.showShort(resultMsg);
+                ToastUtils.showShort(R.string.message_error_check_retry);
                 break;
         }
     }
@@ -279,6 +279,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
         dispose(mCountDisposable);
         MyApplication.getAppContext().setNeedUpdateUserInfo(true);
         startActivity(SetPasswordActivity.class);
+        finish();
     }
 
     @Override

@@ -116,7 +116,7 @@ public class MainActivity extends BaseFragmentActivity {
                     ivGuide.setVisibility(View.GONE);
                 }
             });
-            SharedPreferencesUtil.getParam(Keys.FIRST_IN, true);
+            SharedPreferencesUtil.setParam(Keys.FIRST_IN, true);
         }
     }
 

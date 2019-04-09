@@ -19,6 +19,7 @@ import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.bean.SUserCover;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.CodeSignInContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.CodeSignInPresenter;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
@@ -26,6 +27,7 @@ import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.CountObserver;
 import cn.treebear.kwifimanager.util.CountUtil;
 import cn.treebear.kwifimanager.util.UserInfoUtil;
+import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -59,6 +61,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
      * 计时器订阅器
      */
     private Disposable mCountDisposable;
+    private TMessageDialog noSignDialog;
 
     @Override
     public int layoutId() {
@@ -73,8 +76,8 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
     @Override
     protected void initView() {
         ActivityStackUtils.pressActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
-        setTitleBack(R.string.sign_in_k);
-        tvSignNext.setText(R.string.sign_in_k);
+        setTitleBack(Config.Text.EMPTY);
+        tvSignNext.setText(R.string.login);
         listenFocus();
         listenTextChange();
     }
@@ -105,9 +108,41 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
     }
 
     @Override
-    public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
-        ToastUtils.showShort(resultMsg);
+    public void onLoadFail(BaseResponse data, String resultMsg, int resultCode) {
+        tvSignNext.setEnabled(true);
         hideLoading();
+        switch (resultCode) {
+            case ApiCode.DB_NOT_FOUND_RECORD:
+                showNoSignDialog();
+                break;
+            default:
+                ToastUtils.showShort(R.string.message_error_check_retry);
+                break;
+        }
+    }
+
+    private void showNoSignDialog() {
+        if (noSignDialog == null) {
+            noSignDialog = new TMessageDialog(this).withoutMid()
+                    .title(R.string.tips)
+                    .content(R.string.mobile_not_sign_up)
+                    .left(R.string.cancel)
+                    .right(R.string.sign_up_now)
+                    .doClick(new TMessageDialog.DoClickListener() {
+                        @Override
+                        public void onClickLeft(View view) {
+                            noSignDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onClickRight(View view) {
+                            dismiss(noSignDialog);
+                            startActivity(SignUpActivity.class);
+                            finish();
+                        }
+                    });
+        }
+        noSignDialog.show();
     }
 
     @OnClick(R.id.tv_sign_next)

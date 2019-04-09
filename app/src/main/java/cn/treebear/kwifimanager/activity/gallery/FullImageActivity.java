@@ -47,14 +47,11 @@ public class FullImageActivity extends BaseActivity {
         adapter = new FullImageAdapter(GalleryHelper.getImageBeans());
         manager.scrollToPosition(imagePosition);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
-            @Override
-            public void OnPageChanged(int i, int i1) {
-                if (i1 >= GalleryHelper.getImageBeans().size()) {
-                    return;
-                }
-                tvTitle.setText(GalleryHelper.getImageBeans().get(i1).getDate());
+        recyclerView.addOnPageChangedListener((i, i1) -> {
+            if (i1 >= GalleryHelper.getImageBeans().size()) {
+                return;
             }
+            tvTitle.setText(GalleryHelper.getImageBeans().get(i1).getDate());
         });
     }
 

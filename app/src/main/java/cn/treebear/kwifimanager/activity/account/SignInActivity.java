@@ -68,7 +68,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
     @Override
     protected void initView() {
         ActivityStackUtils.pressActivity(Config.Tags.TAG_SIGN_ACCOUNT, this);
-        setTitleBack(R.string.sign_in_k);
+        setTitleBack(Config.Text.EMPTY);
         tvSignNext.setText(R.string.login);
         listenFocus();
         listenTextChange();
@@ -190,7 +190,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
                 showNoSignDialog();
                 break;
             default:
-                ToastUtils.showShort(R.string.info_error_check_input);
+                ToastUtils.showShort(R.string.message_error_check_retry);
                 break;
         }
     }
