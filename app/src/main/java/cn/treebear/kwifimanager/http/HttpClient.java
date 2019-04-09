@@ -50,7 +50,7 @@ public class HttpClient {
         getInstance().initRetrofit();
     }
 
-    public static void updataApiToken(String token) {
+    public static void updateApiToken(String token) {
         getInstance().retrofit = null;
         apiToken = token;
         getInstance().initRetrofit();

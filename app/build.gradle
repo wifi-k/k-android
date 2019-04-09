@@ -17,8 +17,8 @@ android {
         buildConfigField "String", "APP_NAME", '"小K管家"'
         buildConfigField "String", "UMENG_APPKEY", '"5c9c305a3fc1958d800010fc"'
         buildConfigField "String", "UMENG_MESSAGE_SECRET", '"17f28a2b0dac46d22c16065a7163f41f"'
-        buildConfigField "String", "WX_APPKEY", '"WX_APPKEY"'
-        buildConfigField "String", "WX_APP_SECRET", '"WX_APP_SECRET"'
+        buildConfigField "String", "WX_APPKEY", '"wxa62e4e12f7d59b51"'
+        buildConfigField "String", "WX_APP_SECRET", '"4a37cd29b146bf2a20bb95ad13486233"'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 UMENG_CHANNEL       : "treebear-cloud",

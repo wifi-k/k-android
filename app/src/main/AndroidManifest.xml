@@ -29,7 +29,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".activity.gallery.FullImageActivity"></activity>
+        <activity android:name=".activity.gallery.GalleryBackupActivity"></activity>
+        <activity android:name=".activity.gallery.FullImageActivity" />
         <activity android:name=".activity.home.report.ChildrenListActivity" />
         <activity
             android:name=".activity.me.MyChildrenListActivity"

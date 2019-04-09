@@ -32,6 +32,7 @@ import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.CountObserver;
 import cn.treebear.kwifimanager.util.CountUtil;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import io.reactivex.disposables.Disposable;
@@ -45,7 +46,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     TextView tvMidInfo;
     @BindView(R.id.btn_bottom)
     Button btnConfirm;
-    private int bindType;
+    private int bindType = Values.TYPE_FIRST_INCREASE_NODE;
     private TMessageDialog tMessageDialog;
     private WifiManager wifiManager;
     private Disposable mDisposable;
@@ -78,9 +79,6 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     @Override
     protected void onResume() {
         super.onResume();
-        if (NetWorkUtils.isWifiConnected(this)) {
-            WiFiHttpClient.tryToSignInWifi(null);
-        }
         PermissionUtils.permission(PermissionConstants.LOCATION)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
@@ -96,10 +94,11 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     }
 
     private void checkWiFi() {
-        if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
+        if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getToken())) {
             WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
                 @Override
                 public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                    MyApplication.getAppContext().saveDeviceInfo(resultData.getData());
                     change2Bind();
                 }
 
@@ -136,8 +135,10 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @OnClick(R.id.btn_bottom)
     public void onBtnBottomClicked() {
+        TLog.w("OkHttp",MyApplication.getAppContext().getDeviceInfo().getId());
         if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
             showLoading();
+            TLog.w(MyApplication.getAppContext().getDeviceInfo().getId());
             mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
         } else {
             if (NetWorkUtils.isWifiConnected(this)) {

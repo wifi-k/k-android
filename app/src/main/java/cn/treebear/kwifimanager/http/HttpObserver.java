@@ -45,6 +45,7 @@ public class HttpObserver {
 
             @Override
             public void onError(Throwable e) {
+                TLog.e(e);
                 callBack.onFailed(null, e.getMessage(), -1);
             }
 

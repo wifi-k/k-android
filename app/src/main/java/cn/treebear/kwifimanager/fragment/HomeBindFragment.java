@@ -265,7 +265,8 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R.id.tv_invite_member)
     public void onTvInviteMemberClicked() {
-        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.ic_test_logo, null);
+        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", String.format("快来加入我的小K家庭吧，家庭码：%s",nodeBean.getInviteCode()),
+                "https://www.treebear.cn", R.mipmap.ic_launcher, null);
     }
 
     @OnClick(R.id.tv_my_k)

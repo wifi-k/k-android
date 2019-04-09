@@ -29,7 +29,7 @@ public class LoginWifiPresenter extends BasePresenter<LoginWifiContract.View, Lo
                     if (mView != null) {
                         mView.onLoadData(data);
                     }
-                    WiFiHttpClient.updataApiToken(data.getToken());
+                    WiFiHttpClient.updateApiToken(data.getToken());
                 }
             }
         });

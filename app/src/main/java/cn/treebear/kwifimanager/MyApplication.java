@@ -20,6 +20,7 @@ import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.http.HttpClient;
 import cn.treebear.kwifimanager.receiver.NetWorkReceiver;
 import cn.treebear.kwifimanager.receiver.OpenFileReceiver;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.PhoneStateUtil;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.util.UserInfoUtil;
@@ -133,8 +134,10 @@ public class MyApplication extends MultiDexApplication {
 
     public void savedUser(ServerUserInfo user) {
         this.user = user;
-        HttpClient.updataApiToken(user.getToken());
-        UserInfoUtil.updateUserInfo(user);
+        if (Check.hasContent(user.getToken())) {
+            UserInfoUtil.updateUserInfo(user);
+            HttpClient.updateApiToken(user.getToken());
+        }
     }
 
     public ServerUserInfo getUser() {

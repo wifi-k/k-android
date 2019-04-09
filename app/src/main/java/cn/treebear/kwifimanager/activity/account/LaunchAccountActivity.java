@@ -52,11 +52,11 @@ public class LaunchAccountActivity extends BaseActivity {
             btnSignin.setVisibility(View.GONE);
             btnSignup.setVisibility(View.GONE);
             MyApplication.getAppContext().savedUser(UserInfoUtil.getUserInfo());
-            getNodeList();
+            getUserInfo();
         }
     }
 
-    private void getNodeList() {
+    private void getUserInfo() {
         showLoading("自动登录中...");
         new GetUserInfoModel().getUserInfo(new IModel.AsyncCallBack<BaseResponse<SUserCover>>() {
             @Override

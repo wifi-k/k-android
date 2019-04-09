@@ -63,7 +63,7 @@ public class WiFiHttpClient {
         getInstance().initRetrofit();
     }
 
-    public static void updataApiToken(String token) {
+    public static void updateApiToken(String token) {
         apiToken = token;
         updateClient();
     }
@@ -89,10 +89,10 @@ public class WiFiHttpClient {
             builder.readTimeout(160, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
 //            if (BuildConfig.DEBUG) {
-                // Log信息拦截器
-                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-                builder.addInterceptor(loggingInterceptor);
+            // Log信息拦截器
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(loggingInterceptor);
 //            }
             builder.cache(cache);
 
@@ -115,7 +115,7 @@ public class WiFiHttpClient {
      */
     public static void xiaokOffline() {
         needLogin = true;
-        MyApplication.getAppContext().setSelectNode("");
+        apiToken = "";
     }
 
     /**
@@ -153,18 +153,11 @@ public class WiFiHttpClient {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.e("OkHttp", "WiFi login success !" + TLog.valueOf(resultData));
-//                ToastUtils.showShort(TLog.valueOf(resultData.getData().toString()));
                 if (resultData.getData() != null) {
                     apiToken = resultData.getData().getToken();
-                    updataApiToken(apiToken);
-                    MyApplication.getAppContext().getDeviceInfo().setToken(apiToken);
-                    needLogin = false;
-//                    if (callBack != null) {
-//                        callBack.onSuccess(resultData);
-//                    }
-                    isLogin_ing = false;
+                    MyApplication.getAppContext().saveDeviceInfo(resultData.getData());
+                    updateApiToken(apiToken);
                     getDeviceSerialId(callBack);
-//                    getDeviceOnlineStatus();
                 }
             }
 
@@ -187,14 +180,15 @@ public class WiFiHttpClient {
                 TLog.i(resultData);
                 if (resultData != null && resultData.getData() != null) {
                     WifiDeviceInfo data = resultData.getData();
-//                    MyApplication.getAppContext().getDeviceInfo().setId(resultData.getData().getId());
                     data.setToken(apiToken);
                     MyApplication.getAppContext().saveDeviceInfo(data);
+                    resultData.setData(data);
                     if (callBack != null) {
                         callBack.onSuccess(resultData);
                     }
+                    needLogin = false;
+                    isLogin_ing = false;
                 }
-//                getDeviceOnlineStatus();
             }
 
             @Override

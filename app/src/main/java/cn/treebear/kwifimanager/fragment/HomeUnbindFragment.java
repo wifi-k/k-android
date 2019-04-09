@@ -1,7 +1,6 @@
 package cn.treebear.kwifimanager.fragment;
 
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,12 +13,8 @@ import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.activity.bindap.BindAction1Activity;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
-import cn.treebear.kwifimanager.config.Config;
-import cn.treebear.kwifimanager.config.Keys;
-import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.mvp.server.contract.UnbindHomeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.UnbindHomePresenter;
-import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.dialog.TipsDialog;
 
@@ -63,18 +58,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
 
     @OnClick({R.id.iv_bind, R.id.tv_bind})
     public void onViewClicked(View view) {
-        String wifiSSID = NetWorkUtils.getSSIDWhenWifi(mContext);
-        Bundle bundle = new Bundle();
-        if (NetWorkUtils.isWifiConnected(mContext)) {
-            if (wifiSSID.startsWith(Config.Text.AP_NAME_START)) {
-                bundle.putInt(Keys.TYPE, Values.CONNET_WIFI_XIAOK);
-            } else {
-                bundle.putInt(Keys.TYPE, Values.CONNECT_WIFI_OTHER);
-            }
-        } else {
-            bundle.putInt(Keys.TYPE, Values.CONNECT_WIFI_NONE);
-        }
-        startActivity(BindAction1Activity.class, bundle);
+        startActivity(BindAction1Activity.class);
     }
 
     @OnClick(R.id.tv_input_family_code)

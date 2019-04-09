@@ -25,7 +25,7 @@ public class BindHomePresenter extends BasePresenter<BindHomeContract.View, Bind
     public void getNodeList() {
         ArrayMap<String, Object> map = map();
         map.put(Keys.PAGE_NO, 1);
-        map.put(Keys.PAGE_SIZE, 1);
+        map.put(Keys.PAGE_SIZE, 10);
         mModel.getNodeList(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<NodeInfoDetail>>() {
             @Override
             public void onSuccess(BaseResponse<NodeInfoDetail> resultData) {

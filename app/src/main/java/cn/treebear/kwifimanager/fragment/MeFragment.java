@@ -78,6 +78,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
     public void onLoadData(SUserCover resultData) {
         userInfo = resultData.getUser();
         userInfo.setNodeSize(resultData.getNodeSize());
+        userInfo.setToken(MyApplication.getAppContext().getUser().getToken());
         MyApplication.getAppContext().savedUser(userInfo);
         updateUserInfo();
         MyApplication.getAppContext().setNeedUpdateUserInfo(false);
