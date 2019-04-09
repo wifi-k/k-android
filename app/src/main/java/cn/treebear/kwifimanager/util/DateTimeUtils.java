@@ -118,6 +118,21 @@ public class DateTimeUtils {
         calendar.setTimeInMillis(mills);
         return sdfMdHmm.format(calendar.getTime());
     }
+    /**
+     * 格式化时间
+     *
+     * @param mills 时间毫秒值
+     * @return MD_Hmm格式时间
+     */
+    public static String formatYMDHm4Gallery(long mills) {
+        if (mills < DAY * 365) {
+            mills *= 1000;
+        }
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfMdHmm = new SimpleDateFormat("yyyy年M月d日 H:mm");
+        GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
+        calendar.setTimeInMillis(mills);
+        return sdfMdHmm.format(calendar.getTime());
+    }
 
 
     /**

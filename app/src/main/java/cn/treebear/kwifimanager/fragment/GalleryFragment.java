@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.activity.gallery.FullImageActivity;
-import cn.treebear.kwifimanager.adapter.GalleryAdapter;
+import cn.treebear.kwifimanager.adapter.GalleryDisplayAdapter;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.bean.local.LocalImageSection;
@@ -60,7 +60,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     private ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
     private ArrayList<LocalImageSection> sections = new ArrayList<>();
     private LoaderManager loaderManager;
-    private GalleryAdapter galleryAdapter;
+    private GalleryDisplayAdapter galleryAdapter;
     private View header;
     private ImageView ivNewerPic;
     private TextView tvNewerPic;
@@ -94,7 +94,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     private void setAdapter() {
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         recyclerView.addItemDecoration(new DividerItemDecoration(new Layer(DividerBuilder.get().with(new ColorDrawable(Color.WHITE)).build())));
-        galleryAdapter = new GalleryAdapter(sections);
+        galleryAdapter = new GalleryDisplayAdapter(sections);
         header = LayoutInflater.from(mContext).inflate(R.layout.header_gallery_list, mRootView, false);
         findHeaderView();
         galleryAdapter.addHeaderView(header);

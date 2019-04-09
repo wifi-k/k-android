@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
@@ -31,11 +32,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.activity.WebsiteActivity;
+import cn.treebear.kwifimanager.activity.account.SignInActivity;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.IView;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.Dismissable;
 import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import io.reactivex.disposables.Disposable;
@@ -515,6 +519,17 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
         hideLoading();
+        switch (resultCode) {
+            case ApiCode.TOKEN_EXPIRED:
+            case ApiCode.TOKEN_INVALID:
+                ToastUtils.showShort(R.string.sign_in_info_overdue_reload);
+                UserInfoUtil.clearUserInfo();
+                startActivity(SignInActivity.class);
+                ActivityStackUtils.finishAll(Config.Tags.ALL);
+                break;
+            default:
+                break;
+        }
     }
 
     /**

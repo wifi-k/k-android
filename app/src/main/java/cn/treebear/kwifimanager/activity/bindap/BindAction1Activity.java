@@ -181,7 +181,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @Override
     public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
-        hideLoading();
+        super.onLoadFail(response,resultMsg, resultCode);
         switch (resultCode) {
             case ApiCode.INVALID_PARAM:
                 ToastUtils.showShort(R.string.this_node_has_bound);

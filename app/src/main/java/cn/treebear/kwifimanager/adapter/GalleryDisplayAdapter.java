@@ -19,7 +19,7 @@ import cn.treebear.kwifimanager.config.GalleryHelper;
 import cn.treebear.kwifimanager.config.GlideApp;
 import cn.treebear.kwifimanager.util.DensityUtil;
 
-public class GalleryAdapter extends BaseSectionQuickAdapter<LocalImageSection, BaseViewHolder> {
+public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSection, BaseViewHolder> {
     private int model = GalleryHelper.IMAGE_MODEL_DISPLAY;
     private ArrayList<LocalImageBean> selectedBeans = new ArrayList<>();
 
@@ -29,11 +29,11 @@ public class GalleryAdapter extends BaseSectionQuickAdapter<LocalImageSection, B
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
-    public GalleryAdapter(List<LocalImageSection> data) {
+    public GalleryDisplayAdapter(List<LocalImageSection> data) {
         super(R.layout.item_gallery_image, R.layout.item_gallery_date, data);
     }
 
-    public GalleryAdapter(List<LocalImageSection> data, @GalleryHelper.AdapterModel int adapterModel) {
+    public GalleryDisplayAdapter(List<LocalImageSection> data, @GalleryHelper.AdapterModel int adapterModel) {
         super(R.layout.item_gallery_image, R.layout.item_gallery_date, data);
         model = adapterModel;
     }

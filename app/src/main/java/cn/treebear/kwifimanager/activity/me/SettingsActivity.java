@@ -7,7 +7,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.R;
-import cn.treebear.kwifimanager.activity.account.LaunchAccountActivity;
+import cn.treebear.kwifimanager.activity.account.SignInActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.config.Config;
@@ -83,7 +83,8 @@ public class SettingsActivity extends BaseActivity<SignOutContract.Presenter, Ba
     @Override
     public void onSignOut() {
         UserInfoUtil.clearUserInfo();
-        startActivity(LaunchAccountActivity.class);
+//        startActivity(LaunchAccountActivity.class);
+        startActivity(SignInActivity.class);
         ActivityStackUtils.finishAll(Config.Tags.ALL);
     }
 }

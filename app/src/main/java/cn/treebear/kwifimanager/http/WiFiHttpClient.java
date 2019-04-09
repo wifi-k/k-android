@@ -6,7 +6,6 @@ import android.util.ArrayMap;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -89,12 +88,12 @@ public class WiFiHttpClient {
             builder.connectTimeout(160, TimeUnit.SECONDS);
             builder.readTimeout(160, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
-            if (BuildConfig.DEBUG) {
+//            if (BuildConfig.DEBUG) {
                 // Log信息拦截器
                 HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                 builder.addInterceptor(loggingInterceptor);
-            }
+//            }
             builder.cache(cache);
 
             retrofit = new Retrofit.Builder()

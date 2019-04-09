@@ -61,6 +61,11 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
     }
 
     @Override
+    protected boolean inAll() {
+        return false;
+    }
+
+    @Override
     public PwdSignInContract.Presenter getPresenter() {
         return new PwdSignInPresenter();
     }

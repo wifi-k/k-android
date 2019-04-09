@@ -14,6 +14,7 @@ import cn.treebear.kwifimanager.adapter.FullImageAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.config.GalleryHelper;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.util.DateTimeUtils;
 
 public class FullImageActivity extends BaseActivity {
 
@@ -51,7 +52,8 @@ public class FullImageActivity extends BaseActivity {
             if (i1 >= GalleryHelper.getImageBeans().size()) {
                 return;
             }
-            tvTitle.setText(GalleryHelper.getImageBeans().get(i1).getDate());
+//            tvTitle.setText(GalleryHelper.getImageBeans().get(i1).getDate());
+            tvTitle.setText(DateTimeUtils.formatYMDHm4Gallery(GalleryHelper.getImageBeans().get(i1).getDateAdded()));
         });
     }
 
