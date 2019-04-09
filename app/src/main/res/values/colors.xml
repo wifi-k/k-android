@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#37EDA3</color>
-    <color name="colorPrimaryDark">#37EDA3</color>
-    <color name="colorAccent">#37EDA3</color>
+    <color name="colorPrimary">#22DB96</color>
+    <color name="colorPrimaryDark">#22DB96</color>
+    <color name="colorAccent">#22DB96</color>
+    <color name="colorAccent80">#8022DB96</color>
 
     <color name="color_dfdfdf">#DFDFDF</color>
 
-    <color name="switch_button_check">#37EDA3</color>
+    <color name="switch_button_check">#22DB96</color>
 
     <color name="text_dark_black">#222</color>
     <color name="text_light_black">#BEC3CC</color>

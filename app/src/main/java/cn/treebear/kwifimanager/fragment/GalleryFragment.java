@@ -28,8 +28,10 @@ import com.karumi.dividers.Layer;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.activity.gallery.FullImageActivity;
+import cn.treebear.kwifimanager.activity.gallery.GalleryBackupActivity;
 import cn.treebear.kwifimanager.adapter.GalleryDisplayAdapter;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.bean.local.LocalImageBean;
@@ -57,6 +59,8 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     TextView tvShareGallery;
     @BindView(R.id.rl_tab_wrapper)
     RelativeLayout rlTabWrapper;
+    @BindView(R.id.iv_backup)
+    ImageView ivBackup;
     private ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
     private ArrayList<LocalImageSection> sections = new ArrayList<>();
     private LoaderManager loaderManager;
@@ -182,6 +186,11 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
                 }
             }
         });
+    }
+
+    @OnClick(R.id.iv_backup)
+    public void onBackupClick(){
+        startActivity(GalleryBackupActivity.class);
     }
 
     @NonNull

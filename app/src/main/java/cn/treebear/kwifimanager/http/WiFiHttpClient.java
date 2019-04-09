@@ -64,6 +64,9 @@ public class WiFiHttpClient {
     }
 
     public static void updateApiToken(String token) {
+        if (token == null) {
+            token = "";
+        }
         apiToken = token;
         updateClient();
     }
