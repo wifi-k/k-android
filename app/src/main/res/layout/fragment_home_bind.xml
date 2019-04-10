@@ -30,82 +30,47 @@
 
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/bg_f1f5ff_r8"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:src="@mipmap/ic_home_sign_notice"
-                    app:layout_constraintBottom_toBottomOf="@+id/marquee_notice"
-                    app:layout_constraintTop_toTopOf="@+id/marquee_notice"
-                    tools:layout_editor_absoluteX="28dp" />
-
-                <cn.treebear.kwifimanager.widget.marquee.MarqueeTextView
-                    android:id="@+id/marquee_notice"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/imageView4"
-                    tools:layout_editor_absoluteY="255dp">
-
-                </cn.treebear.kwifimanager.widget.marquee.MarqueeTextView>
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/online_wrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/ll_has_no_backup_wrapper"
+                android:layout_width="0dp"
+                android:layout_height="72dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginEnd="4dp"
                 android:background="@drawable/bg_home_join_wrapper"
-                android:minHeight="200dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_network_speed">
+                app:layout_constraintTop_toBottomOf="@+id/tv_parent_control">
 
                 <TextView
-                    android:id="@+id/tv_look_more"
+                    android:id="@+id/tv_has_no_backup"
+                    style="@style/text_content"
                     android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="23dp"
-                    android:background="@drawable/bg_h32_f5_r8"
-                    android:gravity="center"
-                    android:text="@string/look_all"
-                    android:textColor="#7383A2"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_device_list" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/how_much_picture_backup"
+                    android:textSize="13sp"
+                    tools:text="您有10张新的照片未备份,是否现在备份?" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_device_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:focusable="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_to_backup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/btn_main_r14"
+                    android:paddingStart="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/to_back_up"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -125,9 +90,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    app:civ_border_width="0.5dp"
-                    app:civ_border_color="@android:color/white"
                     android:src="@mipmap/ic_home_sign_default_header"
+                    app:civ_border_color="@android:color/white"
+                    app:civ_border_width="0.5dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -271,6 +236,42 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_f1f5ff_r8"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:src="@mipmap/ic_home_sign_notice"
+                    app:layout_constraintBottom_toBottomOf="@+id/marquee_notice"
+                    app:layout_constraintTop_toTopOf="@+id/marquee_notice"
+                    tools:layout_editor_absoluteX="28dp" />
+
+                <cn.treebear.kwifimanager.widget.marquee.MarqueeTextView
+                    android:id="@+id/marquee_notice"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/imageView4"
+                    tools:layout_editor_absoluteY="255dp">
+
+                </cn.treebear.kwifimanager.widget.marquee.MarqueeTextView>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_parent_control"
                 android:layout_width="wrap_content"
@@ -333,146 +334,199 @@
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_parent_control"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout2" />
-            <!--android:background="@drawable/shape_rectf_shadow"-->
+            <!--android:bg_children_careful="@drawable/shape_rectf_shadow"-->
+
             <LinearLayout
-                android:id="@+id/ll_has_no_backup_wrapper"
-                android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="4dp"
-               android:background="@drawable/bg_home_join_wrapper"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_parent_control">
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="4dp"
-                    android:src="@mipmap/ic_found_backup" />
-
-                <TextView
-                    android:id="@+id/tv_has_no_backup"
-                    style="@style/text_content"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/how_much_picture_backup"
-                    android:textSize="11sp"
-                    tools:text="您有10张新的照片未备份,是否现在备份?" />
-
-                <TextView
-                    android:id="@+id/tv_to_backup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/btn_green_to_cyan14"
-                    android:paddingStart="12dp"
-                    android:paddingTop="4dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="4dp"
-                    android:text="@string/to_back_up"
-                    android:textColor="@android:color/white"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/education_wrapper"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_has_no_backup_wrapper">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/conn_device"
-                android:textColor="#2B3852"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_has_no_backup_wrapper" />
-
-            <TextView
-                android:id="@+id/tv_network_speed"
-                style="@style/text_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/network_speed_now"
-                android:textColor="#7383A2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView19" />
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/title_take_care_children"
-                android:textColor="#2B3852"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/online_wrapper" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/bg_home_join_wrapper"
-                android:minHeight="200dp"
-                android:padding="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView22">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_children_device"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="100dp"
-                    android:focusable="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_online_device_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/conn_device"
+                    android:textColor="#2B3852"
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/tv_look_more_kid"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="23dp"
-                    android:background="@drawable/bg_h32_f5_r8"
-                    android:gravity="center"
-                    android:text="@string/look_all"
-                    android:textColor="#7383A2"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_children_device" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:id="@+id/tv_network_speed"
+                    style="@style/text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/network_speed_now"
+                    android:textColor="#7383A2" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/online_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/bg_home_join_wrapper"
+                    android:minHeight="100dp"
+                    android:padding="8dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tv_look_more"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="23dp"
+                        android:background="@drawable/bg_h32_f5_r8"
+                        android:gravity="center"
+                        android:text="@string/look_all"
+                        android:textColor="#7383A2"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rv_device_list" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_device_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:focusable="false"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/no_device_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:src="@mipmap/ic_has_no_device" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/has_no_device"
+                        android:textColor="#7383A2"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/tips_has_no_device"
+                        android:textColor="#B6C0CB" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/education_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_take_care_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/title_take_care_children"
+                    android:textColor="#2B3852"
+                    android:textSize="20sp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_online_device_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/bg_home_join_wrapper"
+                    android:minHeight="100dp"
+                    android:padding="8dp"
+                    android:visibility="visible">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_children_device"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_look_more_kid"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="23dp"
+                        android:background="@drawable/bg_h32_f5_r8"
+                        android:gravity="center"
+                        android:text="@string/look_all"
+                        android:textColor="#7383A2"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rv_children_device" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/no_children_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:src="@mipmap/has_no_children" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/has_no_week_report"
+                        android:textColor="#7383A2"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/tips_has_no_children"
+                        android:textColor="#B6C0CB" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

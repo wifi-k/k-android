@@ -351,5 +351,11 @@
     <string name="pause_backup">暂停备份</string>
     <string name="waitting">等待中</string>
     <string name="pic_backup">照片备份</string>
+    <string name="share_to_share_gallery">分享到共享相册</string>
+    <string name="wechat">微信</string>
+    <string name="has_no_device">暂无设备</string>
+    <string name="tips_has_no_device">请绑定设备进行设置</string>
+    <string name="has_no_week_report">暂无周报</string>
+    <string name="tips_has_no_children">开启儿童上网关爱查看周报</string>
 
 </resources>

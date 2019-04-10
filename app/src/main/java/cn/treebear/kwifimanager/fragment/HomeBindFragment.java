@@ -103,6 +103,14 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     RecyclerView rvChildrenDevice;
     @BindView(R2.id.tv_look_more_kid)
     TextView tvLookMoreKid;
+    @BindView(R2.id.cl_online_device_wrapper)
+    ConstraintLayout clChildrenWrapper;
+    @BindView(R2.id.no_device_wrapper)
+    LinearLayout noDeviceWrapper;
+    @BindView(R2.id.online_wrapper)
+    ConstraintLayout clDeviceWrapper;
+    @BindView(R2.id.no_children_wrapper)
+    LinearLayout noChildrenWrapper;
     private ArrayList<MobileListBean.MobileBean> mobilePhoneList = new ArrayList<>();
     private MobilePhoneAdapter mobilePhoneAdapter;
 
@@ -209,6 +217,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     private void setMobileListAdapter() {
         rvDeviceList.setLayoutManager(new LinearLayoutManager(mContext));
+//        rvDeviceList.setLayoutManager(new MyLinearLayoutManager(mContext));
         mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 6);
         rvDeviceList.setAdapter(mobilePhoneAdapter);
         mobilePhoneAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -266,7 +275,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R2.id.tv_invite_member)
     public void onTvInviteMemberClicked() {
-        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", String.format("快来加入我的小K家庭吧，家庭码：%s",nodeBean.getInviteCode()),
+        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", String.format("快来加入我的小K家庭吧，家庭码：%s", nodeBean.getInviteCode()),
                 "https://www.treebear.cn", R.mipmap.ic_launcher, null);
     }
 
@@ -355,6 +364,9 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         mobilePhoneAdapter.notifyDataSetChanged();
         tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%s/下行网速%s”", 2, nodeBean.getUpstream(), nodeBean.getDownstream()));
         tvLookMore.setVisibility(mobilePhoneList.size() >= 3 ? View.VISIBLE : View.GONE);
+
+        noDeviceWrapper.setVisibility(mobilePhoneList.size() == 0 ? View.VISIBLE : View.GONE);
+        clDeviceWrapper.setVisibility(mobilePhoneList.size() == 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -378,6 +390,8 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         childrenList.clear();
         childrenList.addAll(data.getPage());
         childrenCarefulAdapter.notifyDataSetChanged();
+        noChildrenWrapper.setVisibility(childrenList.size() == 0 ? View.VISIBLE : View.GONE);
+        clChildrenWrapper.setVisibility(childrenList.size() == 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override

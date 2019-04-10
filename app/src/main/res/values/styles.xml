@@ -120,7 +120,7 @@
         <item name="itemMarginTop">4dp</item>
         <item name="itemTextSize">11sp</item>
         <item name="textColorNormal">@color/text_4a</item>
-        <item name="textColorSelected">@color/colorAccent</item>
+        <item name="textColorSelected">@color/color_47d5ed</item>
     </style>
     <!--图片上传进度条-->
     <style name="MyProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
@@ -189,13 +189,13 @@
     <!--<style name="umeng_socialize_divider">-->
     <!--<item name="android:layout_width">fill_parent</item>-->
     <!--<item name="android:layout_height">1dp</item>-->
-    <!--<item name="android:background">@color/umeng_socialize_divider</item>-->
+    <!--<item name="android:bg_children_careful">@color/umeng_socialize_divider</item>-->
     <!--</style>-->
 
     <!--<style name="umeng_socialize_list_item">-->
     <!--<item name="android:layout_width">fill_parent</item>-->
     <!--<item name="android:layout_height">55dp</item>-->
-    <!--<item name="android:background">@color/umeng_socialize_list_item_bgcolor</item>-->
+    <!--<item name="android:bg_children_careful">@color/umeng_socialize_list_item_bgcolor</item>-->
     <!--<item name="android:paddingBottom">5dp</item>-->
     <!--<item name="android:paddingTop">5dp</item>-->
     <!--</style>-->
@@ -203,7 +203,7 @@
     <!--<style name="umeng_socialize_edit_padding">-->
     <!--<item name="android:layout_width">fill_parent</item>-->
     <!--<item name="android:layout_height">fill_parent</item>-->
-    <!--<item name="android:background">@color/umeng_socialize_list_item_bgcolor</item>-->
+    <!--<item name="android:bg_children_careful">@color/umeng_socialize_list_item_bgcolor</item>-->
     <!--<item name="android:layout_marginLeft">6dp</item>-->
     <!--<item name="android:layout_marginRight">6dp</item>-->
     <!--<item name="android:layout_marginTop">6dp</item>-->

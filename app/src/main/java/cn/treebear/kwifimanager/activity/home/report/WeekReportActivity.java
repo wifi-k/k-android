@@ -69,7 +69,7 @@ public class WeekReportActivity extends BaseActivity {
 
     private void initChart2() {
         {   // // Chart Style // //
-            // background color
+            // bg_children_careful color
             chart.setBackgroundColor(Color.WHITE);
             // disable description text
             chart.getDescription().setEnabled(false);

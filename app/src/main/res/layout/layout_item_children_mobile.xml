@@ -3,37 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="160dp"
+    android:layout_marginTop="10dp"
+    android:background="@mipmap/bg_children_careful"
     android:paddingBottom="20dp">
 
-    <ImageView
-        android:id="@+id/iv_children_phone_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="21dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_device_apple" />
+    <RelativeLayout
+        android:id="@+id/icon_wrapper"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/white_r32"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" >
+        
+        <ImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/iv_children_phone_icon"
+            android:src="@mipmap/ic_device_pad"
+            android:layout_width="44dp"
+            android:layout_height="44dp" />
+        
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_mobile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="6dp"
         android:textColor="#2B3852"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/iv_children_phone_icon"
-        app:layout_constraintTop_toTopOf="@+id/iv_children_phone_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_wrapper"
+        app:layout_constraintStart_toEndOf="@+id/icon_wrapper"
         tools:text="孩子的手机" />
 
     <TextView
         android:id="@+id/tv_average_use_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#4A5A78"
-        app:layout_constraintStart_toStartOf="@+id/tv_mobile_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mobile_name"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="上周平均每日活跃时长：10小时" />
 
     <TextView
@@ -55,24 +72,8 @@
         android:textColor="#4A5A78"
         android:textSize="15sp"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/iv_children_phone_icon"
-        app:layout_constraintTop_toBottomOf="@+id/iv_children_phone_icon" />
-
-    <TextView
-        android:id="@+id/tv_look_week_report"
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="19dp"
-        android:background="@drawable/btn_green_to_cyan14"
-        android:gravity="center"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="@string/look_week_report"
-        android:textColor="@android:color/white"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_use_time_rank" />
+        app:layout_constraintStart_toStartOf="@+id/icon_wrapper"
+        app:layout_constraintTop_toBottomOf="@+id/icon_wrapper" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/ll_active_app_wrapper"
@@ -85,4 +86,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <TextView
+        android:id="@+id/tv_look_week_report"
+        android:layout_width="wrap_content"
+        android:layout_height="27dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/rectf_r14_47d5ed"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/look_week_report"
+        android:textColor="@color/color_47d5ed"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_wrapper"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
