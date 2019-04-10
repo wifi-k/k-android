@@ -2,14 +2,15 @@ package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.AppBean;
 import cn.treebear.kwifimanager.bean.BanAppPlanBean;
@@ -23,15 +24,15 @@ import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 public class BanAppPlanActivity extends BaseActivity {
 
 
-    @BindView(R.id.tv_ban_app_name)
+    @BindView(R2.id.tv_ban_app_name)
     TextView tvBanAppName;
-    @BindView(R.id.tv_limited_online_time)
+    @BindView(R2.id.tv_limited_online_time)
     TextView tvBanApp;
-    @BindView(R.id.tv_ban_app_tips)
+    @BindView(R2.id.tv_ban_app_tips)
     TextView tvBanAppTips;
-    @BindView(R.id.tv_has_option_time)
+    @BindView(R2.id.tv_has_option_time)
     TextView tvHasOptionTime;
-    @BindView(R.id.tv_has_option_device)
+    @BindView(R2.id.tv_has_option_device)
     TextView tvHasOptionDevice;
     private BanAppPlanBean needModifyPlan;
     private TInputDialog modifyNameDialog;
@@ -74,12 +75,12 @@ public class BanAppPlanActivity extends BaseActivity {
         tvBanAppName.setText(needModifyPlan.getName());
     }
 
-    @OnClick(R.id.tv_modify_name)
+    @OnClick(R2.id.tv_modify_name)
     public void onTvModifyNameClicked() {
         showModifyNameDialog();
     }
 
-    @OnClick(R.id.tv_limited_online_time)
+    @OnClick(R2.id.tv_limited_online_time)
     public void onTvLimitedOnlineTimeClicked() {
         Bundle bundle = new Bundle();
         if (needModifyPlan != null) {
@@ -88,7 +89,7 @@ public class BanAppPlanActivity extends BaseActivity {
         startActivityForResult(ChooseBanAppActivity.class, bundle, Values.REQUEST_BAN_APP);
     }
 
-    @OnClick(R.id.tv_control_device)
+    @OnClick(R2.id.tv_control_device)
     public void onTvControlDeviceClicked() {
         Bundle bundle = new Bundle();
         if (needModifyPlan != null) {

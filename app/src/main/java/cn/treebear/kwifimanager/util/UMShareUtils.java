@@ -1,7 +1,7 @@
 package cn.treebear.kwifimanager.util;
 
 import android.app.Activity;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;

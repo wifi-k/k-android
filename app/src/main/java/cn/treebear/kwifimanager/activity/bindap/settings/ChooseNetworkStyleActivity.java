@@ -8,6 +8,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -24,7 +25,7 @@ import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
  */
 public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.Presenter, WifiDeviceInfo> implements DynamicIpContract.View {
 
-    @BindView(R.id.rg_online_type)
+    @BindView(R2.id.rg_online_type)
     RadioGroup rgOnlineType;
 
     private int onlineType;
@@ -63,7 +64,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
         });
     }
 
-    @OnClick(R.id.btn_online_type_next)
+    @OnClick(R2.id.btn_online_type_next)
     public void onViewClicked() {
         switch (onlineType) {
             case Values.ONLINE_TYPE_DIAL:

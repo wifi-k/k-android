@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
@@ -39,23 +40,23 @@ import io.reactivex.disposables.Disposable;
  */
 public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter, String> implements SignUpVerifyContract.View {
 
-    @BindView(R.id.et_verify)
+    @BindView(R2.id.et_verify)
     EditText etSignUpCode;
-    @BindView(R.id.line_password)
+    @BindView(R2.id.line_password)
     TextView linePassword;
-    @BindView(R.id.et_phone)
+    @BindView(R2.id.et_phone)
     EditText etSignUpPhone;
-    @BindView(R.id.line_phone)
+    @BindView(R2.id.line_phone)
     TextView linePhoneNumber;
-    @BindView(R.id.iv_edit_clear)
+    @BindView(R2.id.iv_edit_clear)
     ImageView ivEditClear;
-    @BindView(R.id.tv_get_code)
+    @BindView(R2.id.tv_get_code)
     TextView tvGetCode;
-    @BindView(R.id.tv_sign_next)
+    @BindView(R2.id.tv_sign_next)
     TextView tvSignNext;
-    @BindView(R.id.cb_signup_protocol)
+    @BindView(R2.id.cb_signup_protocol)
     CheckBox cbSignupProtocol;
-    @BindView(R.id.iv_verify_clear)
+    @BindView(R2.id.iv_verify_clear)
     ImageView ivVerifyClear;
     /**
      * 定时器订阅者
@@ -89,12 +90,12 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
         listenTextChange();
     }
 
-    @OnClick(R.id.iv_edit_clear)
+    @OnClick(R2.id.iv_edit_clear)
     public void onIvEditClearClicked() {
         etSignUpPhone.setText("");
     }
 
-    @OnClick(R.id.tv_get_code)
+    @OnClick(R2.id.tv_get_code)
     public void onTvGetCodeClicked() {
         if (etSignUpPhone.getText().length() == 11) {
             mPresenter.getSignUpVerifyCode(etSignUpPhone.getText().toString());
@@ -121,7 +122,7 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
         }
     }
 
-    @OnClick(R.id.tv_sign_next)
+    @OnClick(R2.id.tv_sign_next)
     public void onTvSignNextClicked() {
         if (!etSignUpCode.getText().toString().equals(mVerifyCode)) {
             ToastUtils.showShort(Config.Tips.VERIFY_CODE_ERROR);
@@ -135,19 +136,19 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
         }
     }
 
-    @OnClick(R.id.tv_user_protocol)
+    @OnClick(R2.id.tv_user_protocol)
     public void onTvUserProtocolClicked() {
         openWebsite(Config.Urls.USER_PROTOCOL);
         cbSignupProtocol.setChecked(true);
     }
 
-    @OnClick(R.id.tv_private_protocol)
+    @OnClick(R2.id.tv_private_protocol)
     public void onTvPrivateProtocolClicked() {
         openWebsite(Config.Urls.PRIVATE_PROTOCOL);
         cbSignupProtocol.setChecked(true);
     }
 
-    @OnClick(R.id.iv_verify_clear)
+    @OnClick(R2.id.iv_verify_clear)
     public void onIvVerifyClearClicked() {
         etSignUpCode.setText("");
     }

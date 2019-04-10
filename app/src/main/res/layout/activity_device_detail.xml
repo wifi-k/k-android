@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.home.mobile.MobileDetailActivity">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -74,7 +74,7 @@
 
             </RelativeLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/mobile_control_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="299dp"
@@ -212,9 +212,9 @@
                     app:layout_constraintTop_toTopOf="@+id/tv_blacklisting"
                     app:sb_checked_color="@color/switch_button_check"
                     app:sb_show_indicator="false" />
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/mobile_speed_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
@@ -331,10 +331,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView45" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <include
         layout="@layout/common_title"

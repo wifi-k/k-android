@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.bindap.settings.ChooseNetworkStyleActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -42,9 +43,9 @@ import io.reactivex.disposables.Disposable;
  */
 public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presenter, Object> implements BindNodeConstract.View {
 
-    @BindView(R.id.tv_mid_info)
+    @BindView(R2.id.tv_mid_info)
     TextView tvMidInfo;
-    @BindView(R.id.btn_bottom)
+    @BindView(R2.id.btn_bottom)
     Button btnConfirm;
     private int bindType = Values.TYPE_FIRST_INCREASE_NODE;
     private TMessageDialog tMessageDialog;
@@ -133,7 +134,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                 }).request();
     }
 
-    @OnClick(R.id.btn_bottom)
+    @OnClick(R2.id.btn_bottom)
     public void onBtnBottomClicked() {
         TLog.w("OkHttp",MyApplication.getAppContext().getDeviceInfo().getId());
         if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {

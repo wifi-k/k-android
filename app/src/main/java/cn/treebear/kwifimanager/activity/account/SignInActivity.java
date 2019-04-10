@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -35,21 +36,21 @@ import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
  */
 public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, ServerUserInfo> implements PwdSignInContract.View {
 
-    @BindView(R.id.et_sign_in_verify)
+    @BindView(R2.id.et_sign_in_verify)
     EditText etSignInVerify;
-    @BindView(R.id.line_password)
+    @BindView(R2.id.line_password)
     TextView linePassword;
-    @BindView(R.id.et_sign_in_phone)
+    @BindView(R2.id.et_sign_in_phone)
     EditText etSignInPhone;
-    @BindView(R.id.line_phone)
+    @BindView(R2.id.line_phone)
     TextView linePhone;
-    @BindView(R.id.tv_sign_next)
+    @BindView(R2.id.tv_sign_next)
     TextView tvSignNext;
-    @BindView(R.id.iv_edit_clear)
+    @BindView(R2.id.iv_edit_clear)
     ImageView ivEditClear;
-    @BindView(R.id.iv_password_eye)
+    @BindView(R2.id.iv_password_eye)
     ImageView ivPasswordEye;
-    @BindView(R.id.iv_password_clear)
+    @BindView(R2.id.iv_password_clear)
     ImageView ivPasswordClear;
     private boolean passwordVisible = false;
     private TMessageDialog noSignDialog;
@@ -138,29 +139,29 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
         });
     }
 
-    @OnClick(R.id.tv_forget_password)
+    @OnClick(R2.id.tv_forget_password)
     public void onTvForgetPasswordClicked() {
         startActivity(ForgetPwdCodeActivity.class);
     }
 
-    @OnClick(R.id.tv_sign_next)
+    @OnClick(R2.id.tv_sign_next)
     public void onTvSignNextClicked() {
         showLoading();
         mPresenter.signInByPwd(etSignInPhone.getText().toString(), etSignInVerify.getText().toString());
         tvSignNext.setEnabled(false);
     }
 
-    @OnClick(R.id.tv_sms_sign_in)
+    @OnClick(R2.id.tv_sms_sign_in)
     public void onTvSmsSignInClicked() {
         startActivity(VerifySignInActivity.class);
     }
 
-    @OnClick(R.id.iv_edit_clear)
+    @OnClick(R2.id.iv_edit_clear)
     public void onIvClearClick() {
         etSignInPhone.setText("");
     }
 
-    @OnClick(R.id.iv_password_eye)
+    @OnClick(R2.id.iv_password_eye)
     public void onIvPasswordEyeClicked() {
         passwordVisible = !passwordVisible;
         if (passwordVisible) {
@@ -173,7 +174,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
         etSignInVerify.setSelection(etSignInVerify.getText().length());
     }
 
-    @OnClick(R.id.iv_password_clear)
+    @OnClick(R2.id.iv_password_clear)
     public void onIvPasswordClearClicked() {
         etSignInVerify.setText("");
     }

@@ -8,6 +8,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -20,17 +21,17 @@ import cn.treebear.kwifimanager.mvp.wifi.presenter.DynamicIpPresenter;
  * @author Administrator
  */
 public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presenter, WifiDeviceInfo> implements DynamicIpContract.View {
-    @BindView(R.id.tv_connect_status)
+    @BindView(R2.id.tv_connect_status)
     TextView tvConnectStatus;
-    @BindView(R.id.tv_ip)
+    @BindView(R2.id.tv_ip)
     TextView tvIp;
-    @BindView(R.id.tv_subnet)
+    @BindView(R2.id.tv_subnet)
     TextView tvSubnet;
-    @BindView(R.id.tv_gateway)
+    @BindView(R2.id.tv_gateway)
     TextView tvGateway;
-    @BindView(R.id.tv_dns1)
+    @BindView(R2.id.tv_dns1)
     TextView tvDns1;
-    @BindView(R.id.tv_dns2)
+    @BindView(R2.id.tv_dns2)
     TextView tvDns2;
     int count = 0;
 
@@ -61,7 +62,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
         updateWifiInfoShow();
     }
 
-    @OnClick(R.id.tv_update_ip_address)
+    @OnClick(R2.id.tv_update_ip_address)
     public void onViewClicked() {
         showLoading();
         mPresenter.dynamicIpSet();

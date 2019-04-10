@@ -2,9 +2,6 @@ package cn.treebear.kwifimanager.activity.home.report;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -24,8 +21,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.home.MyMarkerView;
 import cn.treebear.kwifimanager.adapter.ActiveAppAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
@@ -37,9 +38,9 @@ import cn.treebear.kwifimanager.test.BeanTest;
  */
 public class WeekReportActivity extends BaseActivity {
 
-    @BindView(R.id.chart_week_report)
+    @BindView(R2.id.chart_week_report)
     LineChart chart;
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
 
     private String[] values = {"3-24", "3-25", "3-26", "3-27", "3-28", "3-29", "3-30"};

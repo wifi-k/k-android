@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.account.SignInActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -28,13 +29,13 @@ import io.reactivex.disposables.Disposable;
  */
 public class ModifyMobileActivity extends BaseActivity<ModifyUserMobileContract.Presenter, String> implements ModifyUserMobileContract.View {
 
-    @BindView(R.id.et_new_mobile)
+    @BindView(R2.id.et_new_mobile)
     EditText etNewMobile;
-    @BindView(R.id.et_verify_code)
+    @BindView(R2.id.et_verify_code)
     EditText etVerifyCode;
-    @BindView(R.id.tv_get_verify_code)
+    @BindView(R2.id.tv_get_verify_code)
     TextView tvGetVerifyCode;
-    @BindView(R.id.tv_complete)
+    @BindView(R2.id.tv_complete)
     TextView tvComplete;
     private Disposable mCountDisposable;
 
@@ -67,7 +68,7 @@ public class ModifyMobileActivity extends BaseActivity<ModifyUserMobileContract.
         });
     }
 
-    @OnClick(R.id.tv_get_verify_code)
+    @OnClick(R2.id.tv_get_verify_code)
     public void onTvGetVerifyCodeClicked() {
         if (etNewMobile.getText().toString().length() != 11) {
             ToastUtils.showShort(R.string.input_correct_mobile);
@@ -77,7 +78,7 @@ public class ModifyMobileActivity extends BaseActivity<ModifyUserMobileContract.
         mPresenter.getVerifyCode(etNewMobile.getText().toString());
     }
 
-    @OnClick(R.id.tv_complete)
+    @OnClick(R2.id.tv_complete)
     public void onTvCompleteClicked() {
         if (etNewMobile.getText().toString().length() != 11) {
             ToastUtils.showShort(R.string.input_correct_mobile);

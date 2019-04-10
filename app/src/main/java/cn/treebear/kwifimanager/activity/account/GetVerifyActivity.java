@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.config.Config;
@@ -28,19 +29,19 @@ import io.reactivex.disposables.Disposable;
  */
 @Deprecated
 public class GetVerifyActivity extends BaseActivity<GetVerifyContract.Presenter, String> implements GetVerifyContract.View {
-    @BindView(R.id.et_verify)
+    @BindView(R2.id.et_verify)
     EditText etSignUpVerify;
-    @BindView(R.id.line_password)
+    @BindView(R2.id.line_password)
     TextView linePassword;
-    @BindView(R.id.et_phone)
+    @BindView(R2.id.et_phone)
     EditText etSignUpPhone;
-    @BindView(R.id.line_phone)
+    @BindView(R2.id.line_phone)
     TextView linePhone;
-    @BindView(R.id.iv_edit_clear)
+    @BindView(R2.id.iv_edit_clear)
     ImageView ivEditClear;
-    @BindView(R.id.tv_get_code)
+    @BindView(R2.id.tv_get_code)
     TextView tvGetCode;
-    @BindView(R.id.tv_sign_next)
+    @BindView(R2.id.tv_sign_next)
     TextView tvSignNext;
     /**
      * 界面title
@@ -94,12 +95,12 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.Presenter,
         countDown();
     }
 
-    @OnClick(R.id.iv_edit_clear)
+    @OnClick(R2.id.iv_edit_clear)
     public void onIvEditClearClicked() {
         etSignUpPhone.setText("");
     }
 
-    @OnClick(R.id.tv_get_code)
+    @OnClick(R2.id.tv_get_code)
     public void onTvGetCodeClicked() {
         if (etSignUpPhone.getText().length() == 11) {
             mPresenter.getGetVerifyCode(type, etSignUpPhone.getText().toString());
@@ -107,7 +108,7 @@ public class GetVerifyActivity extends BaseActivity<GetVerifyContract.Presenter,
         }
     }
 
-    @OnClick(R.id.tv_sign_next)
+    @OnClick(R2.id.tv_sign_next)
     public void onTvSignNextClicked() {
         if (!etSignUpVerify.getText().toString().equals(mVerifyCode)) {
             ToastUtils.showShort(Config.Tips.VERIFY_CODE_ERROR);

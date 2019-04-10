@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.constant.PermissionConstants;
@@ -23,10 +21,13 @@ import org.json.JSONObject;
 
 import java.io.File;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.account.SetPasswordActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.QiNiuUserBean;
@@ -52,13 +53,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presenter, SUserCover> implements ModifyUserInfoContract.View {
 
-    @BindView(R.id.root_view)
+    @BindView(R2.id.root_view)
     ConstraintLayout mRootView;
-    @BindView(R.id.civ_header_pic)
+    @BindView(R2.id.civ_header_pic)
     CircleImageView civHeaderPic;
-    @BindView(R.id.tv_nick_name)
+    @BindView(R2.id.tv_nick_name)
     TextView tvNickName;
-    @BindView(R.id.tv_mobile_number)
+    @BindView(R2.id.tv_mobile_number)
     TextView tvMobileNumber;
     private TChoosePicTypePop choosePicTypePop;
     private String picPath;
@@ -82,22 +83,22 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
         mPresenter.getUserInfo();
     }
 
-    @OnClick(R.id.civ_header_pic)
+    @OnClick(R2.id.civ_header_pic)
     public void onCivHeaderPicClicked() {
         showChoosePop();
     }
 
-    @OnClick(R.id.tv_nick_name)
+    @OnClick(R2.id.tv_nick_name)
     public void onTvNickNameClicked() {
         startActivity(ModifyNickNameActivity.class);
     }
 
-    @OnClick(R.id.tv_mobile_number)
+    @OnClick(R2.id.tv_mobile_number)
     public void onTvMobileNumberClicked() {
         startActivity(ModifyMobileActivity.class);
     }
 
-    @OnClick(R.id.tv_modify_password)
+    @OnClick(R2.id.tv_modify_password)
     public void onTvModifyPasswordClicked() {
         // TODO: 2019/3/14 修改界面以兼容修改和重置
         startActivity(SetPasswordActivity.class);

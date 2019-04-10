@@ -2,18 +2,19 @@ package cn.treebear.kwifimanager.activity.home.myk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.ChooseXiaoKAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -27,9 +28,9 @@ import cn.treebear.kwifimanager.util.DensityUtil;
 import cn.treebear.kwifimanager.widget.divider.RecyclerViewDividerItemDecoration;
 
 public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presenter, NodeInfoDetail> implements SelectXiaoKContract.View {
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.refresh_layout)
+    @BindView(R2.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     private int pageNo = 1;
     private List<NodeInfoDetail.NodeBean> nodeBeans = new ArrayList<>();

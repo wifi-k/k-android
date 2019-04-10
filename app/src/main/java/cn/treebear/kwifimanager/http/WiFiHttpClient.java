@@ -60,6 +60,7 @@ public class WiFiHttpClient {
      */
     public static void updateClient() {
         getInstance().retrofit = null;
+        mRetrofitHttp = null;
         getInstance().initRetrofit();
     }
 
@@ -133,6 +134,12 @@ public class WiFiHttpClient {
      * 内部处理token更新
      */
     public static void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
+        synchronized (WiFiHttpClient.class) {
+            tologin(callBack);
+        }
+    }
+
+    private static void tologin(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         // 保证全局单次连接wifi只登录一次
         if (!needLogin) {
             if (callBack != null && resultData != null) {
@@ -172,7 +179,6 @@ public class WiFiHttpClient {
                     callBack.onFailed(resultData, resultMsg, resultCode);
                 }
             }
-
         });
     }
 

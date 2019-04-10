@@ -2,16 +2,17 @@ package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -27,7 +28,7 @@ import cn.treebear.kwifimanager.util.TLog;
  */
 public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContract.Presenter, MobileListBean> implements AllMobileListContract.View {
 
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
     ArrayList<MobileListBean.MobileBean> mobileList = new ArrayList<>();
     private GuardJoinDeviceAdapter adapter;

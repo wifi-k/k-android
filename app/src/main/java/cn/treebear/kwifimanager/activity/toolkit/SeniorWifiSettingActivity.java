@@ -2,7 +2,6 @@ package cn.treebear.kwifimanager.activity.toolkit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -10,9 +9,11 @@ import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.ConstConfig;
@@ -24,13 +25,13 @@ import cn.treebear.kwifimanager.config.Values;
  */
 public class SeniorWifiSettingActivity extends BaseActivity {
 
-    @BindView(R.id.tv_spectrum_bandwidth)
+    @BindView(R2.id.tv_spectrum_bandwidth)
     TextView tvSpectrumBandwidth;
-    @BindView(R.id.tv_work_model)
+    @BindView(R2.id.tv_work_model)
     TextView tvWorkModel;
-    @BindView(R.id.swb_broadcast)
+    @BindView(R2.id.swb_broadcast)
     SwitchButton swbBroadcast;
-    @BindView(R.id.tv_net_channel)
+    @BindView(R2.id.tv_net_channel)
     TextView tvNetChannel;
     private int netChannelPosition;
     private int workModelPosition;
@@ -52,7 +53,7 @@ public class SeniorWifiSettingActivity extends BaseActivity {
         ToastUtils.showShort(R.string.save);
     }
 
-    @OnClick(R.id.tv_spectrum_bandwidth)
+    @OnClick(R2.id.tv_spectrum_bandwidth)
     public void onTvSpectrumBandwidthClicked() {
 //        titleText = params.getString(Keys.TITLE, "");
 //        settingItemType = params.getInt(Keys.TYPE, 0);
@@ -66,7 +67,7 @@ public class SeniorWifiSettingActivity extends BaseActivity {
         startActivityForResult(SeniorSettingItemActivity.class, bundle, Values.REQUEST_SENIOR_SETTING);
     }
 
-    @OnClick(R.id.tv_work_model)
+    @OnClick(R2.id.tv_work_model)
     public void onTvWorkModelClicked() {
         Bundle bundle = new Bundle();
         bundle.putString(Keys.TITLE, getString(R.string.work_model));
@@ -76,7 +77,7 @@ public class SeniorWifiSettingActivity extends BaseActivity {
         startActivityForResult(SeniorSettingItemActivity.class, bundle, Values.REQUEST_SENIOR_SETTING);
     }
 
-    @OnClick(R.id.tv_net_channel)
+    @OnClick(R2.id.tv_net_channel)
     public void onTvNetChannelClicked() {
         Bundle bundle = new Bundle();
         bundle.putString(Keys.TITLE, getString(R.string.net_channel));

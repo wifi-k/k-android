@@ -1,18 +1,19 @@
 package cn.treebear.kwifimanager.activity.home.report;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.ChildrenListBean;
@@ -23,11 +24,11 @@ import cn.treebear.kwifimanager.mvp.server.presenter.ChildrenListPresenter;
 
 public class ChildrenListActivity extends BaseActivity<ChildrenListContract.Presenter, ChildrenListBean> implements ChildrenListContract.View {
 
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.refresh_layout)
+    @BindView(R2.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.tv_empty_view)
+    @BindView(R2.id.tv_empty_view)
     TextView tvEmptyView;
     private int pageNo = 1;
     private List<ChildrenListBean.ChildrenBean> childrenBeans = new ArrayList<>();

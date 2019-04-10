@@ -1,14 +1,15 @@
 package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.LimitOnlineTimeAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.BanAppPlanBean;
@@ -21,7 +22,7 @@ import cn.treebear.kwifimanager.config.Keys;
 @Deprecated
 public class LimitTimeControlActivity extends BaseActivity {
 
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
     private BanAppPlanBean planBean;
     private ArrayList<TimeLimitBean> limitOnlineTime = new ArrayList<>();
@@ -62,7 +63,7 @@ public class LimitTimeControlActivity extends BaseActivity {
         timeAdapter.setOnItemClickListener((adapter, view, position) -> toEditTime(position));
     }
 
-    @OnClick(R.id.tv_add_new_limit_time)
+    @OnClick(R2.id.tv_add_new_limit_time)
     public void onViewClicked() {
 
     }

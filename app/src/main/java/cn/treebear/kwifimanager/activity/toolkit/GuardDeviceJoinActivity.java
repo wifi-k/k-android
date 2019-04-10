@@ -1,8 +1,5 @@
 package cn.treebear.kwifimanager.activity.toolkit;
 
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -10,10 +7,14 @@ import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.MobileListBean;
@@ -27,9 +28,9 @@ import cn.treebear.kwifimanager.mvp.server.presenter.NodeMobilePresenter;
  */
 public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Presenter, MobileListBean> implements NodeMobileContract.View {
 
-    @BindView(R.id.empty_view_wrapper)
+    @BindView(R2.id.empty_view_wrapper)
     ConstraintLayout emptyViewWrapper;
-    @BindView(R.id.rv_guard_device_list)
+    @BindView(R2.id.rv_guard_device_list)
     RecyclerView rvGuardDeviceList;
     private ArrayList<MobileListBean.MobileBean> guardDeviceList = new ArrayList<>();
     private GuardJoinDeviceAdapter adapter;
@@ -66,7 +67,7 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
         mPresenter.getNodeMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo);
     }
 
-    @OnClick(R.id.tv_add_join)
+    @OnClick(R2.id.tv_add_join)
     public void onViewClicked() {
 
     }

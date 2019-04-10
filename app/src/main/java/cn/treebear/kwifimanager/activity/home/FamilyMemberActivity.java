@@ -1,9 +1,6 @@
 package cn.treebear.kwifimanager.activity.home;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,10 +8,14 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.FamilyMemberAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -34,11 +35,11 @@ import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
  */
 public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Presenter, FamilyMemberCover> implements FamilyMemberContract.View {
 
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView rvFamilyList;
-    @BindView(R.id.tv_bottom_button)
+    @BindView(R2.id.tv_bottom_button)
     Button tvAddFamilyMember;
-    @BindView(R.id.refresh_layout)
+    @BindView(R2.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     private ArrayList<FamilyMemberBean> familyMemberList = new ArrayList<>();
     private FamilyMemberAdapter familyMemberAdapter;
@@ -100,7 +101,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
         refreshLayout.setOnRefreshListener(() -> mPresenter.getFamilyMembers(nodeId));
     }
 
-    @OnClick(R.id.tv_bottom_button)
+    @OnClick(R2.id.tv_bottom_button)
     public void onAddFamilyMemberClicked() {
         UMShareUtils.shareWxLink(this, "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.ic_test_logo, null);
     }

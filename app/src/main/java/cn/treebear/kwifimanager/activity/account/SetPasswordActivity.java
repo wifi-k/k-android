@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -30,23 +31,23 @@ import cn.treebear.kwifimanager.util.Check;
  */
 public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presenter, Object> implements SetPasswordContract.View {
 
-    @BindView(R.id.et_password_again)
+    @BindView(R2.id.et_password_again)
     EditText etPasswordAgain;
-    @BindView(R.id.et_sign_up_password)
+    @BindView(R2.id.et_sign_up_password)
     EditText etSignUpPassword;
-    @BindView(R.id.iv_password_state)
+    @BindView(R2.id.iv_password_state)
     ImageView ivPasswordState;
-    @BindView(R.id.btn_confirm)
+    @BindView(R2.id.btn_confirm)
     TextView btnConfirm;
-    @BindView(R.id.line_password)
+    @BindView(R2.id.line_password)
     TextView linePassword;
-    @BindView(R.id.line_phone)
+    @BindView(R2.id.line_phone)
     TextView linePhoneNumber;
-    @BindView(R.id.iv_password1_clear)
+    @BindView(R2.id.iv_password1_clear)
     ImageView ivPassword1Clear;
-    @BindView(R.id.iv_password2_eye)
+    @BindView(R2.id.iv_password2_eye)
     ImageView ivPassword2Eye;
-    @BindView(R.id.iv_password2_clear)
+    @BindView(R2.id.iv_password2_clear)
     ImageView ivPassword2Clear;
     /**
      * password 明文/密码状态
@@ -132,7 +133,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
         });
     }
 
-    @OnClick(R.id.iv_password_state)
+    @OnClick(R2.id.iv_password_state)
     public void onIvEditClearClicked() {
         password1Visible = !password1Visible;
         if (password1Visible) {
@@ -145,12 +146,12 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
         etSignUpPassword.setSelection(etSignUpPassword.getText().length());
     }
 
-    @OnClick(R.id.iv_password1_clear)
+    @OnClick(R2.id.iv_password1_clear)
     public void onIvPassword1ClearClicked() {
         etPasswordAgain.setText("");
     }
 
-    @OnClick(R.id.iv_password2_eye)
+    @OnClick(R2.id.iv_password2_eye)
     public void onIvPassword2EyeClicked() {
         password2Visible = !password2Visible;
         if (password2Visible) {
@@ -163,11 +164,11 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
         etPasswordAgain.setSelection(etPasswordAgain.getText().length());
     }
 
-    @OnClick(R.id.iv_password2_clear)
+    @OnClick(R2.id.iv_password2_clear)
     public void onIvPassword2ClearClicked() {
     }
 
-    @OnClick(R.id.btn_confirm)
+    @OnClick(R2.id.btn_confirm)
     public void onBtnConfirmClicked() {
         if (Check.equals(etSignUpPassword, etPasswordAgain)) {
             mPresenter.setPassword(etSignUpPassword.getText().toString());

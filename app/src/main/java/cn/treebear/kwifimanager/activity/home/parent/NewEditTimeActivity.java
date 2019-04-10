@@ -2,8 +2,6 @@ package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,9 +11,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.SelectDaysAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.Daybean;
@@ -32,11 +33,11 @@ import cn.treebear.kwifimanager.widget.pop.TimePickerPop;
  */
 public class NewEditTimeActivity extends BaseActivity {
 
-    @BindView(R.id.tv_start_time)
+    @BindView(R2.id.tv_start_time)
     TextView tvStartTime;
-    @BindView(R.id.tv_end_time)
+    @BindView(R2.id.tv_end_time)
     TextView tvEndTime;
-    @BindView(R.id.rv_days)
+    @BindView(R2.id.rv_days)
     RecyclerView recyclerView;
     private List<Daybean> days = new ArrayList<>();
     private TimePickerPop startTimePop;
@@ -83,12 +84,12 @@ public class NewEditTimeActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.start_time_wrapper)
+    @OnClick(R2.id.start_time_wrapper)
     public void onStartTimeWrapperClicked() {
         showModifyStartTimePop();
     }
 
-    @OnClick(R.id.end_time_wrapper)
+    @OnClick(R2.id.end_time_wrapper)
     public void onEndTimeWrapperClicked() {
         showModifyEndTimePop();
     }

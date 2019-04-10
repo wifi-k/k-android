@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -23,17 +24,17 @@ import cn.treebear.kwifimanager.util.Check;
  */
 public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presenter, WifiDeviceInfo> implements StaticIpContract.View {
 
-    @BindView(R.id.et_ip_address)
+    @BindView(R2.id.et_ip_address)
     EditText etIpAddress;
-    @BindView(R.id.et_subnet_mask)
+    @BindView(R2.id.et_subnet_mask)
     EditText etSubnetMask;
-    @BindView(R.id.et_gateway)
+    @BindView(R2.id.et_gateway)
     EditText etGateway;
-    @BindView(R.id.et_first_dns)
+    @BindView(R2.id.et_first_dns)
     EditText etFirstDns;
-    @BindView(R.id.et_secend_dns)
+    @BindView(R2.id.et_secend_dns)
     EditText etSecendDns;
-    @BindView(R.id.btn_next)
+    @BindView(R2.id.btn_next)
     Button btnNext;
     int count = 0;
 
@@ -53,7 +54,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presen
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 
-    @OnClick(R.id.btn_next)
+    @OnClick(R2.id.btn_next)
     public void onViewClicked() {
         if (checkInput()) {
             showLoading();

@@ -6,6 +6,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 
 /**
@@ -13,9 +14,9 @@ import cn.treebear.kwifimanager.base.BaseActivity;
  */
 public class UpdateAppActivity extends BaseActivity {
 
-    @BindView(R.id.tv_current_version)
+    @BindView(R2.id.tv_current_version)
     TextView tvCurrentVersion;
-    @BindView(R.id.tv_newer_version)
+    @BindView(R2.id.tv_newer_version)
     TextView tvNewerVersion;
 
     @Override
@@ -29,7 +30,7 @@ public class UpdateAppActivity extends BaseActivity {
         tvCurrentVersion.setText(BuildConfig.VERSION_NAME);
     }
 
-    @OnClick(R.id.tv_uodate_now)
+    @OnClick(R2.id.tv_uodate_now)
     public void onViewClicked() {
         // TODO: 2019/3/14 更新
     }

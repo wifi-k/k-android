@@ -2,7 +2,6 @@ package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,10 +9,12 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.TimeControlbean;
@@ -32,17 +33,17 @@ import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
  */
 public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Presenter, TimeControlbean> implements TimeControlContract.View {
 
-    @BindView(R.id.tv_ban_app_name)
+    @BindView(R2.id.tv_ban_app_name)
     TextView tvBanAppName;
-    @BindView(R.id.tv_ban_app_tips)
+    @BindView(R2.id.tv_ban_app_tips)
     TextView tvBanAppTips;
-    @BindView(R.id.tv_modify_name)
+    @BindView(R2.id.tv_modify_name)
     TextView tvModifyName;
-    @BindView(R.id.tv_limited_online_time)
+    @BindView(R2.id.tv_limited_online_time)
     TextView tvLimitedTime;
-    @BindView(R.id.tv_has_option_time)
+    @BindView(R2.id.tv_has_option_time)
     TextView tvHasOptionTime;
-    @BindView(R.id.tv_has_option_device)
+    @BindView(R2.id.tv_has_option_device)
     TextView tvHasOptionDevice;
     private TimeControlbean.TimeControl needModifyPlan;
     private TInputDialog modifyNameDialog;
@@ -112,12 +113,12 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
         }
     }
 
-    @OnClick(R.id.tv_modify_name)
+    @OnClick(R2.id.tv_modify_name)
     public void onTvModifyNameClicked() {
         showModifyNameDialog();
     }
 
-    @OnClick(R.id.tv_limited_online_time)
+    @OnClick(R2.id.tv_limited_online_time)
     public void onTvLimitedOnlineTimeClicked() {
         Bundle bundle = new Bundle();
         bundle.putString(Keys.START_TIME, needModifyPlan.getSt());
@@ -126,7 +127,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
         startActivityForResult(NewEditTimeActivity.class, bundle, Values.REQUEST_EDIT_TIME);
     }
 
-    @OnClick(R.id.tv_control_device)
+    @OnClick(R2.id.tv_control_device)
     public void onTvControlDeviceClicked() {
         Bundle bundle = new Bundle();
         bundle.putStringArrayList(Keys.PARENT_CONTROL_DEVICE, needModifyPlan.getsMac());

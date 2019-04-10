@@ -1,9 +1,6 @@
 package cn.treebear.kwifimanager.activity.home.myk;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,9 +9,13 @@ import com.blankj.utilcode.util.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.bindap.BindAction1Activity;
 import cn.treebear.kwifimanager.adapter.MyDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
@@ -33,11 +34,11 @@ import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
  */
 public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter, NodeInfoDetail> implements MyNodeContract.View {
 
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView rvDeviceList;
-    @BindView(R.id.refresh_layout)
+    @BindView(R2.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.tv_empty_view)
+    @BindView(R2.id.tv_empty_view)
     TextView emptyView;
     private MyDeviceAdapter deviceAdapter;
     private TInputDialog tInputDialog;

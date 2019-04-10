@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.activity.bindap.BindAction1Activity;
 import cn.treebear.kwifimanager.base.BaseFragment;
@@ -26,11 +27,11 @@ import cn.treebear.kwifimanager.widget.dialog.TipsDialog;
 public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presenter, BaseResponse> implements UnbindHomeContract.View {
 
 
-    @BindView(R.id.iv_bind)
+    @BindView(R2.id.iv_bind)
     ImageView ivBind;
-    @BindView(R.id.tv_bind)
+    @BindView(R2.id.tv_bind)
     TextView tvBind;
-    @BindView(R.id.tv_input_family_code)
+    @BindView(R2.id.tv_input_family_code)
     TextView tvInputFamilyCode;
     private TInputDialog inputDialog;
     private TipsDialog errorTipsDialog;
@@ -61,7 +62,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
         startActivity(BindAction1Activity.class);
     }
 
-    @OnClick(R.id.tv_input_family_code)
+    @OnClick(R2.id.tv_input_family_code)
     public void onFamilyCodeClicked() {
         showFamilyCodeDialog();
 

@@ -2,8 +2,6 @@ package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,8 +9,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.ChooseAppAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.AppBean;
@@ -25,7 +26,7 @@ import cn.treebear.kwifimanager.test.BeanTest;
  */
 public class ChooseBanAppActivity extends BaseActivity {
 
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView rvAppList;
     private BanAppPlanBean needModifyPlan;
     ArrayList<AppBean> appList = new ArrayList<>();

@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -21,17 +22,17 @@ import cn.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
  * @author Administrator
  */
 public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDeviceInfo> implements DynamicIpContract.View {
-    @BindView(R.id.tv_broadband_account)
+    @BindView(R2.id.tv_broadband_account)
     EditText etBroadbandAccount;
-    @BindView(R.id.et_broadband_password)
+    @BindView(R2.id.et_broadband_password)
     EditText etBroadbandPassword;
-    @BindView(R.id.ip_address)
+    @BindView(R2.id.ip_address)
     TextView tvIpAddress;
-    @BindView(R.id.tv_dns_server)
+    @BindView(R2.id.tv_dns_server)
     TextView tvDnsServer;
-    @BindView(R.id.tv_disconnect)
+    @BindView(R2.id.tv_disconnect)
     TextView tvDisconnect;
-    @BindView(R.id.tv_connect)
+    @BindView(R2.id.tv_connect)
     TextView tvConnect;
     private int count = 0;
 
@@ -46,14 +47,14 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
         updateWifiInfoShow();
     }
 
-    @OnClick(R.id.tv_disconnect)
+    @OnClick(R2.id.tv_disconnect)
     public void onTvDisconnectClicked() {
         showLoading(R.string.commit_ing);
         mPresenter.dialUpSet(Config.Text.AP_NAME_START + etBroadbandAccount.getText().toString(),
                 Config.Text.AP_NAME_START + etBroadbandPassword.getText().toString());
     }
 
-    @OnClick(R.id.tv_connect)
+    @OnClick(R2.id.tv_connect)
     public void onTvConnectClicked() {
         if (etBroadbandAccount.getText().length() < 1 || etBroadbandPassword.getText().length() < 1) {
             ToastUtils.showShort(R.string.check_pppoe_account_info);

@@ -2,10 +2,6 @@ package cn.treebear.kwifimanager.activity.gallery;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +12,14 @@ import com.karumi.dividers.DividerBuilder;
 import com.karumi.dividers.DividerItemDecoration;
 import com.karumi.dividers.Layer;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.GalleryUploadAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.config.GalleryHelper;
@@ -27,13 +28,13 @@ import cn.treebear.kwifimanager.util.TLog;
 
 public class GalleryBackupActivity extends BaseActivity {
 
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.tv_backup_status_sticky)
+    @BindView(R2.id.tv_backup_status_sticky)
     TextView tvBackupStatusSticky;
-    @BindView(R.id.tv_pause_backup_sticky)
+    @BindView(R2.id.tv_pause_backup_sticky)
     TextView tvPauseBackupSticky;
-    @BindView(R.id.cl_header_sticky_wrapper)
+    @BindView(R2.id.cl_header_sticky_wrapper)
     ConstraintLayout clHeaderWrapper;
     private TextView tvBackupTip;
     private TextView tvUploadSpeed;
@@ -94,7 +95,7 @@ public class GalleryBackupActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.tv_pause_backup_sticky)
+    @OnClick(R2.id.tv_pause_backup_sticky)
     public void onViewClicked() {
 
     }

@@ -1,6 +1,5 @@
 package cn.treebear.kwifimanager.activity.toolkit;
 
-import android.support.v7.widget.GridLayout;
 import android.util.ArrayMap;
 import android.widget.TextView;
 
@@ -8,10 +7,12 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.List;
 
+import androidx.gridlayout.widget.GridLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.NodeWifiListBean;
@@ -34,29 +35,29 @@ import cn.treebear.kwifimanager.widget.dialog.TipsDialog;
  */
 public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Presenter, NodeWifiListBean> implements NodeOptionSetContract.View {
 
-    @BindView(R.id.tv_has_no_password)
+    @BindView(R2.id.tv_has_no_password)
     TextView tvHasNoPassword;
-    @BindView(R.id.tv_setting_wifi_name)
+    @BindView(R2.id.tv_setting_wifi_name)
     TextView tvSettingWifiName;
-    @BindView(R.id.tv_wifi_ssid)
+    @BindView(R2.id.tv_wifi_ssid)
     TextView tvWifiSSID;
-    @BindView(R.id.tv_setting_wifi_password)
+    @BindView(R2.id.tv_setting_wifi_password)
     TextView tvSettingWifiPassword;
-    //    @BindView(R.id.tv_guard_join_net)
+    //    @BindView(R2.id.tv_guard_join_net)
 //    TextView tvGuardJoinNet;
-//    @BindView(R.id.tv_senior_settings)
+//    @BindView(R2.id.tv_senior_settings)
 //    TextView tvSeniorSettings;
-    @BindView(R.id.tv_online_setting)
+    @BindView(R2.id.tv_online_setting)
     TextView tvOnlineSetting;
-    //    @BindView(R.id.tv_lan_setting)
+    //    @BindView(R2.id.tv_lan_setting)
 //    TextView tvLanSetting;
-    @BindView(R.id.tv_restart_device)
+    @BindView(R2.id.tv_restart_device)
     TextView tvRestartDevice;
-//    @BindView(R.id.tv_dhcp_server)
+//    @BindView(R2.id.tv_dhcp_server)
 //    TextView tvDhcpServer;
-    @BindView(R.id.tv_reset_device)
+    @BindView(R2.id.tv_reset_device)
     TextView tvResetDevice;
-    @BindView(R.id.gl_senior_setting_wrapper)
+    @BindView(R2.id.gl_senior_setting_wrapper)
     GridLayout glSeniorSettingWrapper;
     private TInputDialog nameModifyDialog;
     private TInputDialog passwordModifyDialog;
@@ -83,47 +84,47 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         mPresenter.getNodeSsid(MyApplication.getAppContext().getCurrentSelectNode());
     }
 
-    @OnClick(R.id.tv_setting_wifi_name)
+    @OnClick(R2.id.tv_setting_wifi_name)
     public void onTvSettingWifiNameClicked() {
         showNameInputDialog();
     }
 
-    @OnClick(R.id.tv_setting_wifi_password)
+    @OnClick(R2.id.tv_setting_wifi_password)
     public void onTvSettingWifiPasswordClicked() {
         showPasswordInputDialog();
     }
 
-    @OnClick(R.id.tv_guard_join_net)
+    @OnClick(R2.id.tv_guard_join_net)
     public void onTvGuardJoinNetClicked() {
         startActivity(GuardDeviceJoinActivity.class);
     }
 
-//    @OnClick(R.id.tv_senior_settings)
+//    @OnClick(R2.id.tv_senior_settings)
 //    public void onTvSeniorSettingsClicked() {
 //        startActivity(SeniorWifiSettingActivity.class);
 //    }
 
-    @OnClick(R.id.tv_online_setting)
+    @OnClick(R2.id.tv_online_setting)
     public void onTvOnlineSettingClicked() {
         startActivity(OnlineSettingActivity.class);
     }
 
-//    @OnClick(R.id.tv_lan_setting)
+//    @OnClick(R2.id.tv_lan_setting)
 //    public void onTvLanSettingClicked() {
 //        startActivity(LanSettingActivity.class);
 //    }
 
-    @OnClick(R.id.tv_restart_device)
+    @OnClick(R2.id.tv_restart_device)
     public void onTvRestartDeviceClicked() {
         showRestartTipDialog();
     }
 
-//    @OnClick(R.id.tv_dhcp_server)
+//    @OnClick(R2.id.tv_dhcp_server)
 //    public void onTvDhcpServerClicked() {
 //        startActivity(DHCPServerActivity.class);
 //    }
 
-    @OnClick(R.id.tv_reset_device)
+    @OnClick(R2.id.tv_reset_device)
     public void onTvResetDeviceClicked() {
         showResetTipDialog();
     }

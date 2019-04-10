@@ -9,10 +9,10 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.config.Config;
 

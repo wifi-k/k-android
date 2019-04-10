@@ -1,8 +1,6 @@
 package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,10 +8,13 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.BanTimeAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -31,11 +32,11 @@ import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
  */
 public class TimeControlListActivity extends BaseActivity<TimeControlContract.Presenter, TimeControlbean> implements TimeControlContract.View {
 
-    @BindView(R.id.tv_tips)
+    @BindView(R2.id.tv_tips)
     TextView tvTips;
-    @BindView(R.id.rv_ban_app)
+    @BindView(R2.id.rv_ban_app)
     RecyclerView recyclerView;
-    @BindView(R.id.tv_add_ban_app_plan)
+    @BindView(R2.id.tv_add_ban_app_plan)
     TextView tvAddTimeControl;
     private ArrayList<TimeControlbean.TimeControl> timeLimitList = new ArrayList<>();
     private int currentModifyPosition;
@@ -111,7 +112,7 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
         mPresenter.getTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode());
     }
 
-    @OnClick(R.id.tv_add_ban_app_plan)
+    @OnClick(R2.id.tv_add_ban_app_plan)
     public void onTvAddNewTCClick() {
         startActivity(TimeControlPlanActivity.class);
     }

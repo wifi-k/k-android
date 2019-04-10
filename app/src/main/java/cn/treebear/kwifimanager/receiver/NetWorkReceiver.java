@@ -16,6 +16,7 @@ import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.IModel;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
+import cn.treebear.kwifimanager.util.TLog;
 
 /**
  * @author Administrator
@@ -34,6 +35,7 @@ public class NetWorkReceiver extends BroadcastReceiver {
             if (isWifi && !hasOnWifi) {
                 hasOnWifi = true;
                 if (NetWorkUtils.isSameLikeXiaoK(context)) {
+                    TLog.e("OkHttp","NetWorkUtils 调用登录");
                     WiFiHttpClient.xiaokOnline();
                 } else {
                     ToastUtils.showShort(R.string.has_wifi_connected);

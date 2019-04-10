@@ -8,6 +8,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.bean.QiNiuUserBean;
@@ -22,9 +23,9 @@ import cn.treebear.kwifimanager.util.Check;
  */
 public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.Presenter, SUserCover> implements ModifyUserInfoContract.View {
 
-    @BindView(R.id.et_nick_name)
+    @BindView(R2.id.et_nick_name)
     EditText etNickName;
-    @BindView(R.id.iv_edit_close)
+    @BindView(R2.id.iv_edit_close)
     ImageView ivEditClose;
 
     @Override
@@ -53,7 +54,7 @@ public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.
         });
     }
 
-    @OnClick(R.id.iv_edit_close)
+    @OnClick(R2.id.iv_edit_close)
     public void onViewClicked() {
         etNickName.setText("");
     }

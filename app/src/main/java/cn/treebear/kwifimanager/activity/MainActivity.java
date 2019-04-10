@@ -1,6 +1,5 @@
 package cn.treebear.kwifimanager.activity;
 
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -10,13 +9,13 @@ import com.chaychan.library.BottomBarLayout;
 
 import java.util.ArrayList;
 
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseFragmentActivity;
-import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.IPresenter;
-import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
@@ -24,11 +23,7 @@ import cn.treebear.kwifimanager.fragment.GalleryFragment;
 import cn.treebear.kwifimanager.fragment.HomeBindFragment;
 import cn.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import cn.treebear.kwifimanager.fragment.MeFragment;
-import cn.treebear.kwifimanager.http.WiFiHttpClient;
-import cn.treebear.kwifimanager.mvp.IModel;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
-import cn.treebear.kwifimanager.util.Check;
-import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
 import cn.treebear.kwifimanager.util.TLog;
 
@@ -39,9 +34,9 @@ import cn.treebear.kwifimanager.util.TLog;
  */
 public class MainActivity extends BaseFragmentActivity {
 
-    @BindView(R.id.vp_fragments)
+    @BindView(R2.id.vp_fragments)
     FrameLayout vpFragments;
-    @BindView(R.id.bottom_bar)
+    @BindView(R2.id.bottom_bar)
     BottomBarLayout bottomBar;
     HomeBindFragment homeBindFragment;
     HomeUnbindFragment homeUnbindFragment;
@@ -123,9 +118,6 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isTryingSign && NetWorkUtils.isWifiConnected(this)) {
-            tryToSignWifi();
-        }
         updateHomeFragment();
         TLog.i(MyApplication.getAppContext().getUser().toString());
         TLog.i(MyApplication.getAppContext().getDeviceInfo());
@@ -163,43 +155,6 @@ public class MainActivity extends BaseFragmentActivity {
                 statusTransparentFontWhite();
             }
         }
-    }
-
-    private void tryToSignWifi() {
-        isTryingSign = true;
-        bottomBar.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
-                    WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
-                        @Override
-                        public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
-                            isTryingSign = false;
-                        }
-
-                        @Override
-                        public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
-                            isTryingSign = false;
-                        }
-                    });
-
-                }
-                if (NetWorkUtils.isSameLikeXiaoK(MainActivity.this)) {
-                    WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
-                        @Override
-                        public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
-                            isTryingSign = false;
-                        }
-
-                        @Override
-                        public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
-                            isTryingSign = false;
-                        }
-                    });
-
-                }
-            }
-        }, 5000);
     }
 
 }

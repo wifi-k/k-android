@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.config.ConstConfig;
@@ -15,13 +16,13 @@ import cn.treebear.kwifimanager.config.Keys;
  */
 public class MobileInfoActivity extends BaseActivity {
 
-    @BindView(R.id.tv_device_type)
+    @BindView(R2.id.tv_device_type)
     TextView tvDeviceType;
-    @BindView(R.id.tv_phone_brand)
+    @BindView(R2.id.tv_phone_brand)
     TextView tvPhoneBrand;
-    @BindView(R.id.tv_mac_address)
+    @BindView(R2.id.tv_mac_address)
     TextView tvMacAddress;
-    @BindView(R.id.tv_ip_address)
+    @BindView(R2.id.tv_ip_address)
     TextView tvIpAddress;
     private MobileListBean.MobileBean mobilePhoneBean;
 

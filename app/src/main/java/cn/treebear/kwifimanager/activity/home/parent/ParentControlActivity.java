@@ -2,6 +2,7 @@ package cn.treebear.kwifimanager.activity.home.parent;
 
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 
 /**
@@ -19,12 +20,12 @@ public class ParentControlActivity extends BaseActivity {
         setTitleBack(R.string.parent_control);
     }
 
-    @OnClick(R.id.tv_time_control)
+    @OnClick(R2.id.tv_time_control)
     public void onTvTimeControlClicked() {
         startActivity(TimeControlListActivity.class);
     }
 
-    @OnClick(R.id.tv_ban_app)
+    @OnClick(R2.id.tv_ban_app)
     public void onTvBanAppClicked() {
         startActivity(BanAppListActivity.class);
     }

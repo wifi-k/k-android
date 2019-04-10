@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
@@ -29,17 +30,17 @@ import cn.treebear.kwifimanager.util.Check;
  */
 public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter, WifiDeviceInfo> implements DialUpContract.View {
 
-    @BindView(R.id.et_net_account)
+    @BindView(R2.id.et_net_account)
     EditText etNetAccount;
-    @BindView(R.id.line_account)
+    @BindView(R2.id.line_account)
     TextView lineAccount;
-    @BindView(R.id.et_net_passowrd)
+    @BindView(R2.id.et_net_passowrd)
     EditText etNetPassowrd;
-    @BindView(R.id.iv_password_ryr)
+    @BindView(R2.id.iv_password_ryr)
     ImageView ivPasswordRyr;
-    @BindView(R.id.line_password)
+    @BindView(R2.id.line_password)
     TextView linePassword;
-    @BindView(R.id.btn_dial_up_confirm)
+    @BindView(R2.id.btn_dial_up_confirm)
     Button btnDialUpConfirm;
     private boolean passwordVisible = false;
     private int count = 0;
@@ -78,7 +79,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
         etNetPassowrd.setOnFocusChangeListener((v, hasFocus) -> linePassword.setBackgroundColor(hasFocus ? Config.Colors.MAIN : Config.Colors.LINE));
     }
 
-    @OnClick(R.id.iv_password_ryr)
+    @OnClick(R2.id.iv_password_ryr)
     public void onIvPasswordRyrClicked() {
         passwordVisible = !passwordVisible;
         if (passwordVisible) {
@@ -93,7 +94,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
         etNetPassowrd.setSelection(etNetPassowrd.getText().length());
     }
 
-    @OnClick(R.id.btn_dial_up_confirm)
+    @OnClick(R2.id.btn_dial_up_confirm)
     public void onBtnDialUpConfirmClicked() {
         showLoading();
         count = 0;

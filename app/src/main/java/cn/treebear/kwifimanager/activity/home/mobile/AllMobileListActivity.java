@@ -1,8 +1,6 @@
 package cn.treebear.kwifimanager.activity.home.mobile;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,9 +9,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -30,13 +31,13 @@ import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
  */
 public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Presenter, MobileListBean> implements AllMobileListContract.View {
 
-    @BindView(R.id.tv_online_device_count)
+    @BindView(R2.id.tv_online_device_count)
     TextView tvOnlineDeviceCount;
-    @BindView(R.id.tv_upload_speed)
+    @BindView(R2.id.tv_upload_speed)
     TextView tvUploadSpeed;
-    @BindView(R.id.tv_download_speed)
+    @BindView(R2.id.tv_download_speed)
     TextView tvDownloadSpeed;
-    @BindView(R.id.rv_device_list)
+    @BindView(R2.id.rv_device_list)
     RecyclerView rvDeviceList;
     private ArrayList<MobileListBean.MobileBean> mobilePhoneList = new ArrayList<>();
     private MobilePhoneAdapter mobilePhoneAdapter;

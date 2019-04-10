@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -29,9 +30,9 @@ import cn.treebear.kwifimanager.util.UserInfoUtil;
  */
 public class LaunchAccountActivity extends BaseActivity {
 
-    @BindView(R.id.btn_signup)
+    @BindView(R2.id.btn_signup)
     TextView btnSignup;
-    @BindView(R.id.btn_signin)
+    @BindView(R2.id.btn_signin)
     TextView btnSignin;
 
     @Override
@@ -87,12 +88,12 @@ public class LaunchAccountActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.btn_signin)
+    @OnClick(R2.id.btn_signin)
     public void onSignInClick() {
         startActivity(SignInActivity.class);
     }
 
-    @OnClick(R.id.btn_signup)
+    @OnClick(R2.id.btn_signup)
     public void onSignUpClick() {
         startActivity(SignUpActivity.class);
     }

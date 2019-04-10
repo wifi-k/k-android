@@ -1,6 +1,6 @@
 package cn.treebear.kwifimanager.mvp.server.contract;
 
-import android.support.annotation.Size;
+import androidx.annotation.Size;
 
 import java.util.List;
 

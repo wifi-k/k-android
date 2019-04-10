@@ -7,6 +7,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.account.SignInActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -22,7 +23,7 @@ import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
  */
 public class SettingsActivity extends BaseActivity<SignOutContract.Presenter, BaseResponse> implements SignOutContract.View {
 
-    @BindView(R.id.tv_version)
+    @BindView(R2.id.tv_version)
     TextView tvVersion;
     private TMessageDialog signOutDialog;
 
@@ -47,12 +48,12 @@ public class SettingsActivity extends BaseActivity<SignOutContract.Presenter, Ba
         startActivity(UpdateAppActivity.class);
     }
 
-    @OnClick(R.id.tv_about_us)
+    @OnClick(R2.id.tv_about_us)
     public void onTvAboutUsClick() {
         // TODO: 2019/3/14 跳转关于我们
     }
 
-    @OnClick(R.id.tv_sign_out)
+    @OnClick(R2.id.tv_sign_out)
     public void onTvSignOutClick() {
         showSignOutDialog();
     }

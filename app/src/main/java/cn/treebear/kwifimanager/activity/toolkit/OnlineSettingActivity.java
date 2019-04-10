@@ -8,6 +8,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseFragmentActivity;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.fragment.DynamicOnlineFragment;
@@ -20,9 +21,9 @@ import cn.treebear.kwifimanager.widget.pop.TChooseOnlineTypePop;
  */
 public class OnlineSettingActivity extends BaseFragmentActivity {
 
-    @BindView(R.id.tv_choose_online_type)
+    @BindView(R2.id.tv_choose_online_type)
     TextView tvChooseOnlineType;
-    @BindView(R.id.fragment_wrapper)
+    @BindView(R2.id.fragment_wrapper)
     FrameLayout fragmentWrapper;
     private TChooseOnlineTypePop tChooseOnlineTypePop;
     private DynamicOnlineFragment dynamicOnlineFragment;
@@ -52,7 +53,7 @@ public class OnlineSettingActivity extends BaseFragmentActivity {
         addFragments(dynamicOnlineFragment, staticIpFragment, pppoeFragment);
     }
 
-    @OnClick(R.id.tv_choose_online_type)
+    @OnClick(R2.id.tv_choose_online_type)
     public void onViewClicked() {
         if (tChooseOnlineTypePop == null) {
             tChooseOnlineTypePop = new TChooseOnlineTypePop(this);

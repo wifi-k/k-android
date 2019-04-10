@@ -4,12 +4,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,9 +21,16 @@ import com.karumi.dividers.Layer;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.gallery.FullImageActivity;
 import cn.treebear.kwifimanager.activity.gallery.GalleryBackupActivity;
 import cn.treebear.kwifimanager.adapter.GalleryDisplayAdapter;
@@ -47,19 +48,19 @@ import cn.treebear.kwifimanager.util.TLog;
 public class GalleryFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.tv_ai_gallery)
+    @BindView(R2.id.tv_ai_gallery)
     TextView tvAiGallery;
-    @BindView(R.id.tv_all_gallery)
+    @BindView(R2.id.tv_all_gallery)
     TextView tvAllGallery;
-    @BindView(R.id.tv_share_gallery)
+    @BindView(R2.id.tv_share_gallery)
     TextView tvShareGallery;
-    @BindView(R.id.rl_tab_wrapper)
+    @BindView(R2.id.rl_tab_wrapper)
     RelativeLayout rlTabWrapper;
-    @BindView(R.id.iv_backup)
+    @BindView(R2.id.iv_backup)
     ImageView ivBackup;
     private ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
     private ArrayList<LocalImageSection> sections = new ArrayList<>();
@@ -188,7 +189,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
         });
     }
 
-    @OnClick(R.id.iv_backup)
+    @OnClick(R2.id.iv_backup)
     public void onBackupClick(){
         startActivity(GalleryBackupActivity.class);
     }

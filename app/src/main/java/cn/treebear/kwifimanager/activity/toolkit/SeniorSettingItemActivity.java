@@ -2,13 +2,14 @@ package cn.treebear.kwifimanager.activity.toolkit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.TextSettingAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.ItemBean;
@@ -20,7 +21,7 @@ import cn.treebear.kwifimanager.config.Values;
  */
 public class SeniorSettingItemActivity extends BaseActivity {
 
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView rvSettingItem;
     private String titleText;
     private ArrayList<ItemBean> itemData = new ArrayList<>();

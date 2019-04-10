@@ -1,12 +1,11 @@
 package cn.treebear.kwifimanager.adapter;
 
-import android.support.annotation.Nullable;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.Daybean;
 import cn.treebear.kwifimanager.bean.TimeLimitBean;

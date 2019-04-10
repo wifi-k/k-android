@@ -1,6 +1,5 @@
 package cn.treebear.kwifimanager.adapter;
 
-import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -12,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.config.GlideApp;

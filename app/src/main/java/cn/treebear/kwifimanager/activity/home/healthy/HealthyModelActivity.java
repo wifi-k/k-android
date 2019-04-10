@@ -2,9 +2,6 @@ package cn.treebear.kwifimanager.activity.home.healthy;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,10 +11,14 @@ import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.home.time.ModifyTimeActivity;
 import cn.treebear.kwifimanager.adapter.HealthyModelAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
@@ -35,11 +36,11 @@ import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
  */
 public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Presenter, HealthyModelBean> implements HealthyModelContract.View {
 
-    @BindView(R.id.sb_healthy)
+    @BindView(R2.id.sb_healthy)
     SwitchButton sbHealthy;
-    @BindView(R.id.recycler_view)
+    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.tv_add_timer)
+    @BindView(R2.id.tv_add_timer)
     TextView tvAddTimer;
     private ArrayList<HealthyModelBean.WifiBean.TimerBean> timeLimitList = new ArrayList<>();
     private HealthyModelAdapter healthyModelAdapter;
@@ -87,7 +88,7 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
         });
     }
 
-    @OnClick(R.id.tv_add_timer)
+    @OnClick(R2.id.tv_add_timer)
     public void onTvAddTimerClicked() {
         startActivityForResult(ModifyTimeActivity.class, null, Values.REQUEST_EDIT_TIME);
     }

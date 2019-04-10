@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -22,17 +23,17 @@ import cn.treebear.kwifimanager.util.Check;
  * @author Administrator
  */
 public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, WifiDeviceInfo> implements StaticIpContract.View {
-    @BindView(R.id.et_ip_address)
+    @BindView(R2.id.et_ip_address)
     EditText etIpAddress;
-    @BindView(R.id.et_subnet)
+    @BindView(R2.id.et_subnet)
     EditText etSubnet;
-    @BindView(R.id.et_gateway)
+    @BindView(R2.id.et_gateway)
     EditText etGateway;
-    @BindView(R.id.et_dns_1)
+    @BindView(R2.id.et_dns_1)
     EditText etDns1;
-    @BindView(R.id.et_dns_2)
+    @BindView(R2.id.et_dns_2)
     EditText etDns2;
-    @BindView(R.id.tv_update_option)
+    @BindView(R2.id.tv_update_option)
     TextView tvUpdateOption;
     private int count;
 
@@ -52,7 +53,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
         return new StaticIpPresenter();
     }
 
-    @OnClick(R.id.tv_update_option)
+    @OnClick(R2.id.tv_update_option)
     public void onTvUpdateOptionClicked() {
         if (checkInput()) {
             showLoading();

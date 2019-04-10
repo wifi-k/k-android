@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
@@ -32,21 +33,21 @@ import io.reactivex.disposables.Disposable;
  */
 public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presenter, String> implements GetVerifyContract.View {
 
-    @BindView(R.id.et_verify)
+    @BindView(R2.id.et_verify)
     EditText etVerify;
-    @BindView(R.id.line_password)
+    @BindView(R2.id.line_password)
     TextView linePassword;
-    @BindView(R.id.et_phone)
+    @BindView(R2.id.et_phone)
     EditText etPhone;
-    @BindView(R.id.line_phone)
+    @BindView(R2.id.line_phone)
     TextView linePhone;
-    @BindView(R.id.iv_edit_clear)
+    @BindView(R2.id.iv_edit_clear)
     ImageView ivEditClear;
-    @BindView(R.id.tv_get_code)
+    @BindView(R2.id.tv_get_code)
     TextView tvGetCode;
-    @BindView(R.id.tv_sign_next)
+    @BindView(R2.id.tv_sign_next)
     TextView tvSignNext;
-    @BindView(R.id.iv_verify_clear)
+    @BindView(R2.id.iv_verify_clear)
     ImageView ivVerifyClear;
     /**
      * 倒计时订阅器
@@ -76,17 +77,17 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
         listenTextChange();
     }
 
-    @OnClick(R.id.iv_edit_clear)
+    @OnClick(R2.id.iv_edit_clear)
     public void onIvEditClearClicked() {
         etPhone.setText(Config.Text.EMPTY);
     }
 
-    @OnClick(R.id.iv_verify_clear)
+    @OnClick(R2.id.iv_verify_clear)
     public void onViewClicked() {
         etVerify.setText(Config.Text.EMPTY);
     }
 
-    @OnClick(R.id.tv_get_code)
+    @OnClick(R2.id.tv_get_code)
     public void onTvGetCodeClicked() {
         if (etPhone.getText().length() == 11) {
             mPresenter.getGetVerifyCode(Config.RequestType.VERIFY_CODE_FORGET_PWD, etPhone.getText().toString());
@@ -94,7 +95,7 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
         }
     }
 
-    @OnClick(R.id.tv_sign_next)
+    @OnClick(R2.id.tv_sign_next)
     public void onTvSignNextClicked() {
         if (!etVerify.getText().toString().equals(mVerifyCode)) {
             ToastUtils.showShort(R.string.verify_code_input_error);

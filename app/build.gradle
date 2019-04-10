@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'realm-android'
+
+apply plugin: 'com.jakewharton.butterknife'
 realm {
     syncEnabled = true
 }
@@ -19,7 +21,7 @@ android {
         buildConfigField "String", "UMENG_MESSAGE_SECRET", '"17f28a2b0dac46d22c16065a7163f41f"'
         buildConfigField "String", "WX_APPKEY", '"wxa62e4e12f7d59b51"'
         buildConfigField "String", "WX_APP_SECRET", '"4a37cd29b146bf2a20bb95ad13486233"'
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 UMENG_CHANNEL       : "treebear-cloud",
                 UMENG_APPKEY        : "5c9c305a3fc1958d800010fc",
@@ -57,16 +59,16 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // 测试套件
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
     // Android 扩展包
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:gridlayout-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -75,10 +77,11 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation "com.github.bumptech.glide:glide:4.9.0"
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation  'com.android.support:support-v4:28.0.0'
     //防止三方框架爆包
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
     // util集合
     implementation 'com.blankj:utilcode:1.23.5'
     // 沉浸式状态栏
@@ -86,8 +89,8 @@ dependencies {
     // 底部导航栏
     implementation 'com.github.chaychan:BottomBarLayout:1.1.2'
     // 黄油🔪
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     // 快捷BaseAdapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     // logging

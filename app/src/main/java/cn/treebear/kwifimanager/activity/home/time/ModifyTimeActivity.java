@@ -8,6 +8,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.HealthyModelBean;
 import cn.treebear.kwifimanager.config.Keys;
@@ -20,9 +21,9 @@ import cn.treebear.kwifimanager.widget.pop.TimePickerPop;
  */
 public class ModifyTimeActivity extends BaseActivity {
 
-    @BindView(R.id.tv_start_time)
+    @BindView(R2.id.tv_start_time)
     TextView tvStartTime;
-    @BindView(R.id.tv_end_time)
+    @BindView(R2.id.tv_end_time)
     TextView tvEndTime;
     private HealthyModelBean.WifiBean.TimerBean timeLimit;
     private TimePickerPop startTimePop;
@@ -55,17 +56,17 @@ public class ModifyTimeActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.start_time_wrapper)
+    @OnClick(R2.id.start_time_wrapper)
     public void onStartTimeWrapperClicked() {
         showStartTimePop();
     }
 
-    @OnClick(R.id.end_time_wrapper)
+    @OnClick(R2.id.end_time_wrapper)
     public void onEndTimeWrapperClicked() {
         showEndTimePop();
     }
 
-    @OnClick(R.id.btn_confirm)
+    @OnClick(R2.id.btn_confirm)
     public void onBtnConfirmClicked() {
         Intent intent = new Intent();
         intent.putExtra(Keys.POSITION, position);

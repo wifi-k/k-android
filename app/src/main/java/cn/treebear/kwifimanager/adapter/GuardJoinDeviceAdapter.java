@@ -1,6 +1,5 @@
 package cn.treebear.kwifimanager.adapter;
 
-import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -9,6 +8,7 @@ import com.suke.widget.SwitchButton;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.config.GlideApp;

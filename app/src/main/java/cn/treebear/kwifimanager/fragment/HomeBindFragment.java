@@ -3,10 +3,6 @@ package cn.treebear.kwifimanager.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,20 +13,25 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.activity.home.FamilyMemberActivity;
-import cn.treebear.kwifimanager.activity.home.report.WeekReportActivity;
 import cn.treebear.kwifimanager.activity.home.healthy.HealthyModelActivity;
 import cn.treebear.kwifimanager.activity.home.mobile.AllMobileListActivity;
-import cn.treebear.kwifimanager.activity.home.report.ChildrenListActivity;
 import cn.treebear.kwifimanager.activity.home.mobile.MobileDetailActivity;
 import cn.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
 import cn.treebear.kwifimanager.activity.home.myk.SelectXiaoKActivity;
 import cn.treebear.kwifimanager.activity.home.parent.ParentControlActivity;
+import cn.treebear.kwifimanager.activity.home.report.ChildrenListActivity;
+import cn.treebear.kwifimanager.activity.home.report.WeekReportActivity;
 import cn.treebear.kwifimanager.activity.message.MessageListActivity;
 import cn.treebear.kwifimanager.activity.toolkit.WifiToolkitActivity;
 import cn.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
@@ -60,47 +61,47 @@ import static android.app.Activity.RESULT_OK;
  */
 public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, NodeInfoDetail> implements BindHomeContract.View {
 
-    @BindView(R.id.tv_title_text)
+    @BindView(R2.id.tv_title_text)
     TextView tvTitleText;
-    @BindView(R.id.tv_back_home)
+    @BindView(R2.id.tv_back_home)
     TextView tvBackHome;
-    @BindView(R.id.tv_ap_name)
+    @BindView(R2.id.tv_ap_name)
     TextView tvApName;
-    @BindView(R.id.tv_user_state)
+    @BindView(R2.id.tv_user_state)
     TextView tvUserState;
-    @BindView(R.id.tv_root_name)
+    @BindView(R2.id.tv_root_name)
     TextView tvRootName;
-    @BindView(R.id.tv_user_role)
+    @BindView(R2.id.tv_user_role)
     TextView tvUserRole;
-    @BindView(R.id.tv_invite_member)
+    @BindView(R2.id.tv_invite_member)
     TextView tvInviteMember;
-    @BindView(R.id.tv_my_k)
+    @BindView(R2.id.tv_my_k)
     TextView tvMyK;
-    @BindView(R.id.marquee_notice)
+    @BindView(R2.id.marquee_notice)
     MarqueeTextView marqueeNotice;
-    @BindView(R.id.tv_parent_control)
+    @BindView(R2.id.tv_parent_control)
     TextView tvParentControl;
-    @BindView(R.id.tv_healthy_model)
+    @BindView(R2.id.tv_healthy_model)
     TextView tvHealthyModel;
-    @BindView(R.id.tv_look_week_report)
+    @BindView(R2.id.tv_look_week_report)
     TextView tvLookWeekReport;
-    @BindView(R.id.tv_has_no_backup)
+    @BindView(R2.id.tv_has_no_backup)
     TextView tvHasNoBackup;
-    @BindView(R.id.tv_to_backup)
+    @BindView(R2.id.tv_to_backup)
     TextView tvToBackup;
-    @BindView(R.id.ll_has_no_backup_wrapper)
+    @BindView(R2.id.ll_has_no_backup_wrapper)
     LinearLayout llHasNoBackupWrapper;
-    @BindView(R.id.education_wrapper)
+    @BindView(R2.id.education_wrapper)
     ConstraintLayout educationWrapper;
-    @BindView(R.id.tv_network_speed)
+    @BindView(R2.id.tv_network_speed)
     TextView tvNetworkSpeed;
-    @BindView(R.id.rv_device_list)
+    @BindView(R2.id.rv_device_list)
     RecyclerView rvDeviceList;
-    @BindView(R.id.tv_look_more)
+    @BindView(R2.id.tv_look_more)
     TextView tvLookMore;
-    @BindView(R.id.rv_children_device)
+    @BindView(R2.id.rv_children_device)
     RecyclerView rvChildrenDevice;
-    @BindView(R.id.tv_look_more_kid)
+    @BindView(R2.id.tv_look_more_kid)
     TextView tvLookMoreKid;
     private ArrayList<MobileListBean.MobileBean> mobilePhoneList = new ArrayList<>();
     private MobilePhoneAdapter mobilePhoneAdapter;
@@ -247,14 +248,14 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         modifyNameDialog.show();
     }
 
-    @OnClick(R.id.tv_ap_name)
+    @OnClick(R2.id.tv_ap_name)
     public void onTvApNameClicked() {
         Bundle bundle = new Bundle();
         bundle.putInt(Keys.POSITION, 0);
         startActivityForResult(SelectXiaoKActivity.class, bundle, Values.REQUEST_SELECT_NODE);
     }
 
-    @OnClick(R.id.tv_root_name)
+    @OnClick(R2.id.tv_root_name)
     public void onTvRootNameClicked() {
         if (nodeBean != null) {
             Bundle bundle = new Bundle();
@@ -263,44 +264,44 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         }
     }
 
-    @OnClick(R.id.tv_invite_member)
+    @OnClick(R2.id.tv_invite_member)
     public void onTvInviteMemberClicked() {
         UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", String.format("快来加入我的小K家庭吧，家庭码：%s",nodeBean.getInviteCode()),
                 "https://www.treebear.cn", R.mipmap.ic_launcher, null);
     }
 
-    @OnClick(R.id.tv_my_k)
+    @OnClick(R2.id.tv_my_k)
     public void onTvMyKClicked() {
         startActivity(MyDeviceListActivity.class);
     }
 
-    @OnClick(R.id.tv_parent_control)
+    @OnClick(R2.id.tv_parent_control)
     public void onTvParentControlClicked() {
         startActivity(ParentControlActivity.class);
     }
 
-    @OnClick(R.id.tv_healthy_model)
+    @OnClick(R2.id.tv_healthy_model)
     public void onTvHealthyModelClicked() {
         if (Check.hasContent(MyApplication.getAppContext().getCurrentSelectNode())) {
             startActivity(HealthyModelActivity.class);
         }
     }
 
-    @OnClick(R.id.tv_look_week_report)
+    @OnClick(R2.id.tv_look_week_report)
     public void onTvLookWeekReportClicked() {
         startActivity(ChildrenListActivity.class);
     }
 
-    @OnClick(R.id.tv_wifi_settings)
+    @OnClick(R2.id.tv_wifi_settings)
     public void onTvWifiSettingsClicked() {
         startActivity(WifiToolkitActivity.class);
     }
 
-    @OnClick(R.id.tv_to_backup)
+    @OnClick(R2.id.tv_to_backup)
     public void onTvToBackupClicked() {
     }
 
-    @OnClick(R.id.tv_look_more)
+    @OnClick(R2.id.tv_look_more)
     public void onTvLookMoreClicked() {
         startActivity(AllMobileListActivity.class);
     }

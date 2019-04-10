@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
@@ -32,23 +33,23 @@ import cn.treebear.kwifimanager.util.Check;
  */
 public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Presenter, BaseResponse> implements ForgetPasswordContract.View {
 
-    @BindView(R.id.et_password_again)
+    @BindView(R2.id.et_password_again)
     EditText etPasswordAgain;
-    @BindView(R.id.line_password)
+    @BindView(R2.id.line_password)
     TextView linePassword;
-    @BindView(R.id.et_sign_up_password)
+    @BindView(R2.id.et_sign_up_password)
     EditText etSignUpPassword;
-    @BindView(R.id.line_phone)
+    @BindView(R2.id.line_phone)
     TextView linePhone;
-    @BindView(R.id.iv_password_state)
+    @BindView(R2.id.iv_password_state)
     ImageView ivPasswordState;
-    @BindView(R.id.btn_confirm)
+    @BindView(R2.id.btn_confirm)
     Button btnConfirm;
-    @BindView(R.id.iv_password1_clear)
+    @BindView(R2.id.iv_password1_clear)
     ImageView ivPassword1Clear;
-    @BindView(R.id.iv_password2_eye)
+    @BindView(R2.id.iv_password2_eye)
     ImageView ivPassword2Eye;
-    @BindView(R.id.iv_password2_clear)
+    @BindView(R2.id.iv_password2_clear)
     ImageView ivPassword2Clear;
     private String mobile;
     private String vcode;
@@ -86,7 +87,7 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
         ActivityStackUtils.finishAll(Config.Tags.TAG_FORGET_PASSWORD);
     }
 
-    @OnClick(R.id.iv_password_state)
+    @OnClick(R2.id.iv_password_state)
     public void onIvPasswordStateClicked() {
         password1Visible = !password1Visible;
         if (password1Visible) {
@@ -99,12 +100,12 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
         etSignUpPassword.setSelection(etSignUpPassword.getText().length());
     }
 
-    @OnClick(R.id.iv_password1_clear)
+    @OnClick(R2.id.iv_password1_clear)
     public void onIvPassword1ClearClicked() {
         etSignUpPassword.setText("");
     }
 
-    @OnClick(R.id.iv_password2_eye)
+    @OnClick(R2.id.iv_password2_eye)
     public void onIvPassword2EyeClicked() {
         password1Visible = !password1Visible;
         if (password1Visible) {
@@ -117,12 +118,12 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
         etPasswordAgain.setSelection(etPasswordAgain.getText().length());
     }
 
-    @OnClick(R.id.iv_password2_clear)
+    @OnClick(R2.id.iv_password2_clear)
     public void onIvPassword2ClearClicked() {
         etPasswordAgain.setText("");
     }
 
-    @OnClick(R.id.btn_confirm)
+    @OnClick(R2.id.btn_confirm)
     public void onBtnConfirmClicked() {
         if (!Check.equals(etSignUpPassword, etPasswordAgain)) {
             ToastUtils.showShort(R.string.password_not_equal);

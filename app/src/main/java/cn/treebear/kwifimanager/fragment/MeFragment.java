@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.home.myk.MyDeviceListActivity;
 import cn.treebear.kwifimanager.activity.me.MyChildrenListActivity;
 import cn.treebear.kwifimanager.activity.me.SettingsActivity;
@@ -28,11 +29,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * @author Administrator
  */
 public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUserCover> implements GetUserInfoContract.View {
-    @BindView(R.id.tv_user_name)
+    @BindView(R2.id.tv_user_name)
     TextView tvUserName;
-    @BindView(R.id.tv_user_mobile)
+    @BindView(R2.id.tv_user_mobile)
     TextView tvUserMobile;
-    @BindView(R.id.iv_me_user_header)
+    @BindView(R2.id.iv_me_user_header)
     CircleImageView ivMeUserHeader;
 
     private ServerUserInfo userInfo;
@@ -84,7 +85,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
         MyApplication.getAppContext().setNeedUpdateUserInfo(false);
     }
 
-    @OnClick(R.id.iv_settings)
+    @OnClick(R2.id.iv_settings)
     public void onIvSettingsClicked() {
         startActivity(SettingsActivity.class);
     }
@@ -94,17 +95,17 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
         startActivity(UserInfoActivity.class);
     }
 
-    @OnClick(R.id.tv_my_k)
+    @OnClick(R2.id.tv_my_k)
     public void onTvMyKClicked() {
         startActivity(MyDeviceListActivity.class);
     }
 
-    @OnClick(R.id.tv_my_kid)
+    @OnClick(R2.id.tv_my_kid)
     public void onTvMyKidClicked() {
         startActivity(MyChildrenListActivity.class);
     }
 
-    @OnClick(R.id.tv_into_new_family)
+    @OnClick(R2.id.tv_into_new_family)
     public void onTvAddNewFamilyClicked() {
         showFamilyCodeDialog();
     }

@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
@@ -28,9 +27,11 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import java.io.File;
 
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.receiver.OpenFileReceiver;
 import cn.treebear.kwifimanager.service.ODownloadService;
@@ -45,9 +46,9 @@ import okhttp3.Call;
 public class WebsiteActivity extends BaseActivity {
     private static final String TAG = "WebsiteActivity";
 
-    @BindView(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     LinearLayout llTitle;
-    @BindView(R.id.wv_website)
+    @BindView(R2.id.wv_website)
     WebView wvWebsite;
     private boolean isFullScreen;
     private String title;
@@ -196,12 +197,12 @@ public class WebsiteActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.iv_back)
+    @OnClick(R2.id.iv_back)
     public void onIvBackClicked() {
         finish();
     }
 
-    @OnClick(R.id.tv_title_right)
+    @OnClick(R2.id.tv_title_right)
     public void onTvTitleRightClicked() {
     }
 

@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseSeekBarChangeListener;
@@ -29,29 +30,29 @@ import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
  */
 public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Presenter, MobileListBean> implements AllMobileListContract.View {
 
-    @BindView(R.id.iv_device_type)
+    @BindView(R2.id.iv_device_type)
     ImageView ivDeviceType;
-    @BindView(R.id.ll_user_name_wrapper)
+    @BindView(R2.id.ll_user_name_wrapper)
     LinearLayout llUserNameWrapper;
-    @BindView(R.id.sw_online_alarm)
+    @BindView(R2.id.sw_online_alarm)
     SwitchButton swbOnlineAlarm;
-    @BindView(R.id.swb_blacklisting)
+    @BindView(R2.id.swb_blacklisting)
     SwitchButton swbBlacklisting;
-    @BindView(R.id.tv_download_speed)
+    @BindView(R2.id.tv_download_speed)
     TextView tvDownloadSpeed;
-    @BindView(R.id.swb_speed_limit)
+    @BindView(R2.id.swb_speed_limit)
     SwitchButton swbSpeedLimit;
-    @BindView(R.id.sb_upload_speed)
+    @BindView(R2.id.sb_upload_speed)
     SeekBar sbUploadSpeed;
-    @BindView(R.id.tv_upload_speed)
+    @BindView(R2.id.tv_upload_speed)
     TextView tvUploadSpeed;
-    @BindView(R.id.sb_download_speed)
+    @BindView(R2.id.sb_download_speed)
     SeekBar sbDownloadSpeed;
-    @BindView(R.id.tv_device_name)
+    @BindView(R2.id.tv_device_name)
     TextView tvDeviceName;
-    @BindView(R.id.tv_device_time)
+    @BindView(R2.id.tv_device_time)
     TextView tvDeviceTime;
-    @BindView(R.id.sw_online_children)
+    @BindView(R2.id.sw_online_children)
     SwitchButton swbOnlineChildren;
     private TInputDialog modifyNameDialog;
     private MobileListBean.MobileBean mobilePhoneBean;
@@ -136,12 +137,12 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         sbUploadSpeed.setEnabled(false);
     }
 
-    @OnClick(R.id.iv_modify_device_name)
+    @OnClick(R2.id.iv_modify_device_name)
     public void onmodifyDeviceNameClicked() {
         showModifyNameDialog();
     }
 
-    @OnClick(R.id.tv_device_info)
+    @OnClick(R2.id.tv_device_info)
     public void onTvDeviceInfoClicked() {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Keys.MOBILE, mobilePhoneBean);

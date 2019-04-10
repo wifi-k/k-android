@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.wifi.contract.ModifyWifiInfoContract;
@@ -32,15 +33,15 @@ import io.reactivex.disposables.Disposable;
  */
 public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.Presenter, Object> implements ModifyWifiInfoContract.View {
 
-    @BindView(R.id.et_wifi_name)
+    @BindView(R2.id.et_wifi_name)
     EditText etWifiName;
-    @BindView(R.id.tv_line_name)
+    @BindView(R2.id.tv_line_name)
     TextView tvLineName;
-    @BindView(R.id.et_wifi_password)
+    @BindView(R2.id.et_wifi_password)
     EditText etWifiPassword;
-    @BindView(R.id.tv_line_password)
+    @BindView(R2.id.tv_line_password)
     TextView tvLinePassword;
-    @BindView(R.id.iv_password_eye)
+    @BindView(R2.id.iv_password_eye)
     ImageView ivPasswordEye;
     private boolean passwordVisible = false;
     private TMessageDialog tMessageDialog;
@@ -90,7 +91,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
         });
     }
 
-    @OnClick(R.id.iv_password_eye)
+    @OnClick(R2.id.iv_password_eye)
     public void onIvPasswordEyeClicked() {
         passwordVisible = !passwordVisible;
         if (passwordVisible) {
@@ -105,7 +106,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
         etWifiPassword.setSelection(etWifiPassword.getText().length());
     }
 
-    @OnClick(R.id.btn_confirm)
+    @OnClick(R2.id.btn_confirm)
     public void onBtnConfirmClicked() {
         if (checkInput()) {
             initMessageDialog();

@@ -2,10 +2,10 @@ package cn.treebear.kwifimanager.config;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
-import android.support.annotation.IntDef;
-import android.support.annotation.IntRange;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 import java.util.ArrayList;
 import java.util.Collections;

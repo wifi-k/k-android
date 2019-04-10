@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
@@ -37,21 +38,21 @@ import io.reactivex.disposables.Disposable;
 public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presenter, String> implements CodeSignInContract.View {
 
 
-    @BindView(R.id.et_verify)
+    @BindView(R2.id.et_verify)
     EditText etSignInVerify;
-    @BindView(R.id.line_password)
+    @BindView(R2.id.line_password)
     TextView linePassword;
-    @BindView(R.id.et_phone)
+    @BindView(R2.id.et_phone)
     EditText etSignInPhone;
-    @BindView(R.id.line_phone)
+    @BindView(R2.id.line_phone)
     TextView linePhone;
-    @BindView(R.id.iv_edit_clear)
+    @BindView(R2.id.iv_edit_clear)
     ImageView ivEditClear;
-    @BindView(R.id.tv_get_code)
+    @BindView(R2.id.tv_get_code)
     TextView tvGetCode;
-    @BindView(R.id.tv_sign_next)
+    @BindView(R2.id.tv_sign_next)
     TextView tvSignNext;
-    @BindView(R.id.iv_verify_clear)
+    @BindView(R2.id.iv_verify_clear)
     ImageView ivVerifyClear;
     /**
      * 系统下发验证码，用于本地验证
@@ -82,12 +83,12 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
         listenTextChange();
     }
 
-    @OnClick(R.id.iv_edit_clear)
+    @OnClick(R2.id.iv_edit_clear)
     public void onIvEditClearClicked() {
         etSignInPhone.setText("");
     }
 
-    @OnClick(R.id.tv_get_code)
+    @OnClick(R2.id.tv_get_code)
     public void onTvGetCodeClicked() {
         if (etSignInPhone.getText().length() == 11) {
             mPresenter.getSignInVerifyCode(etSignInPhone.getText().toString());
@@ -95,7 +96,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
         }
     }
 
-    @OnClick(R.id.iv_verify_clear)
+    @OnClick(R2.id.iv_verify_clear)
     public void onViewClicked() {
         etSignInVerify.setText("");
     }
@@ -145,7 +146,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
         noSignDialog.show();
     }
 
-    @OnClick(R.id.tv_sign_next)
+    @OnClick(R2.id.tv_sign_next)
     public void onTvSignNextClicked() {
         if (!etSignInVerify.getText().toString().equals(mVerifyCode)) {
             ToastUtils.showShort(Config.Tips.VERIFY_CODE_ERROR);

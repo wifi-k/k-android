@@ -1,17 +1,18 @@
 package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.BanAppAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.BanAppPlanBean;
@@ -23,7 +24,7 @@ import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
  * @author Administrator
  */
 public class BanAppListActivity extends BaseActivity {
-    @BindView(R.id.rv_ban_app)
+    @BindView(R2.id.rv_ban_app)
     RecyclerView rvBanAppList;
     private ArrayList<BanAppPlanBean> banAppPlanList = new ArrayList<>();
     private BanAppAdapter banAppAdapter;
@@ -66,7 +67,7 @@ public class BanAppListActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.tv_add_ban_app_plan)
+    @OnClick(R2.id.tv_add_ban_app_plan)
     public void ontvAddBanAppPlanClicked() {
         startActivity(BanAppPlanActivity.class);
     }

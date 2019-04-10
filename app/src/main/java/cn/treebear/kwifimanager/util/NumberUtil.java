@@ -1,7 +1,7 @@
 package cn.treebear.kwifimanager.util;
 
-import android.support.annotation.IntRange;
-import android.support.annotation.Size;
+import androidx.annotation.IntRange;
+import androidx.annotation.Size;
 import android.text.TextUtils;
 
 import java.text.DecimalFormat;
