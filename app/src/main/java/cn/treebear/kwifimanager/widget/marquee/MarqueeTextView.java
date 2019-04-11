@@ -1,7 +1,6 @@
 package cn.treebear.kwifimanager.widget.marquee;
 
 import android.content.Context;
-import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -15,6 +14,7 @@ import android.widget.ViewFlipper;
 
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import cn.treebear.kwifimanager.R;
 
 /**
@@ -74,7 +74,7 @@ public class MarqueeTextView extends LinearLayout {
                 textView.setText(textArrays.get(i));
                 textView.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_notice));
                 textView.setGravity(Gravity.CENTER_VERTICAL);
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
                 textView.setSingleLine(true);
                 textView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
                 textView.setMarqueeRepeatLimit(2);

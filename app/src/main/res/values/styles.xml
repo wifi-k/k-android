@@ -61,6 +61,7 @@
         <item name="android:textColorHint">#DEDEDE</item>
     </style>
     <!--子标题样式-->
+    <!--android:fontFamily="sans-serif-medium"-->
     <style name="subtitle_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">54dp</item>
@@ -68,10 +69,11 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingStart">18dp</item>
         <item name="android:paddingEnd">18dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/text_28354C</item>
         <item name="android:textSize">17sp</item>
-        <item name="android:textStyle">bold</item>
     </style>
+    <!--<item name="android:textStyle">bold</item>-->
     <!--确认按钮-->
     <style name="confirm_button">
         <item name="android:layout_width">match_parent</item>
@@ -119,7 +121,7 @@
         <item name="android:layout_weight">1</item>
         <item name="itemMarginTop">4dp</item>
         <item name="itemTextSize">11sp</item>
-        <item name="textColorNormal">@color/text_4a</item>
+        <item name="textColorNormal">@color/text_4a5a78</item>
         <item name="textColorSelected">@color/color_47d5ed</item>
     </style>
     <!--图片上传进度条-->

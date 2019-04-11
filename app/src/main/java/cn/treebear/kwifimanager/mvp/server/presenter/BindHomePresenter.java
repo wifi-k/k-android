@@ -89,7 +89,7 @@ public class BindHomePresenter extends BasePresenter<BindHomeContract.View, Bind
         ArrayMap<String, Object> map = map();
         map.put(Keys.NODE_ID, nodeId);
         map.put(Keys.PAGE_NO, pageNo);
-        map.put(Keys.PAGE_SIZE, Config.Numbers.HOME_MOBILE_PAGE_SIZE);
+        map.put(Keys.PAGE_SIZE, 25);
         mModel.getMobileList(convertRequestBody(map), new IModel.AsyncCallBack<BaseResponse<MobileListBean>>() {
             @Override
             public void onSuccess(BaseResponse<MobileListBean> resultData) {

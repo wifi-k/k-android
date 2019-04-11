@@ -162,11 +162,12 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
             public void afterTextChanged(Editable s) {
                 ivEditClear.setVisibility(Check.hasContent(s) && etSignUpPhone.hasFocus() ? View.VISIBLE : View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
-                    // TODO: 2019/2/26 检查手机号合法性
                     tvGetCode.setTextColor(Config.Colors.MAIN);
+                    tvGetCode.setBackgroundResource(R.drawable.rectf_r2_green);
                     updateConfirmBtnEnable();
                 } else {
                     tvGetCode.setTextColor(Config.Colors.TEXT_9B);
+                    tvGetCode.setBackgroundResource(R.drawable.rect_h29_r2_line_f2_trans);
                 }
             }
         });

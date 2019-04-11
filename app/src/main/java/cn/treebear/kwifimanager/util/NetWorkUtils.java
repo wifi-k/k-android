@@ -13,8 +13,8 @@ import android.provider.Settings;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.WiFiHttpClient;
 
 /**
  * 网络管理工具
@@ -109,7 +109,7 @@ public class NetWorkUtils {
      * 小K 已登录
      */
     public static boolean isXiaoKSignIn() {
-        return Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getToken());
+        return Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId());
     }
 
     /**
@@ -117,7 +117,7 @@ public class NetWorkUtils {
      */
     public static boolean isCurrentXiaoK(String nodeId) {
         return isXiaoKSignIn()
-                && MyApplication.getAppContext().getDeviceInfo().getId().equals(nodeId);
+                && WiFiHttpClient.getWifiDeviceInfo().getId().equals(nodeId);
     }
 
     /**

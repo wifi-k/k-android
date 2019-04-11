@@ -8,10 +8,7 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.AppBean;
 import cn.treebear.kwifimanager.bean.BanAppPlanBean;
 import cn.treebear.kwifimanager.bean.Daybean;
-import cn.treebear.kwifimanager.bean.DeviceBean;
-import cn.treebear.kwifimanager.bean.FamilyMemberBean;
 import cn.treebear.kwifimanager.bean.MobilePhoneBean;
-import cn.treebear.kwifimanager.bean.NoticeBean;
 import cn.treebear.kwifimanager.bean.TimeLimitBean;
 
 /**
@@ -21,13 +18,8 @@ import cn.treebear.kwifimanager.bean.TimeLimitBean;
  * @author Administrator
  */
 public class BeanTest {
-    private static ArrayList<NoticeBean> result = null;
     private static ArrayList<MobilePhoneBean> mobilePhoneList = null;
-    private static ArrayList<MobilePhoneBean> childrenMobile = null;
-    private static ArrayList<FamilyMemberBean> familyMemberBeans = null;
     public static ArrayList<BanAppPlanBean> banAppPlanBeans = null;
-    private static ArrayList<TimeLimitBean> timeLimitBeans = null;
-    private static ArrayList<DeviceBean> deviceBeans = null;
     private static ArrayList<AppBean> appBeans = null;
 
     private BeanTest() {
@@ -51,58 +43,6 @@ public class BeanTest {
             }};
         }
         return appBeans;
-    }
-
-    public static ArrayList<MobilePhoneBean> getGuardDeviceList() {
-        ArrayList<MobilePhoneBean> result = new ArrayList<>();
-        if (mobilePhoneList == null) {
-            getMobilePhoneList(10);
-        }
-        for (int i = 5; i < mobilePhoneList.size() - 1; i++) {
-            result.add(mobilePhoneList.get(i));
-        }
-        return result;
-    }
-
-    /**
-     * 测试数据
-     * 我的小K列表
-     */
-    public static ArrayList<DeviceBean> getDeviceList() {
-        if (deviceBeans == null) {
-            deviceBeans = new ArrayList<DeviceBean>() {{
-                add(new DeviceBean(createKname(), createSerialId(), random.nextBoolean(), "V1.0.0", "V1.5.1"));
-                add(new DeviceBean(createKname(), createSerialId(), random.nextBoolean(), "V1.5.1", "V1.5.1"));
-            }};
-        }
-        return deviceBeans;
-    }
-
-    /**
-     * 测试数据
-     * 获取时间控制列表
-     */
-    public static ArrayList<TimeLimitBean> getTimeLimitList() {
-        if (timeLimitBeans == null) {
-            timeLimitBeans = new ArrayList<TimeLimitBean>() {{
-                add(new TimeLimitBean(createString(3), "12:00", "16:00", new ArrayList<Daybean>() {{
-                    add(new Daybean("周一", Calendar.MONDAY));
-                    add(new Daybean("周二", Calendar.TUESDAY));
-                    add(new Daybean("周三", Calendar.WEDNESDAY));
-                }}));
-                add(new TimeLimitBean(createString(3), "12:00", "16:00", new ArrayList<Daybean>() {{
-                    add(new Daybean("周一", Calendar.MONDAY));
-                    add(new Daybean("周二", Calendar.TUESDAY));
-                    add(new Daybean("周三", Calendar.WEDNESDAY));
-                }}));
-                add(new TimeLimitBean(createString(3), "12:00", "16:00", new ArrayList<Daybean>() {{
-                    add(new Daybean("周一", Calendar.MONDAY));
-                    add(new Daybean("周二", Calendar.TUESDAY));
-                    add(new Daybean("周三", Calendar.WEDNESDAY));
-                }}));
-            }};
-        }
-        return timeLimitBeans;
     }
 
     /**
@@ -139,32 +79,6 @@ public class BeanTest {
         return banAppPlanBeans;
     }
 
-
-    /**
-     * 获取消息列表
-     */
-    public static ArrayList<NoticeBean> getNoticeList() {
-        if (result == null) {
-            result = new ArrayList<>();
-            result.add(new NoticeBean("树熊客访专用上网时间到了，被踢下线了", "【设备下线】", createTimeMill()));
-            result.add(new NoticeBean("树熊客访专用上线啦", "【设备上线】", createTimeMill()));
-            result.add(new NoticeBean("熊孩子的手机上线啦", "【设备上线】", createTimeMill()));
-            result.add(new NoticeBean("您有新设备树熊客访专用上线啦，请立即备注 便于管理", "【新设备上线】", createTimeMill()));
-        }
-        return result;
-    }
-
-    /**
-     * 从信息中提取字符串集合
-     */
-    public static ArrayList<String> getNoticeFromBean(ArrayList<NoticeBean> notices) {
-        ArrayList<String> strings = new ArrayList<>();
-        for (NoticeBean notice : notices) {
-            strings.add(notice.getContent());
-        }
-        return strings;
-    }
-
     /**
      * 测试数据
      * ----获取联网设备
@@ -194,51 +108,6 @@ public class BeanTest {
             bean.setBanOnline(false);
         }
         return mobilePhoneList;
-    }
-
-    /**
-     * 获取首页设备
-     */
-    public static ArrayList<MobilePhoneBean> getHomeMobileList() {
-        ArrayList<MobilePhoneBean> result = new ArrayList<>();
-        if (mobilePhoneList == null || mobilePhoneList.size() < 3) {
-            getMobilePhoneList(10);
-        }
-        for (int i = 0; i < 3; i++) {
-            result.add(mobilePhoneList.get(i));
-        }
-        return result;
-    }
-
-    /**
-     * 测试数据
-     * 首页----获取儿童设备列表
-     */
-    public static ArrayList<MobilePhoneBean> getChildrenPhoneList(int number) {
-        if (childrenMobile == null) {
-            childrenMobile = new ArrayList<>();
-            if (mobilePhoneList == null) {
-                getMobilePhoneList(10 + number);
-            }
-            for (int i = 3; i < 3 + number; i++) {
-                childrenMobile.add(mobilePhoneList.get(i));
-            }
-        }
-        return childrenMobile;
-    }
-
-    /**
-     * 测试数据
-     * 家庭成员----列表
-     */
-    public static ArrayList<FamilyMemberBean> getFamilyMemberList(int number) {
-        if (familyMemberBeans == null) {
-            familyMemberBeans = new ArrayList<>();
-            for (int i = 0; i < number; i++) {
-                familyMemberBeans.add(new FamilyMemberBean(createString(4), createMobile()));
-            }
-        }
-        return familyMemberBeans;
     }
 
 

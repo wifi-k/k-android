@@ -3,6 +3,7 @@ package cn.treebear.kwifimanager.activity.bindap.settings;
 import android.text.Editable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.ArrayMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,7 +13,6 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
@@ -20,10 +20,16 @@ import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.http.WiFiHttpClient;
+import cn.treebear.kwifimanager.mvp.IModel;
+import cn.treebear.kwifimanager.mvp.server.model.BindNodeModel;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
 import cn.treebear.kwifimanager.mvp.wifi.presenter.DialUpPresenter;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.util.RequestBodyUtils;
+import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
 
 /**
  * @author Administrator
@@ -103,13 +109,33 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
-        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
-        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
-        hideLoading();
-        startActivity(ModifyWifiInfoActivity.class);
-        ToastUtils.showShort(R.string.connect_success);
+        WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
+//        hideLoading();
+//        startActivity(ModifyWifiInfoActivity.class);
+//        ToastUtils.showShort(R.string.connect_success);
+        bindNode();
+    }
+    private void bindNode() {
+        ArrayMap<String, Object> map = new ArrayMap<>();
+        map.put(Keys.NODE_ID, String.valueOf(SharedPreferencesUtil.getParam(SharedPreferencesUtil.NODE_ID, "")));
+        new BindNodeModel().bindNode(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<Object>>() {
+            @Override
+            public void onSuccess(BaseResponse<Object> resultData) {
+                hideLoading();
+                SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
+                startActivity(ModifyWifiInfoActivity.class);
+                ToastUtils.showShort(R.string.connect_success);
+            }
+
+            @Override
+            public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
+                hideLoading();
+                ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+            }
+        });
     }
 
     @Override
@@ -128,9 +154,10 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
                 }, 2000);
                 break;
             case Config.WifiResponseCode.CONNECT_SUCCESS:
-                hideLoading();
-                startActivity(ModifyWifiInfoActivity.class);
-                ToastUtils.showShort(R.string.connect_success);
+                bindNode();
+//                hideLoading();
+//                startActivity(ModifyWifiInfoActivity.class);
+//                ToastUtils.showShort(R.string.connect_success);
                 break;
             default:
                 hideLoading();

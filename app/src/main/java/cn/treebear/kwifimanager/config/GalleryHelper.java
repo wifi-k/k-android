@@ -2,14 +2,14 @@ package cn.treebear.kwifimanager.config;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
-import androidx.annotation.IntDef;
-import androidx.annotation.IntRange;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.bean.local.LocalImageSection;
@@ -84,7 +84,6 @@ public class GalleryHelper {
                 String filepath = cursor.getString(pathIndex);
                 LocalImageBean imageBean = new LocalImageBean(thumbPath, date, DateTimeUtils.formatYMD4Gallery(date), filepath);
                 imageBeans.add(imageBean);
-                TLog.w(imageBean);
             } while (cursor.moveToNext());
             image2Section();
         }

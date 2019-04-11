@@ -64,7 +64,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
         tvDownloadSpeed.setText(String.valueOf(currentNode.getDownstream()));
         tvUploadSpeed.setText(String.valueOf(currentNode.getUpstream()));
         mPresenter.getMobileList(currentNode.getNodeId(), pageNo, Config.Numbers.PAGE_SIZE);
-        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 8);
+        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 7);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(mobilePhoneAdapter);
         mobilePhoneAdapter.setOnItemChildClickListener((adapter, view, position) -> {

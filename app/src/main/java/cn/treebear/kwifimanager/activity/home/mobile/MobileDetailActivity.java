@@ -22,7 +22,9 @@ import cn.treebear.kwifimanager.config.GlideApp;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 /**
@@ -71,6 +73,7 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     public void initParams(Bundle params) {
         if (params != null) {
             mobilePhoneBean = (MobileListBean.MobileBean) params.getSerializable(Keys.MOBILE);
+            TLog.i(mobilePhoneBean);
         }
     }
 
@@ -84,7 +87,7 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
 
     private void setListener() {
         swbOnlineChildren.setOnCheckedChangeListener((view, isChecked) -> mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
-                mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), isChecked ? 1 : 0,
+                mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), swbBlacklisting.isChecked() ? 1 : 0,
                 isChecked ? 1 : 0, swbOnlineAlarm.isChecked() ? 1 : 0));
         swbOnlineAlarm.setOnCheckedChangeListener((view, isChecked) -> mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
                 mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), swbBlacklisting.isChecked() ? 1 : 0,
@@ -119,7 +122,10 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     }
 
     private void updateView() {
-        tvDeviceName.setText(mobilePhoneBean.getName());
+        if (mobilePhoneBean == null){
+            return;
+        }
+        tvDeviceName.setText(Check.hasContent(mobilePhoneBean.getNote()) ? mobilePhoneBean.getNote() : mobilePhoneBean.getName());
         boolean isOnline = mobilePhoneBean.getStatus() == 1;
         tvDeviceTime.setText(String.format("%s " + (isOnline ? "上线" : "离线"),
                 DateTimeUtils.formatMDHmm(isOnline ? mobilePhoneBean.getOnTime() : mobilePhoneBean.getOffTime())));

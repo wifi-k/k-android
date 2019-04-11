@@ -18,6 +18,7 @@ import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.NodeWifiListBean;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
+import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.IModel;
 import cn.treebear.kwifimanager.mvp.server.contract.NodeOptionSetContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.NodeOptionSetPresenter;
@@ -158,7 +159,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
                     if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
                         modifyNameLocal(s, "");
                     } else {
-                        mPresenter.modifySsid(MyApplication.getAppContext().getDeviceInfo().getId(), Values.FREQ_ALL, s);
+                        mPresenter.modifySsid(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, s);
                     }
                 }
             });
@@ -201,7 +202,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
                     if (NetWorkUtils.isXiaoKSignIn()) {
                         modifyNameLocal(NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()), s);
                     } else {
-                        mPresenter.modifyPasswd(MyApplication.getAppContext().getDeviceInfo().getId(), Values.FREQ_ALL, s);
+                        mPresenter.modifyPasswd(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, s);
                     }
                 }
             });

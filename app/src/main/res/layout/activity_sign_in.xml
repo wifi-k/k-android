@@ -12,10 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif"
         android:text="@string/where_come_kwifimanager"
-        android:textColor="@color/text_deep_black_33"
+        android:textAllCaps="true"
+        android:textColor="@color/text_28354C"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
@@ -23,9 +26,10 @@
         android:id="@+id/tv_forget_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="12dp"
+        android:padding="4dp"
         android:text="@string/forget_password"
-        android:textColor="@color/text_dark_2f"
+        android:textColor="@color/text_28354C"
         app:layout_constraintEnd_toEndOf="@+id/tv_sign_next"
         app:layout_constraintTop_toBottomOf="@+id/tv_sign_next" />
 
@@ -33,14 +37,14 @@
         android:id="@+id/et_sign_in_verify"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="14dp"
         android:background="@null"
-        android:fontFamily="sans-serif-condensed-medium"
         android:hint="@string/input_password"
         android:inputType="textPassword"
         android:maxLength="25"
         android:paddingBottom="15dp"
         android:singleLine="true"
+        android:textColor="@color/text_28354C"
         android:textColorHint="@color/text_hint_cf"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="@+id/et_sign_in_phone"
@@ -74,18 +78,19 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="36dp"
         android:background="@null"
-        android:fontFamily="sans-serif-condensed-medium"
         android:hint="@string/input_phone_number_please"
         android:inputType="number"
         android:maxLength="11"
         android:paddingBottom="15dp"
         android:singleLine="true"
+        android:textColor="@color/text_28354C"
         android:textColorHint="@color/text_hint_cf"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:ignore="TextFields" />
+        tools:ignore="TextFields"
+        tools:text="137777" />
 
     <TextView
         android:id="@+id/line_phone"
@@ -97,10 +102,10 @@
         app:layout_constraintTop_toBottomOf="@+id/et_sign_in_phone" />
 
     <TextView
-        style="@style/confirm_button"
         android:id="@+id/tv_sign_next"
+        style="@style/confirm_button"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="42dp"
         android:layout_marginEnd="36dp"
         android:enabled="false"
         android:text="@string/login"
@@ -112,9 +117,10 @@
         android:id="@+id/tv_sms_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="12dp"
+        android:padding="4dp"
         android:text="@string/sms_sign_in"
-        android:textColor="@color/text_dark_2f"
+        android:textColor="@color/text_28354C"
         app:layout_constraintStart_toStartOf="@+id/tv_sign_next"
         app:layout_constraintTop_toBottomOf="@+id/tv_sign_next" />
 

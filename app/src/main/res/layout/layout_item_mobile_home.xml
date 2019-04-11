@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="94dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/iv_phoneType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_device_apple" />
@@ -21,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:ellipsize="end"
         android:lines="1"
         android:maxEms="6"
@@ -36,12 +37,13 @@
         android:id="@+id/tv_remark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:background="@drawable/rectf_r4_47d5ed"
         android:ellipsize="end"
         android:paddingStart="5dp"
-        android:paddingTop="2dp"
+        android:paddingTop="1dp"
         android:paddingEnd="5dp"
-        android:paddingBottom="2dp"
+        android:paddingBottom="1dp"
         android:singleLine="true"
         android:text="@string/remark"
         android:textColor="@color/color_47d5ed"
@@ -55,7 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:textColor="#7383A2"
+        android:layout_marginBottom="4dp"
+        android:textColor="@color/text_7383a2"
         app:layout_constraintBottom_toBottomOf="@+id/iv_phoneType"
         app:layout_constraintStart_toEndOf="@+id/iv_phoneType"
         tools:text="上线时间:12月14日 9:00" />

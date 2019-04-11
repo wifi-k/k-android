@@ -1,71 +1,75 @@
 package cn.treebear.kwifimanager.receiver;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 
-import com.blankj.utilcode.util.ToastUtils;
+import java.util.List;
 
+import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.MyApplication;
-import cn.treebear.kwifimanager.R;
-import cn.treebear.kwifimanager.base.BaseResponse;
-import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
-import cn.treebear.kwifimanager.mvp.IModel;
-import cn.treebear.kwifimanager.util.Check;
-import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.util.TLog;
+
+import static android.net.wifi.WifiManager.WIFI_STATE_DISABLED;
+import static android.net.wifi.WifiManager.WIFI_STATE_DISABLING;
+import static android.net.wifi.WifiManager.WIFI_STATE_ENABLED;
+import static android.net.wifi.WifiManager.WIFI_STATE_ENABLING;
+import static android.net.wifi.WifiManager.WIFI_STATE_UNKNOWN;
 
 /**
  * @author Administrator
  */
 public class NetWorkReceiver extends BroadcastReceiver {
-    private boolean hasOnWifi = false;
-
-    private boolean isTryingSign = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-            boolean isWifi = networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
-            if (isWifi && !hasOnWifi) {
-                hasOnWifi = true;
-                if (NetWorkUtils.isSameLikeXiaoK(context)) {
-                    TLog.e("OkHttp","NetWorkUtils 调用登录");
-                    WiFiHttpClient.xiaokOnline();
-                } else {
-                    ToastUtils.showShort(R.string.has_wifi_connected);
+        if (!BuildConfig.APPLICATION_ID.equals(getProcessName(context, android.os.Process.myPid()))) {
+            TLog.i("NetWorkReceiver", getProcessName(context, android.os.Process.myPid()) + "非本进程");
+            return;
+        }
+        if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
+            switch (intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WIFI_STATE_UNKNOWN)) {
+                case WIFI_STATE_DISABLED: {
+                    WiFiHttpClient.xiaokOffline();
+                    break;
                 }
-                tryToSignWifi();
-            }
-            if (!isWifi && hasOnWifi) {
-                ToastUtils.showShort("您已断开WiFi连接");
-                WiFiHttpClient.xiaokOffline();
-                hasOnWifi = false;
+                case WIFI_STATE_DISABLING: {
+                    break;
+                }
+                case WIFI_STATE_ENABLED: {
+                    if (WiFiHttpClient.getNeedLogin()) {
+                        WiFiHttpClient.getInstance().tryToSignInWifi(null);
+                        MyApplication.time = System.currentTimeMillis();
+                    }
+                    break;
+                }
+                case WIFI_STATE_ENABLING: {
+                    break;
+                }
+                case WIFI_STATE_UNKNOWN: {
+                    break;
+                }
             }
         }
     }
 
-    private void tryToSignWifi() {
-        if (!isTryingSign) {
-            isTryingSign = true;
-            if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
-                WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
-                    @Override
-                    public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
-                        isTryingSign = false;
-                    }
-
-                    @Override
-                    public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
-                        isTryingSign = false;
-                    }
-                });
+    public static String getProcessName(Context cxt, int pid) {
+        ActivityManager am = (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            TLog.i("NetWorkReceiver", procInfo.processName);
+            if (procInfo.pid == pid) {
+                TLog.i("NetWorkReceiver-this", procInfo.processName);
+                return procInfo.processName;
             }
         }
+        return null;
     }
+
 }

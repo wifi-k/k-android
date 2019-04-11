@@ -7,7 +7,6 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity;
@@ -15,6 +14,7 @@ import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 
@@ -67,10 +67,10 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
-        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
-        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+        WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
         hideLoading();
         startActivity(ModifyWifiInfoActivity.class);
     }
@@ -97,7 +97,7 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
     }
 
     private void updateWifiInfoShow() {
-        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         etBroadbandAccount.setText(deviceInfo.getWan().getName());
         etBroadbandPassword.setText(deviceInfo.getWan().getPasswd());
         tvDnsServer.setText(deviceInfo.getWan().getDns1());

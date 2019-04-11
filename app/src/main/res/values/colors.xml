@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#22DB96</color>
-    <color name="colorPrimaryDark">#22DB96</color>
-    <color name="colorAccent">#22DB96</color>
-    <color name="colorAccent80">#8022DB96</color>
+    <color name="colorPrimary">#47D5ED</color>
+    <color name="colorPrimaryDark">#47D5ED</color>
+    <color name="colorAccent">#47D5ED</color>
+    <color name="colorAccent80">#8047D5ED</color>
 
     <color name="color_dfdfdf">#DFDFDF</color>
 
@@ -16,11 +16,11 @@
     <color name="whitep85">#d9ffffff</color>
     <color name="text_color_5c">#5C5C5C</color>
     <color name="text_deep_black_33">#333333</color>
-    <color name="text_hint_cf">#CFCFCF</color>
-    <color name="line_f2">#F2F2F2</color>
-    <color name="line_f7">#F7F7F7</color>
+    <color name="text_hint_cf">#B6C0CB</color>
+    <color name="line_f2">#EBEEF2</color>
+    <color name="line_f7">#EBEEF2</color>
     <color name="light_text_9b">#9B9B9B</color>
-    <color name="white50">#40FFFFFF</color>
+    <color name="white50">#60FFFFFF</color>
     <color name="text_deep_black_21">#212121</color>
     <color name="text_light_gray_c5">#C5C5C5</color>
     <color name="text_gray_82">#828282</color>
@@ -30,15 +30,17 @@
     <color name="text_white_a5">#A5FFFFFF</color>
 
     <color name="text_color_notice">#7383A2</color>
-    <color name="text_28354C">#28354C</color>
+    <color name="text_28354C">#2B3852</color>
     <color name="color_313e54">#313E54</color>
     <color name="text_6c">#6C6C6C</color>
     <color name="text_83">#83889B</color>
-    <color name="text_4a">#4A5B78</color>
+    <color name="text_4a5a78">#4A5A78</color>
     <color name="color_f6f7fb_gray">#F6F7FB</color>
     <color name="text_3b">#3B3B3B</color>
     <color name="line_eee">#EEEEEE</color>
     <color name="color_47d5ed">#47D5ED</color>
     <color name="text_7383a2">#7383A2</color>
+    <color name="main_yellow">#efb925</color>
+    <color name="text_b6c0cb">#B6C0CB</color>
 
 </resources>

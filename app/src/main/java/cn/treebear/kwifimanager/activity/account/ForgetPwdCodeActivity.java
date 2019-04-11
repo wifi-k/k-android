@@ -49,6 +49,8 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
     TextView tvSignNext;
     @BindView(R2.id.iv_verify_clear)
     ImageView ivVerifyClear;
+    @BindView(R2.id.textView)
+    TextView textView;
     /**
      * 倒计时订阅器
      */
@@ -71,7 +73,8 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
     @Override
     protected void initView() {
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FORGET_PASSWORD, this);
-        setTitleBack(R.string.find_password);
+        setTitleBack("");
+        textView.setText(R.string.find_password);
         tvSignNext.setText(R.string.next_step);
         listenFocus();
         listenTextChange();
@@ -126,9 +129,11 @@ public class ForgetPwdCodeActivity extends BaseActivity<GetVerifyContract.Presen
                 ivEditClear.setVisibility(Check.hasContent(s) && etPhone.hasFocus() ? View.VISIBLE : View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     tvGetCode.setTextColor(Config.Colors.MAIN);
+                    tvGetCode.setBackgroundResource(R.drawable.rectf_r2_green);
                     updateConfirmBtnEnable();
                 } else {
                     tvGetCode.setTextColor(Config.Colors.TEXT_9B);
+                    tvGetCode.setBackgroundResource(R.drawable.rect_h29_r2_line_f2_trans);
                 }
             }
         });

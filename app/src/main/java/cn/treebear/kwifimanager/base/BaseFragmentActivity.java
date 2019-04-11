@@ -7,16 +7,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.Size;
-import androidx.annotation.StringRes;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -29,6 +19,16 @@ import com.umeng.message.PushAgent;
 
 import java.util.ArrayList;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.Size;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.treebear.kwifimanager.R;
@@ -532,16 +532,14 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment oldFragment = mFragments.get(position);
         fragmentTransaction.hide(oldFragment);
+        mFragments.remove(oldFragment);
         if (!mFragments.contains(newFragment)) {
-            mFragments.add(newFragment);
+            mFragments.add(position, newFragment);
             fragmentTransaction.add(getFragmentHolderId(), newFragment);
         }
-        mFragments.set(position, newFragment);
-        mFragments.set(mFragments.size() - 1, oldFragment);
-        mFragments.remove(oldFragment);
-        fragmentTransaction.remove(oldFragment);
         fragmentTransaction.show(mFragments.get(currentFragmentIndex));
-        fragmentTransaction.commitNow();
+        fragmentTransaction.remove(oldFragment);
+        fragmentTransaction.commit();
     }
 
     /**

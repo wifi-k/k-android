@@ -33,6 +33,7 @@ import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.CountObserver;
 import cn.treebear.kwifimanager.util.CountUtil;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
+import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
@@ -80,26 +81,30 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     @Override
     protected void onResume() {
         super.onResume();
-        PermissionUtils.permission(PermissionConstants.LOCATION)
-                .callback(new PermissionUtils.SimpleCallback() {
-                    @Override
-                    public void onGranted() {
-                        checkWiFi();
-                    }
+        if (WiFiHttpClient.getNeedLogin()) {
+            PermissionUtils.permission(PermissionConstants.LOCATION)
+                    .callback(new PermissionUtils.SimpleCallback() {
+                        @Override
+                        public void onGranted() {
+                            checkWiFi();
+                        }
 
-                    @Override
-                    public void onDenied() {
-                        ToastUtils.showLong(R.string.refuse_loaction_permission);
-                    }
-                }).request();
+                        @Override
+                        public void onDenied() {
+                            ToastUtils.showLong(R.string.refuse_loaction_permission);
+                        }
+                    }).request();
+        } else {
+            change2Bind();
+        }
     }
 
     private void checkWiFi() {
-        if (!Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getToken())) {
-            WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+        LoadingProgressDialog.showProgressDialog(this, getString(R.string.scanning));
+        if (!NetWorkUtils.isXiaoKSignIn()) {
+            WiFiHttpClient.getInstance().tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
                 @Override
                 public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
-                    MyApplication.getAppContext().saveDeviceInfo(resultData.getData());
                     change2Bind();
                 }
 
@@ -114,7 +119,8 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     }
 
     private void change2Bind() {
-        if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
+        hideLoading();
+        if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
             tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，点击立即绑定设备", NetWorkUtils.getRealSSIDWhenWifi(this)));
             btnConfirm.setText(R.string.bind_now);
         }
@@ -136,38 +142,47 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @OnClick(R2.id.btn_bottom)
     public void onBtnBottomClicked() {
-        TLog.w("OkHttp",MyApplication.getAppContext().getDeviceInfo().getId());
-        if (Check.hasContent(MyApplication.getAppContext().getDeviceInfo().getId())) {
-            showLoading();
-            TLog.w(MyApplication.getAppContext().getDeviceInfo().getId());
-            mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
-        } else {
-            if (NetWorkUtils.isWifiConnected(this)) {
-                WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
-                    @Override
-                    public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
-                        showLoading();
-                        mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
-                    }
-
-                    @Override
-                    public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
-
-                    }
-                });
-
-                String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
-                if (Check.hasContent(wifiSSID)) {
-                    if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
-                        mPresenter.bindNode(MyApplication.getAppContext().getDeviceInfo().getId());
-                    } else {
-                        ToastUtils.showShort(R.string.connect_xiaok_tips1);
-                    }
-                }
-            } else {
-                notXiaoKDialog();
+        TLog.w("OkHttp", WiFiHttpClient.getWifiDeviceInfo().getId());
+        if (Check.hasContent((String) SharedPreferencesUtil.getParam(SharedPreferencesUtil.NODE_ID, ""))) {
+            ToastUtils.showShort(R.string.bind_success);
+            hideLoading();
+            MyApplication.getAppContext().getUser().setNodeSize(1);
+            if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
+                startActivity(ChooseNetworkStyleActivity.class);
             }
+            finish();
+        } else {
+            notXiaoKDialog();
         }
+//        if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
+//            showLoading();
+//            mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
+//        } else {
+//            if (NetWorkUtils.isWifiConnected(this)) {
+//                WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+//                    @Override
+//                    public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+//                        showLoading();
+//                        mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
+//                    }
+//
+//                    @Override
+//                    public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
+//
+//                    }
+//                });
+//                String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
+//                if (Check.hasContent(wifiSSID)) {
+//                    if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
+//                        mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
+//                    } else {
+//                        ToastUtils.showShort(R.string.connect_xiaok_tips1);
+//                    }
+//                }
+//            } else {
+//                notXiaoKDialog();
+//            }
+//        }
     }
 
     @Override
@@ -183,7 +198,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @Override
     public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
-        super.onLoadFail(response,resultMsg, resultCode);
+        super.onLoadFail(response, resultMsg, resultCode);
         switch (resultCode) {
             case ApiCode.INVALID_PARAM:
                 ToastUtils.showShort(R.string.this_node_has_bound);
@@ -230,7 +245,6 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
         if (wifiManager != null) {
             wifiManager.startScan();
         }
-        LoadingProgressDialog.showProgressDialog(this, getString(R.string.scanning));
         CountUtil.numberDown(3, new CountObserver() {
             @Override
             public void onSubscribe(Disposable d) {

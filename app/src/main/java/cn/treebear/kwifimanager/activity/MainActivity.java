@@ -23,6 +23,7 @@ import cn.treebear.kwifimanager.fragment.GalleryFragment;
 import cn.treebear.kwifimanager.fragment.HomeBindFragment;
 import cn.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import cn.treebear.kwifimanager.fragment.MeFragment;
+import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
 import cn.treebear.kwifimanager.util.TLog;
@@ -54,7 +55,6 @@ public class MainActivity extends BaseFragmentActivity {
         }
     };
     long lastPressBackMills = 0;
-    boolean isTryingSign = false;
 
     @Override
     public int layoutId() {
@@ -120,7 +120,7 @@ public class MainActivity extends BaseFragmentActivity {
         super.onResume();
         updateHomeFragment();
         TLog.i(MyApplication.getAppContext().getUser().toString());
-        TLog.i(MyApplication.getAppContext().getDeviceInfo());
+        TLog.i(WiFiHttpClient.getWifiDeviceInfo());
     }
 
     @Override

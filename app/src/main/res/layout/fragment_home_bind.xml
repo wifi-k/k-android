@@ -32,14 +32,15 @@
             <LinearLayout
                 android:id="@+id/ll_has_no_backup_wrapper"
                 android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_marginStart="4dp"
+                android:layout_height="68dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="18dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/bg_home_join_wrapper"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_parent_control">
@@ -50,7 +51,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="6dp"
                     android:layout_weight="1"
                     android:text="@string/how_much_picture_backup"
                     android:textSize="13sp"
@@ -61,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="6dp"
                     android:background="@drawable/btn_main_r14"
                     android:paddingStart="12dp"
                     android:paddingTop="4dp"
@@ -102,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="3dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/come_back_home"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
@@ -155,7 +157,7 @@
                     android:layout_height="13dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@android:color/white"
+                    android:background="@color/white50"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -215,8 +217,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:background="@mipmap/bg_home_myap"
+                    android:drawableEnd="@mipmap/ic_line_arrow_right_white"
                     android:gravity="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="10dp"
                     android:text="@string/my_k_ap"
+                    android:textAllCaps="true"
                     android:textColor="@android:color/white"
                     android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView"
@@ -281,6 +287,7 @@
                 android:layout_weight="1"
                 android:drawableTop="@mipmap/ic_home_sign_parental"
                 android:drawablePadding="16dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="@string/parent_control"
                 android:textColor="@color/text_deep_black_33"
@@ -295,6 +302,7 @@
                 android:layout_weight="1"
                 android:drawableTop="@mipmap/ic_home_sign_healthy"
                 android:drawablePadding="16dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/healthy_model"
                 android:textColor="@color/text_deep_black_33"
@@ -311,6 +319,7 @@
                 android:layout_weight="1"
                 android:drawableTop="@mipmap/ic_home_week_report"
                 android:drawablePadding="16dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/look_week_report"
                 android:textColor="@color/text_deep_black_33"
@@ -328,6 +337,7 @@
                 android:layout_weight="1"
                 android:drawableTop="@mipmap/ic_home_sign_wifisetting"
                 android:drawablePadding="16dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/wifi_setting"
                 android:textColor="@color/text_deep_black_33"
@@ -339,7 +349,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="28dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_has_no_backup_wrapper">
@@ -349,8 +359,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/conn_device"
-                    android:textColor="#2B3852"
+                    android:textColor="@color/text_28354C"
                     android:textSize="20sp" />
 
                 <TextView
@@ -362,13 +373,14 @@
                     android:layout_marginTop="4dp"
                     android:text="@string/network_speed_now"
                     android:textColor="#7383A2" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/online_wrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_home_join_wrapper"
                     android:minHeight="100dp"
                     android:padding="8dp"
@@ -425,14 +437,15 @@
                         android:layout_marginTop="3dp"
                         android:text="@string/has_no_device"
                         android:textColor="#7383A2"
-                        android:textSize="17sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/tips_has_no_device"
-                        android:textColor="#B6C0CB" />
+                        android:textColor="#B6C0CB"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -450,6 +463,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/title_take_care_children"
                     android:textColor="#2B3852"
                     android:textSize="20sp" />
@@ -458,9 +472,9 @@
                     android:id="@+id/cl_online_device_wrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_home_join_wrapper"
                     android:minHeight="100dp"
                     android:padding="8dp"
@@ -515,14 +529,15 @@
                         android:layout_marginTop="3dp"
                         android:text="@string/has_no_week_report"
                         android:textColor="#7383A2"
-                        android:textSize="17sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/tips_has_no_children"
-                        android:textColor="#B6C0CB" />
+                        android:textColor="#B6C0CB"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 

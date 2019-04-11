@@ -6,8 +6,8 @@
                 android:bottom="10px"
                 android:left="4px"
                 android:right="4px"
-                android:top="4px" />
-            <solid android:color="#0DCCCCCC" />
+                android:top="2px" />
+            <solid android:color="#0DDDDDDD" />
             <corners android:radius="8dp" />
         </shape>
     </item>
@@ -17,8 +17,8 @@
                 android:bottom="10px"
                 android:left="4px"
                 android:right="4px"
-                android:top="4px" />
-            <solid android:color="#10CCCCCC" />
+                android:top="2px" />
+            <solid android:color="#10DDDDDD" />
             <corners android:radius="8dp" />
         </shape>
     </item>
@@ -28,8 +28,8 @@
                 android:bottom="10px"
                 android:left="4px"
                 android:right="4px"
-                android:top="4px" />
-            <solid android:color="#15CCCCCC" />
+                android:top="2px" />
+            <solid android:color="#15DDDDDD" />
             <corners android:radius="8dp" />
         </shape>
     </item>
@@ -39,8 +39,8 @@
                 android:bottom="10px"
                 android:left="4px"
                 android:right="4px"
-                android:top="4px" />
-            <solid android:color="#20CCCCCC" />
+                android:top="2px" />
+            <solid android:color="#20DDDDDD" />
             <corners android:radius="8dp" />
         </shape>
     </item>
@@ -50,19 +50,19 @@
                 android:bottom="10px"
                 android:left="4px"
                 android:right="4px"
-                android:top="4px" />
-            <solid android:color="#30CCCCCC" />
+                android:top="2px" />
+            <solid android:color="#30DDDDDD" />
             <corners android:radius="8dp" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle" >
-            <solid android:color="#14CCCCCC" />
+            <solid android:color="#14DDDDDD" />
             <corners android:radius="8dp" />
             <padding android:bottom="10px"
                 android:left="4px"
                 android:right="4px"
-                android:top="4px" />
+                android:top="2px" />
         </shape>
     </item>
     <item>
@@ -73,7 +73,7 @@
                 android:bottom="14px"
                 android:left="3px"
                 android:right="3px"
-                android:top="3px" />
+                android:top="2px" />
         </shape>
     </item>
 </layer-list>

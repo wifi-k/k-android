@@ -42,6 +42,7 @@ import cn.treebear.kwifimanager.bean.ChildrenListBean;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
+import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
@@ -181,8 +182,9 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     }
 
     private void updateOtherData() {
-        tvUserRole.setText(MyApplication.getAppContext().getUser().getRole() == 0 ? getString(R.string.admin) : getString(R.string.member));
-        tvRootName.setText(MyApplication.getAppContext().getUser().getName());
+        ServerUserInfo userInfo = MyApplication.getAppContext().getUser();
+        tvUserRole.setText(userInfo.getRole() == 0 ? getString(R.string.admin) : getString(R.string.member));
+        tvRootName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length()-4));
         tvUserState.setText(R.string.online);
         tvApName.setText("xiaok123-4567");
         tvHasNoBackup.setText("您有10张新的照片未备份，是否现在备份?");
@@ -360,13 +362,25 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     @Override
     public void onMobileListResponse(MobileListBean data) {
         mobilePhoneList.clear();
-        mobilePhoneList.addAll(data.getPage());
+        tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%s/下行网速%s”", getOnlineNumber(data.getPage()), nodeBean.getUpstream(), nodeBean.getDownstream()));
+        if (data.getPage().size() > 3) {
+            mobilePhoneList.addAll(data.getPage().subList(0, 3));
+        } else {
+            mobilePhoneList.addAll(data.getPage());
+        }
         mobilePhoneAdapter.notifyDataSetChanged();
-        tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%s/下行网速%s”", 2, nodeBean.getUpstream(), nodeBean.getDownstream()));
         tvLookMore.setVisibility(mobilePhoneList.size() >= 3 ? View.VISIBLE : View.GONE);
 
         noDeviceWrapper.setVisibility(mobilePhoneList.size() == 0 ? View.VISIBLE : View.GONE);
         clDeviceWrapper.setVisibility(mobilePhoneList.size() == 0 ? View.GONE : View.VISIBLE);
+    }
+
+    private int getOnlineNumber(List<MobileListBean.MobileBean> page) {
+        int count = 0;
+        for (MobileListBean.MobileBean bean : page) {
+            count += bean.getStatus() == 1 ? 1 : 0;
+        }
+        return count;
     }
 
     @Override
@@ -396,7 +410,8 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @Override
     public void onChildrenListError(BaseResponse error) {
-        // TODO: 2019/4/4 暂无儿童
+        noChildrenWrapper.setVisibility(View.VISIBLE);
+        clChildrenWrapper.setVisibility(View.GONE);
     }
 
     private NodeInfoDetail.NodeBean searchSelectNode(List<NodeInfoDetail.NodeBean> page) {

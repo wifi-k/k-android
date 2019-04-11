@@ -126,7 +126,7 @@
             <TextView
                 android:id="@+id/textView34"
                 style="@style/subtitle_text"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="45dp"
                 android:text="@string/senior_settings"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"

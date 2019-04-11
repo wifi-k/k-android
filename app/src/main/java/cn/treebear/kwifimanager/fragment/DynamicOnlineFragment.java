@@ -6,7 +6,6 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseFragment;
@@ -14,6 +13,7 @@ import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.http.ApiCode;
+import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 import cn.treebear.kwifimanager.mvp.wifi.presenter.DynamicIpPresenter;
 
@@ -53,10 +53,10 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
-        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
-        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+       WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
         hideLoading();
         ToastUtils.showShort(R.string.option_update_success);
         updateWifiInfoShow();
@@ -95,7 +95,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
     }
 
     private void updateWifiInfoShow() {
-        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         tvConnectStatus.setText(deviceInfo.isConnect() ? R.string.wan_connect_ok : R.string.wan_connect_no);
         tvIp.setText(deviceInfo.getWan().getIp());
         tvSubnet.setText(deviceInfo.getWan().getNetmask());

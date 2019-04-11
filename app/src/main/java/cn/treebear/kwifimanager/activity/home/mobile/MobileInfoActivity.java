@@ -51,7 +51,7 @@ public class MobileInfoActivity extends BaseActivity {
             tvPhoneBrand.setText(macVendor);
         }
         tvMacAddress.setText(mobilePhoneBean.getMac());
-        tvIpAddress.setText(mobilePhoneBean.getIp());
+        tvIpAddress.setText(mobilePhoneBean.getLocalIp());
     }
 
 }

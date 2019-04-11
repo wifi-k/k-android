@@ -47,13 +47,13 @@ public final class Config {
         @ColorInt
         int MAIN = Color.parseColor("#26DCBC");
         @ColorInt
-        int LINE = Color.parseColor("#F2F2F2");
+        int LINE = Color.parseColor("#EBEEF2");
         @ColorInt
-        int TEXT_9B = Color.parseColor("#9B9B9B");
+        int TEXT_9B = Color.parseColor("#B6C0CB");
         @ColorInt
         int TEXT_28 = Color.parseColor("#28354C");
         @ColorInt
-        int DEVICE_ONLINE = Color.parseColor("#0AD88B");
+        int DEVICE_ONLINE = Color.parseColor("#7383A2");
         @ColorInt
         int DEVICE_OFFLINE = Color.parseColor("#7383A2");
         @ColorInt

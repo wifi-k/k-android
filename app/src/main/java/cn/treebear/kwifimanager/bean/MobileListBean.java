@@ -36,22 +36,26 @@ public class MobileListBean implements Serializable {
     public static class MobileBean implements Serializable, Parcelable {
 
         /**
-         * mac : 8c:25:05:bf:9f:57
-         * name : Honor_8-4b0f822bd35bf1af
-         * onTime : 1554199524
+         * id : 5
+         * mac : 68:f7:28:77:f4:51
+         * name : PC-20190221OGLK
+         * onTime : 1554873435
          * offTime : 0
          * status : 1
-         * note : null
+         * note : PC-000001
          * nodeId : 214216BF0F3D
-         * createTime : 1554199525220
-         * updateTime : 1554199525220
+         * createTime : 1553777328892
+         * updateTime : 1554886567312
          * isDelete : 0
-         * isBlock : 0
-         * isOnline: 0 关闭
-         * macVendor : huawei
-         * macIcon : http://test.developer.qiniu.famwifi.com/ic_hw.png?e=1554200145&token=yl1JVmF9Vx6HuZ1dapbIEbZ4lb__T0Z71tXZ71zj:ce1wHNQWUHErKMYUwMJYNdZOY2Q=
+         * isBlock : 1
+         * macVendor : default
+         * macIcon : http://test.developer.qiniu.famwifi.com/ic_default.png?e=1554887333&token=yl1JVmF9Vx6HuZ1dapbIEbZ4lb__T0Z71tXZ71zj:OSl_Va5sDavTQfstXHRmOQwUlKM=
+         * localIp :
+         * isRecord : 1
+         * isOnline : 0
          */
 
+        private int id;
         private String mac;
         private String name;
         private int onTime;
@@ -63,34 +67,18 @@ public class MobileListBean implements Serializable {
         private long updateTime;
         private int isDelete;
         private int isBlock;
-        private int isRecord;
-        private int isOnline;
         private String macVendor;
         private String macIcon;
-        private String ip;
+        private String localIp;
+        private int isRecord;
+        private int isOnline;
 
-        public int getIsRecord() {
-            return isRecord;
+        public int getId() {
+            return id;
         }
 
-        public void setIsRecord(int isRecord) {
-            this.isRecord = isRecord;
-        }
-
-        public int getIsOnline() {
-            return isOnline;
-        }
-
-        public void setIsOnline(int isOnline) {
-            this.isOnline = isOnline;
-        }
-
-        public String getIp() {
-            return ip;
-        }
-
-        public void setIp(String ip) {
-            this.ip = ip;
+        public void setId(int id) {
+            this.id = id;
         }
 
         public String getMac() {
@@ -197,15 +185,40 @@ public class MobileListBean implements Serializable {
             this.macIcon = macIcon;
         }
 
+        public String getLocalIp() {
+            return localIp;
+        }
+
+        public void setLocalIp(String localIp) {
+            this.localIp = localIp;
+        }
+
+        public int getIsRecord() {
+            return isRecord;
+        }
+
+        public void setIsRecord(int isRecord) {
+            this.isRecord = isRecord;
+        }
+
+        public int getIsOnline() {
+            return isOnline;
+        }
+
+        public void setIsOnline(int isOnline) {
+            this.isOnline = isOnline;
+        }
+
         @Override
         public String toString() {
             return "MobileBean{" +
-                    "mac='" + mac + '\'' +
+                    "id=" + id +
+                    ", mac='" + mac + '\'' +
                     ", name='" + name + '\'' +
                     ", onTime=" + onTime +
                     ", offTime=" + offTime +
                     ", status=" + status +
-                    ", note=" + note +
+                    ", note='" + note + '\'' +
                     ", nodeId='" + nodeId + '\'' +
                     ", createTime=" + createTime +
                     ", updateTime=" + updateTime +
@@ -213,9 +226,11 @@ public class MobileListBean implements Serializable {
                     ", isBlock=" + isBlock +
                     ", macVendor='" + macVendor + '\'' +
                     ", macIcon='" + macIcon + '\'' +
+                    ", localIp='" + localIp + '\'' +
+                    ", isRecord=" + isRecord +
+                    ", isOnline=" + isOnline +
                     '}';
         }
-
 
         @Override
         public int describeContents() {
@@ -224,6 +239,7 @@ public class MobileListBean implements Serializable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.id);
             dest.writeString(this.mac);
             dest.writeString(this.name);
             dest.writeInt(this.onTime);
@@ -237,13 +253,16 @@ public class MobileListBean implements Serializable {
             dest.writeInt(this.isBlock);
             dest.writeString(this.macVendor);
             dest.writeString(this.macIcon);
-            dest.writeString(this.ip);
+            dest.writeString(this.localIp);
+            dest.writeInt(this.isRecord);
+            dest.writeInt(this.isOnline);
         }
 
         public MobileBean() {
         }
 
         protected MobileBean(Parcel in) {
+            this.id = in.readInt();
             this.mac = in.readString();
             this.name = in.readString();
             this.onTime = in.readInt();
@@ -257,7 +276,9 @@ public class MobileListBean implements Serializable {
             this.isBlock = in.readInt();
             this.macVendor = in.readString();
             this.macIcon = in.readString();
-            this.ip = in.readString();
+            this.localIp = in.readString();
+            this.isRecord = in.readInt();
+            this.isOnline = in.readInt();
         }
 
         public static final Creator<MobileBean> CREATOR = new Creator<MobileBean>() {

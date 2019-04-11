@@ -168,9 +168,11 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
                 ivEditClear.setVisibility(Check.hasContent(s) && etSignInPhone.hasFocus() ? View.VISIBLE : View.GONE);
                 if (s.length() == Config.Numbers.PHONE_LENGTH) {
                     tvGetCode.setTextColor(Config.Colors.MAIN);
+                    tvGetCode.setBackgroundResource(R.drawable.rectf_r2_green);
                     updateConfirmBtnEnable();
                 } else {
                     tvGetCode.setTextColor(Config.Colors.TEXT_9B);
+                    tvGetCode.setBackgroundResource(R.drawable.rect_h29_r2_line_f2_trans);
                 }
             }
         });
@@ -196,6 +198,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
      */
     private void listenFocus() {
         etSignInPhone.requestFocus();
+        linePhone.setBackgroundColor(Config.Colors.MAIN);
         etSignInPhone.setOnFocusChangeListener((v, hasFocus) -> {
             ivEditClear.setVisibility(Check.hasContent(etSignInPhone) && hasFocus ? View.VISIBLE : View.GONE);
             if (hasFocus) {

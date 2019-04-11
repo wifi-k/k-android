@@ -4,8 +4,7 @@ package cn.treebear.kwifimanager;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
+import android.net.wifi.WifiManager;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
@@ -14,9 +13,10 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.inapp.InAppMessageManager;
 import com.umeng.socialize.PlatformConfig;
 
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
-import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.http.HttpClient;
 import cn.treebear.kwifimanager.receiver.NetWorkReceiver;
 import cn.treebear.kwifimanager.receiver.OpenFileReceiver;
@@ -50,15 +50,13 @@ public class MyApplication extends MultiDexApplication {
      */
     private ServerUserInfo user;
     /**
-     * 设备信息
-     */
-    private WifiDeviceInfo info;
-    /**
      * 友盟推送客户端
      */
     private PushAgent mPushAgent;
 
     private String devToken = "";
+
+    public static long time = 0;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -111,6 +109,7 @@ public class MyApplication extends MultiDexApplication {
         registerReceiver(new OpenFileReceiver(), new IntentFilter(BuildConfig.APPLICATION_ID + ".open_file"));
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         //        intentFilter.addAction(WifiManager.RSSI_CHANGED_ACTION);
         NetWorkReceiver mNetWorkReceiver = new NetWorkReceiver();
         registerReceiver(mNetWorkReceiver, intentFilter);
@@ -147,23 +146,12 @@ public class MyApplication extends MultiDexApplication {
         return user;
     }
 
-    public WifiDeviceInfo getDeviceInfo() {
-        if (info == null) {
-            info = new WifiDeviceInfo();
-        }
-        return info;
-    }
-
     public void setNeedUpdateUserInfo(boolean need) {
         needUpdateUserInfo = need;
     }
 
     public boolean isNeedUpdateUserInfo() {
         return needUpdateUserInfo;
-    }
-
-    public void saveDeviceInfo(WifiDeviceInfo info) {
-        this.info = info;
     }
 
     public String getCurrentSelectNode() {

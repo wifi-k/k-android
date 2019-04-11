@@ -39,6 +39,10 @@ public abstract class BasePresenter<V extends IView, M extends IModel> implement
         } else {
             emptyMap.clear();
         }
+//        FormBody body=new FormBody.Builder()
+//                .add("username","admin")
+//                .add("token","sjdkdjows=dmzkkshf")
+//                .build();
         return emptyMap;
     }
 

@@ -64,7 +64,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
 
     private void updateUserInfo() {
         userInfo = MyApplication.getAppContext().getUser();
-        tvUserName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile());
+        tvUserName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length()-4));
         tvUserMobile.setText(userInfo.getMobile());
         GlideApp.with(mRootView)
                 .load(userInfo.getAvatar())

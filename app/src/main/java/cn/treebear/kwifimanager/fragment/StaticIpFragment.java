@@ -7,7 +7,6 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity;
@@ -15,6 +14,7 @@ import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.wifi.contract.StaticIpContract;
 import cn.treebear.kwifimanager.mvp.wifi.presenter.StaticIpPresenter;
 import cn.treebear.kwifimanager.util.Check;
@@ -70,10 +70,10 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
-        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
-        MyApplication.getAppContext().saveDeviceInfo(deviceInfo);
+       WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
         hideLoading();
         startActivity(ModifyWifiInfoActivity.class);
         ToastUtils.showShort(R.string.connect_success);
@@ -128,7 +128,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
     }
 
     private void updateWifiInfoShow() {
-        WifiDeviceInfo deviceInfo = MyApplication.getAppContext().getDeviceInfo();
+        WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         etIpAddress.setText(deviceInfo.getWan().getIp());
         etSubnet.setText(deviceInfo.getWan().getNetmask());
         etGateway.setText(deviceInfo.getWan().getGateway());

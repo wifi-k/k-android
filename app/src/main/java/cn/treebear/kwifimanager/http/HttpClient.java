@@ -78,12 +78,12 @@ public class HttpClient {
             builder.readTimeout(30, TimeUnit.SECONDS);
             builder.connectTimeout(30, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
-//            if (BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG) {
                 // Log信息拦截器
                 HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//这里可以选择拦截级别
                 builder.addInterceptor(loggingInterceptor);
-//            }
+            }
             builder.cache(cache);
 
             retrofit = new Retrofit.Builder()

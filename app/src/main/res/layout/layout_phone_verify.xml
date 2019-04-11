@@ -13,7 +13,6 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="8dp"
         android:background="@null"
-        android:fontFamily="sans-serif-condensed-medium"
         android:hint="@string/input_verify_code_please"
         android:inputType="number"
         android:maxLength="6"
@@ -43,7 +42,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="36dp"
         android:background="@null"
-        android:fontFamily="sans-serif-condensed-medium"
         android:hint="@string/input_phone_number_please"
         android:inputType="number"
         android:maxLength="11"
@@ -85,18 +83,18 @@
         android:gravity="center"
         android:padding="5dp"
         android:text="@string/get_code"
-        android:textColor="@color/light_text_9b"
+        android:textColor="@color/text_b6c0cb"
         app:layout_constraintEnd_toEndOf="@+id/line_phone"
         app:layout_constraintTop_toBottomOf="@+id/line_phone" />
 
     <TextView
-        style="@style/confirm_button"
         android:id="@+id/tv_sign_next"
+        style="@style/confirm_button"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="42dp"
         android:layout_marginEnd="36dp"
-        android:text="@string/signup"
         android:enabled="false"
+        android:text="@string/signup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line_password" />

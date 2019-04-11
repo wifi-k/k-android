@@ -40,7 +40,6 @@ import cn.treebear.kwifimanager.bean.local.LocalImageSection;
 import cn.treebear.kwifimanager.config.GalleryHelper;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.util.DensityUtil;
-import cn.treebear.kwifimanager.util.TLog;
 
 /**
  * @author Administrator
@@ -178,7 +177,6 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
                 if (y[0] >= y[2] && y[2] != 0) {
                     percent = -1;
                 }
-                TLog.w("dy = " + dy + "; y[0] = " + y[0] + "; y[1] = " + y[1] + ";percent = " + percent);
                 if (percent != y[3]) {
                     tvTitle.setTranslationX(y[1] * percent);
                     rlTabWrapper.setAlpha(0 - percent);

@@ -6,7 +6,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import androidx.core.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -14,6 +13,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.UnknownHostException;
 
+import androidx.core.app.ActivityCompat;
 import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.MyApplication;
 
@@ -23,7 +23,7 @@ import cn.treebear.kwifimanager.MyApplication;
  */
 public class TLog {
 
-    private static String TAG = "kkkk";
+    private static String TAG = "NOHttp";
     private static boolean showLog = true;
 //    private static boolean showLog = BuildConfig.DEBUG;
 

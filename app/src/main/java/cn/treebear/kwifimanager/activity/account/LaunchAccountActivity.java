@@ -55,6 +55,10 @@ public class LaunchAccountActivity extends BaseActivity {
             MyApplication.getAppContext().savedUser(UserInfoUtil.getUserInfo());
             getUserInfo();
         }
+//        if (NetWorkUtils.isWifiConnected(LaunchAccountActivity.this) && WiFiHttpClient.getNeedLogin()) {
+//            TLog.i("OKHttp", "1111111111");
+//            WiFiHttpClient.getInstance().tryToSignInWifi(null);
+//        }
     }
 
     private void getUserInfo() {

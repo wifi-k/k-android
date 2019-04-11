@@ -13,8 +13,10 @@ import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.IModel;
 import cn.treebear.kwifimanager.mvp.wifi.model.WiFiSettingProxyModel;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.RequestBodyUtils;
 import cn.treebear.kwifimanager.util.SecurityUtils;
+import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
 import cn.treebear.kwifimanager.util.TLog;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -34,46 +36,64 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WiFiHttpClient {
     private static WiFiHttpClient mRetrofitHttp;
-    private static WiFiSettingProxyModel wifiProxyClient;
+    private  WiFiSettingProxyModel wifiProxyClient;
+    private static WifiDeviceInfo wifiDeviceInfo;
     private String baseUrl = Config.Urls.ROUTER_BASE_URL;
     private Retrofit retrofit;
-    private static String apiToken = "";
-    private static boolean needLogin = true;
-    private static boolean isLogin_ing = false;
-    private static BaseResponse<WifiDeviceInfo> resultData;
+    private  volatile String apiToken = "";
+    private  boolean needLogin = true;
 
     private WiFiHttpClient() {
 
     }
 
     public static WiFiHttpClient getInstance() {
-        synchronized (WiFiHttpClient.class) {
-            if (mRetrofitHttp == null) {
-                mRetrofitHttp = new WiFiHttpClient();
+        if (mRetrofitHttp == null) {
+            synchronized (WiFiHttpClient.class) {
+                if (mRetrofitHttp == null) {
+                    mRetrofitHttp = new WiFiHttpClient();
+                    wifiDeviceInfo = new WifiDeviceInfo();
+                }
             }
         }
         return mRetrofitHttp;
     }
 
-    /**
-     * 方便测试期间后门更改 IP : port
-     */
-    public static void updateClient() {
-        getInstance().retrofit = null;
-        mRetrofitHttp = null;
-        getInstance().initRetrofit();
+    public static boolean getNeedLogin() {
+        if (wifiDeviceInfo == null) {
+            return true;
+        }
+        return getInstance().needLogin && !Check.hasContent(wifiDeviceInfo.getId());
+    }
+
+    public static WifiDeviceInfo getWifiDeviceInfo() {
+        return wifiDeviceInfo;
+    }
+
+    public static String getApiToken() {
+        if (wifiDeviceInfo != null) {
+            return wifiDeviceInfo.getToken();
+        }
+        return getInstance().apiToken;
+    }
+
+    public static void setWifiDeviceInfo(WifiDeviceInfo wifiDeviceInfo) {
+        WiFiHttpClient.wifiDeviceInfo = wifiDeviceInfo;
     }
 
     public static void updateApiToken(String token) {
         if (token == null) {
             token = "";
         }
-        apiToken = token;
-        updateClient();
+        TLog.i("OkHttp", "----------***********---uuu--------");
+        getInstance().apiToken = token;
+        getInstance().retrofit = null;
+        getInstance().initRetrofit();
     }
 
     private void initRetrofit() {
         if (retrofit == null) {
+            TLog.i("OkHttp", "----------***********---iii-------");
             //缓存
             File cacheFile = new File(MyApplication.getAppContext().getCacheDir(), "cache");
             //100Mb
@@ -89,8 +109,8 @@ public class WiFiHttpClient {
                 return chain.proceed(request);
             };
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(160, TimeUnit.SECONDS);
-            builder.readTimeout(160, TimeUnit.SECONDS);
+            builder.connectTimeout(30, TimeUnit.SECONDS);
+            builder.readTimeout(30, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
 //            if (BuildConfig.DEBUG) {
             // Log信息拦截器
@@ -99,7 +119,6 @@ public class WiFiHttpClient {
             builder.addInterceptor(loggingInterceptor);
 //            }
             builder.cache(cache);
-
             retrofit = new Retrofit.Builder()
                     .baseUrl(getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create())
@@ -118,55 +137,54 @@ public class WiFiHttpClient {
      * 小K设备下线，再次上线需要重新登录
      */
     public static void xiaokOffline() {
-        needLogin = true;
-        apiToken = "";
-    }
-
-    /**
-     * 小K设备上线，尝试登录
-     */
-    public static void xiaokOnline() {
-        tryToSignInWifi(null);
+        getInstance().needLogin = true;
+        getInstance().apiToken = "";
+        getInstance().retrofit = null;
+        getInstance().initRetrofit();
+        TLog.i("OkHttp", "----------***********-----off-----");
     }
 
     /**
      * 便于各个界面调用WiFi登录
      * 内部处理token更新
      */
-    public static void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
-        synchronized (WiFiHttpClient.class) {
-            tologin(callBack);
+    public void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
+        TLog.e("OkHttp", "Thread.currentThread().getId() = " + Thread.currentThread().getId());
+        initRetrofit();
+        // 保证全局单次连接wifi只登录一次
+        if (needLogin && !Check.hasContent(apiToken)) {
+            TLog.i("OkHttp", "--xxxx-----***********---------------");
+            toLogin(callBack);
+        } else {
+            if (callBack != null) {
+                callBack.onSuccess(null);
+            }
+            TLog.w("Current device has logged in !");
         }
     }
 
-    private static void tologin(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
-        // 保证全局单次连接wifi只登录一次
-        if (!needLogin) {
-            if (callBack != null && resultData != null) {
-                callBack.onSuccess(resultData);
-            }
-            TLog.w("Current device has logged in !");
-            return;
+    private static void toLogin(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
+        if (getInstance().wifiProxyClient == null) {
+            getInstance().wifiProxyClient = new WiFiSettingProxyModel();
         }
-        if (isLogin_ing) {
-            TLog.w("Current device is login ing !");
-            return;
-        }
-        if (wifiProxyClient == null) {
-            wifiProxyClient = new WiFiSettingProxyModel();
-        }
-        isLogin_ing = true;
         ArrayMap<String, Object> map = new ArrayMap<>();
         map.put(Keys.NAME, "admin");
         map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD));
-        wifiProxyClient.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+        TLog.i("OkHttp", "-------------------------------------");
+        getInstance().wifiProxyClient.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
                 TLog.e("OkHttp", "WiFi login success !" + TLog.valueOf(resultData));
+                if (wifiDeviceInfo == null) {
+                    wifiDeviceInfo = new WifiDeviceInfo();
+                }
+                TLog.i("OkHttp", "----------***********-111---------");
                 if (resultData.getData() != null) {
-                    apiToken = resultData.getData().getToken();
-                    MyApplication.getAppContext().saveDeviceInfo(resultData.getData());
-                    updateApiToken(apiToken);
+                    getInstance().apiToken = resultData.getData().getToken();
+                    wifiDeviceInfo.setToken(getInstance().apiToken );
+                    TLog.i("OkHttp", "----------***********----222-----");
+                    getInstance().needLogin = false;
+                    updateApiToken(getInstance().apiToken );
                     getDeviceSerialId(callBack);
                 }
             }
@@ -174,7 +192,7 @@ public class WiFiHttpClient {
             @Override
             public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
                 TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
-                isLogin_ing = false;
+                getInstance().needLogin = true;
                 if (callBack != null) {
                     callBack.onFailed(resultData, resultMsg, resultCode);
                 }
@@ -183,44 +201,28 @@ public class WiFiHttpClient {
     }
 
     private static void getDeviceSerialId(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
-        wifiProxyClient.getNodeInfo(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+        getInstance().wifiProxyClient.getNodeInfo(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
-                TLog.i(resultData);
                 if (resultData != null && resultData.getData() != null) {
                     WifiDeviceInfo data = resultData.getData();
-                    data.setToken(apiToken);
-                    MyApplication.getAppContext().saveDeviceInfo(data);
+                    wifiDeviceInfo.setId(data.getId());
+                    wifiDeviceInfo.setWan(data.getWan());
+                    SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, data.getId());
                     resultData.setData(data);
                     if (callBack != null) {
                         callBack.onSuccess(resultData);
                     }
-                    needLogin = false;
-                    isLogin_ing = false;
+                    getInstance().needLogin = false;
                 }
             }
 
             @Override
             public void onFailed(BaseResponse data, String resultMsg, int resultCode) {
-                TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
                 if (callBack != null) {
                     callBack.onFailed(data, resultMsg, resultCode);
                 }
-            }
-        });
-    }
-
-    private static void getDeviceOnlineStatus() {
-        wifiProxyClient.queryNetStatus(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
-            @Override
-            public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
-                TLog.i("getDeviceOnlineStatus ： " + TLog.valueOf(resultData));
-                MyApplication.getAppContext().getDeviceInfo().setConnect(true);
-            }
-
-            @Override
-            public void onFailed(BaseResponse data, String resultMsg, int resultCode) {
-                TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
+                getInstance().needLogin = true;
             }
         });
     }
@@ -229,8 +231,4 @@ public class WiFiHttpClient {
         return baseUrl == null ? Config.Urls.ROUTER_BASE_URL : baseUrl;
     }
 
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
-        retrofit = null;
-    }
 }

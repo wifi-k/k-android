@@ -24,6 +24,7 @@ public interface WiFiApi {
      * 设置路由器使用拨号上网
      * ame	str	宽带账号
      * passwd	str	账号密码
+     * .addHeader("Api-Token", apiToken)
      */
     @POST("pppoe/set")
     Observable<BaseResponse<Object>> ppoeSet(@Body RequestBody params);

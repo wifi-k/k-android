@@ -205,6 +205,14 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     }
 
     @Override
+    protected void onTitleLeftClick() {
+        if (nodeList.size() == 0) {
+            MyApplication.getAppContext().getUser().setNodeSize(0);
+        }
+        super.onTitleLeftClick();
+    }
+
+    @Override
     protected void onDestroy() {
         dismiss(tInputDialog, tMessageDialog);
         super.onDestroy();

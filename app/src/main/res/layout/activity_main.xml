@@ -11,8 +11,15 @@
         android:id="@+id/vp_fragments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_bar"
+        android:layout_above="@+id/line1"
         android:layout_alignParentTop="true" />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_above="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:background="@color/line_f2"
+        android:layout_height="1dp"/>
 
     <com.chaychan.library.BottomBarLayout
         android:id="@+id/bottom_bar"
