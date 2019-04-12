@@ -1,5 +1,8 @@
 package cn.treebear.kwifimanager.activity.message;
 
+import android.view.View;
+import android.widget.TextView;
+
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +27,8 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
     RecyclerView rvMessageList;
     @BindView(R2.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R2.id.tv_empty_view)
+    TextView tvEmptyView;
     int pageNo = 1;
     private List<MessageInfoBean.PageBean> messageList;
     private MessageAdapter adapter;
@@ -63,10 +68,11 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
         messageList.addAll(resultData.getPage());
         adapter.notifyDataSetChanged();
         if (messageList.size() < Config.Numbers.PAGE_SIZE) {
-            adapter.loadMoreEnd();
+            adapter.loadMoreEnd(messageList.size() == 0);
         } else {
             adapter.loadMoreComplete();
         }
+        tvEmptyView.setVisibility(messageList.size() == 0 ? View.VISIBLE : View.GONE);
     }
 
 }

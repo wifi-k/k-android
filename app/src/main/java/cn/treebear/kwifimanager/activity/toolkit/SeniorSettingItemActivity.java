@@ -2,11 +2,13 @@ package cn.treebear.kwifimanager.activity.toolkit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
@@ -23,6 +25,10 @@ public class SeniorSettingItemActivity extends BaseActivity {
 
     @BindView(R2.id.recycler_view)
     RecyclerView rvSettingItem;
+    @BindView(R2.id.refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R2.id.tv_empty_view)
+    TextView tvEmptyView;
     private String titleText;
     private ArrayList<ItemBean> itemData = new ArrayList<>();
     private int settingItemType;
@@ -53,8 +59,10 @@ public class SeniorSettingItemActivity extends BaseActivity {
     protected void initView() {
         setTitleBack(titleText, getString(R.string.save));
         settingAdapter = new TextSettingAdapter(itemData);
+        swipeRefreshLayout.setRefreshing(false);
         rvSettingItem.setLayoutManager(new LinearLayoutManager(this));
         rvSettingItem.setAdapter(settingAdapter);
+        settingAdapter.setEnableLoadMore(false);
         settingAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (currentPosition >= 0 && currentPosition < itemData.size()) {
                 itemData.get(currentPosition).setChecked(false);

@@ -2,6 +2,8 @@ package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.suke.widget.SwitchButton;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
@@ -30,6 +33,10 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
 
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R2.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
+    @BindView(R2.id.tv_empty_view)
+    TextView tvEmptyView;
     ArrayList<MobileListBean.MobileBean> mobileList = new ArrayList<>();
     private GuardJoinDeviceAdapter adapter;
     private ArrayList<String> macs = new ArrayList<>();
@@ -62,7 +69,7 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
         adapter = new GuardJoinDeviceAdapter(mobileList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo, Config.Numbers.PAGE_SIZE);
+        refreshData();
         adapter.setOnCheckedChangeListener(new GuardJoinDeviceAdapter.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isCheck, MobileListBean.MobileBean item) {
@@ -75,6 +82,12 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
                 }
             }
         });
+        refreshLayout.setOnRefreshListener(this::refreshData);
+        adapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), ++pageNo, Config.Numbers.PAGE_SIZE), recyclerView);
+    }
+
+    private void refreshData() {
+        mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo = 1, Config.Numbers.PAGE_SIZE);
     }
 
     @Override
@@ -89,8 +102,14 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
 
     @Override
     public void onLoadData(MobileListBean resultData) {
+        refreshLayout.setRefreshing(false);
         if (pageNo == 1) {
             mobileList.clear();
+        }
+        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
+            adapter.loadMoreEnd(mobileList.size()==0);
+        } else {
+            adapter.loadMoreComplete();
         }
         mobileList.addAll(resultData.getPage());
         for (MobileListBean.MobileBean bean : mobileList) {
@@ -102,6 +121,7 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
             }
         }
         adapter.notifyDataSetChanged();
+        tvEmptyView.setVisibility(mobileList.size() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override

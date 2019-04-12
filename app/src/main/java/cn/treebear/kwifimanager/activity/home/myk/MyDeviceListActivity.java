@@ -111,7 +111,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
         if (Check.hasContent(page)) {
             if (page.size() < Config.Numbers.PAGE_SIZE) {
                 deviceAdapter.setEnableLoadMore(false);
-                deviceAdapter.loadMoreEnd();
+                deviceAdapter.loadMoreEnd(nodeList.size()==0);
             } else {
                 deviceAdapter.loadMoreComplete();
             }

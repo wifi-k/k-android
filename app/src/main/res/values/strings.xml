@@ -357,5 +357,6 @@
     <string name="tips_has_no_device">请绑定设备进行设置</string>
     <string name="has_no_week_report">暂无周报</string>
     <string name="tips_has_no_children">开启儿童上网关爱查看周报</string>
+    <string name="ban_time_plan_name">禁用时间方案1</string>
 
 </resources>

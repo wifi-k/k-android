@@ -2,6 +2,8 @@ package cn.treebear.kwifimanager.activity.home.myk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -32,6 +34,8 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
     RecyclerView recyclerView;
     @BindView(R2.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
+    @BindView(R2.id.tv_empty_view)
+    TextView emptyView;
     private int pageNo = 1;
     private List<NodeInfoDetail.NodeBean> nodeBeans = new ArrayList<>();
     private ChooseXiaoKAdapter adapter;
@@ -68,10 +72,7 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
             showLoading(R.string.change_node_ing);
             mPresenter.selectXiaoK(nodeBeans.get(position).getNodeId());
         });
-        refreshLayout.setOnRefreshListener(() -> {
-            pageNo = 1;
-            mPresenter.getXiaoKList(pageNo);
-        });
+        refreshLayout.setOnRefreshListener(() -> mPresenter.getXiaoKList(pageNo = 1));
     }
 
     @Override
@@ -81,11 +82,15 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
         if (pageNo == 1) {
             nodeBeans.clear();
         }
+        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
+            adapter.loadMoreEnd(nodeBeans.size() == 0);
+        }
         adapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
         if (searchSelectNode(resultData.getPage()) != -1) {
             nodeBeans.addAll(resultData.getPage());
             adapter.notifyDataSetChanged();
         }
+        emptyView.setVisibility(nodeBeans.size() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override

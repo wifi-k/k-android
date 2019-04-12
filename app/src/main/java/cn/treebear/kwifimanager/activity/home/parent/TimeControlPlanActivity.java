@@ -89,7 +89,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
 
     private void change2IncreaseDisplay() {
         setTitleBack(R.string.increase, R.string.save);
-        tvBanAppName.setText(R.string.ban_app_plan_1);
+        tvBanAppName.setText(R.string.ban_time_plan_name);
     }
 
     private void change2ModifyDisplay() {
@@ -99,16 +99,16 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
 
     @Override
     protected void onTitleRightClick() {
-        if (Check.hasContent(needModifyPlan.getSt()) && Check.hasContent(needModifyPlan.getEt()) && needModifyPlan.getWt() > 0){
-            if(Check.hasContent(needModifyPlan.getsMac())) {
+        if (Check.hasContent(needModifyPlan.getSt()) && Check.hasContent(needModifyPlan.getEt()) && needModifyPlan.getWt() > 0) {
+            if (Check.hasContent(needModifyPlan.getsMac())) {
                 mPresenter.setTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode(),
                         needModifyPlan.getId(), tvBanAppName.getText().toString(),
                         needModifyPlan.getSt(), needModifyPlan.getEt(), needModifyPlan.getWt(),
                         needModifyPlan.getsMac());
-            }else {
+            } else {
                 ToastUtils.showShort("请选择需要管理的设备");
             }
-        }else {
+        } else {
             ToastUtils.showShort("请选择需要管理的时间段");
         }
     }
@@ -235,17 +235,17 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
 
                         @Override
                         public void onClickRight(View view) {
-                            if (Check.hasContent(needModifyPlan.getSt()) && Check.hasContent(needModifyPlan.getEt()) && needModifyPlan.getWt() > 0){
-                                if(Check.hasContent(needModifyPlan.getsMac())) {
+                            if (Check.hasContent(needModifyPlan.getSt()) && Check.hasContent(needModifyPlan.getEt()) && needModifyPlan.getWt() > 0) {
+                                if (Check.hasContent(needModifyPlan.getsMac())) {
                                     mPresenter.setTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode(),
                                             needModifyPlan.getId(), tvBanAppName.getText().toString(),
                                             needModifyPlan.getSt(), needModifyPlan.getEt(), needModifyPlan.getWt(),
                                             needModifyPlan.getsMac());
-                                }else {
+                                } else {
                                     ToastUtils.showShort("请选择需要管理的设备");
                                     dismiss(unsavedDialog);
                                 }
-                            }else {
+                            } else {
                                 ToastUtils.showShort("请选择需要管理的时间段");
                                 dismiss(unsavedDialog);
                             }

@@ -3,6 +3,7 @@ package cn.treebear.kwifimanager.activity.home.parent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
@@ -28,6 +30,10 @@ public class ChooseBanAppActivity extends BaseActivity {
 
     @BindView(R2.id.recycler_view)
     RecyclerView rvAppList;
+    @BindView(R2.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
+    @BindView(R2.id.tv_empty_view)
+    TextView emptyView;
     private BanAppPlanBean needModifyPlan;
     ArrayList<AppBean> appList = new ArrayList<>();
     private ChooseAppAdapter chooseAppAdapter;
@@ -67,6 +73,18 @@ public class ChooseBanAppActivity extends BaseActivity {
                 adapter.notifyItemChanged(position);
             }
         });
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        });
+        chooseAppAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+
+            }
+        }, rvAppList);
     }
 
     @Override
