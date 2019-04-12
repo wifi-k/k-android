@@ -363,5 +363,7 @@
     <string name="unbind_failed">解绑失败</string>
     <string name="bind_ing">绑定中...</string>
     <string name="has_no_week_add_children">暂无周报，请添加儿童关爱</string>
+    <string name="restart_node_tips">需在本地WiFi环境重启设备</string>
+    <string name="reset_node_tips">需在本地WiFi环境恢复设备</string>
 
 </resources>

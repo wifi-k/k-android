@@ -73,19 +73,20 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @Override
     protected void initView() {
-        setTitleBack(bindType == 1 ? R.string.append_xiaok : R.string.setting, R.string.skip_set_network);
+//        setTitleBack(bindType == 1 ? R.string.append_xiaok : R.string.setting, R.string.skip_set_network);
+        setTitleBack(bindType == 1 ? R.string.append_xiaok : R.string.setting);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
 
     @Override
     protected void onTitleRightClick() {
-        if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
-            showLoading(getString(R.string.bind_ing));
-            mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
-        }else {
-            ToastUtils.showShort("暂未获取到nodeId，请稍后再试");
-        }
+//        if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
+////            showLoading(getString(R.string.bind_ing));
+////            mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
+////        } else {
+////            ToastUtils.showShort("暂未获取到nodeId，请稍后再试");
+////        }
     }
 
     @Override

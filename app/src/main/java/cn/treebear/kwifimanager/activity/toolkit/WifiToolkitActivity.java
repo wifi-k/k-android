@@ -236,7 +236,11 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
                         @Override
                         public void onClickRight(TextView tvRight) {
-                            restart();
+                            if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+                                restart();
+                            } else {
+                                ToastUtils.showShort(R.string.restart_node_tips);
+                            }
                         }
                     });
         }
@@ -292,7 +296,11 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
                         @Override
                         public void onClickRight(TextView tvRight) {
-                            reset();
+                            if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+                                reset();
+                            } else {
+                                ToastUtils.showShort(R.string.reset_node_tips);
+                            }
                         }
                     });
         }
