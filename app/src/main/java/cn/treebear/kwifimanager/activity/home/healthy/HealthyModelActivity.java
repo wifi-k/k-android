@@ -95,6 +95,10 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
 
     @Override
     protected void onTitleRightClick() {
+        if (timeLimitList.size() > 24) {
+            ToastUtils.showShort("最多可同时设置24个时间段，您设置了" + timeLimitList.size() + "个");
+            return;
+        }
         showLoading(R.string.option_ing);
         ArrayList<HealthyModelBean.WifiBean> wifiBeans = new ArrayList<>();
         HealthyModelBean.WifiBean wifiBean = new HealthyModelBean.WifiBean();

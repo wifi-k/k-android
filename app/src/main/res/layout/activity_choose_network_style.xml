@@ -10,7 +10,9 @@
 
     <TextView
         style="@style/subtitle_text"
-        android:text="@string/choose_online_type" />
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/choose_online_type"
+        android:textSize="20sp" />
 
     <RadioGroup
         android:id="@+id/rg_online_type"

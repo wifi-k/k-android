@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
@@ -127,6 +128,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
                 hideLoading();
                 SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
                 startActivity(ModifyWifiInfoActivity.class);
+                MyApplication.getAppContext().getUser().setNodeSize(1);
                 ToastUtils.showShort(R.string.connect_success);
             }
 

@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
@@ -102,6 +103,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
             public void onSuccess(BaseResponse<Object> resultData) {
                 hideLoading();
                 SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
+                MyApplication.getAppContext().getUser().setNodeSize(1);
                 startActivity(ModifyWifiInfoActivity.class);
                 ToastUtils.showShort(R.string.connect_success);
             }

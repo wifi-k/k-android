@@ -146,13 +146,15 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
         if (Check.hasContent((String) SharedPreferencesUtil.getParam(SharedPreferencesUtil.NODE_ID, ""))) {
             ToastUtils.showShort(R.string.bind_success);
             hideLoading();
-            MyApplication.getAppContext().getUser().setNodeSize(1);
+//            MyApplication.getAppContext().getUser().setNodeSize(1);
             if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
                 startActivity(ChooseNetworkStyleActivity.class);
             }
             finish();
         } else {
-            notXiaoKDialog();
+            if (MyApplication.getAppContext().getUser().getNodeSize() == 0) {
+                notXiaoKDialog();
+            }
         }
 //        if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
 //            showLoading();

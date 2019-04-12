@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
@@ -94,6 +95,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presen
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
                 hideLoading();
+                MyApplication.getAppContext().getUser().setNodeSize(1);
                 SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
                 startActivity(ModifyWifiInfoActivity.class);
                 ToastUtils.showShort(R.string.connect_success);

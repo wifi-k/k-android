@@ -55,6 +55,9 @@ public class DateTimeUtils {
      * 根据上下线状态及时间创建对应文字说明
      */
     public static String createTimeInfoByStatusLength(boolean onlineStatus, long mills) {
+        if (mills < DAY * 365) {
+            mills *= 1000;
+        }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf_mdhmm = new SimpleDateFormat("M月d日 H:mm");
         String status = "";
         String time = "";
@@ -142,6 +145,9 @@ public class DateTimeUtils {
      * @return y-M-D_Hmm格式时间
      */
     public static String formatY_M_dHmm(long mills) {
+        if (mills < DAY * 365) {
+            mills *= 1000;
+        }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfy_M_dHmm = new SimpleDateFormat("yy-M-d H:mm");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
@@ -160,6 +166,9 @@ public class DateTimeUtils {
      * 获取时间戳格式字符
      */
     public static String fmtYMDhmss(long mills) {
+        if (mills < DAY * 365) {
+            mills *= 1000;
+        }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat yyMMddhhmmssSS = new SimpleDateFormat("yyMMddHHmmssSS");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
@@ -170,6 +179,9 @@ public class DateTimeUtils {
      * 将毫秒值转换为时长（仅保留最大单位）
      */
     public static String mill2Time(long mill) {
+        if (mill < DAY * 365) {
+            mill *= 1000;
+        }
         String time;
         if (mill < SECONDS) {
             time = S_LESS_SECENDS;

@@ -38,24 +38,17 @@
                 android:id="@+id/textView3"
                 style="@style/subtitle_text"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/online_type_static_ip"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.33" />
-
             <TextView
                 android:id="@+id/textView9"
                 style="@style/edit_title"
+                android:layout_marginEnd="8dp"
                 android:text="@string/ip_address_"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/et_ip_address"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <EditText
@@ -67,83 +60,89 @@
                 android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@+id/textView9"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/et_subnet_mask"
                 app:layout_constraintTop_toTopOf="@+id/textView9" />
 
             <TextView
                 android:id="@+id/textView10"
                 style="@style/edit_title"
+                android:layout_marginEnd="8dp"
                 android:text="@string/subnet_mask"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/et_subnet_mask"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
             <EditText
                 android:id="@+id/et_subnet_mask"
                 style="@style/edit_text_normal_gray"
-                android:ems="10"
                 android:digits="0123456789."
-                android:inputType="number"
+                android:ems="10"
                 android:hint="@string/hint_subnet"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@+id/textView10"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/et_first_dns"
                 app:layout_constraintTop_toTopOf="@+id/textView10" />
 
             <TextView
                 android:id="@+id/textView12"
                 style="@style/edit_title"
+                android:layout_marginEnd="8dp"
                 android:text="@string/gateway_"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/et_gateway"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
             <EditText
                 android:id="@+id/et_gateway"
                 style="@style/edit_text_normal_gray"
+                android:digits="0123456789."
                 android:ems="10"
                 android:hint="@string/hint_subnet"
-                android:digits="0123456789."
                 android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@+id/textView12"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/et_first_dns"
                 app:layout_constraintTop_toTopOf="@+id/textView12" />
 
             <TextView
                 android:id="@+id/textView14"
                 style="@style/edit_title"
+                android:layout_marginStart="16dp"
                 android:text="@string/first_dns_server"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
             <EditText
                 android:id="@+id/et_first_dns"
                 style="@style/edit_text_normal_gray"
+                android:layout_marginStart="8dp"
+                android:digits="0123456789."
                 android:ems="10"
                 android:hint="@string/hint_subnet"
-                android:digits="0123456789."
                 android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@+id/textView14"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toEndOf="@+id/textView14"
                 app:layout_constraintTop_toTopOf="@+id/textView14" />
 
             <TextView
                 android:id="@+id/textView15"
                 style="@style/edit_title"
+                android:layout_marginStart="16dp"
                 android:text="@string/second_dns_server"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
             <EditText
                 android:id="@+id/et_secend_dns"
                 style="@style/edit_text_normal_gray"
+                android:layout_marginStart="8dp"
+                android:digits="0123456789."
                 android:ems="10"
                 android:hint="@string/hint_subnet"
-                android:digits="0123456789."
                 android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@+id/textView15"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toTopOf="@+id/textView15" />
 
             <Button

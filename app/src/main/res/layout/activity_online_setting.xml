@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="23dp"
+        android:fontFamily="sans-serif-medium"
         android:text="@string/online_type"
         android:textColor="@color/text_28354C"
         android:textSize="17sp"

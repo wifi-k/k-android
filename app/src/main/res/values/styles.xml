@@ -71,7 +71,7 @@
         <item name="android:paddingEnd">18dp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/text_28354C</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
     <!--<item name="android:textStyle">bold</item>-->
     <!--确认按钮-->

@@ -118,6 +118,7 @@
     <TextView
         android:id="@+id/textView35"
         style="@style/subtitle_text"
+        android:fontFamily="sans-serif-medium"
         android:text="@string/device_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
