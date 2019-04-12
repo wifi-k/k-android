@@ -8,7 +8,6 @@ import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.wifi.contract.ModifyWifiInfoContract;
 import cn.treebear.kwifimanager.mvp.wifi.model.ModifyWifiInfoModel;
-import cn.treebear.kwifimanager.util.SecurityUtils;
 
 /**
  * @author Administrator
@@ -31,7 +30,8 @@ public class ModifyWifiInfoPresenter extends BasePresenter<ModifyWifiInfoContrac
         }
         map.put(Keys.SSID0, so0);
         map.put(Keys.SSID, ssid);
-        map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(password));
+//        map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(password));
+        map.put(Keys.PASSWD_WIFI, password);
         mModel.modifyWifiInfo(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {

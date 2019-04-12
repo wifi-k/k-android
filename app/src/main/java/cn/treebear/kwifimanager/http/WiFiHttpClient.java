@@ -41,7 +41,7 @@ public class WiFiHttpClient {
     private String baseUrl = Config.Urls.ROUTER_BASE_URL;
     private Retrofit retrofit;
     private volatile String apiToken = "";
-    private boolean needLogin = true;
+    private static boolean needLogin = true;
 
     private WiFiHttpClient() {
 
@@ -63,7 +63,7 @@ public class WiFiHttpClient {
         if (wifiDeviceInfo == null) {
             return true;
         }
-        return getInstance().needLogin && !Check.hasContent(wifiDeviceInfo.getId());
+        return  needLogin && !Check.hasContent(wifiDeviceInfo.getId());
     }
 
     public static WifiDeviceInfo getWifiDeviceInfo() {
@@ -136,7 +136,7 @@ public class WiFiHttpClient {
      * 小K设备下线，再次上线需要重新登录
      */
     public static void xiaokOffline() {
-        getInstance().needLogin = true;
+        needLogin = true;
         getInstance().apiToken = "";
         getInstance().retrofit = null;
         getInstance().initRetrofit();
@@ -177,7 +177,7 @@ public class WiFiHttpClient {
                 if (resultData.getData() != null) {
                     getInstance().apiToken = resultData.getData().getToken();
                     wifiDeviceInfo.setToken(getInstance().apiToken);
-                    getInstance().needLogin = false;
+                    needLogin = false;
                     updateApiToken(getInstance().apiToken);
                     getDeviceSerialId(callBack);
                 }
@@ -186,7 +186,7 @@ public class WiFiHttpClient {
             @Override
             public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
                 TLog.e("OkHttp", "WiFi login failed , code : " + resultCode + ", message : " + resultMsg);
-                getInstance().needLogin = true;
+                needLogin = true;
                 if (callBack != null) {
                     callBack.onFailed(resultData, resultMsg, resultCode);
                 }
@@ -207,7 +207,7 @@ public class WiFiHttpClient {
                     if (callBack != null) {
                         callBack.onSuccess(resultData);
                     }
-                    getInstance().needLogin = false;
+                    needLogin = false;
                 }
             }
 
@@ -216,7 +216,7 @@ public class WiFiHttpClient {
                 if (callBack != null) {
                     callBack.onFailed(data, resultMsg, resultCode);
                 }
-                getInstance().needLogin = true;
+                needLogin = true;
                 dealWithResultCode(resultCode);
             }
         });

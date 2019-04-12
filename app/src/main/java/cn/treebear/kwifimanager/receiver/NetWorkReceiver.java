@@ -42,10 +42,10 @@ public class NetWorkReceiver extends BroadcastReceiver {
             if (isWifi && !hasOnWifi) {
                 hasOnWifi = true;
                 TLog.e("OkHttp", "NetWorkUtils 调用登录");
-                if (WiFiHttpClient.getNeedLogin()) {
+//                if (WiFiHttpClient.getNeedLogin()) {
                     WiFiHttpClient.getInstance().tryToSignInWifi(null);
                     MyApplication.time = System.currentTimeMillis();
-                }
+//                }
             }
             if (!isWifi && hasOnWifi) {
                 WiFiHttpClient.xiaokOffline();

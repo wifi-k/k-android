@@ -176,6 +176,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         params.put(Keys.SSID0, NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()));
         params.put(Keys.SSID, name);
         if (Check.hasContent(passwd)) {
+//            params.put(Keys.PASSWD_WIFI, SecurityUtils.md5(passwd));
             params.put(Keys.PASSWD_WIFI, passwd);
         }
         proxyModel.modifyWifiInfo(RequestBodyUtils.convert(params), new IModel.AsyncCallBack<BaseResponse<Object>>() {
