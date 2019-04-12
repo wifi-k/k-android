@@ -11,14 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="44dp"
         android:drawableTop="@mipmap/ic_parent_time_control"
         android:drawablePadding="14dp"
         android:text="@string/online_time_control"
         android:textColor="#4A5A78"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/tv_ban_app"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toTopOf="@+id/tv_ban_app" />
 
     <include
         android:id="@+id/include11"
@@ -43,7 +42,7 @@
         android:id="@+id/textView17"
         style="@style/subtitle_text"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/parent_control"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
@@ -53,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="32dp"
         android:drawableTop="@mipmap/ic_ban_app"
         android:drawablePadding="14dp"
         android:text="@string/ban_app"

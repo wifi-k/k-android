@@ -540,6 +540,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         fragmentTransaction.show(mFragments.get(currentFragmentIndex));
         fragmentTransaction.remove(oldFragment);
         fragmentTransaction.commit();
+        forceUpdateFragment(currentFragmentIndex);
     }
 
     /**
@@ -555,6 +556,19 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
             currentFragmentIndex = newIndex;
             fragmentTransaction.commit();
         }
+    }
+
+    /**
+     * 强制切换fragment
+     *
+     * @param newIndex 新下标
+     */
+    protected void forceUpdateFragment(int newIndex) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.hide(mFragments.get(currentFragmentIndex));
+        fragmentTransaction.show(mFragments.get(newIndex));
+        currentFragmentIndex = newIndex;
+        fragmentTransaction.commit();
     }
 
     /**

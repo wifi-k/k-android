@@ -13,7 +13,7 @@ import cn.treebear.kwifimanager.bean.TimeControlbean;
  * @author Administrator
  */
 public class BanTimeAdapter extends BaseQuickAdapter<TimeControlbean.TimeControl, BaseViewHolder> {
-    private int[] icons = new int[]{R.mipmap.ic_ban_time_1, R.mipmap.ic_ban_time_2};
+    private int[] icons = new int[]{R.mipmap.ic_ban_time_0, R.mipmap.ic_ban_time_1, R.mipmap.ic_ban_time_2};
     private int count = 0;
 
     public BanTimeAdapter(@Nullable List<TimeControlbean.TimeControl> data) {

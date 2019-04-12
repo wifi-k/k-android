@@ -109,8 +109,8 @@ public class WiFiHttpClient {
                 return chain.proceed(request);
             };
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(30, TimeUnit.SECONDS);
-            builder.readTimeout(30, TimeUnit.SECONDS);
+            builder.connectTimeout(130, TimeUnit.SECONDS);
+            builder.readTimeout(130, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
 //            if (BuildConfig.DEBUG) {
             // Log信息拦截器

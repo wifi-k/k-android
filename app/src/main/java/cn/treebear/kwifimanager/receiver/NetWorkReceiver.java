@@ -4,7 +4,10 @@ import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import java.util.List;
 
@@ -24,32 +27,51 @@ import static android.net.wifi.WifiManager.WIFI_STATE_UNKNOWN;
  */
 public class NetWorkReceiver extends BroadcastReceiver {
 
+    private boolean hasOnWifi = false;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!BuildConfig.APPLICATION_ID.equals(getProcessName(context, android.os.Process.myPid()))) {
             TLog.i("NetWorkReceiver", getProcessName(context, android.os.Process.myPid()) + "非本进程");
             return;
         }
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            boolean isWifi = networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            if (isWifi && !hasOnWifi) {
+                hasOnWifi = true;
+                TLog.e("OkHttp", "NetWorkUtils 调用登录");
+                if (WiFiHttpClient.getNeedLogin()) {
+                    WiFiHttpClient.getInstance().tryToSignInWifi(null);
+                    MyApplication.time = System.currentTimeMillis();
+                }
+            }
+            if (!isWifi && hasOnWifi) {
+                WiFiHttpClient.xiaokOffline();
+                hasOnWifi = false;
+            }
+        }
         if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
             switch (intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WIFI_STATE_UNKNOWN)) {
                 case WIFI_STATE_DISABLED: {
-                    WiFiHttpClient.xiaokOffline();
+                    Log.i("NetWorkReceiver", "WiFi关闭");
                     break;
                 }
                 case WIFI_STATE_DISABLING: {
+                    Log.i("NetWorkReceiver", "WiFi正在关闭");
                     break;
                 }
                 case WIFI_STATE_ENABLED: {
-                    if (WiFiHttpClient.getNeedLogin()) {
-                        WiFiHttpClient.getInstance().tryToSignInWifi(null);
-                        MyApplication.time = System.currentTimeMillis();
-                    }
+                    Log.i("NetWorkReceiver", "WiFi开启");
                     break;
                 }
                 case WIFI_STATE_ENABLING: {
+                    Log.i("NetWorkReceiver", "WiFi正在开启");
                     break;
                 }
                 case WIFI_STATE_UNKNOWN: {
+                    Log.i("NetWorkReceiver", "WiFi状态未知");
                     break;
                 }
             }

@@ -81,22 +81,22 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     @Override
     protected void onResume() {
         super.onResume();
-        if (WiFiHttpClient.getNeedLogin()) {
-            PermissionUtils.permission(PermissionConstants.LOCATION)
-                    .callback(new PermissionUtils.SimpleCallback() {
-                        @Override
-                        public void onGranted() {
+        PermissionUtils.permission(PermissionConstants.LOCATION)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                        if (WiFiHttpClient.getNeedLogin()) {
                             checkWiFi();
+                        } else {
+                            change2Bind();
                         }
+                    }
 
-                        @Override
-                        public void onDenied() {
-                            ToastUtils.showLong(R.string.refuse_loaction_permission);
-                        }
-                    }).request();
-        } else {
-            change2Bind();
-        }
+                    @Override
+                    public void onDenied() {
+                        ToastUtils.showLong(R.string.refuse_loaction_permission);
+                    }
+                }).request();
     }
 
     private void checkWiFi() {
