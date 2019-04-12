@@ -80,6 +80,7 @@
     <string name="commit_ing">正在提交…</string>
     <string name="cancel">取消</string>
     <string name="setting">设置</string>
+    <string name="skip_set_network">测试跳过配网绑定</string>
     <string name="goto_online_setting">前往连接小K</string>
     <string name="connect_xiaok_tips1">请在后续流程中保持小K连接状态</string>
     <string name="bind_success">绑定设备成功</string>
@@ -358,5 +359,9 @@
     <string name="has_no_week_report">暂无周报</string>
     <string name="tips_has_no_children">开启儿童上网关爱查看周报</string>
     <string name="ban_time_plan_name">禁用时间方案1</string>
+    <string name="unbind_success">解绑成功</string>
+    <string name="unbind_failed">解绑失败</string>
+    <string name="bind_ing">绑定中...</string>
+    <string name="has_no_week_add_children">暂无周报，请添加儿童关爱</string>
 
 </resources>

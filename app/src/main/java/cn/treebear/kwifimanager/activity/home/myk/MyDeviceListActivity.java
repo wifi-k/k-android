@@ -23,6 +23,7 @@ import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
+import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.MyNodePresenter;
 import cn.treebear.kwifimanager.util.Check;
@@ -111,7 +112,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
         if (Check.hasContent(page)) {
             if (page.size() < Config.Numbers.PAGE_SIZE) {
                 deviceAdapter.setEnableLoadMore(false);
-                deviceAdapter.loadMoreEnd(nodeList.size()==0);
+                deviceAdapter.loadMoreEnd(nodeList.size() == 0);
             } else {
                 deviceAdapter.loadMoreComplete();
             }
@@ -145,11 +146,16 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
 
     @Override
     public void unbindNodeResponse(int resultCode, String msg) {
-        needRefresh = true;
-        nodeList.remove(currentModifyPosition);
-        MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
-        deviceAdapter.notifyDataSetChanged();
-        ToastUtils.showShort("解绑成功");
+        if (resultCode == ApiCode.SUCC) {
+            needRefresh = true;
+            dismiss(tMessageDialog);
+            nodeList.remove(currentModifyPosition);
+            MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
+            deviceAdapter.notifyDataSetChanged();
+            ToastUtils.showShort(R.string.unbind_success);
+        } else {
+            ToastUtils.showShort(R.string.unbind_failed);
+        }
     }
 
     @Override
@@ -167,12 +173,11 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(android.view.View view) {
-                            tMessageDialog.dismiss();
+                           dismiss(tMessageDialog);
                         }
 
                         @Override
                         public void onClickRight(android.view.View view) {
-                            tMessageDialog.dismiss();
                             mPresenter.unbindNode(nodeList.get(currentModifyPosition).getNodeId());
                         }
                     });

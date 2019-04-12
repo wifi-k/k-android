@@ -97,7 +97,8 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
         bundle.putStringArrayList(Keys.PARENT_CONTROL_DEVICE, macs);
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);
-        onTitleLeftClick();
+        hideLoading();
+        finish();
     }
 
     @Override

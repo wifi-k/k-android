@@ -73,9 +73,19 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @Override
     protected void initView() {
-        setTitleBack(bindType == 1 ? R.string.append_xiaok : R.string.setting);
+        setTitleBack(bindType == 1 ? R.string.append_xiaok : R.string.setting, R.string.skip_set_network);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
+    }
+
+    @Override
+    protected void onTitleRightClick() {
+        if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
+            showLoading(getString(R.string.bind_ing));
+            mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
+        }else {
+            ToastUtils.showShort("暂未获取到nodeId，请稍后再试");
+        }
     }
 
     @Override
@@ -144,13 +154,16 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     public void onBtnBottomClicked() {
         TLog.w("OkHttp", WiFiHttpClient.getWifiDeviceInfo().getId());
         if (Check.hasContent((String) SharedPreferencesUtil.getParam(SharedPreferencesUtil.NODE_ID, ""))) {
-            ToastUtils.showShort(R.string.bind_success);
-            hideLoading();
 //            MyApplication.getAppContext().getUser().setNodeSize(1);
             if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
+                ToastUtils.showShort(R.string.bind_success);
+                hideLoading();
                 startActivity(ChooseNetworkStyleActivity.class);
+                finish();
+            } else {
+                showLoading(getString(R.string.bind_ing));
+                mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
             }
-            finish();
         } else {
             if (MyApplication.getAppContext().getUser().getNodeSize() == 0) {
                 notXiaoKDialog();

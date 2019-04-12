@@ -168,6 +168,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
 //                btnDialUpConfirm.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
                 break;
         }
+        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     @Override

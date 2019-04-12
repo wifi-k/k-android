@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
@@ -114,10 +115,14 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
         healthyModelInfo = resultData;
         sbHealthy.setChecked(resultData.getOp() == 1);
         timeLimitList.clear();
-        if (Check.hasContent(resultData.getWifi())) {
-            HealthyModelBean.WifiBean wifiBean = new GsonBuilder().create().fromJson(resultData.getWifi().substring(1, resultData.getWifi().length() - 1), HealthyModelBean.WifiBean.class);
-            if (wifiBean != null) {
-                timeLimitList.addAll(wifiBean.getTimer());
+        if (Check.hasContent(resultData.getWifi()) && resultData.getWifi().length() >= 4) {
+            try {
+                HealthyModelBean.WifiBean wifiBean = new GsonBuilder().create().fromJson(resultData.getWifi().substring(1, resultData.getWifi().length() - 1), HealthyModelBean.WifiBean.class);
+                if (wifiBean != null) {
+                    timeLimitList.addAll(wifiBean.getTimer());
+                }
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
             }
         }
         healthyModelAdapter.notifyDataSetChanged();
@@ -128,7 +133,7 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
         hasModify = false;
         ToastUtils.showShort(R.string.set_option_success);
         hideLoading();
-        if (unsavedDialog.isShowing()) {
+        if (unsavedDialog != null && unsavedDialog.isShowing()) {
             dismiss(unsavedDialog);
             finish();
         }

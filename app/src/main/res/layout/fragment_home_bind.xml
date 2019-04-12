@@ -290,7 +290,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="@string/parent_control"
-                android:textColor="@color/text_deep_black_33"
+                android:textColor="@color/text_28354C"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout2"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
@@ -305,7 +305,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/healthy_model"
-                android:textColor="@color/text_deep_black_33"
+                android:textColor="@color/text_28354C"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_parent_control"
                 app:layout_constraintEnd_toStartOf="@+id/tv_look_week_report"
@@ -322,7 +322,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/look_week_report"
-                android:textColor="@color/text_deep_black_33"
+                android:textColor="@color/text_28354C"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_parent_control"
                 app:layout_constraintEnd_toStartOf="@+id/tv_wifi_settings"
@@ -340,7 +340,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="@string/wifi_setting"
-                android:textColor="@color/text_deep_black_33"
+                android:textColor="@color/text_28354C"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_parent_control"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout2" />
@@ -420,7 +420,7 @@
                     android:id="@+id/no_device_wrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="14dp"
+                    android:layout_marginBottom="24dp"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:visibility="gone">
@@ -512,7 +512,7 @@
                     android:id="@+id/no_children_wrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="36dp"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:visibility="gone">

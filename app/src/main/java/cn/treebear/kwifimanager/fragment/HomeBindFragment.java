@@ -184,7 +184,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     private void updateOtherData() {
         ServerUserInfo userInfo = MyApplication.getAppContext().getUser();
         tvUserRole.setText(userInfo.getRole() == 0 ? getString(R.string.admin) : getString(R.string.member));
-        tvRootName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length()-4));
+        tvRootName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length() - 4));
         tvUserState.setText(R.string.online);
         tvApName.setText("xiaok123-4567");
         tvHasNoBackup.setText("您有10张新的照片未备份，是否现在备份?");
@@ -220,7 +220,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     private void setMobileListAdapter() {
         rvDeviceList.setLayoutManager(new LinearLayoutManager(mContext));
 //        rvDeviceList.setLayoutManager(new MyLinearLayoutManager(mContext));
-        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 6);
+        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 5);
         rvDeviceList.setAdapter(mobilePhoneAdapter);
         mobilePhoneAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
@@ -300,7 +300,15 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R2.id.tv_look_week_report)
     public void onTvLookWeekReportClicked() {
-        startActivity(ChildrenListActivity.class);
+        if (childrenList.size() == 0) {
+            ToastUtils.showShort(R.string.has_no_week_add_children);
+        } else if (childrenList.size() == 1) {
+            Bundle bundle = new Bundle();
+            bundle.putString(Keys.MAC, childrenList.get(0).getMac());
+            startActivity(WeekReportActivity.class, bundle);
+        } else {
+            startActivity(ChildrenListActivity.class);
+        }
     }
 
     @OnClick(R2.id.tv_wifi_settings)

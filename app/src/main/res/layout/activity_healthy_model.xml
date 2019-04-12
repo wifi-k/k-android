@@ -45,6 +45,7 @@
         android:layout_width="51dp"
         android:layout_height="31dp"
         android:layout_marginEnd="16dp"
+        app:sb_checked_color="#37EDA3"
         app:layout_constraintBottom_toBottomOf="@+id/textView18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView18" />
@@ -72,8 +73,17 @@
 
     <TextView
         android:id="@+id/tv_add_timer"
-         style="@style/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@mipmap/bg_big_buttom"
+        android:gravity="center"
+        android:textSize="18sp"
         android:text="@string/_add_times"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

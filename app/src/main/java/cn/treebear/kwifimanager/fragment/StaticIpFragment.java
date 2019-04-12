@@ -98,6 +98,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
         }
+        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     /**

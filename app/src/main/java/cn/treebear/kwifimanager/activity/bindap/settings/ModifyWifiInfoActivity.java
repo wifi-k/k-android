@@ -18,13 +18,14 @@ import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.wifi.contract.ModifyWifiInfoContract;
 import cn.treebear.kwifimanager.mvp.wifi.presenter.ModifyWifiInfoPresenter;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
-import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import io.reactivex.disposables.Disposable;
 
@@ -133,7 +134,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
                     public void onGranted() {
-                        LoadingProgressDialog.showProgressDialog(ModifyWifiInfoActivity.this, getString(R.string.scanning));
+//                        LoadingProgressDialog.showProgressDialog(ModifyWifiInfoActivity.this, getString(R.string.scanning));
 //                        if (wifiManager != null) {
 //                            wifiManager.setWifiEnabled(false);
 //                            wifiManager.setWifiEnabled(true);
@@ -157,6 +158,12 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
 //            }
 //
 //        }, 3000);
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        super.onLoadFail(resultData, resultMsg, resultCode);
+        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     private boolean checkInput() {

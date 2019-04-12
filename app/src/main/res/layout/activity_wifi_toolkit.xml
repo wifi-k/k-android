@@ -148,6 +148,7 @@
                     android:id="@+id/tv_guard_join_net"
                     style="@style/senior_setting_view"
                     android:drawableTop="@mipmap/ic_toolkit_guard_join_net"
+                    android:fontFamily="sans-serif"
                     android:text="@string/toolkit_guard_join_net" />
 
                 <!--<TextView-->
@@ -158,9 +159,17 @@
                     <!--android:visibility="visible" />-->
 
                 <TextView
+                    android:id="@+id/tv_restart_device"
+                    style="@style/senior_setting_view"
+                    android:drawableTop="@mipmap/ic_toolkit_restart_device"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/toolkit_restart_device" />
+
+                <TextView
                     android:id="@+id/tv_online_setting"
                     style="@style/senior_setting_view"
                     android:drawableTop="@mipmap/ic_toolkit_online_setting"
+                    android:fontFamily="sans-serif"
                     android:text="@string/toolkit_online_setting" />
 
                 <!--<TextView-->
@@ -168,12 +177,6 @@
                     <!--style="@style/senior_setting_view"-->
                     <!--android:drawableTop="@mipmap/ic_toolkit_lan_setting"-->
                     <!--android:text="@string/toolkit_lan_setting" />-->
-
-                <TextView
-                    android:id="@+id/tv_restart_device"
-                    style="@style/senior_setting_view"
-                    android:drawableTop="@mipmap/ic_toolkit_restart_device"
-                    android:text="@string/toolkit_restart_device" />
 
                 <!--<TextView-->
                     <!--android:id="@+id/tv_dhcp_server"-->
@@ -184,7 +187,8 @@
                 <TextView
                     android:id="@+id/tv_reset_device"
                     style="@style/senior_setting_view"
-                    android:drawableTop="@mipmap/ic_toolkit_reset_device"
+                    android:drawableTop="@mipmap/ic_toolkit_reset_device2"
+                    android:fontFamily="sans-serif"
                     android:text="@string/toolkit_reset_device" />
 
             </androidx.gridlayout.widget.GridLayout>

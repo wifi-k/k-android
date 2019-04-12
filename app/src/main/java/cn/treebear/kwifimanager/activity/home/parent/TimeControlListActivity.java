@@ -94,11 +94,12 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(View view) {
-                            super.onClickLeft(view);
+                            dismiss(deleteDialog);
                         }
 
                         @Override
                         public void onClickRight(View view) {
+                            dismiss(deleteDialog);
                             mPresenter.deleteTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode(), timeLimitList.get(currentModifyPosition).getId());
                         }
                     });
@@ -204,16 +205,20 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
 
     @Override
     public void onDeleteAllowTimeResponse(BaseResponse response) {
-        switch (response.getCode()) {
-            case ApiCode.SUCC:
-                timeLimitList.remove(currentModifyPosition);
-                banTimeAdapter.notifyDataSetChanged();
-                dismiss(deleteDialog);
-                ToastUtils.showShort(R.string.delete_success);
-                break;
-            default:
-                ToastUtils.showShort(R.string.delete_failed_retry);
-                break;
+        try {
+            dismiss(deleteDialog);
+            switch (response.getCode()) {
+                case ApiCode.SUCC:
+                    timeLimitList.remove(currentModifyPosition);
+                    banTimeAdapter.notifyDataSetChanged();
+                    ToastUtils.showShort(R.string.delete_success);
+                    break;
+                default:
+                    ToastUtils.showShort(R.string.delete_failed_retry);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

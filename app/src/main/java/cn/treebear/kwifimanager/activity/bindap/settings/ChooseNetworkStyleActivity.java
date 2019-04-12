@@ -144,6 +144,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
         }
+        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     @Override

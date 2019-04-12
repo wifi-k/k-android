@@ -138,6 +138,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presen
 //                btnNext.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
                 break;
         }
+        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     /**

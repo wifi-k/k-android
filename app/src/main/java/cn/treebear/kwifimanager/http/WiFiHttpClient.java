@@ -36,12 +36,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WiFiHttpClient {
     private static WiFiHttpClient mRetrofitHttp;
-    private  WiFiSettingProxyModel wifiProxyClient;
+    private WiFiSettingProxyModel wifiProxyClient;
     private static WifiDeviceInfo wifiDeviceInfo;
     private String baseUrl = Config.Urls.ROUTER_BASE_URL;
     private Retrofit retrofit;
-    private  volatile String apiToken = "";
-    private  boolean needLogin = true;
+    private volatile String apiToken = "";
+    private boolean needLogin = true;
 
     private WiFiHttpClient() {
 
@@ -93,7 +93,6 @@ public class WiFiHttpClient {
 
     private void initRetrofit() {
         if (retrofit == null) {
-            TLog.i("OkHttp", "----------***********---iii-------");
             //缓存
             File cacheFile = new File(MyApplication.getAppContext().getCacheDir(), "cache");
             //100Mb
@@ -141,7 +140,6 @@ public class WiFiHttpClient {
         getInstance().apiToken = "";
         getInstance().retrofit = null;
         getInstance().initRetrofit();
-        TLog.i("OkHttp", "----------***********-----off-----");
     }
 
     /**
@@ -153,7 +151,6 @@ public class WiFiHttpClient {
         initRetrofit();
         // 保证全局单次连接wifi只登录一次
         if (needLogin && !Check.hasContent(apiToken)) {
-            TLog.i("OkHttp", "--xxxx-----***********---------------");
             toLogin(callBack);
         } else {
             if (callBack != null) {
@@ -170,7 +167,6 @@ public class WiFiHttpClient {
         ArrayMap<String, Object> map = new ArrayMap<>();
         map.put(Keys.NAME, "admin");
         map.put(Keys.PASSWD_WIFI, SecurityUtils.md5(Config.Text.XIAO_K_WIFI_PASSOWRD));
-        TLog.i("OkHttp", "-------------------------------------");
         getInstance().wifiProxyClient.appLogin(RequestBodyUtils.convert(map), new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
@@ -178,13 +174,11 @@ public class WiFiHttpClient {
                 if (wifiDeviceInfo == null) {
                     wifiDeviceInfo = new WifiDeviceInfo();
                 }
-                TLog.i("OkHttp", "----------***********-111---------");
                 if (resultData.getData() != null) {
                     getInstance().apiToken = resultData.getData().getToken();
-                    wifiDeviceInfo.setToken(getInstance().apiToken );
-                    TLog.i("OkHttp", "----------***********----222-----");
+                    wifiDeviceInfo.setToken(getInstance().apiToken);
                     getInstance().needLogin = false;
-                    updateApiToken(getInstance().apiToken );
+                    updateApiToken(getInstance().apiToken);
                     getDeviceSerialId(callBack);
                 }
             }
@@ -223,6 +217,7 @@ public class WiFiHttpClient {
                     callBack.onFailed(data, resultMsg, resultCode);
                 }
                 getInstance().needLogin = true;
+                dealWithResultCode(resultCode);
             }
         });
     }
@@ -231,4 +226,10 @@ public class WiFiHttpClient {
         return baseUrl == null ? Config.Urls.ROUTER_BASE_URL : baseUrl;
     }
 
+    public static void dealWithResultCode(int code) {
+        if (code == 2) {
+            xiaokOffline();
+            getInstance().tryToSignInWifi(null);
+        }
+    }
 }

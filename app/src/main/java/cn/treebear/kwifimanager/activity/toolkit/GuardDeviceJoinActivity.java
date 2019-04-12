@@ -3,6 +3,7 @@ package cn.treebear.kwifimanager.activity.toolkit;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -18,6 +20,7 @@ import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.MobileListBean;
+import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.server.contract.NodeMobileContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.NodeMobilePresenter;
 
@@ -32,6 +35,8 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
     ConstraintLayout emptyViewWrapper;
     @BindView(R2.id.rv_guard_device_list)
     RecyclerView rvGuardDeviceList;
+    @BindView(R2.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
     private ArrayList<MobileListBean.MobileBean> guardDeviceList = new ArrayList<>();
     private GuardJoinDeviceAdapter adapter;
     private int pageNo = 1;
@@ -61,10 +66,17 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
         });
         showLoading();
         refresh();
+        refreshLayout.setOnRefreshListener(this::refresh);
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mPresenter.getNodeMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo += 1);
+            }
+        }, rvGuardDeviceList);
     }
 
     private void refresh() {
-        mPresenter.getNodeMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo);
+        mPresenter.getNodeMobileList(MyApplication.getAppContext().getCurrentSelectNode(), pageNo = 1);
     }
 
     @OnClick(R2.id.tv_add_join)
@@ -75,9 +87,15 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
     @Override
     public void onLoadData(MobileListBean resultData) {
         hideLoading();
+        refreshLayout.setRefreshing(false);
         if (resultData.getPage() != null) {
             if (pageNo == 1) {
                 guardDeviceList.clear();
+            }
+            if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
+                adapter.loadMoreEnd(guardDeviceList.size() == 0);
+            } else {
+                adapter.loadMoreComplete();
             }
             guardDeviceList.addAll(resultData.getPage());
 //            emptyViewWrapper.setVisibility(guardDeviceList.size() == 0 ? View.VISIBLE : View.GONE);

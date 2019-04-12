@@ -92,6 +92,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
         }
+        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     private void updateWifiInfoShow() {

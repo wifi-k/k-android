@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
@@ -39,6 +40,8 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
     TextView tvDownloadSpeed;
     @BindView(R2.id.rv_device_list)
     RecyclerView rvDeviceList;
+    @BindView(R2.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
     private ArrayList<MobileListBean.MobileBean> mobilePhoneList = new ArrayList<>();
     private MobilePhoneAdapter mobilePhoneAdapter;
     private int currentModifyPosition;
@@ -63,8 +66,8 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
         tvOnlineDeviceCount.setText(String.valueOf(currentNode.getDisk()));
         tvDownloadSpeed.setText(String.valueOf(currentNode.getDownstream()));
         tvUploadSpeed.setText(String.valueOf(currentNode.getUpstream()));
-        mPresenter.getMobileList(currentNode.getNodeId(), pageNo, Config.Numbers.PAGE_SIZE);
-        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 7);
+        refresh();
+        mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 6);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(mobilePhoneAdapter);
         mobilePhoneAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -83,7 +86,13 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
                 startActivity(MobileDetailActivity.class, bundle);
             }
         });
+        refreshLayout.setOnRefreshListener(this::refresh);
         mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo, Config.Numbers.PAGE_SIZE), rvDeviceList);
+    }
+
+    private void refresh() {
+        showLoading();
+        mPresenter.getMobileList(currentNode.getNodeId(), pageNo = 1, Config.Numbers.PAGE_SIZE);
     }
 
     private void showModifyNameDialog() {
@@ -118,19 +127,31 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
 
     @Override
     public void onLoadData(MobileListBean resultData) {
+        hideLoading();
         mobilePhoneAdapter.loadMoreComplete();
+        refreshLayout.setRefreshing(false);
         if (pageNo == 1) {
             mobilePhoneList.clear();
         }
         if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-            mobilePhoneAdapter.loadMoreEnd();
+            mobilePhoneAdapter.loadMoreEnd(mobilePhoneList.size() == 0);
         }
         mobilePhoneList.addAll(resultData.getPage());
         mobilePhoneAdapter.notifyDataSetChanged();
+        tvOnlineDeviceCount.setText(String.valueOf(getOnlineCount(mobilePhoneList)));
+    }
+
+    private int getOnlineCount(ArrayList<MobileListBean.MobileBean> mobilePhoneList) {
+        int count = 0;
+        for (MobileListBean.MobileBean bean : mobilePhoneList) {
+            count +=bean.getStatus();
+        }
+        return count;
     }
 
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        super.onLoadFail(resultData, resultMsg, resultCode);
         ToastUtils.showShort(R.string.online_device_get_failed);
     }
 

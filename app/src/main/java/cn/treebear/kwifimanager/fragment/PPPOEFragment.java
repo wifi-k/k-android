@@ -17,6 +17,7 @@ import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
+import cn.treebear.kwifimanager.mvp.wifi.presenter.DialUpPresenter;
 
 /**
  * @author Administrator
@@ -39,6 +40,11 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
     @Override
     public int layoutId() {
         return R.layout.fragment_pppoe;
+    }
+
+    @Override
+    public DialUpContract.Presenter getPresenter() {
+        return new DialUpPresenter();
     }
 
     @Override
@@ -94,6 +100,7 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
         }
+        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     private void updateWifiInfoShow() {

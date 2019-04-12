@@ -54,7 +54,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 //    TextView tvLanSetting;
     @BindView(R2.id.tv_restart_device)
     TextView tvRestartDevice;
-//    @BindView(R2.id.tv_dhcp_server)
+    //    @BindView(R2.id.tv_dhcp_server)
 //    TextView tvDhcpServer;
     @BindView(R2.id.tv_reset_device)
     TextView tvResetDevice;
@@ -83,6 +83,9 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         proxyModel = new WiFiSettingProxyModel();
         glSeniorSettingWrapper.setColumnCount(DensityUtil.getScreenWidth() < 728 ? 3 : 4);
         mPresenter.getNodeSsid(MyApplication.getAppContext().getCurrentSelectNode());
+        if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+            tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(this));
+        }
     }
 
     @OnClick(R2.id.tv_setting_wifi_name)
@@ -172,16 +175,22 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         ArrayMap<String, Object> params = new ArrayMap<>();
         params.put(Keys.SSID0, NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()));
         params.put(Keys.SSID, name);
-        params.put(Keys.PASSWD_WIFI, passwd);
+        if (Check.hasContent(passwd)) {
+            params.put(Keys.PASSWD_WIFI, passwd);
+        }
         proxyModel.modifyWifiInfo(RequestBodyUtils.convert(params), new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
+                tvWifiSSID.setText(name);
+                dismiss(nameModifyDialog, passwordModifyDialog);
                 ToastUtils.showShort(R.string.option_success_restart);
             }
 
             @Override
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
-                ToastUtils.showShort(R.string.option_failed);
+                dismiss(nameModifyDialog, passwordModifyDialog);
+                ToastUtils.showShort(R.string.option_failed_retry);
+                WiFiHttpClient.dealWithResultCode(resultCode);
             }
         });
     }
@@ -194,7 +203,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             passwordModifyDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    dismiss(passwordModifyDialog);
+                    dismiss(nameModifyDialog, passwordModifyDialog);
                 }
 
                 @Override
@@ -246,6 +255,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                 dismiss(restartTipsDialog);
                 ToastUtils.showShort(R.string.wifi_restart_failed);
+                WiFiHttpClient.dealWithResultCode(resultCode);
             }
         });
     }
@@ -262,6 +272,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                 dismiss(resetTipsDialog);
                 ToastUtils.showShort("恢复出厂设置失败");
+                WiFiHttpClient.dealWithResultCode(resultCode);
             }
         });
     }
@@ -275,7 +286,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
                     .doClick(new TipsDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(TextView tvLeft) {
-                            resetTipsDialog.dismiss();
+                            dismiss(resetTipsDialog);
                         }
 
                         @Override
@@ -289,18 +300,14 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     @Override
     public void onSSIDResponseOK() {
-        if (nameModifyDialog != null) {
-            nameModifyDialog.dismiss();
-            ToastUtils.showShort(R.string.modify_success);
-        }
+        dismiss(nameModifyDialog, passwordModifyDialog);
+        ToastUtils.showShort(R.string.modify_success);
     }
 
     @Override
     public void onPwdResponseOK() {
-        if (passwordModifyDialog != null) {
-            passwordModifyDialog.dismiss();
-            ToastUtils.showShort(R.string.modify_success);
-        }
+        dismiss(nameModifyDialog, passwordModifyDialog);
+        ToastUtils.showShort(R.string.modify_success);
     }
 
     @Override

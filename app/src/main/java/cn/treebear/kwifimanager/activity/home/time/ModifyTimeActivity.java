@@ -48,11 +48,11 @@ public class ModifyTimeActivity extends BaseActivity {
     @Override
     protected void initView() {
         if (timeLimit != null) {
-            setTitleBack(R.string.edit);
+            setTitleBack(R.string.edit,R.string.save);
             tvStartTime.setText(timeLimit.getStartTime());
             tvEndTime.setText(timeLimit.getEndTime());
         } else {
-            setTitleBack(R.string.increase);
+            setTitleBack(R.string.increase,R.string.save);
         }
     }
 
@@ -64,6 +64,16 @@ public class ModifyTimeActivity extends BaseActivity {
     @OnClick(R2.id.end_time_wrapper)
     public void onEndTimeWrapperClicked() {
         showEndTimePop();
+    }
+
+    @Override
+    protected void onTitleRightClick() {
+        Intent intent = new Intent();
+        intent.putExtra(Keys.POSITION, position);
+        intent.putExtra(Keys.IT_START_TIME, tvStartTime.getText().toString());
+        intent.putExtra(Keys.IT_END_TIME, tvEndTime.getText().toString());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @OnClick(R2.id.btn_confirm)

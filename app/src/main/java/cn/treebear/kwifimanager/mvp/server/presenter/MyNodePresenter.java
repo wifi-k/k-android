@@ -59,6 +59,13 @@ public class MyNodePresenter extends BasePresenter<MyNodeContract.View, MyNodeCo
                     mView.unbindNodeResponse(ApiCode.SUCC, "");
                 }
             }
+
+            @Override
+            public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
+                if (mView != null) {
+                    mView.unbindNodeResponse(resultCode, resultMsg);
+                }
+            }
         });
     }
 

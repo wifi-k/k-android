@@ -41,7 +41,7 @@
     <TextView
         android:id="@+id/textView17"
         style="@style/subtitle_text"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/parent_control"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
