@@ -1,6 +1,8 @@
 package cn.treebear.kwifimanager.activity.bindap.settings;
 
+import android.graphics.Color;
 import android.util.ArrayMap;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -34,6 +36,12 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
 
     @BindView(R2.id.rg_online_type)
     RadioGroup rgOnlineType;
+    @BindView(R.id.rb_online_type_dial)
+    RadioButton rbOnlineTypeDial;
+    @BindView(R.id.rb_online_type_static)
+    RadioButton rbOnlineTypeStatic;
+    @BindView(R.id.rb_online_type_dynamic)
+    RadioButton rbOnlineTypeDynamic;
 
     private int onlineType;
 
@@ -57,12 +65,21 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
             switch (checkedId) {
                 case R.id.rb_online_type_dial:
                     onlineType = Values.ONLINE_TYPE_DIAL;
+                    rbOnlineTypeDial.setBackgroundColor(Config.Colors.LINE);
+                    rbOnlineTypeDynamic.setBackgroundColor(Color.WHITE);
+                    rbOnlineTypeStatic.setBackgroundColor(Color.WHITE);
                     break;
                 case R.id.rb_online_type_static:
                     onlineType = Values.ONLINE_TYPE_STATIC_IP;
+                    rbOnlineTypeDial.setBackgroundColor(Color.WHITE);
+                    rbOnlineTypeDynamic.setBackgroundColor(Color.WHITE);
+                    rbOnlineTypeStatic.setBackgroundColor(Config.Colors.LINE);
                     break;
                 default:
                     onlineType = Values.ONLINE_TYPE_DYNAMIC_IP;
+                    rbOnlineTypeDial.setBackgroundColor(Color.WHITE);
+                    rbOnlineTypeStatic.setBackgroundColor(Color.WHITE);
+                    rbOnlineTypeDynamic.setBackgroundColor(Config.Colors.LINE);
                     break;
             }
         });
@@ -102,7 +119,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
                 hideLoading();
-                SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
+//                SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
                 MyApplication.getAppContext().getUser().setNodeSize(1);
                 startActivity(ModifyWifiInfoActivity.class);
                 ToastUtils.showShort(R.string.connect_success);

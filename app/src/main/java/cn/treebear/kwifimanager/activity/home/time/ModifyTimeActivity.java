@@ -92,7 +92,7 @@ public class ModifyTimeActivity extends BaseActivity {
             startTimePop.addTimeSelectListener(new TimePickerPop.OnTimeSelectListener() {
                 @Override
                 public void onCancelClick() {
-                    startTimePop.dismiss();
+                    dismiss(startTimePop);
                 }
 
                 @Override
@@ -104,7 +104,7 @@ public class ModifyTimeActivity extends BaseActivity {
                 public void onSelected(String time, String hour, String minute) {
                     hasModify = true;
                     tvStartTime.setText(time);
-                    startTimePop.dismiss();
+                    dismiss(startTimePop);
                 }
 
                 @Override
@@ -126,7 +126,7 @@ public class ModifyTimeActivity extends BaseActivity {
             endTimePop.addTimeSelectListener(new TimePickerPop.OnTimeSelectListener() {
                 @Override
                 public void onCancelClick() {
-                    endTimePop.dismiss();
+                    dismiss(endTimePop);
                 }
 
                 @Override
@@ -138,7 +138,7 @@ public class ModifyTimeActivity extends BaseActivity {
                 public void onSelected(String time, String hour, String minute) {
                     hasModify = true;
                     tvEndTime.setText(time);
-                    endTimePop.dismiss();
+                    dismiss(endTimePop);
                 }
 
                 @Override

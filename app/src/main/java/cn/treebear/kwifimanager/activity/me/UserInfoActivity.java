@@ -132,18 +132,18 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
             choosePicTypePop.setOnChooseTypeList(new TChoosePicTypePop.OnChooseTypeListener() {
                 @Override
                 public void onCancelClick() {
-                    choosePicTypePop.dismiss();
+                    dismiss(choosePicTypePop);
                 }
 
                 @Override
                 public void onLeftClick() {
-                    choosePicTypePop.dismiss();
+                    dismiss(choosePicTypePop);
                     gotoCamera();
                 }
 
                 @Override
                 public void onRightClick() {
-                    choosePicTypePop.dismiss();
+                    dismiss(choosePicTypePop);
                     gotoGallery();
                 }
 

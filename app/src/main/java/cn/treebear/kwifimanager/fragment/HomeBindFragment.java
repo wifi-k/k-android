@@ -159,6 +159,10 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         if (MyApplication.getAppContext().isNeedUpdateNodeInfo()) {
             mPresenter.getNodeList();
         }
+        if (Check.hasContent(MyApplication.getAppContext().getCurrentSelectNode())) {
+            mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
+            mPresenter.getChildrenList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
+        }
         mPresenter.getMessageList(1);
     }
 
@@ -242,7 +246,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
             modifyNameDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    modifyNameDialog.dismiss();
+                    dismiss(modifyNameDialog);
                 }
 
                 @Override
@@ -394,7 +398,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     @Override
     public void onModifyMobileInfoResponse(BaseResponse response) {
         if (response != null && response.getCode() == 0) {
-            modifyNameDialog.dismiss();
+            dismiss(modifyNameDialog);
             mobilePhoneAdapter.notifyDataSetChanged();
             ToastUtils.showShort(R.string.modify_success);
         } else {

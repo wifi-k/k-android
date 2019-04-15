@@ -110,6 +110,10 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
     @Override
     protected void onResume() {
         super.onResume();
+        refresh();
+    }
+
+    private void refresh() {
         mPresenter.getTimeControlPlan(MyApplication.getAppContext().getCurrentSelectNode());
     }
 
@@ -129,13 +133,13 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
             tInputDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    tInputDialog.dismiss();
+                    dismiss(tInputDialog);
                 }
 
                 @Override
                 public void onRightClick(String s) {
                     timeLimitList.get(currentModifyPosition).setName(s);
-                    tInputDialog.dismiss();
+                    dismiss(tInputDialog);
                     banTimeAdapter.notifyDataSetChanged();
                 }
             });
@@ -209,8 +213,12 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
             dismiss(deleteDialog);
             switch (response.getCode()) {
                 case ApiCode.SUCC:
-                    timeLimitList.remove(currentModifyPosition);
-                    banTimeAdapter.notifyDataSetChanged();
+                    if (currentModifyPosition >= timeLimitList.size()) {
+                        refresh();
+                    } else {
+                        timeLimitList.remove(currentModifyPosition);
+                        banTimeAdapter.notifyDataSetChanged();
+                    }
                     ToastUtils.showShort(R.string.delete_success);
                     break;
                 default:

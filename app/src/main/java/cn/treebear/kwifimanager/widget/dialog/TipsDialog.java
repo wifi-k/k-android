@@ -6,12 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Size;
-import androidx.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Size;
+import androidx.annotation.StringRes;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.util.DensityUtil;
 import cn.treebear.kwifimanager.widget.Dismissable;
@@ -46,7 +46,17 @@ public class TipsDialog implements Dismissable {
     private static final String CANCEL_DEFAULT_COLOR = "#212121";
     private static final String CONFIRM_DEFAULT_COLOR = "#FFFFFF";
     private float widthPercent = 0.8f;
-    private DoClickListener mListener = new DoClickListener();
+    private DoClickListener mListener = new DoClickListener() {
+        @Override
+        public void onClickLeft(TextView tvLeft) {
+            dismiss();
+        }
+
+        @Override
+        public void onClickRight(TextView tvRight) {
+            dismiss();
+        }
+    };
 
     public TipsDialog(@NonNull Context context) {
         mContext = context;
@@ -58,19 +68,21 @@ public class TipsDialog implements Dismissable {
     }
 
     private void initDialog() {
-        mDialog = new Dialog(mContext);
-        view = LayoutInflater.from(mContext).inflate(R.layout.dialog_tips, null);
-        findView();
-        mDialog.setCancelable(false);
-        mDialog.setContentView(view);
-        mDialog.setCanceledOnTouchOutside(false);
-        Window window = mDialog.getWindow();
-        if (window != null) {
-            window.setContentView(view);
-            window.setBackgroundDrawable(new ColorDrawable(0));
-            WindowManager.LayoutParams p = window.getAttributes();
-            p.width = (int) (DensityUtil.getScreenWidth(mContext) * widthPercent);
-            window.setAttributes(p);
+        if (mDialog == null) {
+            mDialog = new Dialog(mContext);
+            view = LayoutInflater.from(mContext).inflate(R.layout.dialog_tips, null);
+            findView();
+            mDialog.setCancelable(false);
+            mDialog.setContentView(view);
+            mDialog.setCanceledOnTouchOutside(false);
+            Window window = mDialog.getWindow();
+            if (window != null) {
+                window.setContentView(view);
+                window.setBackgroundDrawable(new ColorDrawable(0));
+                WindowManager.LayoutParams p = window.getAttributes();
+                p.width = (int) (DensityUtil.getScreenWidth(mContext) * widthPercent);
+                window.setAttributes(p);
+            }
         }
     }
 
@@ -81,6 +93,11 @@ public class TipsDialog implements Dismissable {
         tvLeft = view.findViewById(R.id.tv_left);
         tvRight = view.findViewById(R.id.tv_right);
         llButton = view.findViewById(R.id.btn_wrapper);
+        ivIcon.setOnClickListener(v -> mListener.onClickIcon(ivIcon));
+        tvTitle.setOnClickListener(v -> mListener.onClickTitle(tvTitle));
+        tvContent.setOnClickListener(v -> mListener.onClickContent(tvContent));
+        tvLeft.setOnClickListener(v -> mListener.onClickLeft(tvLeft));
+        tvRight.setOnClickListener(v -> mListener.onClickRight(tvRight));
     }
 
     public TipsDialog doClick(DoClickListener listener) {
@@ -210,7 +227,7 @@ public class TipsDialog implements Dismissable {
     }
 
     public TipsDialog right(CharSequence text, @ColorInt int colorInt) {
-        return right(text, colorInt, null);
+        return right(text, colorInt, mListener);
     }
 
     public TipsDialog right(CharSequence text, @ColorInt int colorInt, DoClickListener listener) {
@@ -248,6 +265,9 @@ public class TipsDialog implements Dismissable {
     }
 
     public void show() {
+        if (mDialog == null) {
+            initDialog();
+        }
         if (!mDialog.isShowing()) {
             mDialog.show();
         }
@@ -259,7 +279,9 @@ public class TipsDialog implements Dismissable {
 
     @Override
     public void dismiss() {
-        mDialog.dismiss();
+        if (mDialog!=null) {
+            mDialog.dismiss();
+        }
     }
 
     public static class DoClickListener {
@@ -274,6 +296,7 @@ public class TipsDialog implements Dismissable {
         }
 
         public void onClickLeft(TextView tvLeft) {
+
         }
 
         public void onClickRight(TextView tvRight) {

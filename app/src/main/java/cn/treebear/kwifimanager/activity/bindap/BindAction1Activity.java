@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.blankj.utilcode.constant.PermissionConstants;
@@ -47,7 +46,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     @BindView(R2.id.tv_mid_info)
     TextView tvMidInfo;
     @BindView(R2.id.btn_bottom)
-    Button btnConfirm;
+    TextView btnConfirm;
     private int bindType = Values.TYPE_FIRST_INCREASE_NODE;
     private TMessageDialog tMessageDialog;
     private WifiManager wifiManager;
@@ -132,8 +131,8 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     private void change2Bind() {
         hideLoading();
         if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
-            tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，点击立即绑定设备", NetWorkUtils.getRealSSIDWhenWifi(this)));
-            btnConfirm.setText(R.string.bind_now);
+            tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，前往配置网络", NetWorkUtils.getRealSSIDWhenWifi(this)));
+            btnConfirm.setText(R.string.option_network);
         }
     }
 
@@ -241,13 +240,13 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(View view) {
-                            hasBindDialog.dismiss();
+                            dismiss(hasBindDialog);
                         }
 
                         @Override
                         public void onClickRight(View view) {
                             NetWorkUtils.gotoWifiSetting(BindAction1Activity.this);
-                            hasBindDialog.dismiss();
+                            dismiss(hasBindDialog);
                         }
                     });
         }
@@ -290,13 +289,13 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(android.view.View view) {
-                            tMessageDialog.dismiss();
+                            dismiss(tMessageDialog);
                             ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
                         }
 
                         @Override
                         public void onClickRight(android.view.View view) {
-                            tMessageDialog.dismiss();
+                            dismiss(tMessageDialog);
                             NetWorkUtils.gotoWifiSetting(BindAction1Activity.this);
                         }
                     }).show();
@@ -309,13 +308,13 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                 .doClick(new TMessageDialog.DoClickListener() {
                     @Override
                     public void onClickLeft(android.view.View view) {
-                        tMessageDialog.dismiss();
+                        dismiss(tMessageDialog);
                     }
 
                     @Override
                     public void onClickRight(android.view.View view) {
                         NetWorkUtils.gotoWifiSetting(BindAction1Activity.this);
-                        tMessageDialog.dismiss();
+                        dismiss(tMessageDialog);
                     }
                 }).show();
     }
@@ -333,12 +332,12 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(android.view.View view) {
-                            tMessageDialog.dismiss();
+                            dismiss(tMessageDialog);
                         }
 
                         @Override
                         public void onClickRight(android.view.View view) {
-                            tMessageDialog.dismiss();
+                            dismiss(tMessageDialog);
                         }
                     });
         }

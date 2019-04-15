@@ -68,7 +68,7 @@ public class SettingsActivity extends BaseActivity<SignOutContract.Presenter, Ba
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(View view) {
-                            signOutDialog.dismiss();
+                            dismiss(signOutDialog);
                         }
 
                         @Override

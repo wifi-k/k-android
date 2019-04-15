@@ -103,7 +103,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
             modifyNameDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    modifyNameDialog.dismiss();
+                    dismiss(modifyNameDialog);
                 }
 
                 @Override
@@ -134,7 +134,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
             mobilePhoneList.clear();
         }
         if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-            mobilePhoneAdapter.loadMoreEnd(mobilePhoneList.size() == 0);
+            mobilePhoneAdapter.loadMoreEnd(true);
         }
         mobilePhoneList.addAll(resultData.getPage());
         mobilePhoneAdapter.notifyDataSetChanged();
@@ -144,7 +144,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
     private int getOnlineCount(ArrayList<MobileListBean.MobileBean> mobilePhoneList) {
         int count = 0;
         for (MobileListBean.MobileBean bean : mobilePhoneList) {
-            count +=bean.getStatus();
+            count += bean.getStatus();
         }
         return count;
     }

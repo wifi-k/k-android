@@ -37,7 +37,8 @@
 
     </RadioGroup>
 
-    <Button
+    <TextView
+        android:layout_marginTop="30dp"
         android:id="@+id/btn_online_type_next"
         style="@style/confirm_button"
         android:text="@string/next_step" />

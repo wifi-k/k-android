@@ -115,7 +115,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:drawableEnd="@mipmap/ic_line_arrow_right_white"
                     android:drawablePadding="4dp"
                     android:textColor="@android:color/white"
                     app:layout_constraintStart_toStartOf="@+id/tv_back_home"
@@ -239,6 +238,17 @@
                     app:layout_constraintEnd_toStartOf="@+id/textView8"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_root_name" />
+
+                <ImageView
+                    android:id="@+id/imageView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:src="@mipmap/ic_line_arrow_right_white_w10"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_ap_name"
+                    app:layout_constraintStart_toEndOf="@+id/tv_ap_name"
+                    app:layout_constraintTop_toTopOf="@+id/tv_ap_name" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -397,7 +407,7 @@
                         android:background="@drawable/bg_h32_f5_r8"
                         android:gravity="center"
                         android:text="@string/look_all"
-                        android:textColor="#7383A2"
+                        android:textColor="@color/text_7383a2"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -500,7 +510,7 @@
                         android:background="@drawable/bg_h32_f5_r8"
                         android:gravity="center"
                         android:text="@string/look_all"
-                        android:textColor="#7383A2"
+                        android:textColor="@color/text_7383a2"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

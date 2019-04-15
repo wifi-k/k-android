@@ -37,8 +37,7 @@
             <TextView
                 android:id="@+id/textView3"
                 style="@style/subtitle_text"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/online_type_static_ip"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -58,6 +57,7 @@
                 android:ems="10"
                 android:hint="@string/ip_hint"
                 android:inputType="number"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/et_subnet_mask"
@@ -78,6 +78,7 @@
                 android:ems="10"
                 android:hint="@string/hint_subnet"
                 android:inputType="number"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/et_first_dns"
@@ -98,6 +99,7 @@
                 android:ems="10"
                 android:hint="@string/hint_subnet"
                 android:inputType="number"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/et_first_dns"
@@ -119,6 +121,7 @@
                 android:ems="10"
                 android:hint="@string/hint_subnet"
                 android:inputType="number"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView14"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView14"
@@ -140,15 +143,16 @@
                 android:ems="10"
                 android:hint="@string/hint_subnet"
                 android:inputType="number"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView15"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toTopOf="@+id/textView15" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_next"
                 style="@style/confirm_button"
-                android:layout_marginTop="47dp"
+                android:layout_marginTop="50dp"
                 android:text="@string/next_step"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

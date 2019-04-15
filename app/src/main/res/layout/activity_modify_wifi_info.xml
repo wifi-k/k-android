@@ -18,7 +18,6 @@
     <TextView
         android:id="@+id/textView16"
         style="@style/subtitle_text"
-        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/set_wifi_name_pwd"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +85,7 @@
         app:layout_constraintTop_toTopOf="@+id/et_wifi_password"
         app:srcCompat="@mipmap/ic_edit_eye_close_gray" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_confirm"
         style="@style/confirm_button"
         android:layout_marginTop="42dp"

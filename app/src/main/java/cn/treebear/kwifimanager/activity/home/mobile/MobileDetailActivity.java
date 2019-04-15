@@ -54,6 +54,8 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     TextView tvDeviceName;
     @BindView(R2.id.tv_device_time)
     TextView tvDeviceTime;
+    @BindView(R2.id.tv_device_status)
+    TextView tvDeviceStatus;
     @BindView(R2.id.sw_online_children)
     SwitchButton swbOnlineChildren;
     private TInputDialog modifyNameDialog;
@@ -122,13 +124,13 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     }
 
     private void updateView() {
-        if (mobilePhoneBean == null){
+        if (mobilePhoneBean == null) {
             return;
         }
         tvDeviceName.setText(Check.hasContent(mobilePhoneBean.getNote()) ? mobilePhoneBean.getNote() : mobilePhoneBean.getName());
         boolean isOnline = mobilePhoneBean.getStatus() == 1;
-        tvDeviceTime.setText(String.format("%s " + (isOnline ? "上线" : "离线"),
-                DateTimeUtils.formatMDHmm(isOnline ? mobilePhoneBean.getOnTime() : mobilePhoneBean.getOffTime())));
+        tvDeviceStatus.setText(isOnline ? R.string._online : R.string._offline);
+        tvDeviceTime.setText(DateTimeUtils.formatMDHmm(isOnline ? mobilePhoneBean.getOnTime() : mobilePhoneBean.getOffTime()));
         swbOnlineChildren.setChecked(mobilePhoneBean.getIsRecord() == 1);
         swbOnlineAlarm.setChecked(mobilePhoneBean.getIsOnline() == 1);
         GlideApp.with(this).load(mobilePhoneBean.getMacIcon())
@@ -163,7 +165,7 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
             modifyNameDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    modifyNameDialog.dismiss();
+                    dismiss(modifyNameDialog);
                 }
 
                 @Override
@@ -188,7 +190,7 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     @Override
     public void onModifyMobileInfoResponse(BaseResponse response) {
         if (response != null && response.getCode() == 0) {
-            modifyNameDialog.dismiss();
+            dismiss(modifyNameDialog);
             mobilePhoneBean.setName(mobilePhoneBean.getNote());
             tvDeviceName.setText(mobilePhoneBean.getNote());
         } else {

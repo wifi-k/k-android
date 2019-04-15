@@ -2,7 +2,6 @@ package cn.treebear.kwifimanager.widget.pop;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import androidx.annotation.StringRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import com.contrarywind.view.WheelView;
 
 import java.util.ArrayList;
 
+import androidx.annotation.StringRes;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.util.DensityUtil;
@@ -140,10 +140,10 @@ public class TimePickerPop implements Dismissable {
         wheelMinute.setDividerColor(Config.Colors.COLOR_C0);
         wheelHour.setDividerType(WheelView.DividerType.FILL);
         wheelMinute.setDividerType(WheelView.DividerType.FILL);
-//        wheelHour.setItems(hours);
         wheelHour.setAdapter(new ArrayWheelAdapter<String>(hours));
-//        wheelMinute.setItems(minutes);
+        wheelHour.setCurrentItem(hourPosition);
         wheelMinute.setAdapter(new ArrayWheelAdapter<String>(minutes));
+        wheelMinute.setCurrentItem(minutePosition);
         wheelHour.setOnItemSelectedListener(index -> {
             mCurrentHour = String.format("%s", hours.get(index));
             hourPosition = index;

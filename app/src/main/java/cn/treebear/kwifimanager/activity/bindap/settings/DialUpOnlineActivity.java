@@ -4,7 +4,6 @@ import android.text.Editable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.ArrayMap;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,7 +47,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
     @BindView(R2.id.line_password)
     TextView linePassword;
     @BindView(R2.id.btn_dial_up_confirm)
-    Button btnDialUpConfirm;
+    TextView btnDialUpConfirm;
     private boolean passwordVisible = false;
     private int count = 0;
 
@@ -126,7 +125,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
                 hideLoading();
-                SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
+//                SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
                 startActivity(ModifyWifiInfoActivity.class);
                 MyApplication.getAppContext().getUser().setNodeSize(1);
                 ToastUtils.showShort(R.string.connect_success);

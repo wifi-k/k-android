@@ -108,7 +108,8 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
             mobileList.clear();
         }
         if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-            adapter.loadMoreEnd(mobileList.size()==0);
+//            adapter.loadMoreEnd(mobileList.size()==0);
+            adapter.loadMoreEnd(true);
         } else {
             adapter.loadMoreComplete();
         }

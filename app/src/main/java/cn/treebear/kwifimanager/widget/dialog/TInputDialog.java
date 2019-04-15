@@ -3,8 +3,6 @@ package cn.treebear.kwifimanager.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.util.DensityUtil;
@@ -66,21 +66,23 @@ public class TInputDialog implements Dismissable {
     }
 
     private void initDialog() {
-        mDialog = new Dialog(mContext);
-        view = LayoutInflater.from(mContext).inflate(R.layout.dialog_input, null);
-        findView();
-        mDialog.setCancelable(false);
-        mDialog.setContentView(view);
-        mDialog.setCanceledOnTouchOutside(false);
-        Window window = mDialog.getWindow();
-        if (window != null) {
-            window.setContentView(view);
-            //解决dialog中EditText无法弹出输入的问题
-            window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-            window.setBackgroundDrawable(new ColorDrawable(0));
-            WindowManager.LayoutParams p = window.getAttributes();
-            p.width = (int) (DensityUtil.getScreenWidth(mContext) * widthPercent);
-            window.setAttributes(p);
+        if (mDialog == null) {
+            mDialog = new Dialog(mContext);
+            view = LayoutInflater.from(mContext).inflate(R.layout.dialog_input, null);
+            findView();
+            mDialog.setCancelable(false);
+            mDialog.setContentView(view);
+            mDialog.setCanceledOnTouchOutside(false);
+            Window window = mDialog.getWindow();
+            if (window != null) {
+                window.setContentView(view);
+                //解决dialog中EditText无法弹出输入的问题
+                window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                window.setBackgroundDrawable(new ColorDrawable(0));
+                WindowManager.LayoutParams p = window.getAttributes();
+                p.width = (int) (DensityUtil.getScreenWidth(mContext) * widthPercent);
+                window.setAttributes(p);
+            }
         }
     }
 

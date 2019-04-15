@@ -68,7 +68,8 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
         messageList.addAll(resultData.getPage());
         adapter.notifyDataSetChanged();
         if (messageList.size() < Config.Numbers.PAGE_SIZE) {
-            adapter.loadMoreEnd(messageList.size() == 0);
+//            adapter.loadMoreEnd(messageList.size() == 0);
+            adapter.loadMoreEnd(true);
         } else {
             adapter.loadMoreComplete();
         }

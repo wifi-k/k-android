@@ -63,10 +63,13 @@ public class WiFiHttpClient {
         if (wifiDeviceInfo == null) {
             return true;
         }
-        return  needLogin && !Check.hasContent(wifiDeviceInfo.getId());
+        return needLogin && !Check.hasContent(wifiDeviceInfo.getId());
     }
 
     public static WifiDeviceInfo getWifiDeviceInfo() {
+        if (wifiDeviceInfo == null) {
+            wifiDeviceInfo = new WifiDeviceInfo();
+        }
         return wifiDeviceInfo;
     }
 

@@ -27,7 +27,6 @@ import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
-import io.reactivex.disposables.Disposable;
 
 /**
  * @author Administrator
@@ -46,7 +45,6 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
     ImageView ivPasswordEye;
     private boolean passwordVisible = false;
     private TMessageDialog tMessageDialog;
-    private Disposable mDisposable;
     private WifiManager wifiManager;
 
     @Override
@@ -114,14 +112,14 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
             tMessageDialog.doClick(new TMessageDialog.DoClickListener() {
                 @Override
                 public void onClickLeft(android.view.View view) {
-                    tMessageDialog.dismiss();
+                    dismiss(tMessageDialog);
                 }
 
                 @Override
                 public void onClickRight(android.view.View view) {
                     mPresenter.modifyWifiInfo(NetWorkUtils.getSSIDWhenWifi(MyApplication.getAppContext()),
                             etWifiName.getText().toString(), etWifiPassword.getText().toString());
-                    tMessageDialog.dismiss();
+                    dismiss(tMessageDialog);
                     showLoading();
                 }
             }).show();

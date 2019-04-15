@@ -32,14 +32,14 @@ public class BeanTest {
     public static ArrayList<AppBean> getAppList() {
         if (appBeans == null) {
             appBeans = new ArrayList<AppBean>() {{
-                add(new AppBean("王者荣耀", R.mipmap.ic_test_logo, false));
-                add(new AppBean("QQ", R.mipmap.ic_test_logo, false));
-                add(new AppBean("微信", R.mipmap.ic_test_logo, false));
-                add(new AppBean("微博", R.mipmap.ic_test_logo, false));
-                add(new AppBean("知乎", R.mipmap.ic_test_logo, false));
-                add(new AppBean("刺激战场", R.mipmap.ic_test_logo, false));
-                add(new AppBean("明日之后", R.mipmap.ic_test_logo, false));
-                add(new AppBean("脉脉", R.mipmap.ic_test_logo, false));
+                add(new AppBean("王者荣耀", R.mipmap.ic_launcher, false));
+                add(new AppBean("QQ", R.mipmap.ic_launcher, false));
+                add(new AppBean("微信", R.mipmap.ic_launcher, false));
+                add(new AppBean("微博", R.mipmap.ic_launcher, false));
+                add(new AppBean("知乎", R.mipmap.ic_launcher, false));
+                add(new AppBean("刺激战场", R.mipmap.ic_launcher, false));
+                add(new AppBean("明日之后", R.mipmap.ic_launcher, false));
+                add(new AppBean("脉脉", R.mipmap.ic_launcher, false));
             }};
         }
         return appBeans;

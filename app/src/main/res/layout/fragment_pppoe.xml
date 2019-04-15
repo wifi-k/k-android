@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/broadband_account_"
-        android:textColor="@color/text_83"
+        android:textColor="@color/text_7383a2"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/dns_server_"
-        android:textColor="@color/text_83"
+        android:textColor="@color/text_7383a2"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toBottomOf="@+id/textView69" />
 
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/ip_address_"
-        android:textColor="@color/text_83"
+        android:textColor="@color/text_7383a2"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toBottomOf="@+id/textView68" />
 
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/broadband_password_"
-        android:textColor="@color/text_83"
+        android:textColor="@color/text_7383a2"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toBottomOf="@+id/textView67" />
 
@@ -61,8 +61,8 @@
         android:ems="10"
         android:inputType="number|text"
         android:textColor="@color/text_28354C"
-        android:textColorHint="@color/text_83"
-        android:textSize="15sp"
+        android:textColorHint="@color/text_b6c0cb"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView67"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView67"
@@ -70,17 +70,16 @@
 
     <EditText
         android:id="@+id/et_broadband_password"
-        android:layout_width="0dp"
+        android:layout_width="272dp"
         android:layout_height="31dp"
-        android:layout_marginEnd="16dp"
         android:background="@drawable/edit_bg_f6f7fb"
         android:ems="10"
         android:inputType="textPassword"
         android:textColor="@color/text_28354C"
-        android:textColorHint="@color/text_83"
-        android:textSize="15sp"
+        android:textColorHint="@color/text_b6c0cb"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView68"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_broadband_account"
         app:layout_constraintStart_toEndOf="@+id/textView68"
         app:layout_constraintTop_toTopOf="@+id/textView68" />
 
@@ -93,7 +92,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView69"
         app:layout_constraintStart_toEndOf="@+id/textView69"
         app:layout_constraintTop_toTopOf="@+id/textView69"
-        tools:text="0.0.0.0" />
+        android:text="0.0.0.0" />
 
     <TextView
         android:id="@+id/tv_dns_server"
@@ -104,7 +103,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView70"
         app:layout_constraintStart_toEndOf="@+id/textView70"
         app:layout_constraintTop_toTopOf="@+id/textView70"
-        tools:text="0.0.0.0" />
+        android:text="0.0.0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline8"

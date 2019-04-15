@@ -23,6 +23,5 @@ public class FullImageAdapter extends BaseQuickAdapter<LocalImageBean, BaseViewH
         Glide.with(helper.itemView)
                 .load(item.getThumbPath())
                 .into(ivFullImage);
-
     }
 }

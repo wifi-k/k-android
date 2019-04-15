@@ -67,7 +67,8 @@
     <string name="look_all">查看全部</string>
     <string name="title_take_care_children">儿童上网关爱</string>
     <string name="bind_now">立即绑定</string>
-    <string name="online_wifi_bind_xiaok">请连接wifi名称“xiaok-****”的设备\n然后点击立即绑定设备</string>
+    <string name="option_network">配置网络</string>
+    <string name="online_wifi_bind_xiaok">请连接wifi名称“xiaok-****”的设备\n并配置网络</string>
     <string name="choose_online_type">选择上网方式</string>
     <string name="online_type_dial_up">宽带拨号上网</string>
     <string name="online_type_static_ip">静态IP上网</string>
@@ -365,5 +366,8 @@
     <string name="has_no_week_add_children">暂无周报，请添加儿童关爱</string>
     <string name="restart_node_tips">需在本地WiFi环境重启设备</string>
     <string name="reset_node_tips">需在本地WiFi环境恢复设备</string>
+    <string name="user">用户</string>
+    <string name="_online">上线</string>
+    <string name="_offline">离线</string>
 
 </resources>

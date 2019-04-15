@@ -2,7 +2,7 @@ package cn.treebear.kwifimanager.activity.home;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -38,7 +38,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
     @BindView(R2.id.recycler_view)
     RecyclerView rvFamilyList;
     @BindView(R2.id.tv_bottom_button)
-    Button tvAddFamilyMember;
+    TextView tvAddFamilyMember;
     @BindView(R2.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
     private ArrayList<FamilyMemberBean> familyMemberList = new ArrayList<>();
@@ -103,7 +103,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @OnClick(R2.id.tv_bottom_button)
     public void onAddFamilyMemberClicked() {
-        UMShareUtils.shareWxLink(this, "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.ic_test_logo, null);
+        UMShareUtils.shareWxLink(this, "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.ic_launcher, null);
     }
 
 
@@ -118,7 +118,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
             tInputDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    tInputDialog.dismiss();
+                    dismiss(tInputDialog);
                 }
 
                 @Override
@@ -145,7 +145,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(View view) {
-                            tMessageDialog.dismiss();
+                            dismiss(tMessageDialog);
                         }
 
                         @Override
@@ -168,7 +168,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
     @Override
     public void modifyMemberResponse(BaseResponse response) {
         familyMemberList.get(currentModifyPosition).setUserName(tempName);
-        tInputDialog.dismiss();
+        dismiss(tInputDialog);
         familyMemberAdapter.notifyDataSetChanged();
     }
 

@@ -51,7 +51,7 @@
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-medium"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         tools:text="妈妈的手机" />
 
                     <ImageView
@@ -63,15 +63,29 @@
                         app:srcCompat="@mipmap/ic_edit_white" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_device_time"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_below="@+id/ll_user_name_wrapper"
                     android:layout_centerHorizontal="true"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    tools:text="20:00 离线" />
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_device_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        tools:text="20:00" />
+                    <TextView
+                        android:id="@+id/tv_device_status"
+                        tools:text=" 离线"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
             </RelativeLayout>
 

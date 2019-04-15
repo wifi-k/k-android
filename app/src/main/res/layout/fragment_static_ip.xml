@@ -5,13 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.33"/>
-
     <TextView
         android:id="@+id/textView55"
         android:layout_width="wrap_content"
@@ -20,7 +13,7 @@
         android:paddingStart="10dp"
         android:text="@string/ip_address_"
         android:textColor="@color/text_28354C"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="@+id/textView63"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -28,10 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:paddingStart="10dp"
         android:text="@string/first_dns_server"
         android:textColor="@color/text_28354C"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/et_dns_2"
         app:layout_constraintTop_toBottomOf="@+id/textView65" />
 
     <TextView
@@ -42,18 +34,18 @@
         android:paddingStart="10dp"
         android:text="@string/gateway_"
         android:textColor="@color/text_28354C"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/et_dns_1"
         app:layout_constraintTop_toBottomOf="@+id/textView63" />
 
     <TextView
         android:id="@+id/textView62"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
-        android:paddingStart="10dp"
         android:text="@string/second_dns_server"
         android:textColor="@color/text_28354C"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView64" />
 
     <TextView
@@ -64,7 +56,7 @@
         android:paddingStart="10dp"
         android:text="@string/subnet_mask"
         android:textColor="@color/text_28354C"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/et_gateway"
         app:layout_constraintTop_toBottomOf="@+id/textView55" />
 
     <EditText
@@ -108,7 +100,7 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView63"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toEndOf="@+id/textView63"
         app:layout_constraintTop_toTopOf="@+id/textView63" />
 
     <EditText

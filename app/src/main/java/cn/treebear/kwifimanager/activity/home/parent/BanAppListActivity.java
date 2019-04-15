@@ -83,14 +83,14 @@ public class BanAppListActivity extends BaseActivity {
             tInputDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    tInputDialog.dismiss();
+                    dismiss(tInputDialog);
                 }
 
                 @Override
                 public void onRightClick(String s) {
                     // TODO: 2019/3/8 编辑成员信息
                     banAppPlanList.get(currentModifyPosition).setName(s);
-                    tInputDialog.dismiss();
+                    dismiss(tInputDialog);
                     banAppAdapter.notifyDataSetChanged();
                 }
             });

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:drawableEnd="@mipmap/ic_line_arrow_right_white_w10"
             android:drawablePadding="10dp"
             android:gravity="center"
             android:textColor="@android:color/white"
@@ -59,11 +58,22 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="24dp"
             android:src="@mipmap/ic_me_header"
-            app:civ_border_width="0.5dp"
             app:civ_border_color="@android:color/white"
+            app:civ_border_width="0.5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_settings"
             app:srcCompat="@mipmap/ic_me_header" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:src="@mipmap/ic_line_arrow_right_white_w10"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_user_mobile"
+            app:layout_constraintStart_toEndOf="@+id/tv_user_mobile"
+            app:layout_constraintTop_toTopOf="@+id/tv_user_mobile" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

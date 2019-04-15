@@ -1,5 +1,6 @@
 package cn.treebear.kwifimanager.fragment;
 
+import android.annotation.SuppressLint;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -62,9 +63,18 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateUserInfo() {
         userInfo = MyApplication.getAppContext().getUser();
-        tvUserName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length()-4));
+        if (userInfo == null) {
+            return;
+        }
+        tvUserName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length() - 4));
+        if (Check.hasContent(userInfo.getName())) {
+            tvUserName.setText(userInfo.getName());
+        } else if (Check.maxThen(userInfo.getMobile(), 4)) {
+            tvUserName.setText(getString(R.string.user) + (userInfo.getMobile().substring(userInfo.getMobile().length() - 4)));
+        }
         tvUserMobile.setText(userInfo.getMobile());
         GlideApp.with(mRootView)
                 .load(userInfo.getAvatar())
@@ -129,7 +139,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
 
                 @Override
                 public void onLeftClick(String s) {
-                    inputDialog.dismiss();
+                    dismiss(inputDialog);
                 }
 
                 @Override

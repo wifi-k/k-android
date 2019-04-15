@@ -7,13 +7,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.Size;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +21,13 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.inapp.IUmengInAppMsgCloseCallback;
 import com.umeng.message.inapp.InAppMessageManager;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.Size;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.treebear.kwifimanager.R;
@@ -237,7 +237,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param title title文字
      */
     protected void setTitleBack(String title) {
-        setTitle(R.mipmap.back, title);
+        setTitle(R.mipmap.jt, title);
     }
 
     /**
@@ -246,7 +246,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param title title文字
      */
     protected void setTitleBack(@StringRes int title) {
-        setTitle(R.mipmap.back, getString(title));
+        setTitle(R.mipmap.jt, getString(title));
     }
 
     /**
@@ -265,7 +265,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param right 右侧文字
      */
     protected void setTitleBack(String title, String right) {
-        setTitle(R.mipmap.back, title, right, 0, true);
+        setTitle(R.mipmap.jt, title, right, 0, true);
     }
 
     /**
@@ -275,7 +275,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      * @param right 右侧文字
      */
     protected void setTitleBack(int title, int right) {
-        setTitle(R.mipmap.back, getString(title), getString(right), 0, true);
+        setTitle(R.mipmap.jt, getString(title), getString(right), 0, true);
     }
 
     /**

@@ -130,7 +130,7 @@ public class WebsiteActivity extends BaseActivity {
                             .doClick(new TMessageDialog.DoClickListener() {
                                 @Override
                                 public void onClickLeft(View view) {
-                                    messageDialog.dismiss();
+                                    dismiss(messageDialog);
                                 }
 
                                 @Override
@@ -145,7 +145,7 @@ public class WebsiteActivity extends BaseActivity {
                                             Intent intent = new Intent(WebsiteActivity.this, OpenFileReceiver.class);
                                             intent.putExtra("path", file.getAbsolutePath());
                                             sendBroadcast(intent);
-                                            messageDialog.dismiss();
+                                            dismiss(messageDialog);
                                         }
 
                                         @Override
@@ -156,7 +156,7 @@ public class WebsiteActivity extends BaseActivity {
                                         @Override
                                         public void onDownloadFailed(Call call, Exception e) {
                                             ToastUtils.showShort("下载失败，请稍后再试");
-                                            messageDialog.dismiss();
+                                            dismiss(messageDialog);
                                         }
                                     });
                                 }

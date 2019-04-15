@@ -106,7 +106,7 @@ public class BanAppPlanActivity extends BaseActivity {
             modifyNameDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    modifyNameDialog.dismiss();
+                    dismiss(modifyNameDialog);
                 }
 
                 @Override
@@ -116,7 +116,7 @@ public class BanAppPlanActivity extends BaseActivity {
                     if (needModifyPlan != null) {
                         needModifyPlan.setName(s);
                     }
-                    modifyNameDialog.dismiss();
+                    dismiss(modifyNameDialog);
                 }
             });
         }

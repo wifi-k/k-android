@@ -210,12 +210,12 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(View view) {
-                            noSignDialog.dismiss();
+                            dismiss(noSignDialog);
                         }
 
                         @Override
                         public void onClickRight(View view) {
-                            noSignDialog.dismiss();
+                            dismiss(noSignDialog);
                             startActivity(SignUpActivity.class);
                             finish();
                         }

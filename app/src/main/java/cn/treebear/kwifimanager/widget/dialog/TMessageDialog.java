@@ -4,11 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Size;
-import androidx.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -17,10 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Size;
+import androidx.annotation.StringRes;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.util.DensityUtil;
-import cn.treebear.kwifimanager.widget.ProgressDrawableHelper;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.Dismissable;
+import cn.treebear.kwifimanager.widget.ProgressDrawableHelper;
 
 
 /**
@@ -75,19 +76,21 @@ public class TMessageDialog implements Dismissable {
     }
 
     private void initDialog() {
-        mDialog = new Dialog(mContext);
-        view = LayoutInflater.from(mContext).inflate(R.layout.dialog_do_progress, null);
-        findView();
-        mDialog.setCancelable(false);
-        mDialog.setContentView(view);
-        mDialog.setCanceledOnTouchOutside(false);
-        Window window = mDialog.getWindow();
-        if (window != null) {
-            window.setContentView(view);
-            window.setBackgroundDrawable(new ColorDrawable(0));
-            WindowManager.LayoutParams p = window.getAttributes();
-            p.width = (int) (DensityUtil.getScreenWidth(mContext) * widthPercent);
-            window.setAttributes(p);
+        if (mDialog == null) {
+            mDialog = new Dialog(mContext);
+            view = LayoutInflater.from(mContext).inflate(R.layout.dialog_do_progress, null);
+            findView();
+            mDialog.setCancelable(false);
+            mDialog.setContentView(view);
+            mDialog.setCanceledOnTouchOutside(false);
+            Window window = mDialog.getWindow();
+            if (window != null) {
+                window.setContentView(view);
+                window.setBackgroundDrawable(new ColorDrawable(0));
+                WindowManager.LayoutParams p = window.getAttributes();
+                p.width = (int) (DensityUtil.getScreenWidth(mContext) * widthPercent);
+                window.setAttributes(p);
+            }
         }
     }
 
@@ -301,8 +304,12 @@ public class TMessageDialog implements Dismissable {
     }
 
     public void show() {
-        if (!mDialog.isShowing()) {
-            mDialog.show();
+        try {
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
+        } catch (Exception e) {
+            TLog.e(e);
         }
     }
 

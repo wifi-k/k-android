@@ -83,7 +83,8 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
             nodeBeans.clear();
         }
         if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-            adapter.loadMoreEnd(nodeBeans.size() == 0);
+//            adapter.loadMoreEnd(nodeBeans.size() == 0);
+            adapter.loadMoreEnd(true);
         }
         adapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
         if (searchSelectNode(resultData.getPage()) != -1) {

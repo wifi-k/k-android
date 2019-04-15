@@ -132,7 +132,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(View view) {
-                            noSignDialog.dismiss();
+                            dismiss(noSignDialog);
                         }
 
                         @Override

@@ -56,7 +56,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
         WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
-       WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
+        WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
         hideLoading();
         ToastUtils.showShort(R.string.option_update_success);
         updateWifiInfoShow();

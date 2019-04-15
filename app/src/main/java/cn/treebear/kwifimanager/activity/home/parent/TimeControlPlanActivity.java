@@ -142,7 +142,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
             modifyNameDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    modifyNameDialog.dismiss();
+                    dismiss(modifyNameDialog);
                 }
 
                 @Override
@@ -152,7 +152,7 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
                     if (needModifyPlan != null) {
                         needModifyPlan.setName(s);
                     }
-                    modifyNameDialog.dismiss();
+                    dismiss(modifyNameDialog);
                 }
             });
         }

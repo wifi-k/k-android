@@ -76,7 +76,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
 
                 @Override
                 public void onLeftClick(String s) {
-                    inputDialog.dismiss();
+                    dismiss(inputDialog);
                 }
 
                 @Override
@@ -110,7 +110,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
                     .doClick(new TipsDialog.DoClickListener() {
                         @Override
                         public void onClickRight(TextView tvRight) {
-                            errorTipsDialog.dismiss();
+                            dismiss(errorTipsDialog);
                             showFamilyCodeDialog();
                         }
                     });
@@ -120,7 +120,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
 
     private void showSuccessTips() {
         if (successTipsDialog == null) {
-            successTipsDialog = new TipsDialog(mContext).icon(R.mipmap.ic_tips_warnning)
+            successTipsDialog = new TipsDialog(mContext).icon(R.mipmap.ic_tips_success)
                     .title(R.string.family_code_ok)
                     .noContent()
                     .oneButtonRight()
@@ -132,7 +132,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
                             if (mContext instanceof MainActivity) {
                                 ((MainActivity) mContext).updateHomeFragment();
                             }
-                            successTipsDialog.dismiss();
+                            dismiss(successTipsDialog);
                         }
                     });
         }

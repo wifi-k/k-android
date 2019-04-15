@@ -226,13 +226,13 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(View view) {
-                            signDialog.dismiss();
+                            dismiss(signDialog);
                         }
 
                         @Override
                         public void onClickRight(View view) {
                             startActivity(SignInActivity.class);
-                            signDialog.dismiss();
+                            dismiss(signDialog);
                             finish();
                         }
                     });

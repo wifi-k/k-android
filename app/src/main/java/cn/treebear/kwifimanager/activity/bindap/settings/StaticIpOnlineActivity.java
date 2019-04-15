@@ -1,8 +1,8 @@
 package cn.treebear.kwifimanager.activity.bindap.settings;
 
 import android.util.ArrayMap;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -42,7 +42,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presen
     @BindView(R2.id.et_secend_dns)
     EditText etSecendDns;
     @BindView(R2.id.btn_next)
-    Button btnNext;
+    TextView btnNext;
     int count = 0;
 
     @Override
@@ -96,7 +96,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presen
             public void onSuccess(BaseResponse<Object> resultData) {
                 hideLoading();
                 MyApplication.getAppContext().getUser().setNodeSize(1);
-                SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
+//                SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
                 startActivity(ModifyWifiInfoActivity.class);
                 ToastUtils.showShort(R.string.connect_success);
             }

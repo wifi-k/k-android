@@ -77,7 +77,8 @@ public class ChildrenListActivity extends BaseActivity<ChildrenListContract.Pres
         }
         childrenBeans.addAll(resultData.getPage());
         if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-            adapter.loadMoreEnd(childrenBeans.size() == 0);
+//            adapter.loadMoreEnd(childrenBeans.size() == 0);
+            adapter.loadMoreEnd(true);
         } else {
             adapter.loadMoreComplete();
         }

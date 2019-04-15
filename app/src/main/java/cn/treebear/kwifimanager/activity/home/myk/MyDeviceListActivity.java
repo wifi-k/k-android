@@ -112,7 +112,8 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
         if (Check.hasContent(page)) {
             if (page.size() < Config.Numbers.PAGE_SIZE) {
                 deviceAdapter.setEnableLoadMore(false);
-                deviceAdapter.loadMoreEnd(nodeList.size() == 0);
+//                deviceAdapter.loadMoreEnd(nodeList.size() == 0);
+                deviceAdapter.loadMoreEnd(true);
             } else {
                 deviceAdapter.loadMoreComplete();
             }
@@ -138,7 +139,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     @Override
     public void modifyNodeNameResponse(int resultCode, String msg) {
         if (resultCode == 0) {
-            tInputDialog.dismiss();
+            dismiss(tInputDialog);
             ToastUtils.showShort(R.string.modify_success);
             deviceAdapter.notifyDataSetChanged();
         }
@@ -193,7 +194,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
             tInputDialog.setInputDialogListener(new TInputDialog.InputDialogListener() {
                 @Override
                 public void onLeftClick(String s) {
-                    tInputDialog.dismiss();
+                    dismiss(tInputDialog);
                 }
 
                 @Override
