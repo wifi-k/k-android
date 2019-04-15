@@ -27,11 +27,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
-import cn.treebear.kwifimanager.activity.home.MyMarkerView;
 import cn.treebear.kwifimanager.adapter.ActiveAppAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.AppBean;
 import cn.treebear.kwifimanager.test.BeanTest;
+import cn.treebear.kwifimanager.widget.MyMarkerView;
 
 /**
  * @author Administrator
@@ -83,6 +83,7 @@ public class WeekReportActivity extends BaseActivity {
             chart.setHighlightPerDragEnabled(false);
             // create marker to display box when values are selected
             MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+//            MyMarker mv = new MyMarker(this, R.layout.my_maker);
             // Set the marker to the chart
             mv.setChartView(chart);
             chart.setMarker(mv);

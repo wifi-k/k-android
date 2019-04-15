@@ -87,6 +87,9 @@ public class DateTimeUtils {
      * @return MD_Hmm格式时间
      */
     public static String formatMDHmm(long mills) {
+        if (mills < DAY * 365) {
+            mills *= 1000;
+        }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfMdHmm = new SimpleDateFormat("M月d日 H:mm");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
@@ -100,6 +103,9 @@ public class DateTimeUtils {
      * @return MD_Hmm格式时间
      */
     public static String formatYmd(long mills) {
+        if (mills < DAY * 365) {
+            mills *= 1000;
+        }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfMdHmm = new SimpleDateFormat("yyyy年M月d日");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
@@ -202,6 +208,9 @@ public class DateTimeUtils {
      * 将毫秒值转换为时长（从大到小保留3个单位）
      */
     public static String mill2FullTime(long mill) {
+        if (mill < DAY * 365) {
+            mill *= 1000;
+        }
         String time;
         if (mill < SECONDS) {
             time = S_LESS_SECENDS;

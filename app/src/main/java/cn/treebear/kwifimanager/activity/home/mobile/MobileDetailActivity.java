@@ -85,7 +85,11 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         setTitle(R.mipmap.ic_line_arrow_left_white, getString(R.string.device_detail), "", 0, false);
         updateView();
         setListener();
+        tvUploadSpeed.setText("不限速");
+        tvDownloadSpeed.setText("不限速");
     }
+
+    int count = 0;
 
     private void setListener() {
         swbOnlineChildren.setOnCheckedChangeListener((view, isChecked) -> mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
@@ -99,11 +103,14 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
                         mobilePhoneBean.getMac(), mobilePhoneBean.getNote(), isChecked ? 1 : 0,
                         swbOnlineChildren.isChecked() ? 1 : 0, swbOnlineAlarm.isChecked() ? 1 : 0));
         swbSpeedLimit.setOnCheckedChangeListener((view, isChecked) -> {
+            if (++count % 2 == 1) {
+                ToastUtils.showShort("功能正在开发，敬请期待");
+            }
 //            mobilePhoneBean.setLimitSpeed(isChecked);
-            sbDownloadSpeed.setEnabled(isChecked);
-            sbUploadSpeed.setEnabled(isChecked);
-            tvUploadSpeed.setText(isChecked ? String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d) : "不限速");
-            tvDownloadSpeed.setText(isChecked ? String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d) : "不限速");
+//            sbDownloadSpeed.setEnabled(isChecked);
+//            sbUploadSpeed.setEnabled(isChecked);
+//            tvUploadSpeed.setText(isChecked ? String.format("%sMB/S", sbUploadSpeed.getProgress() / 10d) : "不限速");
+//            tvDownloadSpeed.setText(isChecked ? String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d) : "不限速");
         });
         sbUploadSpeed.setOnSeekBarChangeListener(new BaseSeekBarChangeListener() {
             @Override
@@ -123,6 +130,11 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         });
     }
 
+    @OnClick(R2.id.iv_modify_device_name)
+    public void onmodifyDeviceNameClicked() {
+        showModifyNameDialog();
+    }
+
     private void updateView() {
         if (mobilePhoneBean == null) {
             return;
@@ -130,7 +142,7 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         tvDeviceName.setText(Check.hasContent(mobilePhoneBean.getNote()) ? mobilePhoneBean.getNote() : mobilePhoneBean.getName());
         boolean isOnline = mobilePhoneBean.getStatus() == 1;
         tvDeviceStatus.setText(isOnline ? R.string._online : R.string._offline);
-        tvDeviceTime.setText(DateTimeUtils.formatMDHmm(isOnline ? mobilePhoneBean.getOnTime() : mobilePhoneBean.getOffTime()));
+        tvDeviceTime.setText(DateTimeUtils.formatMDHmm(isOnline ? mobilePhoneBean.getOnTime() : mobilePhoneBean.getOffTime()).replace(" ", ""));
         swbOnlineChildren.setChecked(mobilePhoneBean.getIsRecord() == 1);
         swbOnlineAlarm.setChecked(mobilePhoneBean.getIsOnline() == 1);
         GlideApp.with(this).load(mobilePhoneBean.getMacIcon())
@@ -143,11 +155,6 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         tvDownloadSpeed.setText(String.format("%sMB/S", sbDownloadSpeed.getProgress() / 10d));
         sbDownloadSpeed.setEnabled(false);
         sbUploadSpeed.setEnabled(false);
-    }
-
-    @OnClick(R2.id.iv_modify_device_name)
-    public void onmodifyDeviceNameClicked() {
-        showModifyNameDialog();
     }
 
     @OnClick(R2.id.tv_device_info)
@@ -191,8 +198,9 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     public void onModifyMobileInfoResponse(BaseResponse response) {
         if (response != null && response.getCode() == 0) {
             dismiss(modifyNameDialog);
-            mobilePhoneBean.setName(mobilePhoneBean.getNote());
-            tvDeviceName.setText(mobilePhoneBean.getNote());
+            ToastUtils.showShort(R.string.set_option_success);
+            mobilePhoneBean.setName(Check.hasContent(mobilePhoneBean.getNote()) ? mobilePhoneBean.getNote() : mobilePhoneBean.getName());
+            tvDeviceName.setText(mobilePhoneBean.getName());
         } else {
             ToastUtils.showShort(R.string.modify_failed);
         }

@@ -1,4 +1,4 @@
-package cn.treebear.kwifimanager.activity.home;
+package cn.treebear.kwifimanager.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

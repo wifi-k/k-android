@@ -313,6 +313,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         } else {
             startActivity(ChildrenListActivity.class);
         }
+//        startActivity(WeekReportActivity.class);
     }
 
     @OnClick(R2.id.tv_wifi_settings)

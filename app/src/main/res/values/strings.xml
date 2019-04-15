@@ -367,7 +367,7 @@
     <string name="restart_node_tips">需在本地WiFi环境重启设备</string>
     <string name="reset_node_tips">需在本地WiFi环境恢复设备</string>
     <string name="user">用户</string>
-    <string name="_online">上线</string>
-    <string name="_offline">离线</string>
+    <string name="_online">" 上线"</string>
+    <string name="_offline">" 离线"</string>
 
 </resources>
