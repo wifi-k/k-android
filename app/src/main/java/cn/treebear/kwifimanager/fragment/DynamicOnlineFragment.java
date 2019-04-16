@@ -16,6 +16,7 @@ import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 import cn.treebear.kwifimanager.mvp.wifi.presenter.DynamicIpPresenter;
+import cn.treebear.kwifimanager.util.TLog;
 
 /**
  * @author Administrator
@@ -57,6 +58,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
         WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
+        TLog.e(resultData);
         hideLoading();
         ToastUtils.showShort(R.string.option_update_success);
         updateWifiInfoShow();
@@ -97,11 +99,12 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
 
     private void updateWifiInfoShow() {
         WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
+        TLog.w(deviceInfo);
         tvConnectStatus.setText(deviceInfo.isConnect() ? R.string.wan_connect_ok : R.string.wan_connect_no);
         tvIp.setText(deviceInfo.getWan().getIp());
         tvSubnet.setText(deviceInfo.getWan().getNetmask());
         tvGateway.setText(deviceInfo.getWan().getGateway());
         tvDns1.setText(deviceInfo.getWan().getDns1());
-        tvDns1.setText(deviceInfo.getWan().getDns2());
+        tvDns2.setText(deviceInfo.getWan().getDns2());
     }
 }

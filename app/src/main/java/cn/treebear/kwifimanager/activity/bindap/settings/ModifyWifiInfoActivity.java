@@ -27,6 +27,7 @@ import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
+import cn.treebear.kwifimanager.widget.dialog.TipsDialog;
 
 /**
  * @author Administrator
@@ -46,6 +47,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
     private boolean passwordVisible = false;
     private TMessageDialog tMessageDialog;
     private WifiManager wifiManager;
+    private TipsDialog successTipsDialog;
 
     @Override
     public int layoutId() {
@@ -63,6 +65,16 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
         listenFocus();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (successTipsDialog != null && successTipsDialog.isShowing() && NetWorkUtils.isNetConnected(this)) {
+            dismiss(successTipsDialog);
+            MyApplication.getAppContext().getUser().setNodeSize(1);
+            ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
+        }
     }
 
     private void listenFocus() {
@@ -128,6 +140,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
 
     @Override
     public void onLoadData(Object resultData) {
+        hideLoading();
         PermissionUtils.permission(PermissionConstants.LOCATION)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
@@ -138,8 +151,12 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
 //                            wifiManager.setWifiEnabled(true);
 //                            wifiManager.startScan();
 //                        }
-                        MyApplication.getAppContext().getUser().setNodeSize(1);
-                        ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
+                        if (NetWorkUtils.isNetConnected(ModifyWifiInfoActivity.this)) {
+                            MyApplication.getAppContext().getUser().setNodeSize(1);
+                            ActivityStackUtils.finishAll(Config.Tags.TAG_FIRST_BIND_WIFI);
+                        } else {
+                            showSuccessTips();
+                        }
                     }
 
                     @Override
@@ -160,7 +177,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
 
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
-        super.onLoadFail(resultData, resultMsg, resultCode);
+//        super.onLoadFail(resultData, resultMsg, resultCode);
         WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
@@ -191,4 +208,22 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
         ActivityStackUtils.popActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
         finish();
     }
+
+    private void showSuccessTips() {
+        if (successTipsDialog == null) {
+            successTipsDialog = new TipsDialog(this).iconEnable(false)
+                    .title(R.string.set_option_success)
+                    .content(String.format("配置成功，设备正在重启，请前往WiFi设置连接您的WiFi\n%s", etWifiName.getText().toString()))
+                    .oneButtonRight()
+                    .right(R.string.confirm)
+                    .doClick(new TipsDialog.DoClickListener() {
+                        @Override
+                        public void onClickRight(TextView tvRight) {
+                            NetWorkUtils.gotoWifiSetting(ModifyWifiInfoActivity.this);
+                        }
+                    });
+        }
+        successTipsDialog.show();
+    }
+
 }

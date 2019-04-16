@@ -375,7 +375,11 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     @Override
     public void onMobileListResponse(MobileListBean data) {
         mobilePhoneList.clear();
-        tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%s/下行网速%s”", getOnlineNumber(data.getPage()), nodeBean.getUpstream(), nodeBean.getDownstream()));
+        if (nodeBean != null) {
+            tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%s/下行网速%s”", getOnlineNumber(data.getPage()), nodeBean.getUpstream(), nodeBean.getDownstream()));
+        } else {
+            tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%skb/s/下行网速%skb/s”", getOnlineNumber(data.getPage()), 0, 0));
+        }
         if (data.getPage().size() > 3) {
             mobilePhoneList.addAll(data.getPage().subList(0, 3));
         } else {

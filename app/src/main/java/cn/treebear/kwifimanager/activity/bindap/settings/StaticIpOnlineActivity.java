@@ -64,7 +64,7 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presen
     @OnClick(R2.id.btn_next)
     public void onViewClicked() {
         if (checkInput()) {
-            showLoading();
+            showLoading(R.string.option_ing, false);
             count = 0;
             mPresenter.staticIpSet(
                     etIpAddress.getText().toString(),

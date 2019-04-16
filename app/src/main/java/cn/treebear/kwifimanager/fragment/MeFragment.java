@@ -52,7 +52,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
 
     @Override
     protected void initView() {
-        updateUserInfo();
+//        updateUserInfo();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
         if (userInfo == null) {
             return;
         }
-        tvUserName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length() - 4));
+//        tvUserName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length() - 4));
         if (Check.hasContent(userInfo.getName())) {
             tvUserName.setText(userInfo.getName());
         } else if (Check.maxThen(userInfo.getMobile(), 4)) {

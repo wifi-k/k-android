@@ -1,145 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView67"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/broadband_account_"
-        android:textColor="@color/text_7383a2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3"/>
 
-    <TextView
-        android:id="@+id/textView70"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/dns_server_"
-        android:textColor="@color/text_7383a2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@+id/textView69" />
+        <TextView
+            android:id="@+id/textView67"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/broadband_account_"
+            android:textColor="@color/text_7383a2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView69"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/ip_address_"
-        android:textColor="@color/text_7383a2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@+id/textView68" />
+        <TextView
+            android:id="@+id/textView70"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/dns_server_"
+            android:textColor="@color/text_7383a2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/textView69" />
 
-    <TextView
-        android:id="@+id/textView68"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/broadband_password_"
-        android:textColor="@color/text_7383a2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@+id/textView67" />
+        <TextView
+            android:id="@+id/textView69"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/ip_address_"
+            android:textColor="@color/text_7383a2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/textView68" />
 
-    <EditText
-        android:id="@+id/tv_broadband_account"
-        android:layout_width="0dp"
-        android:layout_height="31dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/edit_bg_f6f7fb"
-        android:ems="10"
-        android:inputType="number|text"
-        android:textColor="@color/text_28354C"
-        android:textColorHint="@color/text_b6c0cb"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView67"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView67"
-        app:layout_constraintTop_toTopOf="@+id/textView67" />
+        <TextView
+            android:id="@+id/textView68"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/broadband_password_"
+            android:textColor="@color/text_7383a2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/textView67" />
 
-    <EditText
-        android:id="@+id/et_broadband_password"
-        android:layout_width="272dp"
-        android:layout_height="31dp"
-        android:background="@drawable/edit_bg_f6f7fb"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="@color/text_28354C"
-        android:textColorHint="@color/text_b6c0cb"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView68"
-        app:layout_constraintEnd_toEndOf="@+id/tv_broadband_account"
-        app:layout_constraintStart_toEndOf="@+id/textView68"
-        app:layout_constraintTop_toTopOf="@+id/textView68" />
+        <EditText
+            android:id="@+id/et_broadband_password"
+            android:layout_width="272dp"
+            android:layout_height="31dp"
+            android:background="@drawable/edit_bg_f6f7fb"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:textColor="@color/text_28354C"
+            android:textColorHint="@color/text_b6c0cb"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView68"
+            app:layout_constraintEnd_toEndOf="@+id/tv_broadband_account"
+            app:layout_constraintStart_toEndOf="@+id/textView68"
+            app:layout_constraintTop_toTopOf="@+id/textView68" />
 
-    <TextView
-        android:id="@+id/ip_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text_28354C"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView69"
-        app:layout_constraintStart_toEndOf="@+id/textView69"
-        app:layout_constraintTop_toTopOf="@+id/textView69"
-        android:text="0.0.0.0" />
+        <TextView
+            android:id="@+id/ip_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_28354C"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView69"
+            app:layout_constraintStart_toEndOf="@+id/textView69"
+            app:layout_constraintTop_toTopOf="@+id/textView69"
+            android:text="0.0.0.0" />
 
-    <TextView
-        android:id="@+id/tv_dns_server"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text_28354C"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView70"
-        app:layout_constraintStart_toEndOf="@+id/textView70"
-        app:layout_constraintTop_toTopOf="@+id/textView70"
-        android:text="0.0.0.0" />
+        <TextView
+            android:id="@+id/tv_dns_server"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_28354C"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView70"
+            app:layout_constraintStart_toEndOf="@+id/textView70"
+            app:layout_constraintTop_toTopOf="@+id/textView70"
+            android:text="0.0.0.0" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
-    <TextView
-        android:id="@+id/tv_disconnect"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/bg_f2_r4"
-        android:gravity="center"
-        android:text="@string/disconnect"
-        android:textColor="@color/text_28354C"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView70" />
+        <TextView
+            android:id="@+id/tv_disconnect"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="96dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_f2_r4"
+            android:gravity="center"
+            android:text="@string/disconnect"
+            android:textColor="@color/text_28354C"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView70" />
 
-    <TextView
-        android:id="@+id/tv_connect"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/btn_green_to_cyan_r4"
-        android:gravity="center"
-        android:text="@string/connect"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_disconnect"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toTopOf="@+id/tv_disconnect" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_connect"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn_green_to_cyan_r4"
+            android:gravity="center"
+            android:text="@string/connect"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_disconnect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintTop_toTopOf="@+id/tv_disconnect" />
+
+        <EditText
+            android:id="@+id/tv_broadband_account"
+            android:layout_width="0dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edit_bg_f6f7fb"
+            android:ems="10"
+            android:inputType="number|text"
+            android:textColor="@color/text_28354C"
+            android:textColorHint="@color/text_b6c0cb"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView67"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView67"
+            app:layout_constraintTop_toTopOf="@+id/textView67" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

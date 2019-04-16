@@ -91,6 +91,10 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     @Override
     protected void onResume() {
         super.onResume();
+        // 2019/4/16  debug 回到界面弹窗覆盖问题
+        if (tMessageDialog != null && tMessageDialog.isShowing()) {
+            return;
+        }
         PermissionUtils.permission(PermissionConstants.LOCATION)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
@@ -202,11 +206,12 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
 
     @Override
     public void onLoadData(Object resultData) {
-        ToastUtils.showShort(R.string.bind_success);
         hideLoading();
         MyApplication.getAppContext().getUser().setNodeSize(1);
         if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
             startActivity(ChooseNetworkStyleActivity.class);
+        } else {
+            ToastUtils.showShort(R.string.bind_success);
         }
         finish();
     }
@@ -285,7 +290,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
         } else {
 //                周围没有小K
             initMessageDialog();
-            tMessageDialog.content(String.format("暂时没有发现wifi名称为“xiaok-XXXX”的设备,请先启动并连接设备。"))
+            tMessageDialog.content("暂时没有发现wifi名称为“xiaok-XXXX”的设备,请先启动并连接设备。")
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(android.view.View view) {

@@ -548,6 +548,10 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         LoadingProgressDialog.showProgressDialog(this, getString(tips));
     }
 
+    public void showLoading(@StringRes int tips, boolean canceled) {
+        LoadingProgressDialog.showProgressDialog(this, getString(tips), canceled);
+    }
+
     /**
      * 隐藏加载框，暂时未使用
      */

@@ -1,7 +1,5 @@
 package cn.treebear.kwifimanager.activity.toolkit;
 
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -41,16 +39,11 @@ public class OnlineSettingActivity extends BaseFragmentActivity {
         initFragment();
     }
 
-    @Override
-    protected int getFragmentHolderId() {
-        return R.id.fragment_wrapper;
-    }
-
     private void initFragment() {
         dynamicOnlineFragment = new DynamicOnlineFragment();
         staticIpFragment = new StaticIpFragment();
         pppoeFragment = new PPPOEFragment();
-        addFragments(dynamicOnlineFragment, staticIpFragment, pppoeFragment);
+        addFragments(R.id.fragment_wrapper, dynamicOnlineFragment, staticIpFragment, pppoeFragment);
     }
 
     @OnClick(R2.id.tv_choose_online_type)
@@ -66,11 +59,6 @@ public class OnlineSettingActivity extends BaseFragmentActivity {
             });
         }
         tChooseOnlineTypePop.show(tvChooseOnlineType);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override

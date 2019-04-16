@@ -45,7 +45,6 @@ public class MyMarker extends MarkerView {
             TLog.i(Utils.formatNumber(e.getY(), 0, true));
             tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
         }
-
 //        super.refreshContent(e, highlight);
     }
 

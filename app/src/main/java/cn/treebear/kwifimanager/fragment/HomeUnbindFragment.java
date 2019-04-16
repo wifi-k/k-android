@@ -16,7 +16,9 @@ import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.mvp.server.contract.UnbindHomeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.UnbindHomePresenter;
+import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
+import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 import cn.treebear.kwifimanager.widget.dialog.TipsDialog;
 
 /**
@@ -36,6 +38,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
     private TInputDialog inputDialog;
     private TipsDialog errorTipsDialog;
     private TipsDialog successTipsDialog;
+    private TMessageDialog tMessageDialog;
 
     public HomeUnbindFragment() {
 
@@ -57,15 +60,27 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
         setTitle(R.string.app_name, false);
     }
 
+    private int count = 0;
+
     @OnClick({R.id.iv_bind, R.id.tv_bind})
     public void onViewClicked(View view) {
-        startActivity(BindAction1Activity.class);
+//        if (NetWorkUtils.isXiaoKSignIn()) {
+            startActivity(BindAction1Activity.class);
+//        } else if (!NetWorkUtils.isWifiConnected(mContext)) {
+//            notXiaoKDialog();
+//        } else {
+//            if (count % 5 == 0) {
+//                notXiaoKDialog();
+//            } else {
+//                ToastUtils.showShort("正在尝试与设备建立连接，请稍后");
+//            }
+//            count++;
+//        }
     }
 
     @OnClick(R2.id.tv_input_family_code)
     public void onFamilyCodeClicked() {
         showFamilyCodeDialog();
-
     }
 
     private void showFamilyCodeDialog() {
@@ -139,9 +154,51 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
         successTipsDialog.show();
     }
 
+    private void notXiaoKDialog() {
+        initMessageDialog();
+        tMessageDialog.content("请前往WiFi设置连接名称为“xiaok-xxxx”的WiFi，然后再绑定设备。")
+                .doClick(new TMessageDialog.DoClickListener() {
+                    @Override
+                    public void onClickLeft(android.view.View view) {
+                        dismiss(tMessageDialog);
+                    }
+
+                    @Override
+                    public void onClickRight(android.view.View view) {
+                        NetWorkUtils.gotoWifiSetting(mContext);
+                        dismiss(tMessageDialog);
+                    }
+                }).show();
+    }
+
+    /**
+     * 初始化通用弹窗
+     */
+    private void initMessageDialog() {
+        if (tMessageDialog == null) {
+            tMessageDialog = new TMessageDialog(mContext).withoutMid()
+                    .title(R.string.online_tips)
+                    .content("")
+                    .left(R.string.cancel)
+                    .right(R.string.confirm)
+                    .doClick(new TMessageDialog.DoClickListener() {
+                        @Override
+                        public void onClickLeft(android.view.View view) {
+                            dismiss(tMessageDialog);
+                        }
+
+                        @Override
+                        public void onClickRight(android.view.View view) {
+                            dismiss(tMessageDialog);
+                        }
+                    });
+        }
+    }
+
+
     @Override
     public void onDestroy() {
-        dismiss(successTipsDialog, errorTipsDialog, inputDialog);
+        dismiss(successTipsDialog, errorTipsDialog, inputDialog, tMessageDialog);
         super.onDestroy();
     }
 }

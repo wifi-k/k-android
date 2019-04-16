@@ -59,4 +59,9 @@
         android:visibility="gone"
         tools:src="@drawable/guide_home_2" />
 
+    <FrameLayout
+        android:id="@+id/full_screen_fragment_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>

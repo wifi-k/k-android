@@ -9,7 +9,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
-import cn.treebear.kwifimanager.activity.bindap.settings.ModifyWifiInfoActivity;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
@@ -75,7 +74,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
         deviceInfo.setWan(resultData.getWan());
        WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
         hideLoading();
-        startActivity(ModifyWifiInfoActivity.class);
+//        startActivity(ModifyWifiInfoActivity.class);
         ToastUtils.showShort(R.string.connect_success);
     }
 

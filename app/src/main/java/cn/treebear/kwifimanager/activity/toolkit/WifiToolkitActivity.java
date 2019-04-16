@@ -159,6 +159,8 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
                 @Override
                 public void onRightClick(String s) {
+                    dismiss(nameModifyDialog);
+                    showLoading(R.string.option_ing);
                     if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
                         modifyNameLocal(s, "");
                     } else {
@@ -182,6 +184,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         proxyModel.modifyWifiInfo(RequestBodyUtils.convert(params), new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
+                hideLoading();
                 tvWifiSSID.setText(name);
                 dismiss(nameModifyDialog, passwordModifyDialog);
                 ToastUtils.showShort(R.string.option_success_restart);
@@ -189,6 +192,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
             @Override
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
+                hideLoading();
                 dismiss(nameModifyDialog, passwordModifyDialog);
                 ToastUtils.showShort(R.string.option_failed_retry);
                 WiFiHttpClient.dealWithResultCode(resultCode);
@@ -209,6 +213,8 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
                 @Override
                 public void onRightClick(String s) {
+                    dismiss(nameModifyDialog, passwordModifyDialog);
+                    showLoading(R.string.option_ing);
                     if (NetWorkUtils.isXiaoKSignIn()) {
                         modifyNameLocal(NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()), s);
                     } else {
@@ -309,12 +315,14 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     @Override
     public void onSSIDResponseOK() {
+        hideLoading();
         dismiss(nameModifyDialog, passwordModifyDialog);
         ToastUtils.showShort(R.string.modify_success);
     }
 
     @Override
     public void onPwdResponseOK() {
+        hideLoading();
         dismiss(nameModifyDialog, passwordModifyDialog);
         ToastUtils.showShort(R.string.modify_success);
     }

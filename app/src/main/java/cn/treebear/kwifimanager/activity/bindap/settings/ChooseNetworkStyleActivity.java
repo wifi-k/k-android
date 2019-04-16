@@ -27,7 +27,6 @@ import cn.treebear.kwifimanager.mvp.wifi.presenter.DynamicIpPresenter;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.RequestBodyUtils;
 import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
-import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 
 /**
  * @author Administrator
@@ -95,10 +94,9 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
                 startActivity(StaticIpOnlineActivity.class);
                 break;
             default:
-                LoadingProgressDialog.showProgressDialog(this, getString(R.string.try_to_connect_wifi));
-                mPresenter.dynamicIpSet();
+                showLoading(R.string.try_to_connect_wifi,false);
                 count = 0;
-                showLoading(R.string.option_ing);
+                mPresenter.dynamicIpSet();
                 break;
         }
     }

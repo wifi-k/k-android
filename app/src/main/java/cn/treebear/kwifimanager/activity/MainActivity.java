@@ -69,7 +69,7 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void initView() {
         ActivityStackUtils.pressActivity(Config.Tags.TAG_MODIFY_USER_MOBILE, this);
-        addFragments(fragments);
+        addFragments(R.id.vp_fragments, fragments);
         if (MyApplication.getAppContext().hasBoundNode()) {
             statusWhiteFontBlack();
         } else {
@@ -124,11 +124,6 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected int getFragmentHolderId() {
-        return R.id.vp_fragments;
-    }
-
-    @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - lastPressBackMills > 3000) {
             lastPressBackMills = System.currentTimeMillis();
@@ -144,14 +139,14 @@ public class MainActivity extends BaseFragmentActivity {
             // 当前为未绑定界面
             if (mFragments.get(0) instanceof HomeUnbindFragment) {
                 // 切换为已绑定界面
-                replaceFragment(0, homeBindFragment);
+                replaceFragment(R.id.vp_fragments, 0, homeBindFragment);
                 statusWhiteFontBlack();
             }
         } else {
             // 若未认证 且当前为绑定界面
             if (mFragments.get(0) instanceof HomeBindFragment) {
                 // 切换为未绑定界面
-                replaceFragment(0, homeUnbindFragment);
+                replaceFragment(R.id.vp_fragments, 0, homeUnbindFragment);
                 statusTransparentFontWhite();
             }
         }

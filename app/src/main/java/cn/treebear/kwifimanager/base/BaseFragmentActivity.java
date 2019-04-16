@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.ArrayMap;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -74,6 +75,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * fragment栈
      */
     public ArrayList<Fragment> mFragments = new ArrayList<>();
+    public ArrayMap<Integer,ArrayList<Fragment>> fragmentLists = new ArrayMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -528,14 +530,14 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * @param position    位置
      * @param newFragment 新fragment
      */
-    protected void replaceFragment(int position, Fragment newFragment) {
+    protected void replaceFragment(@IdRes int wrapperId, int position, Fragment newFragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment oldFragment = mFragments.get(position);
         fragmentTransaction.hide(oldFragment);
         mFragments.remove(oldFragment);
         if (!mFragments.contains(newFragment)) {
             mFragments.add(position, newFragment);
-            fragmentTransaction.add(getFragmentHolderId(), newFragment);
+            fragmentTransaction.add(wrapperId, newFragment);
         }
         fragmentTransaction.show(mFragments.get(currentFragmentIndex));
         fragmentTransaction.remove(oldFragment);
@@ -572,24 +574,16 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     }
 
     /**
-     * 获取fragment holder的id
-     *
-     * @return holder的id
-     */
-    protected abstract @IdRes
-    int getFragmentHolderId();
-
-    /**
      * 添加fragments
      */
     @SuppressWarnings("unused")
-    protected void addFragments(Fragment... fragments) {
+    protected void addFragments(@IdRes int wrapperId, Fragment... fragments) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
             for (Fragment fragment : fragments) {
                 if (!mFragments.contains(fragment)) {
                     mFragments.add(fragment);
-                    fragmentTransaction.add(getFragmentHolderId(), fragment, fragment.getClass().getSimpleName());
+                    fragmentTransaction.add(wrapperId, fragment, fragment.getClass().getSimpleName());
                     fragmentTransaction.hide(fragment);
                 }
             }
@@ -602,13 +596,13 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     /**
      * 添加fragments
      */
-    protected void addFragments(ArrayList<Fragment> fragments) {
+    protected void addFragments(@IdRes int wrapperId, ArrayList<Fragment> fragments) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
             for (Fragment fragment : fragments) {
                 if (!mFragments.contains(fragment)) {
                     mFragments.add(fragment);
-                    fragmentTransaction.add(getFragmentHolderId(), fragment, fragment.getClass().getSimpleName());
+                    fragmentTransaction.add(wrapperId, fragment, fragment.getClass().getSimpleName());
                     fragmentTransaction.hide(fragment);
                 }
             }

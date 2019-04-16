@@ -279,7 +279,7 @@ public class TipsDialog implements Dismissable {
 
     @Override
     public void dismiss() {
-        if (mDialog!=null) {
+        if (mDialog != null) {
             mDialog.dismiss();
         }
     }

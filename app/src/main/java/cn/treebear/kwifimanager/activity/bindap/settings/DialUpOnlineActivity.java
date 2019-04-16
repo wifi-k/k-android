@@ -102,7 +102,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
 
     @OnClick(R2.id.btn_dial_up_confirm)
     public void onBtnDialUpConfirmClicked() {
-        showLoading();
+        showLoading(R.string.option_ing, false);
         count = 0;
         mPresenter.dialUpSet(etNetAccount.getText().toString(), etNetPassowrd.getText().toString());
     }
@@ -118,6 +118,7 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
 //        ToastUtils.showShort(R.string.connect_success);
         bindNode();
     }
+
     private void bindNode() {
         ArrayMap<String, Object> map = new ArrayMap<>();
         map.put(Keys.NODE_ID, String.valueOf(SharedPreferencesUtil.getParam(SharedPreferencesUtil.NODE_ID, "")));
