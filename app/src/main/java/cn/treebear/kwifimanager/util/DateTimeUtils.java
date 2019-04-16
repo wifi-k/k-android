@@ -154,7 +154,7 @@ public class DateTimeUtils {
         if (mills < DAY * 365) {
             mills *= 1000;
         }
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfy_M_dHmm = new SimpleDateFormat("yy-M-d H:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdfy_M_dHmm = new SimpleDateFormat("yyyy-MM-dd H:mm");
         GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
         calendar.setTimeInMillis(mills);
         return sdfy_M_dHmm.format(calendar.getTime());

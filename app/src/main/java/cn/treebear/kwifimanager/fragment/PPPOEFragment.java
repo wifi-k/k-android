@@ -72,11 +72,12 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
+        hideLoading();
         WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
         WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
-        hideLoading();
+        updateWifiInfoShow();
 //        startActivity(ModifyWifiInfoActivity.class);
     }
 

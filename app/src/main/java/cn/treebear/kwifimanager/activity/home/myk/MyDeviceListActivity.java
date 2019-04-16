@@ -19,8 +19,8 @@ import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.bindap.BindAction1Activity;
 import cn.treebear.kwifimanager.adapter.MyDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
-import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.http.ApiCode;
@@ -65,7 +65,6 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
         deviceAdapter = new MyDeviceAdapter(nodeList);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(deviceAdapter);
-        mPresenter.getNodeList(pageNo);
         deviceAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             currentModifyPosition = position;
             switch (view.getId()) {
@@ -84,8 +83,9 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
                     break;
             }
         });
+        mPresenter.getNodeList(pageNo = 1);
         refreshLayout.setOnRefreshListener(this::refresh);
-        deviceAdapter.setOnLoadMoreListener(() -> mPresenter.getNodeList(++pageNo), rvDeviceList);
+//        deviceAdapter.setOnLoadMoreListener(() -> mPresenter.getNodeList(++pageNo), rvDeviceList);
     }
 
     private void refresh() {
@@ -104,17 +104,21 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     @Override
     public void onLoadData(NodeInfoDetail resultData) {
         refreshLayout.setRefreshing(false);
-        deviceAdapter.loadMoreComplete();
         needRefresh = false;
+        deviceAdapter.loadMoreComplete();
+        if (resultData == null) {
+            return;
+        }
         if (pageNo == 1) {
             nodeList.clear();
         }
         List<NodeInfoDetail.NodeBean> page = resultData.getPage();
         if (Check.hasContent(page)) {
-            if (resultData.getTotal() < Config.Numbers.PAGE_SIZE) {
-//                deviceAdapter.loadMoreEnd(nodeList.size() == 0);
-                deviceAdapter.loadMoreEnd(true);
-            }
+//            if (page.size() < Config.Numbers.PAGE_SIZE) {
+////                deviceAdapter.loadMoreEnd(nodeList.size() == 0);
+//                deviceAdapter.loadMoreEnd(true);
+//            } else {
+//            }
             nodeList.addAll(page);
         }
         if (nodeList.size() == 0) {
@@ -124,6 +128,14 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
             emptyView.setVisibility(View.GONE);
         }
         deviceAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        super.onLoadFail(resultData, resultMsg, resultCode);
+        needRefresh = true;
+        refreshLayout.setRefreshing(false);
+        deviceAdapter.loadMoreComplete();
     }
 
     @Override
@@ -172,7 +184,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
                     .doClick(new TMessageDialog.DoClickListener() {
                         @Override
                         public void onClickLeft(android.view.View view) {
-                           dismiss(tMessageDialog);
+                            dismiss(tMessageDialog);
                         }
 
                         @Override

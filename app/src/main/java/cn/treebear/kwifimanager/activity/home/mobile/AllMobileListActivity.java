@@ -133,9 +133,9 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
         if (pageNo == 1) {
             mobilePhoneList.clear();
         }
-        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-            mobilePhoneAdapter.loadMoreEnd(true);
-        }
+//        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
+//            mobilePhoneAdapter.loadMoreEnd(true);
+//        }
         mobilePhoneList.addAll(resultData.getPage());
         mobilePhoneAdapter.notifyDataSetChanged();
         tvOnlineDeviceCount.setText(String.valueOf(getOnlineCount(mobilePhoneList)));

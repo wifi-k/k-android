@@ -20,7 +20,6 @@ import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.MobileListBean;
-import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.server.contract.NodeMobileContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.NodeMobilePresenter;
 
@@ -92,12 +91,12 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
             if (pageNo == 1) {
                 guardDeviceList.clear();
             }
-            if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-//                adapter.loadMoreEnd(guardDeviceList.size() == 0);
-                adapter.loadMoreEnd(true);
-            } else {
+//            if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
+////                adapter.loadMoreEnd(guardDeviceList.size() == 0);
+//                adapter.loadMoreEnd(true);
+//            } else {
                 adapter.loadMoreComplete();
-            }
+//            }
             guardDeviceList.addAll(resultData.getPage());
 //            emptyViewWrapper.setVisibility(guardDeviceList.size() == 0 ? View.VISIBLE : View.GONE);
             emptyViewWrapper.setVisibility(View.GONE);

@@ -25,6 +25,7 @@ import cn.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import cn.treebear.kwifimanager.fragment.MeFragment;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
+import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
 import cn.treebear.kwifimanager.util.TLog;
 
@@ -145,6 +146,9 @@ public class MainActivity extends BaseFragmentActivity {
         } else {
             // 若未认证 且当前为绑定界面
             if (getCurrentFragment(R.id.vp_fragments) instanceof HomeBindFragment) {
+                if (!NetWorkUtils.isNetConnected(this)) {
+                    return;
+                }
                 // 切换为未绑定界面
                 replaceFragment(R.id.vp_fragments, 0, homeUnbindFragment);
                 statusTransparentFontWhite();

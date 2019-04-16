@@ -361,8 +361,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         if (messageList.size() > 0) {
             marqueeNotice.initMarqueeTextView(convertMessage(messageList), (view, position) -> startActivity(MessageListActivity.class));
         } else {
-            marqueeNotice.initMarqueeTextView(ConstConfig.EMPTY_NOTICE, (view, position) -> {
-            });
+            marqueeNotice.initMarqueeTextView(ConstConfig.EMPTY_NOTICE, (view, position) -> startActivity(MessageListActivity.class));
         }
     }
 

@@ -35,6 +35,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
     @BindView(R2.id.tv_dns2)
     TextView tvDns2;
     int count = 0;
+    private boolean needToast;
 
     @Override
     public int layoutId() {
@@ -49,24 +50,29 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
     @Override
     public void onResume() {
         super.onResume();
+        showLoading();
         updateWifiInfoShow();
+        mPresenter.queryNetStatus();
+        needToast = false;
     }
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
+        hideLoading();
         WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
         WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
-        TLog.e(resultData);
-        hideLoading();
-        ToastUtils.showShort(R.string.option_update_success);
+        if (needToast) {
+            ToastUtils.showShort(R.string.option_update_success);
+        }
         updateWifiInfoShow();
     }
 
     @OnClick(R2.id.tv_update_ip_address)
     public void onViewClicked() {
         showLoading();
+        needToast = true;
         mPresenter.dynamicIpSet();
     }
 

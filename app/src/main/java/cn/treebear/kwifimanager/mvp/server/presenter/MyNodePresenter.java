@@ -10,7 +10,6 @@ import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 import cn.treebear.kwifimanager.mvp.server.model.MyNodeModel;
-import cn.treebear.kwifimanager.util.Check;
 
 public class MyNodePresenter extends BasePresenter<MyNodeContract.View, MyNodeContract.Model> implements MyNodeContract.Presenter {
     @Override
@@ -26,7 +25,7 @@ public class MyNodePresenter extends BasePresenter<MyNodeContract.View, MyNodeCo
         mModel.getNodeList(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<NodeInfoDetail>>() {
             @Override
             public void onSuccess(BaseResponse<NodeInfoDetail> resultData) {
-                if (Check.hasContent(resultData, mView)) {
+                if (mView != null) {
                     mView.onLoadData(resultData.getData());
                 }
             }

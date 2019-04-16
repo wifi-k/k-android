@@ -73,9 +73,9 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
         }
         messageList.addAll(resultData.getPage());
         adapter.notifyDataSetChanged();
-        if (resultData.getTotal() < Config.Numbers.PAGE_SIZE) {
-            adapter.loadMoreEnd(true);
-        }
+//        if (resultData.getTotal() < Config.Numbers.PAGE_SIZE) {
+//            adapter.loadMoreEnd(true);
+//        }
         tvEmptyView.setVisibility(messageList.size() == 0 ? View.VISIBLE : View.GONE);
     }
 
