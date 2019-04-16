@@ -1,8 +1,10 @@
 package cn.treebear.kwifimanager.activity.message;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +32,7 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
     @BindView(R2.id.tv_empty_view)
     TextView tvEmptyView;
     int pageNo = 1;
-    private List<MessageInfoBean.PageBean> messageList;
+    private List<MessageInfoBean.PageBean> messageList = new ArrayList<>();
     private MessageAdapter adapter;
 
     @Override
@@ -51,8 +53,9 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
         adapter = new MessageAdapter(messageList);
         rvMessageList.setLayoutManager(new LinearLayoutManager(this));
         rvMessageList.setAdapter(adapter);
+        View header = LayoutInflater.from(this).inflate(R.layout.message_header, null, false);
+        adapter.addHeaderView(header);
         adapter.setEnableLoadMore(true);
-        swipeRefreshLayout.setNestedScrollingEnabled(true);
         swipeRefreshLayout.setOnRefreshListener(() -> mPresenter.getMessageInfoList(pageNo = 1));
         adapter.setOnLoadMoreListener(() -> mPresenter.getMessageInfoList(pageNo += 1), rvMessageList);
     }
@@ -61,17 +64,17 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
     public void onLoadData(MessageInfoBean resultData) {
         hideLoading();
         swipeRefreshLayout.setRefreshing(false);
-        if (resultData == null) return;
+        adapter.loadMoreComplete();
+        if (resultData == null) {
+            return;
+        }
         if (pageNo == 1) {
             messageList.clear();
         }
         messageList.addAll(resultData.getPage());
         adapter.notifyDataSetChanged();
-        if (messageList.size() < Config.Numbers.PAGE_SIZE) {
-//            adapter.loadMoreEnd(messageList.size() == 0);
+        if (resultData.getTotal() < Config.Numbers.PAGE_SIZE) {
             adapter.loadMoreEnd(true);
-        } else {
-            adapter.loadMoreComplete();
         }
         tvEmptyView.setVisibility(messageList.size() == 0 ? View.VISIBLE : View.GONE);
     }

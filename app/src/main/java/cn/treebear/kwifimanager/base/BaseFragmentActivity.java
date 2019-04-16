@@ -67,15 +67,15 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * fragment管理器
      */
     private FragmentManager fragmentManager;
+
+    /**
+     * 多容器的fragment栈
+     */
+    public ArrayMap<Integer, ArrayList<Fragment>> fragmentLists = new ArrayMap<>();
     /**
      * 当前fragment的Index
      */
-    public int currentFragmentIndex = 0;
-    /**
-     * fragment栈
-     */
-    public ArrayList<Fragment> mFragments = new ArrayList<>();
-    public ArrayMap<Integer,ArrayList<Fragment>> fragmentLists = new ArrayMap<>();
+    public ArrayMap<Integer, Integer> fragmentIndexMap = new ArrayMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -532,17 +532,45 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      */
     protected void replaceFragment(@IdRes int wrapperId, int position, Fragment newFragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment oldFragment = mFragments.get(position);
+        Fragment oldFragment = getFragments(wrapperId).get(position);
         fragmentTransaction.hide(oldFragment);
-        mFragments.remove(oldFragment);
-        if (!mFragments.contains(newFragment)) {
-            mFragments.add(position, newFragment);
+        getFragments(wrapperId).remove(oldFragment);
+        if (!getFragments(wrapperId).contains(newFragment)) {
+            getFragments(wrapperId).add(position, newFragment);
             fragmentTransaction.add(wrapperId, newFragment);
         }
-        fragmentTransaction.show(mFragments.get(currentFragmentIndex));
+        fragmentTransaction.show(getCurrentFragment(wrapperId));
         fragmentTransaction.remove(oldFragment);
         fragmentTransaction.commit();
-        forceUpdateFragment(currentFragmentIndex);
+        forceUpdateFragment(wrapperId, getCurrentFragmentIndex(wrapperId));
+    }
+
+    protected ArrayList<Fragment> getFragments(@IdRes int wrapperId) {
+        if (fragmentLists.containsKey(wrapperId)) {
+            return fragmentLists.get(wrapperId);
+        } else {
+            ArrayList<Fragment> fragments = new ArrayList<>();
+            fragmentLists.put(wrapperId, fragments);
+            return fragments;
+        }
+    }
+
+    protected int getCurrentFragmentIndex(@IdRes int wrapperId) {
+        if (fragmentIndexMap.containsKey(wrapperId)) {
+            Integer position = fragmentIndexMap.get(wrapperId);
+            return position == null ? 0 : position;
+        } else {
+            fragmentIndexMap.put(wrapperId, 0);
+            return 0;
+        }
+    }
+
+    protected void setCurrentFragmentIndex(@IdRes int wrapperId, int index) {
+        fragmentIndexMap.put(wrapperId, index);
+    }
+
+    protected Fragment getCurrentFragment(@IdRes int wrapperId) {
+        return getFragments(wrapperId).get(getCurrentFragmentIndex(wrapperId));
     }
 
     /**
@@ -550,12 +578,12 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      *
      * @param newIndex 新下标
      */
-    protected void updateFragment(int newIndex) {
-        if (newIndex != currentFragmentIndex) {
+    protected void updateFragment(@IdRes int wrapperId, int newIndex) {
+        if (newIndex != getCurrentFragmentIndex(wrapperId)) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.hide(mFragments.get(currentFragmentIndex));
-            fragmentTransaction.show(mFragments.get(newIndex));
-            currentFragmentIndex = newIndex;
+            fragmentTransaction.hide(getCurrentFragment(wrapperId));
+            fragmentTransaction.show(getFragments(wrapperId).get(newIndex));
+            setCurrentFragmentIndex(wrapperId, newIndex);
             fragmentTransaction.commit();
         }
     }
@@ -565,11 +593,11 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      *
      * @param newIndex 新下标
      */
-    protected void forceUpdateFragment(int newIndex) {
+    protected void forceUpdateFragment(@IdRes int wrapperId, int newIndex) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.hide(mFragments.get(currentFragmentIndex));
-        fragmentTransaction.show(mFragments.get(newIndex));
-        currentFragmentIndex = newIndex;
+        fragmentTransaction.hide(getCurrentFragment(wrapperId));
+        fragmentTransaction.show(getFragments(wrapperId).get(newIndex));
+        setCurrentFragmentIndex(wrapperId, newIndex);
         fragmentTransaction.commit();
     }
 
@@ -581,14 +609,14 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
             for (Fragment fragment : fragments) {
-                if (!mFragments.contains(fragment)) {
-                    mFragments.add(fragment);
+                if (!getFragments(wrapperId).contains(fragment)) {
+                    getFragments(wrapperId).add(fragment);
                     fragmentTransaction.add(wrapperId, fragment, fragment.getClass().getSimpleName());
                     fragmentTransaction.hide(fragment);
                 }
             }
-            currentFragmentIndex = 0;
-            fragmentTransaction.show(mFragments.get(currentFragmentIndex));
+            setCurrentFragmentIndex(wrapperId, 0);
+            fragmentTransaction.show(getCurrentFragment(wrapperId));
         }
         fragmentTransaction.commitNowAllowingStateLoss();
     }
@@ -600,14 +628,14 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
             for (Fragment fragment : fragments) {
-                if (!mFragments.contains(fragment)) {
-                    mFragments.add(fragment);
+                if (!getFragments(wrapperId).contains(fragment)) {
+                    getFragments(wrapperId).add(fragment);
                     fragmentTransaction.add(wrapperId, fragment, fragment.getClass().getSimpleName());
                     fragmentTransaction.hide(fragment);
                 }
             }
-            currentFragmentIndex = 0;
-            fragmentTransaction.show(mFragments.get(currentFragmentIndex));
+            setCurrentFragmentIndex(wrapperId, 0);
+            fragmentTransaction.show(getCurrentFragment(wrapperId));
         }
         fragmentTransaction.commitNowAllowingStateLoss();
     }

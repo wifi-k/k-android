@@ -83,6 +83,7 @@ public class SettingsActivity extends BaseActivity<SignOutContract.Presenter, Ba
 
     @Override
     public void onSignOut() {
+        dismiss(signOutDialog);
         UserInfoUtil.clearUserInfo();
 //        startActivity(LaunchAccountActivity.class);
         startActivity(SignInActivity.class);

@@ -76,7 +76,7 @@ public class MainActivity extends BaseFragmentActivity {
             statusTransparentFontWhite();
         }
         bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> {
-            updateFragment(i1);
+            updateFragment(R.id.vp_fragments, i1);
             switch (i1) {
                 case 0:
                     if (MyApplication.getAppContext().hasBoundNode()) {
@@ -137,14 +137,14 @@ public class MainActivity extends BaseFragmentActivity {
         //若已认证
         if (MyApplication.getAppContext().hasBoundNode()) {
             // 当前为未绑定界面
-            if (mFragments.get(0) instanceof HomeUnbindFragment) {
+            if (getCurrentFragment(R.id.vp_fragments) instanceof HomeUnbindFragment) {
                 // 切换为已绑定界面
                 replaceFragment(R.id.vp_fragments, 0, homeBindFragment);
                 statusWhiteFontBlack();
             }
         } else {
             // 若未认证 且当前为绑定界面
-            if (mFragments.get(0) instanceof HomeBindFragment) {
+            if (getCurrentFragment(R.id.vp_fragments) instanceof HomeBindFragment) {
                 // 切换为未绑定界面
                 replaceFragment(R.id.vp_fragments, 0, homeUnbindFragment);
                 statusTransparentFontWhite();

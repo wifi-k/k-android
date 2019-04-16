@@ -104,18 +104,16 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     @Override
     public void onLoadData(NodeInfoDetail resultData) {
         refreshLayout.setRefreshing(false);
+        deviceAdapter.loadMoreComplete();
         needRefresh = false;
         if (pageNo == 1) {
             nodeList.clear();
         }
         List<NodeInfoDetail.NodeBean> page = resultData.getPage();
         if (Check.hasContent(page)) {
-            if (page.size() < Config.Numbers.PAGE_SIZE) {
-                deviceAdapter.setEnableLoadMore(false);
+            if (resultData.getTotal() < Config.Numbers.PAGE_SIZE) {
 //                deviceAdapter.loadMoreEnd(nodeList.size() == 0);
                 deviceAdapter.loadMoreEnd(true);
-            } else {
-                deviceAdapter.loadMoreComplete();
             }
             nodeList.addAll(page);
         }

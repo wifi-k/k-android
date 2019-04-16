@@ -369,5 +369,6 @@
     <string name="user">用户</string>
     <string name="_online">" 上线"</string>
     <string name="_offline">" 离线"</string>
+    <string name="notice">通知</string>
 
 </resources>

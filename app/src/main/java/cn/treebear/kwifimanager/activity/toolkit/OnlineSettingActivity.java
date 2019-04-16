@@ -54,7 +54,7 @@ public class OnlineSettingActivity extends BaseFragmentActivity {
                 @Override
                 public void onClickItem(int position) {
                     tvChooseOnlineType.setText(ConstConfig.ONLINE_TIME_TYPE.get(position));
-                    updateFragment(position);
+                    updateFragment(R.id.fragment_wrapper, position);
                 }
             });
         }
