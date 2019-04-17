@@ -10,7 +10,6 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
-import androidx.core.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
 import com.blankj.utilcode.constant.PermissionConstants;
@@ -20,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
+import androidx.core.app.ActivityCompat;
 
 /**
  * 手机状态工具类

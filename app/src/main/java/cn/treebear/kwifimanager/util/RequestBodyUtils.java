@@ -11,10 +11,10 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 public class RequestBodyUtils {
+    private static ArrayMap<String, Object> emptyMap = new ArrayMap<String, Object>();
+
     private RequestBodyUtils() {
     }
-
-    private static ArrayMap<String, Object> emptyMap = new ArrayMap<String, Object>();
 
     /**
      * 获取空map对象

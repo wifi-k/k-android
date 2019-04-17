@@ -1,11 +1,11 @@
 package cn.treebear.kwifimanager.util;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Size;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Size;
 
 /**
  * @author Administrator

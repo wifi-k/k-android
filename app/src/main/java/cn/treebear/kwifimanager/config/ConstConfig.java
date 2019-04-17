@@ -1,12 +1,11 @@
 package cn.treebear.kwifimanager.config;
 
 
-import androidx.annotation.IntDef;
-import androidx.collection.ArrayMap;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.annotation.IntDef;
+import androidx.collection.ArrayMap;
 import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.Daybean;
@@ -17,12 +16,6 @@ import cn.treebear.kwifimanager.bean.Daybean;
  */
 
 public interface ConstConfig {
-    @IntDef({
-            Calendar.FRIDAY, Calendar.MONDAY, Calendar.THURSDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.SATURDAY, Calendar.SUNDAY
-    })
-    @interface DayCode {
-    }
-
     ArrayList<Integer> HOME_GUIDE_IMAGE_RESID = new ArrayList<Integer>() {{
         add(0, R.drawable.guide_home_1);
         add(1, R.drawable.guide_home_2);
@@ -34,7 +27,6 @@ public interface ConstConfig {
             add("暂无消息");
         }
     }};
-
     ArrayMap<String, Integer> PHONE_BRAND = new ArrayMap<String, Integer>() {{
         put("apple", R.string.apple);
         put("default", R.string.other);
@@ -45,7 +37,6 @@ public interface ConstConfig {
         put("samsung", R.string.samsung);
         put("vivo", R.string.vivo);
     }};
-
     ArrayList<Daybean> DAY_OF_WEEK = new ArrayList<Daybean>() {
         {
             add(new Daybean("一", Calendar.MONDAY));
@@ -57,18 +48,15 @@ public interface ConstConfig {
             add(new Daybean("日", Calendar.SUNDAY));
         }
     };
-
     ArrayList<Integer> ONLINE_TIME_TYPE = new ArrayList<Integer>() {{
         add(R.string.auto_get_ip_address);
         add(R.string.static_ip_address);
         add(R.string.pppoe);
     }};
-
     ArrayList<Integer> SPECTRUM_BANDWIDTH = new ArrayList<Integer>() {{
         add(R.string.auto);
         add(R.string.sb_20mhz);
     }};
-
     ArrayList<Integer> WORK_MODEL = new ArrayList<Integer>() {{
         add(R.string.wm_11b);
         add(R.string.wm_11g);
@@ -88,6 +76,11 @@ public interface ConstConfig {
         add(R.string.nc_8);
         add(R.string.nc_9);
     }};
+    @IntDef({
+            Calendar.FRIDAY, Calendar.MONDAY, Calendar.THURSDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.SATURDAY, Calendar.SUNDAY
+    })
+    @interface DayCode {
+    }
 
 
 }

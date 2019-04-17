@@ -18,20 +18,22 @@ import android.widget.RelativeLayout;
 
 import java.util.List;
 
+import androidx.annotation.Size;
 import cn.treebear.kwifimanager.R;
 
 /**
  * Created by zhouweixian on 2016/1/23.
  */
 public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlobalLayoutListener {
-    private final String TAG = getClass().getSimpleName();
-    private Context mContent;
-    private List<View> mViews;
-    private boolean first = true;
     /**
      * targetView前缀。SHOW_GUIDE_PREFIX + targetView.getId()作为保存在SP文件的key。
      */
     private static final String SHOW_GUIDE_PREFIX = "show_guide_on_view_";
+    private final String TAG = getClass().getSimpleName();
+    boolean needDraw = true;
+    private Context mContent;
+    private List<View> mViews;
+    private boolean first = true;
     /**
      * GuideView 偏移量
      */
@@ -84,7 +86,6 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
      * 相对于targetView的位置.在target的那个方向
      */
     private Direction direction;
-
     /**
      * 形状
      */
@@ -96,6 +97,13 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
     private boolean onClickExit;
     private OnClickCallback onclickListener;
     private RelativeLayout guideViewLayout;
+    private int[] paddingOffset = {0, 0, 0, 0};
+
+    public GuideView(Context context) {
+        super(context);
+        this.mContent = context;
+        init();
+    }
 
     public void restoreState() {
         Log.v(TAG, "restoreState");
@@ -120,12 +128,6 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
 
     public void setLocation(int[] location) {
         this.location = location;
-    }
-
-    public GuideView(Context context) {
-        super(context);
-        this.mContent = context;
-        init();
     }
 
     public int getRadius() {
@@ -156,6 +158,16 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
         this.customGuideView = customGuideView;
         if (!first) {
             restoreState();
+        }
+    }
+
+    public void setTargetPadding(@Size(min = 1, max = 4) int... padding) {
+        if (padding.length == 1) {
+            paddingOffset[0] = paddingOffset[1] = paddingOffset[2] = paddingOffset[3] = padding[0];
+        } else if (padding.length == paddingOffset.length) {
+            for (int i = 0; i < padding.length; i++) {
+                paddingOffset[i] = padding[i];
+            }
         }
     }
 
@@ -253,8 +265,10 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
 
                 int left = center[0] - radius;
                 int right = center[0] + radius;
-                int top = center[1] - radius;
-                int bottom = center[1] + radius;
+                int top = center[1] - 2 * radius;
+                int bottom = center[1] + 2 * radius;
+//                int top = center[1] - radius;
+//                int bottom = center[1] + radius;
                 switch (direction) {
                     case TOP:
                         this.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
@@ -328,8 +342,6 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
         return -1;
     }
 
-    boolean needDraw = true;
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -379,18 +391,18 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
                     break;
                 case ELLIPSE://椭圆
                     //RectF对象
-                    oval.left = center[0] - 150;                              //左边
-                    oval.top = center[1] - 50;                                   //上边
-                    oval.right = center[0] + 150;                             //右边
-                    oval.bottom = center[1] + 50;                                //下边
+                    oval.left = center[0] - paddingOffset[0];                              //左边
+                    oval.top = center[1] - paddingOffset[1];                                   //上边
+                    oval.right = center[0] + paddingOffset[2];                             //右边
+                    oval.bottom = center[1] + paddingOffset[3];                                //下边
                     temp.drawOval(oval, mCirclePaint);                   //绘制椭圆
                     break;
                 case RECTANGULAR://圆角矩形
                     //RectF对象
-                    oval.left = center[0] - 150;                              //左边
-                    oval.top = center[1] - 50;                                   //上边
-                    oval.right = center[0] + 150;                             //右边
-                    oval.bottom = center[1] + 50;                                //下边
+                    oval.left = center[0] - paddingOffset[0];                              //左边
+                    oval.top = center[1] - paddingOffset[1];                                   //上边
+                    oval.right = center[0] + paddingOffset[2];                             //右边
+                    oval.bottom = center[1] + paddingOffset[3];                                //下边
                     temp.drawRoundRect(oval, radius, radius, mCirclePaint);                   //绘制圆角矩形
                     break;
             }
@@ -494,6 +506,11 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
 
         public Builder setTargetView(View target) {
             guiderView.setTargetView(target);
+            return instance;
+        }
+
+        public Builder setPaddingOffset(@Size(min = 1, max = 4) int... paddingOffset) {
+            guiderView.setTargetPadding(paddingOffset);
             return instance;
         }
 

@@ -32,6 +32,6 @@ public class BindHomeModel extends BaseServerModel implements BindHomeContract.M
 
     @Override
     public void getChildrenList(RequestBody params, AsyncCallBack<BaseResponse<ChildrenListBean>> callBack) {
-        bindObservable(mService.getChildrenList(params),callBack);
+        bindObservable(mService.getChildrenList(params), callBack);
     }
 }

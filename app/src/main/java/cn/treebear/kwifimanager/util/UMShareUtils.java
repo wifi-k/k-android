@@ -1,13 +1,14 @@
 package cn.treebear.kwifimanager.util;
 
 import android.app.Activity;
-import androidx.annotation.DrawableRes;
 
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+
+import androidx.annotation.DrawableRes;
 
 public class UMShareUtils {
 

@@ -218,6 +218,16 @@ public class WebsiteActivity extends BaseActivity {
         wvWebsite.loadUrl(javaScript);
     }
 
+    @Override
+    protected void onDestroy() {
+        if (conn != null) {
+            downloadBinder = null;
+            unbindService(conn);
+        }
+        dismiss(messageDialog);
+        super.onDestroy();
+    }
+
     private static class MyWebViewClient extends WebViewClient {
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
@@ -274,15 +284,5 @@ public class WebsiteActivity extends BaseActivity {
         public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
             return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (conn != null) {
-            downloadBinder = null;
-            unbindService(conn);
-        }
-        dismiss(messageDialog);
-        super.onDestroy();
     }
 }

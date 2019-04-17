@@ -48,11 +48,11 @@ public class ModifyTimeActivity extends BaseActivity {
     @Override
     protected void initView() {
         if (timeLimit != null) {
-            setTitleBack(R.string.edit,R.string.save);
+            setTitleBack(R.string.edit, R.string.save);
             tvStartTime.setText(timeLimit.getStartTime());
             tvEndTime.setText(timeLimit.getEndTime());
         } else {
-            setTitleBack(R.string.increase,R.string.save);
+            setTitleBack(R.string.increase, R.string.save);
         }
     }
 

@@ -1,11 +1,12 @@
 package cn.treebear.kwifimanager.util;
 
 import android.app.Activity;
-import androidx.collection.ArrayMap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+
+import androidx.collection.ArrayMap;
 
 /**
  * 手动管理活动栈结构
@@ -32,7 +33,7 @@ public class ActivityStackUtils {
      * @param activity 入栈界面
      */
     public static void pressActivity(String tag, Activity activity) {
-        requestStack(tag).add(0,activity);
+        requestStack(tag).add(0, activity);
     }
 
     /**

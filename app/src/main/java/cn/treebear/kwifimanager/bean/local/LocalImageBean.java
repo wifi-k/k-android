@@ -19,12 +19,14 @@ public class LocalImageBean {
         this.dateAdded = dateAdded;
         this.filepath = filepath;
     }
-    public LocalImageBean(String thumbPath, long dateAdded, String date,String filepath) {
+
+    public LocalImageBean(String thumbPath, long dateAdded, String date, String filepath) {
         this.thumbPath = thumbPath;
         this.dateAdded = dateAdded;
         this.date = date;
         this.filepath = filepath;
     }
+
     public LocalImageBean(String thumbPath, String dateAdded, String filepath) {
         this.thumbPath = thumbPath;
         this.date = dateAdded;

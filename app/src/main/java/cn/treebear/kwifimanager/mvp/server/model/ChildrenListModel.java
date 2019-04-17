@@ -9,6 +9,6 @@ import okhttp3.RequestBody;
 public class ChildrenListModel extends BaseServerModel implements ChildrenListContract.Model {
     @Override
     public void getChildrenList(RequestBody body, AsyncCallBack<BaseResponse<ChildrenListBean>> callBack) {
-        bindObservable(mService.getChildrenList(body),callBack);
+        bindObservable(mService.getChildrenList(body), callBack);
     }
 }

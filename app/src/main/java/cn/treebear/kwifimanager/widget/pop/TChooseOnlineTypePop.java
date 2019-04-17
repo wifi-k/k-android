@@ -19,6 +19,9 @@ import cn.treebear.kwifimanager.widget.Dismissable;
  */
 public class TChooseOnlineTypePop implements Dismissable {
 
+    public static final int DYNAMIC = 0;
+    public static final int STATIC = 1;
+    public static final int PPPOE = 2;
     private final Context mContext;
     private PopupWindow popupWindow;
     private View mContentView;
@@ -26,9 +29,6 @@ public class TChooseOnlineTypePop implements Dismissable {
     private TextView tvStatic;
     private TextView tvPppoe;
     private TextView[] tvs;
-    public static final int DYNAMIC = 0;
-    public static final int STATIC = 1;
-    public static final int PPPOE = 2;
     private int currentPosition = 0;
     private int selectedColor = Color.parseColor("#25DBBD");
     private int unSelectedColor = Color.parseColor("#28354C");

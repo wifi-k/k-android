@@ -61,6 +61,8 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     RelativeLayout rlTabWrapper;
     @BindView(R2.id.iv_backup)
     ImageView ivBackup;
+    LinearLayout llPicWrapper;
+    LinearLayout llTextWrapper;
     private ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
     private ArrayList<LocalImageSection> sections = new ArrayList<>();
     private LoaderManager loaderManager;
@@ -74,8 +76,6 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     private TextView tvSharePic;
     private TextView tvHasNotBackup;
     private TextView tvToBackup;
-    LinearLayout llPicWrapper;
-    LinearLayout llTextWrapper;
 
     @Override
     public int layoutId() {
@@ -188,7 +188,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     }
 
     @OnClick(R2.id.iv_backup)
-    public void onBackupClick(){
+    public void onBackupClick() {
         startActivity(GalleryBackupActivity.class);
     }
 

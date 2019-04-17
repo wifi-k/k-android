@@ -11,14 +11,21 @@ import java.util.ArrayList;
  */
 public class BanAppPlanBean implements Serializable, Parcelable {
 
+    public static final Creator<BanAppPlanBean> CREATOR = new Creator<BanAppPlanBean>() {
+        @Override
+        public BanAppPlanBean createFromParcel(Parcel source) {
+            return new BanAppPlanBean(source);
+        }
+
+        @Override
+        public BanAppPlanBean[] newArray(int size) {
+            return new BanAppPlanBean[size];
+        }
+    };
     private long id;
-
     private String name;
-
     private ArrayList<TimeLimitBean> limitOnlineTime;
-
     private ArrayList<AppBean> banApps;
-
     private ArrayList<MobilePhoneBean> banMobile;
 
     public BanAppPlanBean(String name, ArrayList<TimeLimitBean> limitOnlineTime, ArrayList<AppBean> banApps, ArrayList<MobilePhoneBean> banMobile) {
@@ -26,6 +33,17 @@ public class BanAppPlanBean implements Serializable, Parcelable {
         this.limitOnlineTime = limitOnlineTime;
         this.banApps = banApps;
         this.banMobile = banMobile;
+    }
+
+    protected BanAppPlanBean(Parcel in) {
+        this.id = in.readLong();
+        this.name = in.readString();
+        this.limitOnlineTime = new ArrayList<TimeLimitBean>();
+        in.readList(this.limitOnlineTime, TimeLimitBean.class.getClassLoader());
+        this.banApps = new ArrayList<AppBean>();
+        in.readList(this.banApps, AppBean.class.getClassLoader());
+        this.banMobile = new ArrayList<MobilePhoneBean>();
+        in.readList(this.banMobile, MobilePhoneBean.class.getClassLoader());
     }
 
     public long getId() {
@@ -97,27 +115,4 @@ public class BanAppPlanBean implements Serializable, Parcelable {
         dest.writeList(this.banApps);
         dest.writeList(this.banMobile);
     }
-
-    protected BanAppPlanBean(Parcel in) {
-        this.id = in.readLong();
-        this.name = in.readString();
-        this.limitOnlineTime = new ArrayList<TimeLimitBean>();
-        in.readList(this.limitOnlineTime, TimeLimitBean.class.getClassLoader());
-        this.banApps = new ArrayList<AppBean>();
-        in.readList(this.banApps, AppBean.class.getClassLoader());
-        this.banMobile = new ArrayList<MobilePhoneBean>();
-        in.readList(this.banMobile, MobilePhoneBean.class.getClassLoader());
-    }
-
-    public static final Creator<BanAppPlanBean> CREATOR = new Creator<BanAppPlanBean>() {
-        @Override
-        public BanAppPlanBean createFromParcel(Parcel source) {
-            return new BanAppPlanBean(source);
-        }
-
-        @Override
-        public BanAppPlanBean[] newArray(int size) {
-            return new BanAppPlanBean[size];
-        }
-    };
 }

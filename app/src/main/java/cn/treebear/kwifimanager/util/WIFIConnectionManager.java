@@ -124,6 +124,7 @@ public class WIFIConnectionManager {
 
     /**
      * 打开WiFi
+     *
      * @return
      */
     public boolean openWifi() {
@@ -136,6 +137,7 @@ public class WIFIConnectionManager {
 
     /**
      * 关闭wifi
+     *
      * @return
      */
     public boolean closeWifi() {
@@ -148,6 +150,7 @@ public class WIFIConnectionManager {
 
     /**
      * 断开连接
+     *
      * @return
      */
     public WIFIConnectionManager disconnect() {

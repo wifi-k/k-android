@@ -1,9 +1,8 @@
 package cn.treebear.kwifimanager.mvp.server.contract;
 
-import androidx.annotation.Size;
-
 import java.util.List;
 
+import androidx.annotation.Size;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.base.IPresenter;
 import cn.treebear.kwifimanager.bean.TimeControlbean;

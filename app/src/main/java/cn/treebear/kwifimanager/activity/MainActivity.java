@@ -2,7 +2,6 @@ package cn.treebear.kwifimanager.activity;
 
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chaychan.library.BottomBarLayout;
@@ -17,9 +16,9 @@ import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.base.BaseFragmentActivity;
 import cn.treebear.kwifimanager.base.IPresenter;
 import cn.treebear.kwifimanager.config.Config;
-import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.fragment.GalleryFragment;
+import cn.treebear.kwifimanager.fragment.GuideFragment;
 import cn.treebear.kwifimanager.fragment.HomeBindFragment;
 import cn.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import cn.treebear.kwifimanager.fragment.MeFragment;
@@ -42,6 +41,7 @@ public class MainActivity extends BaseFragmentActivity {
     BottomBarLayout bottomBar;
     HomeBindFragment homeBindFragment;
     HomeUnbindFragment homeUnbindFragment;
+    long lastPressBackMills = 0;
     private ArrayList<Fragment> fragments = new ArrayList<Fragment>() {
         {
             homeBindFragment = new HomeBindFragment();
@@ -55,7 +55,7 @@ public class MainActivity extends BaseFragmentActivity {
             add(2, new MeFragment());
         }
     };
-    long lastPressBackMills = 0;
+    private GuideFragment guideFragment;
 
     @Override
     public int layoutId() {
@@ -100,22 +100,32 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     private void checkFirstIn() {
-//        findViewById(R.id.full_screen_fragment_wrapper).setVisibility(View.VISIBLE);
-//        addFragments(R.id.full_screen_fragment_wrapper, new GuideFragment());
-
         if (!(boolean) SharedPreferencesUtil.getParam(Keys.FIRST_IN, false) && !MyApplication.getAppContext().hasBoundNode()) {
-            ImageView ivGuide = findViewById(R.id.iv_guide);
-            final int[] position = {0};
-            ivGuide.setVisibility(View.VISIBLE);
-            ivGuide.setImageResource(ConstConfig.HOME_GUIDE_IMAGE_RESID.get(position[0]));
-            ivGuide.setOnClickListener(v -> {
-                if ((++position[0]) < ConstConfig.HOME_GUIDE_IMAGE_RESID.size()) {
-                    ivGuide.setImageResource(ConstConfig.HOME_GUIDE_IMAGE_RESID.get(position[0]));
-                } else {
-                    ivGuide.setVisibility(View.GONE);
-                }
-            });
+//            findViewById(R.id.full_screen_fragment_wrapper).setVisibility(View.VISIBLE);
+            guideFragment = new GuideFragment();
+            addFragments(R.id.full_screen_fragment_wrapper, guideFragment);
             SharedPreferencesUtil.setParam(Keys.FIRST_IN, true);
+        }
+
+//        if (!(boolean) SharedPreferencesUtil.getParam(Keys.FIRST_IN, false) && !MyApplication.getAppContext().hasBoundNode()) {
+//            ImageView ivGuide = findViewById(R.id.iv_guide);
+//            final int[] position = {0};
+//            ivGuide.setVisibility(View.VISIBLE);
+//            ivGuide.setImageResource(ConstConfig.HOME_GUIDE_IMAGE_RESID.get(position[0]));
+//            ivGuide.setOnClickListener(v -> {
+//                if ((++position[0]) < ConstConfig.HOME_GUIDE_IMAGE_RESID.size()) {
+//                    ivGuide.setImageResource(ConstConfig.HOME_GUIDE_IMAGE_RESID.get(position[0]));
+//                } else {
+//                    ivGuide.setVisibility(View.GONE);
+//                }
+//            });
+//            SharedPreferencesUtil.setParam(Keys.FIRST_IN, true);
+//        }
+    }
+
+    public void hidenGuideFragment() {
+        if (guideFragment != null) {
+            removeFragment(R.id.full_screen_fragment_wrapper, guideFragment, true);
         }
     }
 

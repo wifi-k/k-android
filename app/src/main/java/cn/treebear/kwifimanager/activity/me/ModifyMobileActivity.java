@@ -126,7 +126,7 @@ public class ModifyMobileActivity extends BaseActivity<ModifyUserMobileContract.
 
     @Override
     public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
-        super.onLoadFail(response,resultMsg, resultCode);
+        super.onLoadFail(response, resultMsg, resultCode);
         ToastUtils.showShort(R.string.verify_code_send_failed_retry);
     }
 

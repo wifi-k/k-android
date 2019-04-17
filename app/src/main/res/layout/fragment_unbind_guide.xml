@@ -37,13 +37,11 @@
 
         <ImageView
             android:id="@+id/iv_bind_guide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="62dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:paddingStart="50dp"
             android:paddingTop="10dp"
-            android:paddingEnd="50dp"
             android:paddingBottom="10dp"
             android:src="@mipmap/ic_home_unsign_bind"
             app:layout_constraintEnd_toEndOf="@+id/frameLayout"

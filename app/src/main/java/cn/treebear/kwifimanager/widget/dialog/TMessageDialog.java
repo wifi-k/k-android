@@ -31,6 +31,10 @@ import cn.treebear.kwifimanager.widget.ProgressDrawableHelper;
  */
 public class TMessageDialog implements Dismissable {
 
+    private static final String TITLE_DEFAULT_COLOR = "#323232";
+    private static final String CONTENT_DEFAULT_COLOR = "#8D8D8D";
+    private static final String CANCEL_DEFAULT_COLOR = "#212121";
+    private static final String CONFIRM_DEFAULT_COLOR = "#FFFFFF";
     private Context mContext;
     private Dialog mDialog;
     private View view;
@@ -47,10 +51,6 @@ public class TMessageDialog implements Dismissable {
     private LinearLayout llProgress;
     private LinearLayout llButton;
     private TextView tvProgress;
-    private static final String TITLE_DEFAULT_COLOR = "#323232";
-    private static final String CONTENT_DEFAULT_COLOR = "#8D8D8D";
-    private static final String CANCEL_DEFAULT_COLOR = "#212121";
-    private static final String CONFIRM_DEFAULT_COLOR = "#FFFFFF";
     private float widthPercent = 0.75f;
     private DoClickListener mListener = new DoClickListener() {
         @Override

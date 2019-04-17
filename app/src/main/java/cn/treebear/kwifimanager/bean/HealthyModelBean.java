@@ -27,16 +27,16 @@ public class HealthyModelBean implements Serializable {
         return op;
     }
 
+    public void setOp(int op) {
+        this.op = op;
+    }
+
     public String getWifi() {
         return wifi;
     }
 
     public void setWifi(String wifi) {
         this.wifi = wifi;
-    }
-
-    public void setOp(int op) {
-        this.op = op;
     }
 
     public List<WifiBean> getWifiBeans() {
@@ -82,6 +82,15 @@ public class HealthyModelBean implements Serializable {
             this.timer = timer;
         }
 
+        @Override
+        public String toString() {
+            return "WifiBean{" +
+                    "freq=" + freq +
+                    ", rssi=" + rssi +
+                    ", timer=" + timer +
+                    '}';
+        }
+
         public static class TimerBean implements Serializable {
             /**
              * startTime : 23:00
@@ -114,15 +123,6 @@ public class HealthyModelBean implements Serializable {
                         ", endTime='" + endTime + '\'' +
                         '}';
             }
-        }
-
-        @Override
-        public String toString() {
-            return "WifiBean{" +
-                    "freq=" + freq +
-                    ", rssi=" + rssi +
-                    ", timer=" + timer +
-                    '}';
         }
     }
 }

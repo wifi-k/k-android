@@ -16,7 +16,6 @@ import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.MessageAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
-import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.server.contract.MessageConstract;
 import cn.treebear.kwifimanager.mvp.server.presenter.MessagePresenter;
 

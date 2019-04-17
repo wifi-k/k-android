@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyLinearLayoutManager extends LinearLayoutManager {
 
     private static final String TAG = MyLinearLayoutManager.class.getSimpleName();
+    private int[] mMeasuredDimension = new int[2];
 
     public MyLinearLayoutManager(Context context) {
         super(context);
@@ -19,7 +20,6 @@ public class MyLinearLayoutManager extends LinearLayoutManager {
         super(context, orientation, reverseLayout);
     }
 
-    private int[] mMeasuredDimension = new int[2];
     @Override
     public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state,
                           int widthSpec, int heightSpec) {
@@ -60,6 +60,7 @@ public class MyLinearLayoutManager extends LinearLayoutManager {
         }
         setMeasuredDimension(width, height);
     }
+
     private void measureScrapChild(RecyclerView.Recycler recycler, int position, int widthSpec,
                                    int heightSpec, int[] measuredDimension) {
         try {

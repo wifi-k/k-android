@@ -41,10 +41,8 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
     RadioButton rbOnlineTypeStatic;
     @BindView(R.id.rb_online_type_dynamic)
     RadioButton rbOnlineTypeDynamic;
-
-    private int onlineType;
-
     int count = 0;
+    private int onlineType;
 
     @Override
     public int layoutId() {

@@ -72,7 +72,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
         WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
-       WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
+        WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
         hideLoading();
 //        startActivity(ModifyWifiInfoActivity.class);
         ToastUtils.showShort(R.string.option_update_success);

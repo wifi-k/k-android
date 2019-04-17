@@ -11,14 +11,21 @@ import java.util.ArrayList;
  */
 public class TimeLimitBean implements Serializable, Parcelable {
 
+    public static final Creator<TimeLimitBean> CREATOR = new Creator<TimeLimitBean>() {
+        @Override
+        public TimeLimitBean createFromParcel(Parcel source) {
+            return new TimeLimitBean(source);
+        }
+
+        @Override
+        public TimeLimitBean[] newArray(int size) {
+            return new TimeLimitBean[size];
+        }
+    };
     private long id;
-
     private String name;
-
     private String startTime;
-
     private String endTime;
-
     private ArrayList<Daybean> days;
 
     public TimeLimitBean() {
@@ -29,6 +36,15 @@ public class TimeLimitBean implements Serializable, Parcelable {
         this.startTime = startTime;
         this.endTime = endTime;
         this.days = days;
+    }
+
+    protected TimeLimitBean(Parcel in) {
+        this.id = in.readLong();
+        this.name = in.readString();
+        this.startTime = in.readString();
+        this.endTime = in.readString();
+        this.days = new ArrayList<Daybean>();
+        in.readList(this.days, Daybean.class.getClassLoader());
     }
 
     public long getId() {
@@ -100,25 +116,4 @@ public class TimeLimitBean implements Serializable, Parcelable {
         dest.writeString(this.endTime);
         dest.writeList(this.days);
     }
-
-    protected TimeLimitBean(Parcel in) {
-        this.id = in.readLong();
-        this.name = in.readString();
-        this.startTime = in.readString();
-        this.endTime = in.readString();
-        this.days = new ArrayList<Daybean>();
-        in.readList(this.days, Daybean.class.getClassLoader());
-    }
-
-    public static final Creator<TimeLimitBean> CREATOR = new Creator<TimeLimitBean>() {
-        @Override
-        public TimeLimitBean createFromParcel(Parcel source) {
-            return new TimeLimitBean(source);
-        }
-
-        @Override
-        public TimeLimitBean[] newArray(int size) {
-            return new TimeLimitBean[size];
-        }
-    };
 }

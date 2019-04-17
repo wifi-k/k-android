@@ -33,12 +33,8 @@ import io.realm.Realm;
  */
 public class MyApplication extends MultiDexApplication {
 
+    public static long time = 0;
     private static MyApplication mContext;
-
-    public static MyApplication getAppContext() {
-        return mContext;
-    }
-
     private boolean needUpdateUserInfo = true;
     private boolean needUpdateNodeInfo = true;
 
@@ -56,7 +52,9 @@ public class MyApplication extends MultiDexApplication {
 
     private String devToken = "";
 
-    public static long time = 0;
+    public static MyApplication getAppContext() {
+        return mContext;
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -146,12 +144,12 @@ public class MyApplication extends MultiDexApplication {
         return user;
     }
 
-    public void setNeedUpdateUserInfo(boolean need) {
-        needUpdateUserInfo = need;
-    }
-
     public boolean isNeedUpdateUserInfo() {
         return needUpdateUserInfo;
+    }
+
+    public void setNeedUpdateUserInfo(boolean need) {
+        needUpdateUserInfo = need;
     }
 
     public String getCurrentSelectNode() {

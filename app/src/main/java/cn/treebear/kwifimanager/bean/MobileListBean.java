@@ -33,8 +33,27 @@ public class MobileListBean implements Serializable {
         this.page = page;
     }
 
+    @Override
+    public String toString() {
+        return "MobileListBean{" +
+                "total=" + total +
+                ", page=" + page +
+                '}';
+    }
+
     public static class MobileBean implements Serializable, Parcelable {
 
+        public static final Creator<MobileBean> CREATOR = new Creator<MobileBean>() {
+            @Override
+            public MobileBean createFromParcel(Parcel source) {
+                return new MobileBean(source);
+            }
+
+            @Override
+            public MobileBean[] newArray(int size) {
+                return new MobileBean[size];
+            }
+        };
         /**
          * id : 5
          * mac : 68:f7:28:77:f4:51
@@ -72,6 +91,29 @@ public class MobileListBean implements Serializable {
         private String localIp;
         private int isRecord;
         private int isOnline;
+
+        public MobileBean() {
+        }
+
+        protected MobileBean(Parcel in) {
+            this.id = in.readInt();
+            this.mac = in.readString();
+            this.name = in.readString();
+            this.onTime = in.readInt();
+            this.offTime = in.readInt();
+            this.status = in.readInt();
+            this.note = in.readString();
+            this.nodeId = in.readString();
+            this.createTime = in.readLong();
+            this.updateTime = in.readLong();
+            this.isDelete = in.readInt();
+            this.isBlock = in.readInt();
+            this.macVendor = in.readString();
+            this.macIcon = in.readString();
+            this.localIp = in.readString();
+            this.isRecord = in.readInt();
+            this.isOnline = in.readInt();
+        }
 
         public int getId() {
             return id;
@@ -257,48 +299,5 @@ public class MobileListBean implements Serializable {
             dest.writeInt(this.isRecord);
             dest.writeInt(this.isOnline);
         }
-
-        public MobileBean() {
-        }
-
-        protected MobileBean(Parcel in) {
-            this.id = in.readInt();
-            this.mac = in.readString();
-            this.name = in.readString();
-            this.onTime = in.readInt();
-            this.offTime = in.readInt();
-            this.status = in.readInt();
-            this.note = in.readString();
-            this.nodeId = in.readString();
-            this.createTime = in.readLong();
-            this.updateTime = in.readLong();
-            this.isDelete = in.readInt();
-            this.isBlock = in.readInt();
-            this.macVendor = in.readString();
-            this.macIcon = in.readString();
-            this.localIp = in.readString();
-            this.isRecord = in.readInt();
-            this.isOnline = in.readInt();
-        }
-
-        public static final Creator<MobileBean> CREATOR = new Creator<MobileBean>() {
-            @Override
-            public MobileBean createFromParcel(Parcel source) {
-                return new MobileBean(source);
-            }
-
-            @Override
-            public MobileBean[] newArray(int size) {
-                return new MobileBean[size];
-            }
-        };
-    }
-
-    @Override
-    public String toString() {
-        return "MobileListBean{" +
-                "total=" + total +
-                ", page=" + page +
-                '}';
     }
 }

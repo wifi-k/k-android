@@ -35,7 +35,26 @@ public class TimeControlbean {
         this.page = page;
     }
 
+    @Override
+    public String toString() {
+        return "TimeControlbean{" +
+                "total=" + total +
+                ", page=" + page +
+                '}';
+    }
+
     public static class TimeControl implements Parcelable, Serializable {
+        public static final Creator<TimeControl> CREATOR = new Creator<TimeControl>() {
+            @Override
+            public TimeControl createFromParcel(Parcel source) {
+                return new TimeControl(source);
+            }
+
+            @Override
+            public TimeControl[] newArray(int size) {
+                return new TimeControl[size];
+            }
+        };
         /**
          * id : 111111111111
          * nodeId :
@@ -53,10 +72,9 @@ public class TimeControlbean {
         private String st;
         private String et;
         private int wt;
-//        private String mac;
+        //        private String mac;
         @SerializedName("mac")
         private ArrayList<String> sMac;
-        private int op;
 
 //        public String getMac() {
 //            return mac;
@@ -65,6 +83,26 @@ public class TimeControlbean {
 //        public void setMac(String mac) {
 //            this.mac = mac;
 //        }
+        private int op;
+
+        public TimeControl() {
+        }
+
+        public TimeControl(long id, int op) {
+            this.id = id;
+            this.op = op;
+        }
+
+        protected TimeControl(Parcel in) {
+            this.id = in.readLong();
+            this.nodeId = in.readString();
+            this.name = in.readString();
+            this.st = in.readString();
+            this.et = in.readString();
+            this.wt = in.readInt();
+            this.sMac = in.createStringArrayList();
+            this.op = in.readInt();
+        }
 
         public long getId() {
             return id;
@@ -144,7 +182,6 @@ public class TimeControlbean {
                     '}';
         }
 
-
         @Override
         public int describeContents() {
             return 0;
@@ -161,44 +198,5 @@ public class TimeControlbean {
             dest.writeStringList(this.sMac);
             dest.writeInt(this.op);
         }
-
-        public TimeControl() {
-        }
-
-        public TimeControl(long id, int op) {
-            this.id = id;
-            this.op = op;
-        }
-
-        protected TimeControl(Parcel in) {
-            this.id = in.readLong();
-            this.nodeId = in.readString();
-            this.name = in.readString();
-            this.st = in.readString();
-            this.et = in.readString();
-            this.wt = in.readInt();
-            this.sMac = in.createStringArrayList();
-            this.op = in.readInt();
-        }
-
-        public static final Creator<TimeControl> CREATOR = new Creator<TimeControl>() {
-            @Override
-            public TimeControl createFromParcel(Parcel source) {
-                return new TimeControl(source);
-            }
-
-            @Override
-            public TimeControl[] newArray(int size) {
-                return new TimeControl[size];
-            }
-        };
-    }
-
-    @Override
-    public String toString() {
-        return "TimeControlbean{" +
-                "total=" + total +
-                ", page=" + page +
-                '}';
     }
 }

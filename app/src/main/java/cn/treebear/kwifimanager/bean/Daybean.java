@@ -10,16 +10,30 @@ import cn.treebear.kwifimanager.config.ConstConfig;
 
 public class Daybean implements Serializable, Parcelable {
 
-    private String name;
+    public static final Creator<Daybean> CREATOR = new Creator<Daybean>() {
+        @Override
+        public Daybean createFromParcel(Parcel source) {
+            return new Daybean(source);
+        }
 
+        @Override
+        public Daybean[] newArray(int size) {
+            return new Daybean[size];
+        }
+    };
+    private String name;
     @ConstConfig.DayCode
     private int code;
-
     private boolean checked;
 
     public Daybean(String name, int code) {
         this.name = name;
         this.code = code;
+    }
+
+    protected Daybean(Parcel in) {
+        this.name = in.readString();
+        this.code = in.readInt();
     }
 
     public boolean isChecked() {
@@ -65,21 +79,4 @@ public class Daybean implements Serializable, Parcelable {
         dest.writeString(this.name);
         dest.writeInt(this.code);
     }
-
-    protected Daybean(Parcel in) {
-        this.name = in.readString();
-        this.code = in.readInt();
-    }
-
-    public static final Creator<Daybean> CREATOR = new Creator<Daybean>() {
-        @Override
-        public Daybean createFromParcel(Parcel source) {
-            return new Daybean(source);
-        }
-
-        @Override
-        public Daybean[] newArray(int size) {
-            return new Daybean[size];
-        }
-    };
 }

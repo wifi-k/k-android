@@ -13,14 +13,21 @@ import java.util.List;
  */
 public class MobilePhoneBean implements Serializable, Parcelable {
 
+    public static final Creator<MobilePhoneBean> CREATOR = new Creator<MobilePhoneBean>() {
+        @Override
+        public MobilePhoneBean createFromParcel(Parcel source) {
+            return new MobilePhoneBean(source);
+        }
+
+        @Override
+        public MobilePhoneBean[] newArray(int size) {
+            return new MobilePhoneBean[size];
+        }
+    };
     private long id;
-
     private String mac;
-
     private String ip;
-
     private String name;
-
     private String brand;
     /**
      * 水果手机，安卓手机，pad
@@ -88,6 +95,27 @@ public class MobilePhoneBean implements Serializable, Parcelable {
         this.averageTime = averageTime;
         this.banOnline = banOnline;
         this.activeApp = activeApp;
+    }
+
+    protected MobilePhoneBean(Parcel in) {
+        this.id = in.readLong();
+        this.mac = in.readString();
+        this.ip = in.readString();
+        this.name = in.readString();
+        this.brand = in.readString();
+        this.type = in.readInt();
+        this.online = in.readByte() != 0;
+        this.onlineTime = in.readLong();
+        this.offlineTime = in.readLong();
+        this.rank = in.readInt();
+        this.averageTime = in.readLong();
+        this.banOnline = in.readByte() != 0;
+        this.children = in.readByte() != 0;
+        this.onlineAlarm = in.readByte() != 0;
+        this.limitSpeed = in.readByte() != 0;
+        this.limitedUploadSpeed = in.readInt();
+        this.limitedDownloadSpeed = in.readInt();
+        this.activeApp = in.createTypedArrayList(AppBean.CREATOR);
     }
 
     public boolean isBanOnline() {
@@ -278,37 +306,4 @@ public class MobilePhoneBean implements Serializable, Parcelable {
         dest.writeInt(this.limitedDownloadSpeed);
         dest.writeTypedList(this.activeApp);
     }
-
-    protected MobilePhoneBean(Parcel in) {
-        this.id = in.readLong();
-        this.mac = in.readString();
-        this.ip = in.readString();
-        this.name = in.readString();
-        this.brand = in.readString();
-        this.type = in.readInt();
-        this.online = in.readByte() != 0;
-        this.onlineTime = in.readLong();
-        this.offlineTime = in.readLong();
-        this.rank = in.readInt();
-        this.averageTime = in.readLong();
-        this.banOnline = in.readByte() != 0;
-        this.children = in.readByte() != 0;
-        this.onlineAlarm = in.readByte() != 0;
-        this.limitSpeed = in.readByte() != 0;
-        this.limitedUploadSpeed = in.readInt();
-        this.limitedDownloadSpeed = in.readInt();
-        this.activeApp = in.createTypedArrayList(AppBean.CREATOR);
-    }
-
-    public static final Creator<MobilePhoneBean> CREATOR = new Creator<MobilePhoneBean>() {
-        @Override
-        public MobilePhoneBean createFromParcel(Parcel source) {
-            return new MobilePhoneBean(source);
-        }
-
-        @Override
-        public MobilePhoneBean[] newArray(int size) {
-            return new MobilePhoneBean[size];
-        }
-    };
 }

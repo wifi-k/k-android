@@ -95,7 +95,7 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
 ////                adapter.loadMoreEnd(guardDeviceList.size() == 0);
 //                adapter.loadMoreEnd(true);
 //            } else {
-                adapter.loadMoreComplete();
+            adapter.loadMoreComplete();
 //            }
             guardDeviceList.addAll(resultData.getPage());
 //            emptyViewWrapper.setVisibility(guardDeviceList.size() == 0 ? View.VISIBLE : View.GONE);

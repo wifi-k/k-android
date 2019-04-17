@@ -25,9 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpClient {
     private static HttpClient mRetrofitHttp;
+    private static String apiToken = "";
     private String baseUrl = Config.Urls.SERVER_BASE_URL;
     private Retrofit retrofit;
-    private static String apiToken = "";
 
     private HttpClient() {
 
@@ -79,10 +79,10 @@ public class HttpClient {
             builder.connectTimeout(30, TimeUnit.SECONDS);
             builder.addInterceptor(headerInterceptor);
 //            if (BuildConfig.DEBUG) {
-                // Log信息拦截器
-                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//这里可以选择拦截级别
-                builder.addInterceptor(loggingInterceptor);
+            // Log信息拦截器
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//这里可以选择拦截级别
+            builder.addInterceptor(loggingInterceptor);
 //            }
             builder.cache(cache);
 

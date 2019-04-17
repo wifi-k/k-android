@@ -45,14 +45,6 @@ public class MarkerView extends RelativeLayout implements IMarker {
         inflated.layout(0, 0, inflated.getMeasuredWidth(), inflated.getMeasuredHeight());
     }
 
-    public void setOffset(MPPointF offset) {
-        mOffset = offset;
-
-        if (mOffset == null) {
-            mOffset = new MPPointF();
-        }
-    }
-
     public void setOffset(float offsetX, float offsetY) {
         mOffset.x = offsetX;
         mOffset.y = offsetY;
@@ -63,6 +55,14 @@ public class MarkerView extends RelativeLayout implements IMarker {
         return mOffset;
     }
 
+    public void setOffset(MPPointF offset) {
+        mOffset = offset;
+
+        if (mOffset == null) {
+            mOffset = new MPPointF();
+        }
+    }
+
     public MPPointF getOffsetRight() {
         return mOffset;
     }
@@ -71,12 +71,12 @@ public class MarkerView extends RelativeLayout implements IMarker {
         return mOffset;
     }
 
-    public void setChartView(Chart chart) {
-        mWeakChart = new WeakReference<>(chart);
-    }
-
     public Chart getChartView() {
         return mWeakChart == null ? null : mWeakChart.get();
+    }
+
+    public void setChartView(Chart chart) {
+        mWeakChart = new WeakReference<>(chart);
     }
 
     @Override

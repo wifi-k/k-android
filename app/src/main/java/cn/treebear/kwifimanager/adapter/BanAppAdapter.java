@@ -10,7 +10,7 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.BanAppPlanBean;
 
 public class BanAppAdapter extends BaseQuickAdapter<BanAppPlanBean, BaseViewHolder> {
-    int[] icons = new int[]{R.mipmap.ic_ban_app_0,R.mipmap.ic_ban_app_list_1, R.mipmap.ic_ban_app_list_2};
+    int[] icons = new int[]{R.mipmap.ic_ban_app_0, R.mipmap.ic_ban_app_list_1, R.mipmap.ic_ban_app_list_2};
     int count = 0;
 
     public BanAppAdapter(@Nullable List<BanAppPlanBean> data) {

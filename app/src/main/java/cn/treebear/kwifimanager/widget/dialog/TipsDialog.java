@@ -32,6 +32,10 @@ import cn.treebear.kwifimanager.widget.Dismissable;
  */
 public class TipsDialog implements Dismissable {
 
+    private static final String TITLE_DEFAULT_COLOR = "#333333";
+    private static final String CONTENT_DEFAULT_COLOR = "#999999";
+    private static final String CANCEL_DEFAULT_COLOR = "#212121";
+    private static final String CONFIRM_DEFAULT_COLOR = "#FFFFFF";
     private Context mContext;
     private Dialog mDialog;
     private View view;
@@ -41,10 +45,6 @@ public class TipsDialog implements Dismissable {
     private TextView tvLeft;
     private TextView tvRight;
     private LinearLayout llButton;
-    private static final String TITLE_DEFAULT_COLOR = "#333333";
-    private static final String CONTENT_DEFAULT_COLOR = "#999999";
-    private static final String CANCEL_DEFAULT_COLOR = "#212121";
-    private static final String CONFIRM_DEFAULT_COLOR = "#FFFFFF";
     private float widthPercent = 0.8f;
     private DoClickListener mListener = new DoClickListener() {
         @Override

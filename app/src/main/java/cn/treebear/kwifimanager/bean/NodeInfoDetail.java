@@ -31,8 +31,27 @@ public class NodeInfoDetail implements Serializable {
         this.page = page;
     }
 
+    @Override
+    public String toString() {
+        return "NodeInfoDetail{" +
+                "total=" + total +
+                ", page=" + page +
+                '}';
+    }
+
     public static class NodeBean implements Serializable, Parcelable {
 
+        public static final Creator<NodeBean> CREATOR = new Creator<NodeBean>() {
+            @Override
+            public NodeBean createFromParcel(Parcel source) {
+                return new NodeBean(source);
+            }
+
+            @Override
+            public NodeBean[] newArray(int size) {
+                return new NodeBean[size];
+            }
+        };
         /**
          * nodeId : M1L201507221006635
          * manufactory : Treebear
@@ -96,6 +115,42 @@ public class NodeInfoDetail implements Serializable {
         private int health;
         private String firmwareUpgrade;
         private int isSelect;
+
+        public NodeBean() {
+        }
+
+        protected NodeBean(Parcel in) {
+            this.nodeId = in.readString();
+            this.manufactory = in.readString();
+            this.model = in.readString();
+            this.firmware = in.readString();
+            this.bindTime = in.readLong();
+            this.isBind = in.readInt();
+            this.isShare = in.readInt();
+            this.comment = in.readString();
+            this.createTime = in.readLong();
+            this.updateTime = in.readLong();
+            this.isDelete = in.readInt();
+            this.partner = in.readString();
+            this.memory = in.readInt();
+            this.disk = in.readInt();
+            this.upstream = in.readInt();
+            this.downstream = in.readInt();
+            this.unbindTime = in.readLong();
+            this.shareTime = in.readLong();
+            this.unshareTime = in.readLong();
+            this.userId = in.readInt();
+            this.ip = in.readString();
+            this.name = in.readString();
+            this.inviteCode = in.readString();
+            this.status = in.readInt();
+            this.onlineTime = in.readLong();
+            this.offlineTime = in.readLong();
+            this.token = in.readString();
+            this.health = in.readInt();
+            this.firmwareUpgrade = in.readString();
+            this.isSelect = in.readInt();
+        }
 
         public String getNodeId() {
             return nodeId;
@@ -337,7 +392,6 @@ public class NodeInfoDetail implements Serializable {
             this.isSelect = isSelect;
         }
 
-
         @Override
         public String toString() {
             return "NodeBean{" +
@@ -412,61 +466,5 @@ public class NodeInfoDetail implements Serializable {
             dest.writeString(this.firmwareUpgrade);
             dest.writeInt(this.isSelect);
         }
-
-        public NodeBean() {
-        }
-
-        protected NodeBean(Parcel in) {
-            this.nodeId = in.readString();
-            this.manufactory = in.readString();
-            this.model = in.readString();
-            this.firmware = in.readString();
-            this.bindTime = in.readLong();
-            this.isBind = in.readInt();
-            this.isShare = in.readInt();
-            this.comment = in.readString();
-            this.createTime = in.readLong();
-            this.updateTime = in.readLong();
-            this.isDelete = in.readInt();
-            this.partner = in.readString();
-            this.memory = in.readInt();
-            this.disk = in.readInt();
-            this.upstream = in.readInt();
-            this.downstream = in.readInt();
-            this.unbindTime = in.readLong();
-            this.shareTime = in.readLong();
-            this.unshareTime = in.readLong();
-            this.userId = in.readInt();
-            this.ip = in.readString();
-            this.name = in.readString();
-            this.inviteCode = in.readString();
-            this.status = in.readInt();
-            this.onlineTime = in.readLong();
-            this.offlineTime = in.readLong();
-            this.token = in.readString();
-            this.health = in.readInt();
-            this.firmwareUpgrade = in.readString();
-            this.isSelect = in.readInt();
-        }
-
-        public static final Creator<NodeBean> CREATOR = new Creator<NodeBean>() {
-            @Override
-            public NodeBean createFromParcel(Parcel source) {
-                return new NodeBean(source);
-            }
-
-            @Override
-            public NodeBean[] newArray(int size) {
-                return new NodeBean[size];
-            }
-        };
-    }
-
-    @Override
-    public String toString() {
-        return "NodeInfoDetail{" +
-                "total=" + total +
-                ", page=" + page +
-                '}';
     }
 }

@@ -39,6 +39,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
     private TipsDialog errorTipsDialog;
     private TipsDialog successTipsDialog;
     private TMessageDialog tMessageDialog;
+    private int count = 0;
 
     public HomeUnbindFragment() {
 
@@ -60,12 +61,10 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
         setTitle(R.string.app_name, false);
     }
 
-    private int count = 0;
-
     @OnClick({R.id.iv_bind, R.id.tv_bind})
     public void onViewClicked(View view) {
 //        if (NetWorkUtils.isXiaoKSignIn()) {
-            startActivity(BindAction1Activity.class);
+        startActivity(BindAction1Activity.class);
 //        } else if (!NetWorkUtils.isWifiConnected(mContext)) {
 //            notXiaoKDialog();
 //        } else {

@@ -60,6 +60,15 @@ public class WifiDeviceInfo {
         this.wan = wan;
     }
 
+    @Override
+    public String toString() {
+        return "WifiDeviceInfo{" +
+                "id='" + id + '\'' +
+                ", token='" + token + '\'' +
+                ", wan=" + wan +
+                '}';
+    }
+
     public static class WanBean {
         /**
          * ip :
@@ -158,14 +167,5 @@ public class WifiDeviceInfo {
                     ", passwd='" + passwd + '\'' +
                     '}';
         }
-    }
-
-    @Override
-    public String toString() {
-        return "WifiDeviceInfo{" +
-                "id='" + id + '\'' +
-                ", token='" + token + '\'' +
-                ", wan=" + wan +
-                '}';
     }
 }

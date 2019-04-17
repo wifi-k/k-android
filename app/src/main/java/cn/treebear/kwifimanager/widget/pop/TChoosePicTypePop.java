@@ -2,7 +2,6 @@ package cn.treebear.kwifimanager.widget.pop;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import androidx.annotation.DrawableRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.Dismissable;

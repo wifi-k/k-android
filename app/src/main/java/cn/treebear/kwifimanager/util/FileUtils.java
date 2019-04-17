@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import androidx.annotation.Size;
-import androidx.core.content.FileProvider;
 import android.util.Log;
 
 import java.io.Closeable;
@@ -15,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import androidx.annotation.Size;
+import androidx.core.content.FileProvider;
 import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.config.Config;
@@ -27,12 +27,6 @@ public class FileUtils {
     public static final String APK = "apk";
     private static final String TAG = "FileUtils";
     private static final String DEFAULT_CATEGORY = "android.intent.category.DEFAULT";
-
-    public interface Tails {
-        String JPEG = ".jpg";
-        String APK = ".apk";
-
-    }
 
     private FileUtils() {
     }
@@ -472,5 +466,11 @@ public class FileUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public interface Tails {
+        String JPEG = ".jpg";
+        String APK = ".apk";
+
     }
 }

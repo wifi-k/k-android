@@ -111,7 +111,7 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
 ////            adapter.loadMoreEnd(mobileList.size()==0);
 //            adapter.loadMoreEnd(true);
 //        } else {
-            adapter.loadMoreComplete();
+        adapter.loadMoreComplete();
 //        }
         mobileList.addAll(resultData.getPage());
         for (MobileListBean.MobileBean bean : mobileList) {

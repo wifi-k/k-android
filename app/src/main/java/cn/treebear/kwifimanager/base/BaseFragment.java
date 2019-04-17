@@ -48,12 +48,12 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
     protected P mPresenter;
     protected Context mContext;
     protected ViewGroup mRootView;
+    protected boolean hasLoadData = false;
     /**
      * 限制666ms内多次跳转同一界面
      */
     private long lastClick = 0L;
     private Unbinder unbinder;
-    protected boolean hasLoadData = false;
     private boolean useButterKnife = true;
 
     @Override
@@ -81,7 +81,7 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
         return mRootView;
     }
 
-    protected boolean useButterKnife(){
+    protected boolean useButterKnife() {
         return useButterKnife;
     }
 

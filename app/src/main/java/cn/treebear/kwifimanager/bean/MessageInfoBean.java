@@ -27,6 +27,14 @@ public class MessageInfoBean {
         this.page = page;
     }
 
+    @Override
+    public String toString() {
+        return "MessageInfoBean{" +
+                "total=" + total +
+                ", page=" + page +
+                '}';
+    }
+
     public static class PageBean {
         /**
          * title :
@@ -81,13 +89,5 @@ public class MessageInfoBean {
                     ", createTime='" + createTime + '\'' +
                     '}';
         }
-    }
-
-    @Override
-    public String toString() {
-        return "MessageInfoBean{" +
-                "total=" + total +
-                ", page=" + page +
-                '}';
     }
 }

@@ -41,11 +41,11 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     SwipeRefreshLayout refreshLayout;
     @BindView(R2.id.tv_empty_view)
     TextView emptyView;
+    ArrayList<NodeInfoDetail.NodeBean> nodeList = new ArrayList<>();
     private MyDeviceAdapter deviceAdapter;
     private TInputDialog tInputDialog;
     private int currentModifyPosition;
     private TMessageDialog tMessageDialog;
-    ArrayList<NodeInfoDetail.NodeBean> nodeList = new ArrayList<>();
     private int pageNo = 1;
     private boolean needRefresh = false;
 

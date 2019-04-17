@@ -58,6 +58,7 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     TextView tvDeviceStatus;
     @BindView(R2.id.sw_online_children)
     SwitchButton swbOnlineChildren;
+    int count = 0;
     private TInputDialog modifyNameDialog;
     private MobileListBean.MobileBean mobilePhoneBean;
 
@@ -88,8 +89,6 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
         tvUploadSpeed.setText("不限速");
         tvDownloadSpeed.setText("不限速");
     }
-
-    int count = 0;
 
     private void setListener() {
         swbOnlineChildren.setOnCheckedChangeListener((view, isChecked) -> mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),

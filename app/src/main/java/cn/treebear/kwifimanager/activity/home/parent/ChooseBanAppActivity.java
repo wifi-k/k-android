@@ -34,8 +34,8 @@ public class ChooseBanAppActivity extends BaseActivity {
     SwipeRefreshLayout refreshLayout;
     @BindView(R2.id.tv_empty_view)
     TextView emptyView;
-    private BanAppPlanBean needModifyPlan;
     ArrayList<AppBean> appList = new ArrayList<>();
+    private BanAppPlanBean needModifyPlan;
     private ChooseAppAdapter chooseAppAdapter;
 
     @Override

@@ -15,20 +15,13 @@ import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.bean.local.LocalImageSection;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
-import cn.treebear.kwifimanager.util.TLog;
 
 public class GalleryHelper {
 
-    private static ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
-    private static ArrayList<LocalImageSection> sections = new ArrayList<>();
-
     public static final int IMAGE_MODEL_DISPLAY = 0;
     public static final int IMAGE_MODEL_SELECT = 1;
-
-    @IntDef({IMAGE_MODEL_DISPLAY, IMAGE_MODEL_SELECT})
-    public @interface AdapterModel {
-
-    }
+    private static ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
+    private static ArrayList<LocalImageSection> sections = new ArrayList<>();
 
     private GalleryHelper() {
     }
@@ -147,5 +140,10 @@ public class GalleryHelper {
             header += sections.get(i).isHeader ? 1 : 0;
         }
         return total - header;
+    }
+
+    @IntDef({IMAGE_MODEL_DISPLAY, IMAGE_MODEL_SELECT})
+    public @interface AdapterModel {
+
     }
 }

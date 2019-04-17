@@ -7,22 +7,37 @@ import java.io.Serializable;
 
 public class AppBean implements Serializable, Parcelable {
 
+    public static final Creator<AppBean> CREATOR = new Creator<AppBean>() {
+        @Override
+        public AppBean createFromParcel(Parcel source) {
+            return new AppBean(source);
+        }
+
+        @Override
+        public AppBean[] newArray(int size) {
+            return new AppBean[size];
+        }
+    };
     private int id;
-
     private String iconUrl;
-
     private int iconRes;
-
     private String name;
-
     private long useTime;
-
     private boolean ban;
 
     public AppBean(String name, int iconRes, boolean ban) {
         this.iconRes = iconRes;
         this.name = name;
         this.ban = ban;
+    }
+
+    protected AppBean(Parcel in) {
+        this.id = in.readInt();
+        this.iconUrl = in.readString();
+        this.iconRes = in.readInt();
+        this.name = in.readString();
+        this.useTime = in.readLong();
+        this.ban = in.readByte() != 0;
     }
 
     public boolean isBan() {
@@ -98,25 +113,4 @@ public class AppBean implements Serializable, Parcelable {
         dest.writeLong(this.useTime);
         dest.writeByte(this.ban ? (byte) 1 : (byte) 0);
     }
-
-    protected AppBean(Parcel in) {
-        this.id = in.readInt();
-        this.iconUrl = in.readString();
-        this.iconRes = in.readInt();
-        this.name = in.readString();
-        this.useTime = in.readLong();
-        this.ban = in.readByte() != 0;
-    }
-
-    public static final Creator<AppBean> CREATOR = new Creator<AppBean>() {
-        @Override
-        public AppBean createFromParcel(Parcel source) {
-            return new AppBean(source);
-        }
-
-        @Override
-        public AppBean[] newArray(int size) {
-            return new AppBean[size];
-        }
-    };
 }

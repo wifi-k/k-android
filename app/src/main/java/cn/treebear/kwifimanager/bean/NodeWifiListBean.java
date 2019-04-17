@@ -27,6 +27,14 @@ public class NodeWifiListBean {
         this.page = page;
     }
 
+    @Override
+    public String toString() {
+        return "NodeWifiListBean{" +
+                "total=" + total +
+                ", page=" + page +
+                '}';
+    }
+
     public static class WifiBean {
         /**
          * nodeId :
@@ -92,13 +100,5 @@ public class NodeWifiListBean {
                     ", rssi=" + rssi +
                     '}';
         }
-    }
-
-    @Override
-    public String toString() {
-        return "NodeWifiListBean{" +
-                "total=" + total +
-                ", page=" + page +
-                '}';
     }
 }

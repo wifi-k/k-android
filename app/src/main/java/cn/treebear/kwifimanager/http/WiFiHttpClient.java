@@ -36,12 +36,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WiFiHttpClient {
     private static WiFiHttpClient mRetrofitHttp;
-    private WiFiSettingProxyModel wifiProxyClient;
     private static WifiDeviceInfo wifiDeviceInfo;
+    private static boolean needLogin = true;
+    private WiFiSettingProxyModel wifiProxyClient;
     private String baseUrl = Config.Urls.ROUTER_BASE_URL;
     private Retrofit retrofit;
     private volatile String apiToken = "";
-    private static boolean needLogin = true;
 
     private WiFiHttpClient() {
 
@@ -73,15 +73,15 @@ public class WiFiHttpClient {
         return wifiDeviceInfo;
     }
 
+    public static void setWifiDeviceInfo(WifiDeviceInfo wifiDeviceInfo) {
+        WiFiHttpClient.wifiDeviceInfo = wifiDeviceInfo;
+    }
+
     public static String getApiToken() {
         if (wifiDeviceInfo != null) {
             return wifiDeviceInfo.getToken();
         }
         return getInstance().apiToken;
-    }
-
-    public static void setWifiDeviceInfo(WifiDeviceInfo wifiDeviceInfo) {
-        WiFiHttpClient.wifiDeviceInfo = wifiDeviceInfo;
     }
 
     public static void updateApiToken(String token) {
@@ -94,47 +94,6 @@ public class WiFiHttpClient {
         getInstance().initRetrofit();
     }
 
-    private void initRetrofit() {
-        if (retrofit == null) {
-            //缓存
-            File cacheFile = new File(MyApplication.getAppContext().getCacheDir(), "cache");
-            //100Mb
-            Cache cache = new Cache(cacheFile, 1024 * 1024 * 100);
-            //增加头部信息
-            Interceptor headerInterceptor = chain -> {
-                Request.Builder builder = chain.request().newBuilder()
-                        .addHeader("Content-Type", "application/json")
-                        .addHeader("Api-Token", apiToken)
-                        .addHeader("Accept-Encoding", "utf-8")
-                        .addHeader("Api-Version", "2019.3.1");
-                Request request = builder.build();
-                return chain.proceed(request);
-            };
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(130, TimeUnit.SECONDS);
-            builder.readTimeout(130, TimeUnit.SECONDS);
-            builder.addInterceptor(headerInterceptor);
-//            if (BuildConfig.DEBUG) {
-            // Log信息拦截器
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(loggingInterceptor);
-//            }
-            builder.cache(cache);
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(getBaseUrl())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(builder.build())
-                    .build();
-        }
-    }
-
-    public WiFiApi getApiService() {
-        initRetrofit();
-        return retrofit.create(WiFiApi.class);
-    }
-
     /**
      * 小K设备下线，再次上线需要重新登录
      */
@@ -143,24 +102,6 @@ public class WiFiHttpClient {
         getInstance().apiToken = "";
         getInstance().retrofit = null;
         getInstance().initRetrofit();
-    }
-
-    /**
-     * 便于各个界面调用WiFi登录
-     * 内部处理token更新
-     */
-    public void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
-        TLog.e("OkHttp", "Thread.currentThread().getId() = " + Thread.currentThread().getId());
-        initRetrofit();
-        // 保证全局单次连接wifi只登录一次
-        if (needLogin && !Check.hasContent(apiToken)) {
-            toLogin(callBack);
-        } else {
-            if (callBack != null) {
-                callBack.onSuccess(null);
-            }
-            TLog.w("Current device has logged in !");
-        }
     }
 
     private static void toLogin(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
@@ -225,14 +166,73 @@ public class WiFiHttpClient {
         });
     }
 
-    private String getBaseUrl() {
-        return baseUrl == null ? Config.Urls.ROUTER_BASE_URL : baseUrl;
-    }
-
     public static void dealWithResultCode(int code) {
         if (code == 2) {
             xiaokOffline();
             getInstance().tryToSignInWifi(null);
         }
+    }
+
+    private void initRetrofit() {
+        if (retrofit == null) {
+            //缓存
+            File cacheFile = new File(MyApplication.getAppContext().getCacheDir(), "cache");
+            //100Mb
+            Cache cache = new Cache(cacheFile, 1024 * 1024 * 100);
+            //增加头部信息
+            Interceptor headerInterceptor = chain -> {
+                Request.Builder builder = chain.request().newBuilder()
+                        .addHeader("Content-Type", "application/json")
+                        .addHeader("Api-Token", apiToken)
+                        .addHeader("Accept-Encoding", "utf-8")
+                        .addHeader("Api-Version", "2019.3.1");
+                Request request = builder.build();
+                return chain.proceed(request);
+            };
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.connectTimeout(130, TimeUnit.SECONDS);
+            builder.readTimeout(130, TimeUnit.SECONDS);
+            builder.addInterceptor(headerInterceptor);
+//            if (BuildConfig.DEBUG) {
+            // Log信息拦截器
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(loggingInterceptor);
+//            }
+            builder.cache(cache);
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(getBaseUrl())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .client(builder.build())
+                    .build();
+        }
+    }
+
+    public WiFiApi getApiService() {
+        initRetrofit();
+        return retrofit.create(WiFiApi.class);
+    }
+
+    /**
+     * 便于各个界面调用WiFi登录
+     * 内部处理token更新
+     */
+    public void tryToSignInWifi(IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
+        TLog.e("OkHttp", "Thread.currentThread().getId() = " + Thread.currentThread().getId());
+        initRetrofit();
+        // 保证全局单次连接wifi只登录一次
+        if (needLogin && !Check.hasContent(apiToken)) {
+            toLogin(callBack);
+        } else {
+            if (callBack != null) {
+                callBack.onSuccess(null);
+            }
+            TLog.w("Current device has logged in !");
+        }
+    }
+
+    private String getBaseUrl() {
+        return baseUrl == null ? Config.Urls.ROUTER_BASE_URL : baseUrl;
     }
 }

@@ -52,7 +52,14 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     public static final String RIGHT_TEXT = "right_text";
     public static final String TITLE = "title";
     public static final String URL = "url";
-
+    /**
+     * 多容器的fragment栈
+     */
+    public ArrayMap<Integer, ArrayList<Fragment>> fragmentLists = new ArrayMap<>();
+    /**
+     * 当前fragment的Index
+     */
+    public ArrayMap<Integer, Integer> fragmentIndexMap = new ArrayMap<>();
     protected P mPresenter;
     /**
      * 暴露出来供给单个界面更改样式
@@ -67,15 +74,6 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * fragment管理器
      */
     private FragmentManager fragmentManager;
-
-    /**
-     * 多容器的fragment栈
-     */
-    public ArrayMap<Integer, ArrayList<Fragment>> fragmentLists = new ArrayMap<>();
-    /**
-     * 当前fragment的Index
-     */
-    public ArrayMap<Integer, Integer> fragmentIndexMap = new ArrayMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -601,11 +599,25 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         fragmentTransaction.commit();
     }
 
+    protected void removeFragment(@IdRes int wrapperId, Fragment fragment, boolean hideWrapper) {
+        if (fragmentLists.containsKey(wrapperId) && getFragments(wrapperId).contains(fragment)) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.hide(fragment);
+            getFragments(wrapperId).remove(fragment);
+            fragmentTransaction.remove(fragment);
+            fragmentTransaction.commit();
+            if (hideWrapper) {
+                findViewById(wrapperId).setVisibility(View.GONE);
+            }
+        }
+    }
+
     /**
      * 添加fragments
      */
     @SuppressWarnings("unused")
     protected void addFragments(@IdRes int wrapperId, Fragment... fragments) {
+        findViewById(wrapperId).setVisibility(View.VISIBLE);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
             for (Fragment fragment : fragments) {
@@ -625,6 +637,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * 添加fragments
      */
     protected void addFragments(@IdRes int wrapperId, ArrayList<Fragment> fragments) {
+        findViewById(wrapperId).setVisibility(View.VISIBLE);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragmentTransaction.isEmpty()) {
             for (Fragment fragment : fragments) {

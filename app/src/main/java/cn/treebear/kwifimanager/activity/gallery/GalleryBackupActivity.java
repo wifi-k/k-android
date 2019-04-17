@@ -55,7 +55,7 @@ public class GalleryBackupActivity extends BaseActivity {
         setTitleBack(R.string.pic_backup);
         setAdapter();
         tvBackupTip.setText(Html.fromHtml("正在自动备份照片，剩余<font color='#22DB96'>53</font>张"));
-        tvUploadSpeed.setText(String.format("%sB/s",80));
+        tvUploadSpeed.setText(String.format("%sB/s", 80));
     }
 
     private void setAdapter() {

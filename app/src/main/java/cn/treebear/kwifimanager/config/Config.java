@@ -2,8 +2,8 @@ package cn.treebear.kwifimanager.config;
 
 import android.graphics.Color;
 import android.os.Environment;
-import androidx.annotation.ColorInt;
 
+import androidx.annotation.ColorInt;
 import cn.treebear.kwifimanager.BuildConfig;
 
 /**

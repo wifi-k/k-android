@@ -106,12 +106,12 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
 
     @Override
     public void onLoadData(SUserCover resultData) {
-        if (resultData.getUser()!=null){
+        if (resultData.getUser() != null) {
             userInfo = resultData.getUser();
             userInfo.setToken(MyApplication.getAppContext().getUser().getToken());
             userInfo.setNodeSize(resultData.getNodeSize());
             MyApplication.getAppContext().savedUser(userInfo);
-            tvNickName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length()-4));
+            tvNickName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length() - 4));
             tvMobileNumber.setText(userInfo.getMobile());
             GlideApp.with(mRootView)
                     .load(userInfo.getAvatar())

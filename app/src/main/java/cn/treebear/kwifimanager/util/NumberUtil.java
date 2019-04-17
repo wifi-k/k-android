@@ -1,10 +1,11 @@
 package cn.treebear.kwifimanager.util;
 
-import androidx.annotation.IntRange;
-import androidx.annotation.Size;
 import android.text.TextUtils;
 
 import java.text.DecimalFormat;
+
+import androidx.annotation.IntRange;
+import androidx.annotation.Size;
 
 public class NumberUtil {
 

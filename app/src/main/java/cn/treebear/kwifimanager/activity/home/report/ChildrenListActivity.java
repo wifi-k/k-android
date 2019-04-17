@@ -79,7 +79,7 @@ public class ChildrenListActivity extends BaseActivity<ChildrenListContract.Pres
 ////            adapter.loadMoreEnd(childrenBeans.size() == 0);
 //            adapter.loadMoreEnd(true);
 //        } else {
-            adapter.loadMoreComplete();
+        adapter.loadMoreComplete();
 //        }
         adapter.notifyDataSetChanged();
         tvEmptyView.setVisibility(childrenBeans.size() == 0 ? View.VISIBLE : View.GONE);

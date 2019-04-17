@@ -29,6 +29,22 @@ public class NetWorkReceiver extends BroadcastReceiver {
 
     private boolean hasOnWifi = false;
 
+    public static String getProcessName(Context cxt, int pid) {
+        ActivityManager am = (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            TLog.i("NetWorkReceiver", procInfo.processName);
+            if (procInfo.pid == pid) {
+                TLog.i("NetWorkReceiver-this", procInfo.processName);
+                return procInfo.processName;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!BuildConfig.APPLICATION_ID.equals(getProcessName(context, android.os.Process.myPid()))) {
@@ -43,8 +59,8 @@ public class NetWorkReceiver extends BroadcastReceiver {
                 hasOnWifi = true;
                 TLog.e("OkHttp", "NetWorkUtils 调用登录");
 //                if (WiFiHttpClient.getNeedLogin()) {
-                    WiFiHttpClient.getInstance().tryToSignInWifi(null);
-                    MyApplication.time = System.currentTimeMillis();
+                WiFiHttpClient.getInstance().tryToSignInWifi(null);
+                MyApplication.time = System.currentTimeMillis();
 //                }
             }
             if (!isWifi && hasOnWifi) {
@@ -76,22 +92,6 @@ public class NetWorkReceiver extends BroadcastReceiver {
                 }
             }
         }
-    }
-
-    public static String getProcessName(Context cxt, int pid) {
-        ActivityManager am = (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
-        if (runningApps == null) {
-            return null;
-        }
-        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
-            TLog.i("NetWorkReceiver", procInfo.processName);
-            if (procInfo.pid == pid) {
-                TLog.i("NetWorkReceiver-this", procInfo.processName);
-                return procInfo.processName;
-            }
-        }
-        return null;
     }
 
 }
