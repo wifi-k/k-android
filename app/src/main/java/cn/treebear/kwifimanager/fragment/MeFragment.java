@@ -52,7 +52,7 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
 
     @Override
     protected void initView() {
-//        updateUserInfo();
+        updateUserInfo();
     }
 
     @Override

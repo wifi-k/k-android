@@ -7,174 +7,28 @@
     android:background="@android:color/white"
     tools:context=".fragment.HomeUnbindFragment">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="8dp"
-        android:src="@mipmap/ic_home_aplogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@mipmap/bg_home_top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
-
-    <ImageView
-        android:id="@+id/iv_bind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:src="@mipmap/ic_home_unsign_bind"
-        app:layout_constraintEnd_toEndOf="@+id/frameLayout"
-        app:layout_constraintStart_toStartOf="@+id/frameLayout"
-        app:layout_constraintTop_toBottomOf="@+id/include4" />
-
-    <include
-        android:id="@+id/include4"
-        layout="@layout/common_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
-
-    <TextView
-        android:id="@+id/tv_bind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/bind_k_wifi_manager"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="@+id/iv_bind"
-        app:layout_constraintHorizontal_bias="0.464"
-        app:layout_constraintStart_toStartOf="@+id/iv_bind"
-        app:layout_constraintTop_toBottomOf="@+id/iv_bind" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/join_family_wrapper"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="6dp"
-        android:background="@drawable/bg_home_join_wrapper"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bind">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/join_family_code"
-            android:textColor="@color/text_28354C"
-            android:textSize="20sp"
+        <include
+            layout="@layout/layout_home_unbind"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/include42"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView5"
+        <include
+            android:id="@+id/include42"
+            layout="@layout/layout_bottom_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/join_family_tips"
-            android:textColor="@color/text_28354C"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:src="@mipmap/ic_home_unsign_wifi_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_input_family_code"
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:background="@drawable/rect_strock_6f7f9f"
-            android:drawableEnd="@mipmap/ic_full_arrow_right_darkgray"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="@string/input_family_code"
-            android:textColor="@color/text_4a5a78"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/product_introduce"
-        android:textColor="@color/text_28354C"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/join_family_wrapper" />
-
-    <com.chaychan.library.BottomBarLayout
-        android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.chaychan.library.BottomBarItem
-            style="@style/bottomBarStyle"
-            app:iconNormal="@mipmap/tab_home_gray"
-            app:iconSelected="@mipmap/tab_home_selected"
-            app:itemText="@string/homepage" />
-
-        <com.chaychan.library.BottomBarItem
-            android:id="@+id/bottom_bar_gallery"
-            style="@style/bottomBarStyle"
-            app:iconNormal="@mipmap/tab_gallary_gray"
-            app:iconSelected="@mipmap/tab_gallary_selected"
-            app:itemText="@string/info" />
-
-        <com.chaychan.library.BottomBarItem
-            style="@style/bottomBarStyle"
-            app:iconNormal="@mipmap/tab_mine_gray"
-            app:iconSelected="@mipmap/tab_mine_selected"
-            app:itemText="@string/mine" />
-
-    </com.chaychan.library.BottomBarLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

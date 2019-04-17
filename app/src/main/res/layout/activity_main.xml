@@ -1,67 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="cn.treebear.kwifimanager.activity.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/vp_fragments"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/line1"
-        android:layout_alignParentTop="true" />
+        android:orientation="vertical">
 
-    <View
-        android:id="@+id/line1"
-        android:layout_above="@+id/bottom_bar"
-        android:layout_width="match_parent"
-        android:background="@color/line_f2"
-        android:layout_height="1dp"/>
+        <FrameLayout
+            android:id="@+id/vp_fragments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-    <com.chaychan.library.BottomBarLayout
-        android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
+        <include layout="@layout/layout_bottom_bar" />
 
-        <com.chaychan.library.BottomBarItem
-            style="@style/bottomBarStyle"
-            app:iconNormal="@mipmap/tab_home_gray"
-            app:iconSelected="@mipmap/tab_home_selected"
-            app:itemText="@string/homepage" />
-
-        <com.chaychan.library.BottomBarItem
-            style="@style/bottomBarStyle"
-            app:iconNormal="@mipmap/tab_gallary_gray"
-            app:iconSelected="@mipmap/tab_gallary_selected"
-            app:itemText="@string/info" />
-
-        <com.chaychan.library.BottomBarItem
-            style="@style/bottomBarStyle"
-            app:iconNormal="@mipmap/tab_mine_gray"
-            app:iconSelected="@mipmap/tab_mine_selected"
-            app:itemText="@string/mine" />
-
-    </com.chaychan.library.BottomBarLayout>
+    </LinearLayout>
 
     <ImageView
-        android:id="@+id/iv_guide"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:visibility="gone"
-        tools:src="@drawable/guide_home_2" />
+    android:id="@+id/iv_guide"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="fitXY"
+    android:visibility="gone"
+    tools:src="@drawable/guide_home_2" />
 
     <FrameLayout
         android:id="@+id/full_screen_fragment_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone" />
 
-</RelativeLayout>
+</FrameLayout>

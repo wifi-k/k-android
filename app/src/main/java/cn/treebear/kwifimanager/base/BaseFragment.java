@@ -5,12 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.Size;
-import androidx.annotation.StringRes;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +15,12 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.Size;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.treebear.kwifimanager.R;
@@ -29,8 +29,8 @@ import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.IView;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
-import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import cn.treebear.kwifimanager.widget.Dismissable;
+import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 
 /**
  * @author Tinlone
@@ -54,6 +54,7 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
     private long lastClick = 0L;
     private Unbinder unbinder;
     protected boolean hasLoadData = false;
+    private boolean useButterKnife = true;
 
     @Override
     public void onAttach(Context context) {
@@ -67,7 +68,9 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
         if (mRootView == null) {
             mRootView = (ViewGroup) inflater.inflate(layoutId(), container, false);
         }
-        unbinder = ButterKnife.bind(this, mRootView);
+        if (useButterKnife()) {
+            unbinder = ButterKnife.bind(this, mRootView);
+        }
         mPresenter = getPresenter();
         if (mPresenter != null) {
             mPresenter.attachView(this);
@@ -76,6 +79,10 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
         initData();
         TLog.w("构建" + getClass().getSimpleName());
         return mRootView;
+    }
+
+    protected boolean useButterKnife(){
+        return useButterKnife;
     }
 
     @Override

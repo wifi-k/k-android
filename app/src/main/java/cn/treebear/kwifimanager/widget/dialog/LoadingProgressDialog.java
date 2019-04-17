@@ -76,7 +76,7 @@ public class LoadingProgressDialog {
      * 让dialog消失
      */
     public static void dismissProgressDialog() {
-        if (dialog != null && dialog.isShowing()) {
+        if (dialog != null) {
             dialog.dismiss();
         }
         if (dialog != null) {

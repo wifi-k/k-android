@@ -49,8 +49,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:ems="15"
                         android:fontFamily="sans-serif-medium"
+                        android:maxEms="15"
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
                         tools:text="妈妈的手机" />

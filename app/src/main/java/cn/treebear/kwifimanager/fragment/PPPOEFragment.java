@@ -15,13 +15,12 @@ import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
-import cn.treebear.kwifimanager.mvp.wifi.contract.DynamicIpContract;
 import cn.treebear.kwifimanager.mvp.wifi.presenter.DialUpPresenter;
 
 /**
  * @author Administrator
  */
-public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDeviceInfo> implements DynamicIpContract.View {
+public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDeviceInfo> implements DialUpContract.View {
     @BindView(R2.id.tv_broadband_account)
     EditText etBroadbandAccount;
     @BindView(R2.id.et_broadband_password)
@@ -54,7 +53,7 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
 
     @OnClick(R2.id.tv_disconnect)
     public void onTvDisconnectClicked() {
-        showLoading(R.string.commit_ing);
+        showLoading(R.string.connect_ing);
         mPresenter.dialUpSet(Config.Text.AP_NAME_START + etBroadbandAccount.getText().toString(),
                 Config.Text.AP_NAME_START + etBroadbandPassword.getText().toString());
     }
@@ -66,19 +65,19 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
             return;
         }
         count = 0;
+        showLoading(R.string.connect_ing);
         mPresenter.dialUpSet(etBroadbandAccount.getText().toString(), etBroadbandPassword.getText().toString());
-        showLoading();
     }
 
     @Override
     public void onLoadData(WifiDeviceInfo resultData) {
-        hideLoading();
+        ToastUtils.showShort(R.string.option_update_success);
         WifiDeviceInfo deviceInfo = WiFiHttpClient.getWifiDeviceInfo();
         deviceInfo.setConnect(true);
         deviceInfo.setWan(resultData.getWan());
         WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
         updateWifiInfoShow();
-//        startActivity(ModifyWifiInfoActivity.class);
+        hideLoading();
     }
 
     @Override
@@ -88,6 +87,7 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
                 if (++count > 4) {
                     hideLoading();
                     ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                    return;
                 }
                 tvDnsServer.postDelayed(() -> {
                     if (mPresenter != null) {

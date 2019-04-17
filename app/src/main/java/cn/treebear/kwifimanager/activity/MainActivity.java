@@ -100,6 +100,8 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     private void checkFirstIn() {
+//        addFragments(R.id.full_screen_fragment_wrapper,new GuideFragment());
+
         if (!(boolean) SharedPreferencesUtil.getParam(Keys.FIRST_IN, false) && !MyApplication.getAppContext().hasBoundNode()) {
             ImageView ivGuide = findViewById(R.id.iv_guide);
             final int[] position = {0};

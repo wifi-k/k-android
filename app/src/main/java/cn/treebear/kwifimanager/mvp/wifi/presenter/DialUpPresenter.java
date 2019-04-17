@@ -9,6 +9,7 @@ import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
 import cn.treebear.kwifimanager.mvp.wifi.model.DialUpModel;
+import cn.treebear.kwifimanager.util.TLog;
 
 /**
  * @author Administrator
@@ -61,6 +62,7 @@ public class DialUpPresenter extends BasePresenter<DialUpContract.View, DialUpCo
         mModel.getNode(new BaseAsyncCallback<BaseResponse<WifiDeviceInfo>>() {
             @Override
             public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                TLog.w("okokokokokokok");
                 if (mView != null) {
                     mView.onLoadData(resultData.getData());
                 }

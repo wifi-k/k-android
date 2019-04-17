@@ -186,7 +186,7 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
             ToastUtils.showShort(R.string.input_wifi_name_please);
             return false;
         }
-        if (etWifiPassword.getText().length() < Config.Numbers.MIN_WIFI_PASSWORD) {
+        if (Check.hasContent(etWifiPassword) && etWifiPassword.getText().length() < Config.Numbers.MIN_WIFI_PASSWORD) {
             ToastUtils.showShort(R.string.input_wifi_passowrd_please);
             return false;
         }

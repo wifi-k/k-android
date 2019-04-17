@@ -75,7 +75,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
        WiFiHttpClient.setWifiDeviceInfo(deviceInfo);
         hideLoading();
 //        startActivity(ModifyWifiInfoActivity.class);
-        ToastUtils.showShort(R.string.connect_success);
+        ToastUtils.showShort(R.string.option_update_success);
     }
 
     @Override
@@ -85,6 +85,7 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
                 if (++count > 4) {
                     hideLoading();
                     ToastUtils.showShort(R.string.connect_fail);
+                    return;
                 }
                 tvUpdateOption.postDelayed(() -> {
                     if (mPresenter != null) {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="49dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:background="@color/line_f2"
+        android:layout_height="1dp"/>
+
+    <com.chaychan.library.BottomBarLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <com.chaychan.library.BottomBarItem
+            style="@style/bottomBarStyle"
+            app:iconNormal="@mipmap/tab_home_gray"
+            app:iconSelected="@mipmap/tab_home_selected"
+            app:itemText="@string/homepage" />
+
+        <com.chaychan.library.BottomBarItem
+            android:id="@+id/bottom_bar_gallery"
+            style="@style/bottomBarStyle"
+            app:iconNormal="@mipmap/tab_gallery_gray"
+            app:iconSelected="@mipmap/tab_gallery_selected"
+            app:itemText="@string/info" />
+
+        <com.chaychan.library.BottomBarItem
+            style="@style/bottomBarStyle"
+            app:iconNormal="@mipmap/tab_mine_gray"
+            app:iconSelected="@mipmap/tab_mine_selected"
+            app:itemText="@string/mine" />
+
+    </com.chaychan.library.BottomBarLayout>
+</LinearLayout>

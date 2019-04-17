@@ -370,5 +370,7 @@
     <string name="_online">" 上线"</string>
     <string name="_offline">" 离线"</string>
     <string name="notice">通知</string>
+    <string name="has_bound_retry">该设备已被绑定，请检查后再试</string>
+    <string name="connect_ing">正在连接...</string>
 
 </resources>

@@ -7,7 +7,7 @@
 
     <color name="color_dfdfdf">#DFDFDF</color>
 
-    <color name="switch_button_check">#22DB96</color>
+    <color name="switch_button_check">#37EDA3</color>
 
     <color name="text_dark_black">#222</color>
     <color name="text_light_black">#BEC3CC</color>
@@ -42,5 +42,6 @@
     <color name="text_7383a2">#7383A2</color>
     <color name="main_yellow">#efb925</color>
     <color name="text_b6c0cb">#B6C0CB</color>
+    <color name="shadow_80black">#cc000000</color>
 
 </resources>

@@ -70,6 +70,8 @@ public final class Config {
         int COLOR_4A5A78 = Color.parseColor("#4A5A78");
         @ColorInt
         int COLOR_C0 = Color.parseColor("#C0C0C0");
+        @ColorInt
+        int COLOR_80BLACK = Color.parseColor("#cc000000");
 
     }
 

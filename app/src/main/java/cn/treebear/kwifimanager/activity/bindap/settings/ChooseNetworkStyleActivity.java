@@ -94,7 +94,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
                 startActivity(StaticIpOnlineActivity.class);
                 break;
             default:
-                showLoading(R.string.try_to_connect_wifi,false);
+                showLoading(R.string.try_to_connect_wifi, false);
                 count = 0;
                 mPresenter.dynamicIpSet();
                 break;
@@ -126,7 +126,11 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
             @Override
             public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
                 hideLoading();
-                ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                if (resultCode == ApiCode.USR_INVALID) {
+                    ToastUtils.showShort(getString(R.string.has_bound_retry));
+                } else {
+                    ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                }
             }
         });
     }

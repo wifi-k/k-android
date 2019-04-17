@@ -83,6 +83,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
                 if (++count > 4) {
                     hideLoading();
                     ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                    return;
                 }
                 // 延时2秒再次查询
                 tvIp.postDelayed(() -> {
