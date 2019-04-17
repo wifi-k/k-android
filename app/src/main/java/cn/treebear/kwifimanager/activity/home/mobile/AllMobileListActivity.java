@@ -21,7 +21,6 @@ import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
-import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
@@ -87,12 +86,12 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
             }
         });
         refreshLayout.setOnRefreshListener(this::refresh);
-        mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo, Config.Numbers.PAGE_SIZE), rvDeviceList);
+//        mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo, Config.Numbers.PAGE_SIZE), rvDeviceList);
     }
 
     private void refresh() {
         showLoading();
-        mPresenter.getMobileList(currentNode.getNodeId(), pageNo = 1, Config.Numbers.PAGE_SIZE);
+        mPresenter.getMobileList(currentNode.getNodeId(), pageNo = 1, 30);
     }
 
     private void showModifyNameDialog() {
