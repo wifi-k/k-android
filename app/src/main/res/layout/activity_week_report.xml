@@ -37,13 +37,13 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="282dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/bg_home_join_wrapper8">
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_home_join_wrapper">
 
                 <com.github.mikephil.charting.charts.LineChart
-                    android:padding="4dp"
+                    android:padding="6dp"
                     android:id="@+id/chart_week_report"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

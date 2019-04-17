@@ -30,8 +30,9 @@ import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.ActiveAppAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.AppBean;
+import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.test.BeanTest;
-import cn.treebear.kwifimanager.widget.MyMarkerView;
+import cn.treebear.kwifimanager.widget.MyMarker;
 
 /**
  * @author Administrator
@@ -82,8 +83,7 @@ public class WeekReportActivity extends BaseActivity {
             chart.setHighlightPerTapEnabled(true);
             chart.setHighlightPerDragEnabled(false);
             // create marker to display box when values are selected
-            MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-//            MyMarker mv = new MyMarker(this, R.layout.my_maker);
+            MyMarker mv = new MyMarker(this, R.layout.custom_marker_view);
             // Set the marker to the chart
             mv.setChartView(chart);
             chart.setMarker(mv);
@@ -103,14 +103,16 @@ public class WeekReportActivity extends BaseActivity {
         //显示个数
         x.setLabelCount(7, true);
         x.setValueFormatter(formatter);
-        x.setAxisLineColor(Color.TRANSPARENT);
         x.setAvoidFirstLastClipping(false);
+        x.setTextColor(Config.Colors.TEXT_7383A2);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
         YAxis y = chart.getAxisLeft();
         y.setLabelCount(6, false);
-        y.setTextColor(Color.parseColor("#83889B"));
+        y.setTextColor(Config.Colors.TEXT_7383A2);
         y.setDrawGridLines(true);
-        y.setAxisLineColor(Color.parseColor("#36D2F3"));
+        y.setDrawAxisLine(false);
+        y.setGridColor(Config.Colors.COLOR_E7);
+        y.setGridLineWidth(1);
         y.setAxisMinimum(0);
         y.setAxisMaximum(24);
         setData(7, 23);
@@ -150,20 +152,19 @@ public class WeekReportActivity extends BaseActivity {
             set1.setDrawValues(false);
             set1.setCubicIntensity(0.2f);
             set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            // TODO: 2019/3/28
             set1.setHighLightColor(Color.TRANSPARENT);
             // black lines and points
-            set1.setColor(Color.parseColor("#36D2F3"));
-            set1.setCircleColor(Color.parseColor("#36D2F3"));
+            set1.setColor(Color.parseColor("#50E3C2"));
+            set1.setCircleColor(Color.parseColor("#50E3C2"));
 
             // line thickness and point size
-            set1.setLineWidth(1f);
+            set1.setLineWidth(2f);
 
             // draw points as solid circles
             set1.setDrawCircleHole(false);
 
             // customize legend entry
-            set1.setFormLineWidth(1f);
+            set1.setFormLineWidth(2f);
 
             // text size of values
             set1.setDrawValues(false);
@@ -186,7 +187,7 @@ public class WeekReportActivity extends BaseActivity {
                 Drawable drawable = ContextCompat.getDrawable(this, R.drawable.fade_main);
                 set1.setFillDrawable(drawable);
             } else {
-                set1.setFillColor(Color.parseColor("#3336D2F3"));
+                set1.setFillColor(Color.parseColor("#3345F7E7"));
             }
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();

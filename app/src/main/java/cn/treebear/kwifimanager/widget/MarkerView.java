@@ -67,6 +67,10 @@ public class MarkerView extends RelativeLayout implements IMarker {
         return mOffset;
     }
 
+    public MPPointF getOffsetLeft() {
+        return mOffset;
+    }
+
     public void setChartView(Chart chart) {
         mWeakChart = new WeakReference<>(chart);
     }

@@ -43,7 +43,7 @@ public class MobilePhoneAdapter extends BaseQuickAdapter<MobileListBean.MobileBe
                                 + "时间:%s",
                         DateTimeUtils.formatMDHmm(isOnline ? item.getOnTime() : item.getOffTime())))
                 .setTextColor(R.id.tv_onoff_type, isOnline
-                        ? Config.Colors.DEVICE_ONLINE : Config.Colors.DEVICE_OFFLINE)
+                        ? Config.Colors.TEXT_7383A2 : Config.Colors.DEVICE_OFFLINE)
                 .setText(R.id.tv_onoff_type, isOnline ? R.string.online : R.string.offline)
                 .addOnClickListener(R.id.tv_remark);
     }
