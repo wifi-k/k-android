@@ -57,11 +57,12 @@ public class DateTimeUtils {
         if (mills < DAY * 365) {
             mills *= 1000;
         }
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf_mdhmm = new SimpleDateFormat("M月d日 H:mm");
-        String status = "";
+        String status;
         String time = "";
         long lll = System.currentTimeMillis() - mills;
-        if (lll < MINUTE) {
+        if (lll < 0) {
+            status = onlineStatus ? "在线 " : "离线 ";
+        } else if (lll < MINUTE) {
             status = onlineStatus ? "上线 " : "离线 ";
             time = (lll / SECONDS) + S_SECENDS + BEFORE;
         } else if (lll < HOUR) {
@@ -74,6 +75,7 @@ public class DateTimeUtils {
             status = onlineStatus ? "上线时间:" : "离线时间:";
             GregorianCalendar calendar = new GregorianCalendar(Locale.CHINA);
             calendar.setTimeInMillis(mills);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf_mdhmm = new SimpleDateFormat("M月d日 H:mm");
             time = sdf_mdhmm.format(calendar.getTime());
         }
         return status + time;

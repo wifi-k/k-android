@@ -21,12 +21,12 @@ import cn.treebear.kwifimanager.adapter.MyDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
+import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.MyNodeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.MyNodePresenter;
-import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
@@ -85,7 +85,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
         });
         mPresenter.getNodeList(pageNo = 1);
         refreshLayout.setOnRefreshListener(this::refresh);
-//        deviceAdapter.setOnLoadMoreListener(() -> mPresenter.getNodeList(++pageNo), rvDeviceList);
+        deviceAdapter.setOnLoadMoreListener(() -> mPresenter.getNodeList(++pageNo), rvDeviceList);
     }
 
     private void refresh() {
@@ -113,16 +113,15 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
             nodeList.clear();
         }
         List<NodeInfoDetail.NodeBean> page = resultData.getPage();
-        if (Check.hasContent(page)) {
-//            if (page.size() < Config.Numbers.PAGE_SIZE) {
-////                deviceAdapter.loadMoreEnd(nodeList.size() == 0);
-//                deviceAdapter.loadMoreEnd(true);
-//            } else {
-//            }
+        if (page != null) {
+            if (page.size() < Config.Numbers.PAGE_SIZE) {
+//                deviceAdapter.loadMoreEnd(nodeList.size() == 0);
+                deviceAdapter.loadMoreEnd(true);
+            }
             nodeList.addAll(page);
+            deviceAdapter.setEnableLoadMore(page.size() >= Config.Numbers.PAGE_SIZE);
         }
         if (nodeList.size() == 0) {
-            deviceAdapter.setEnableLoadMore(false);
             emptyView.setVisibility(View.VISIBLE);
         } else {
             emptyView.setVisibility(View.GONE);

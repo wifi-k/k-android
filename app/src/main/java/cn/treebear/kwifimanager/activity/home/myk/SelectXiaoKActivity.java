@@ -72,7 +72,12 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
             showLoading(R.string.change_node_ing);
             mPresenter.selectXiaoK(nodeBeans.get(position).getNodeId());
         });
-        refreshLayout.setOnRefreshListener(() -> mPresenter.getXiaoKList(pageNo = 1));
+        refreshLayout.setOnRefreshListener(this::refresh);
+    }
+
+    private void refresh() {
+        pageNo = 1;
+        mPresenter.getXiaoKList(pageNo);
     }
 
     @Override
@@ -82,15 +87,13 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
         if (pageNo == 1) {
             nodeBeans.clear();
         }
-//        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-////            adapter.loadMoreEnd(nodeBeans.size() == 0);
-//            adapter.loadMoreEnd(true);
-//        }
-        adapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
-        if (searchSelectNode(resultData.getPage()) != -1) {
-            nodeBeans.addAll(resultData.getPage());
-            adapter.notifyDataSetChanged();
+        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
+//            adapter.loadMoreEnd(nodeBeans.size() == 0);
+            adapter.loadMoreEnd(true);
         }
+        adapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
+        nodeBeans.addAll(searchSelectNode(resultData.getPage()));
+        adapter.notifyDataSetChanged();
         emptyView.setVisibility(nodeBeans.size() == 0 ? View.VISIBLE : View.GONE);
     }
 
@@ -107,17 +110,17 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
         finish();
     }
 
-    private int searchSelectNode(List<NodeInfoDetail.NodeBean> page) {
+    private List<NodeInfoDetail.NodeBean> searchSelectNode(List<NodeInfoDetail.NodeBean> page) {
         if (!Check.hasContent(page)) {
-            return -1;
+            return page;
         }
         for (int i = 0; i < page.size(); i++) {
             if (page.get(i).getIsSelect() == 1) {
-                return i;
+                return page;
             }
         }
         page.get(0).setIsSelect(1);
         MyApplication.getAppContext().setCurrentNode(page.get(0));
-        return 0;
+        return page;
     }
 }

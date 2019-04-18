@@ -107,12 +107,13 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
         if (pageNo == 1) {
             mobileList.clear();
         }
-//        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-////            adapter.loadMoreEnd(mobileList.size()==0);
-//            adapter.loadMoreEnd(true);
-//        } else {
-        adapter.loadMoreComplete();
-//        }
+        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
+//            adapter.loadMoreEnd(mobileList.size()==0);
+            adapter.loadMoreEnd(true);
+        } else {
+            adapter.loadMoreComplete();
+        }
+        adapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
         mobileList.addAll(resultData.getPage());
         for (MobileListBean.MobileBean bean : mobileList) {
             bean.setIsBlock(0);

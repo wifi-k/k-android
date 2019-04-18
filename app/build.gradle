@@ -92,7 +92,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     // 快捷BaseAdapter
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45'
     // logging
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     // 圆角图片

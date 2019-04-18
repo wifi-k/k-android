@@ -1,14 +1,12 @@
 package cn.treebear.kwifimanager.activity.home.parent;
 
 import android.os.Bundle;
-import android.view.View;
-
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
@@ -26,6 +24,8 @@ import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 public class BanAppListActivity extends BaseActivity {
     @BindView(R2.id.rv_ban_app)
     RecyclerView rvBanAppList;
+    @BindView(R2.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
     private ArrayList<BanAppPlanBean> banAppPlanList = new ArrayList<>();
     private BanAppAdapter banAppAdapter;
     private int currentModifyPosition;
@@ -57,14 +57,17 @@ public class BanAppListActivity extends BaseActivity {
                     break;
             }
         });
-        banAppAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Keys.BAN_APP_PLAN, banAppPlanList.get(position));
-                startActivity(BanAppPlanActivity.class, bundle);
-            }
+        banAppAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Keys.BAN_APP_PLAN, banAppPlanList.get(position));
+            startActivity(BanAppPlanActivity.class, bundle);
         });
+        banAppAdapter.setEnableLoadMore(false);
+        refreshLayout.setOnRefreshListener(this::refresh);
+    }
+
+    private void refresh() {
+
     }
 
     @OnClick(R2.id.tv_add_ban_app_plan)

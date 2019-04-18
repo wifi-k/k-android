@@ -76,7 +76,7 @@ public class TimeControlbean {
         @SerializedName("mac")
         private ArrayList<String> sMac;
 
-//        public String getMac() {
+        //        public String getMac() {
 //            return mac;
 //        }
 //

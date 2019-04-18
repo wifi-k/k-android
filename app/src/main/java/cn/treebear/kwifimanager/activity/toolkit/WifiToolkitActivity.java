@@ -82,6 +82,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         setTitleBack(R.string.wifi_toolkit);
         proxyModel = new WiFiSettingProxyModel();
         glSeniorSettingWrapper.setColumnCount(DensityUtil.getScreenWidth() < 728 ? 3 : 4);
+        showLoading();
         mPresenter.getNodeSsid(MyApplication.getAppContext().getCurrentSelectNode());
         if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
             tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(this));
@@ -110,7 +111,11 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     @OnClick(R2.id.tv_online_setting)
     public void onTvOnlineSettingClicked() {
-        startActivity(OnlineSettingActivity.class);
+        if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+            startActivity(OnlineSettingActivity.class);
+        } else {
+            ToastUtils.showShort(R.string.only_in_wifi_allow);
+        }
     }
 
 //    @OnClick(R2.id.tv_lan_setting)
@@ -120,7 +125,11 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     @OnClick(R2.id.tv_restart_device)
     public void onTvRestartDeviceClicked() {
-        showRestartTipDialog();
+        if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+            showRestartTipDialog();
+        } else {
+            ToastUtils.showShort(R.string.only_in_wifi_allow);
+        }
     }
 
 //    @OnClick(R2.id.tv_dhcp_server)
@@ -130,11 +139,16 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     @OnClick(R2.id.tv_reset_device)
     public void onTvResetDeviceClicked() {
-        showResetTipDialog();
+        if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+            showResetTipDialog();
+        } else {
+            ToastUtils.showShort(R.string.only_in_wifi_allow);
+        }
     }
 
     @Override
     public void onLoadData(NodeWifiListBean resultData) {
+        hideLoading();
         if (resultData == null) {
             return;
         }
@@ -174,6 +188,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
     }
 
     private void modifyNameLocal(String name, String passwd) {
+        dismiss(nameModifyDialog, passwordModifyDialog);
         ArrayMap<String, Object> params = new ArrayMap<>();
         params.put(Keys.SSID0, NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()));
         params.put(Keys.SSID, name);
@@ -186,16 +201,19 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             public void onSuccess(BaseResponse<Object> resultData) {
                 hideLoading();
                 tvWifiSSID.setText(name);
-                dismiss(nameModifyDialog, passwordModifyDialog);
                 ToastUtils.showShort(R.string.option_success_restart);
             }
 
             @Override
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
-                hideLoading();
-                dismiss(nameModifyDialog, passwordModifyDialog);
-                ToastUtils.showShort(R.string.option_failed_retry);
+                // 若token过期则重新登录
                 WiFiHttpClient.dealWithResultCode(resultCode);
+                // 若配置失败，则通过联网配置
+                if (Check.hasContent(passwd)) {
+                    mPresenter.modifyPasswd(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, passwd);
+                } else {
+                    mPresenter.modifySsid(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, name);
+                }
             }
         });
     }

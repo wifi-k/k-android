@@ -1,6 +1,5 @@
 package cn.treebear.kwifimanager.activity;
 
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -101,29 +100,13 @@ public class MainActivity extends BaseFragmentActivity {
 
     private void checkFirstIn() {
         if (!(boolean) SharedPreferencesUtil.getParam(Keys.FIRST_IN, false) && !MyApplication.getAppContext().hasBoundNode()) {
-//            findViewById(R.id.full_screen_fragment_wrapper).setVisibility(View.VISIBLE);
             guideFragment = new GuideFragment();
             addFragments(R.id.full_screen_fragment_wrapper, guideFragment);
             SharedPreferencesUtil.setParam(Keys.FIRST_IN, true);
         }
-
-//        if (!(boolean) SharedPreferencesUtil.getParam(Keys.FIRST_IN, false) && !MyApplication.getAppContext().hasBoundNode()) {
-//            ImageView ivGuide = findViewById(R.id.iv_guide);
-//            final int[] position = {0};
-//            ivGuide.setVisibility(View.VISIBLE);
-//            ivGuide.setImageResource(ConstConfig.HOME_GUIDE_IMAGE_RESID.get(position[0]));
-//            ivGuide.setOnClickListener(v -> {
-//                if ((++position[0]) < ConstConfig.HOME_GUIDE_IMAGE_RESID.size()) {
-//                    ivGuide.setImageResource(ConstConfig.HOME_GUIDE_IMAGE_RESID.get(position[0]));
-//                } else {
-//                    ivGuide.setVisibility(View.GONE);
-//                }
-//            });
-//            SharedPreferencesUtil.setParam(Keys.FIRST_IN, true);
-//        }
     }
 
-    public void hidenGuideFragment() {
+    public void hideGuideFragment() {
         if (guideFragment != null) {
             removeFragment(R.id.full_screen_fragment_wrapper, guideFragment, true);
         }

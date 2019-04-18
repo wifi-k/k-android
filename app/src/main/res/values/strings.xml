@@ -372,5 +372,13 @@
     <string name="notice">通知</string>
     <string name="has_bound_retry">该设备已被绑定，请检查后再试</string>
     <string name="connect_ing">正在连接...</string>
+    <string name="only_in_wifi_allow">仅在XiaoK-WiFi连接下可用</string>
+    <string name="click_bind_now">点击立即绑定</string>
+    <string name="tips_guide_view_1">"若您已经购买了小K管家\n请立即绑定小K管家\n进入到添加新小k管家页面"</string>
+    <string name="tips_guide_view_2">"若您的家庭已经拥有小K管家\n请立即输入家庭码\n加入某个家庭"</string>
+    <string name="i_know">知道了</string>
+    <string name="click_input_code">点击输入家庭码</string>
+    <string name="join_family_share_gallery">加入亲友分享的共享相册</string>
+    <string name="click_gallery_into_gallery">点击相册，进入到相册板块</string>
 
 </resources>

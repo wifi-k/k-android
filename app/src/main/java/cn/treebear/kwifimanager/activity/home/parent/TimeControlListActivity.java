@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -36,6 +37,8 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
     TextView tvTips;
     @BindView(R2.id.rv_ban_app)
     RecyclerView recyclerView;
+    @BindView(R2.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
     @BindView(R2.id.tv_add_ban_app_plan)
     TextView tvAddTimeControl;
     private ArrayList<TimeControlbean.TimeControl> timeLimitList = new ArrayList<>();
@@ -82,6 +85,8 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
             bundle.putSerializable(Keys.BAN_APP_PLAN, timeLimitList.get(position));
             startActivity(TimeControlPlanActivity.class, bundle);
         });
+        banTimeAdapter.setEnableLoadMore(false);
+        refreshLayout.setOnRefreshListener(this::refresh);
     }
 
     private void showDeleteDialog() {

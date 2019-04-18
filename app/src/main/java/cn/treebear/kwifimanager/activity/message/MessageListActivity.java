@@ -16,6 +16,7 @@ import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.MessageAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
+import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.server.contract.MessageConstract;
 import cn.treebear.kwifimanager.mvp.server.presenter.MessagePresenter;
 
@@ -54,9 +55,12 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
         rvMessageList.setAdapter(adapter);
         View header = LayoutInflater.from(this).inflate(R.layout.message_header, null, false);
         adapter.addHeaderView(header);
-        adapter.setEnableLoadMore(true);
-        swipeRefreshLayout.setOnRefreshListener(() -> mPresenter.getMessageInfoList(pageNo = 1));
+        swipeRefreshLayout.setOnRefreshListener(this::refresh);
         adapter.setOnLoadMoreListener(() -> mPresenter.getMessageInfoList(pageNo += 1), rvMessageList);
+    }
+
+    private void refresh() {
+        mPresenter.getMessageInfoList(pageNo = 1);
     }
 
     @Override
@@ -72,9 +76,10 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
         }
         messageList.addAll(resultData.getPage());
         adapter.notifyDataSetChanged();
-//        if (resultData.getTotal() < Config.Numbers.PAGE_SIZE) {
-//            adapter.loadMoreEnd(true);
-//        }
+        if (resultData.getTotal() < Config.Numbers.PAGE_SIZE) {
+            adapter.loadMoreEnd(true);
+        }
+        adapter.setEnableLoadMore(resultData.getTotal() >= Config.Numbers.PAGE_SIZE);
         tvEmptyView.setVisibility(messageList.size() == 0 ? View.VISIBLE : View.GONE);
     }
 

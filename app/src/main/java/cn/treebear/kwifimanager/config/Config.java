@@ -71,7 +71,7 @@ public final class Config {
         @ColorInt
         int COLOR_C0 = Color.parseColor("#C0C0C0");
         @ColorInt
-        int COLOR_80BLACK = Color.parseColor("#cc000000");
+        int COLOR_80BLACK = Color.parseColor("#ee000000");
 
     }
 

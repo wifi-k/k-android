@@ -76,6 +76,7 @@ public interface ConstConfig {
         add(R.string.nc_8);
         add(R.string.nc_9);
     }};
+
     @IntDef({
             Calendar.FRIDAY, Calendar.MONDAY, Calendar.THURSDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.SATURDAY, Calendar.SUNDAY
     })

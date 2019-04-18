@@ -116,7 +116,7 @@ public class NetWorkUtils {
      * 是否当前连接nodeId为 @param nodeId 的设备
      */
     public static boolean isCurrentXiaoK(String nodeId) {
-        return isXiaoKSignIn()
+        return isXiaoKSignIn() && Check.hasContent(nodeId)
                 && WiFiHttpClient.getWifiDeviceInfo().getId().equals(nodeId);
     }
 

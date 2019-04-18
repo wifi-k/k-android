@@ -1,6 +1,7 @@
 package cn.treebear.kwifimanager.fragment;
 
-import android.graphics.Color;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,10 +17,12 @@ public class GuideFragment extends BaseFragment {
     private ImageView ivBind;
     private TextView tvInputFamilyCode;
     private BottomBarItem bottomBarGallery;
-    private TextView iv;
     private GuideView guideView1;
     private GuideView guideView2;
     private GuideView guideView3;
+    private View guideTips1;
+    private View guideTips2;
+    private View guideTips3;
 
     @Override
     public int layoutId() {
@@ -37,17 +40,15 @@ public class GuideFragment extends BaseFragment {
         ivBind = mRootView.findViewById(R.id.iv_bind_guide);
         tvInputFamilyCode = mRootView.findViewById(R.id.tv_input_code_guide);
         bottomBarGallery = mRootView.findViewById(R.id.bottom_bar_gallery_guide);
-        iv = new TextView(mContext);
-        iv.setText("欢迎使用");
-        iv.setTextColor(Color.WHITE);
         ivBind.post(this::initGuideView);
     }
 
     private void initGuideView() {
+        guideTips1 = LayoutInflater.from(mContext).inflate(R.layout.layout_guide_1, null, false);
         guideView1 = GuideView.Builder
                 .newInstance(mContext)      // 必须调用
                 .setTargetView(ivBind)    // 必须调用，设置需要Guide的View
-                .setCustomGuideView(iv)  // 必须调用，设置GuideView，可以使任意View的实例，比如ImageView 或者TextView
+                .setCustomGuideView(guideTips1)  // 必须调用，设置GuideView，可以使任意View的实例，比如ImageView 或者TextView
                 .setPaddingOffset(ivBind.getWidth() * 2 / 3, ivBind.getHeight() / 2, ivBind.getWidth() * 2 / 3, ivBind.getHeight() / 2)
                 .setDirction(GuideView.Direction.BOTTOM)   // 设置GuideView 相对于TargetView的位置，有八种，不设置则默认在屏幕左上角,其余的可以显示在右上，右下等等
                 .setShape(GuideView.MyShape.RECTANGULAR)   // 设置显示形状，支持圆形，椭圆，矩形三种样式，矩形可以是圆角矩形，
@@ -55,17 +56,18 @@ public class GuideFragment extends BaseFragment {
                 .setOnclickExit(false)   // 设置点击消失，可以传入一个Callback，执行被点击后的操作
                 .setOnclickListener(this::showGuideView2)
                 .setRadius(ivBind.getHeight() / 2)          // 设置圆形或矩形透明区域半径，默认是targetView的显示矩形的半径，如果是矩形，这里是设置矩形圆角大小
-                .setOffset(0, 260)     // 设置偏移，一般用于微调GuideView的位置
+                .setOffset(0,  -8)     // 设置偏移，一般用于微调GuideView的位置
                 .build();   // 必须调用，Buider模式，返回GuideView实例
         guideView1.show();                // 必须调用，显示GuideView
     }
 
     private void showGuideView2() {
         guideView1.hide();
+        guideTips2 = LayoutInflater.from(mContext).inflate(R.layout.layout_guide_2, null, false);
         guideView2 = GuideView.Builder
                 .newInstance(mContext)      // 必须调用
                 .setTargetView(tvInputFamilyCode)    // 必须调用，设置需要Guide的View
-                .setCustomGuideView(iv)  // 必须调用，设置GuideView，可以使任意View的实例，比如ImageView 或者TextView
+                .setCustomGuideView(guideTips2)  // 必须调用，设置GuideView，可以使任意View的实例，比如ImageView 或者TextView
                 .setPaddingOffset(tvInputFamilyCode.getWidth() * 3 / 5, tvInputFamilyCode.getHeight() * 2 / 3, tvInputFamilyCode.getWidth() * 3 / 5, tvInputFamilyCode.getHeight() * 2 / 3)
                 .setDirction(GuideView.Direction.BOTTOM)   // 设置GuideView 相对于TargetView的位置，有八种，不设置则默认在屏幕左上角,其余的可以显示在右上，右下等等
                 .setShape(GuideView.MyShape.RECTANGULAR)   // 设置显示形状，支持圆形，椭圆，矩形三种样式，矩形可以是圆角矩形，
@@ -73,17 +75,18 @@ public class GuideFragment extends BaseFragment {
                 .setOnclickExit(false)   // 设置点击消失，可以传入一个Callback，执行被点击后的操作
                 .setOnclickListener(this::showGuideView3)
                 .setRadius(tvInputFamilyCode.getHeight() * 2 / 3)          // 设置圆形或矩形透明区域半径，默认是targetView的显示矩形的半径，如果是矩形，这里是设置矩形圆角大小
-                .setOffset(0, 260)     // 设置偏移，一般用于微调GuideView的位置
+                .setOffset(0 - tvInputFamilyCode.getWidth() / 2, -6)     // 设置偏移，一般用于微调GuideView的位置
                 .build();   // 必须调用，Buider模式，返回GuideView实例
         guideView2.show();                // 必须调用，显示GuideView
     }
 
     private void showGuideView3() {
         guideView2.hide();
+        guideTips3 = LayoutInflater.from(mContext).inflate(R.layout.layout_guide_3, null, false);
         guideView3 = GuideView.Builder
                 .newInstance(mContext)      // 必须调用
                 .setTargetView(bottomBarGallery)    // 必须调用，设置需要Guide的View
-                .setCustomGuideView(iv)  // 必须调用，设置GuideView，可以使任意View的实例，比如ImageView 或者TextView
+                .setCustomGuideView(guideTips3)  // 必须调用，设置GuideView，可以使任意View的实例，比如ImageView 或者TextView
                 .setPaddingOffset(bottomBarGallery.getWidth() / 2, bottomBarGallery.getHeight() / 2, bottomBarGallery.getWidth() / 2, bottomBarGallery.getHeight() / 2)
                 .setDirction(GuideView.Direction.TOP)   // 设置GuideView 相对于TargetView的位置，有八种，不设置则默认在屏幕左上角,其余的可以显示在右上，右下等等
                 .setShape(GuideView.MyShape.CIRCULAR)   // 设置显示形状，支持圆形，椭圆，矩形三种样式，矩形可以是圆角矩形，
@@ -91,7 +94,7 @@ public class GuideFragment extends BaseFragment {
                 .setOnclickExit(false)   // 设置点击消失，可以传入一个Callback，执行被点击后的操作
                 .setOnclickListener(this::finishThis)
                 .setRadius(bottomBarGallery.getHeight() / 2)          // 设置圆形或矩形透明区域半径，默认是targetView的显示矩形的半径，如果是矩形，这里是设置矩形圆角大小
-                .setOffset(0, -260)     // 设置偏移，一般用于微调GuideView的位置
+                .setOffset(0, 12)     // 设置偏移，一般用于微调GuideView的位置
                 .build();   // 必须调用，Buider模式，返回GuideView实例
         guideView3.show();                // 必须调用，显示GuideView
     }
@@ -99,7 +102,7 @@ public class GuideFragment extends BaseFragment {
     private void finishThis() {
         guideView3.hide();
         if (mContext instanceof MainActivity) {
-            ((MainActivity) mContext).hidenGuideFragment();
+            ((MainActivity) mContext).hideGuideFragment();
         }
     }
 }
