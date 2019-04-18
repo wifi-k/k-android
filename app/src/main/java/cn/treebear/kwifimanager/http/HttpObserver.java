@@ -1,7 +1,10 @@
 package cn.treebear.kwifimanager.http;
 
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.base.BaseResponse;
+import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.IModel;
+import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.util.TLog;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -29,7 +32,10 @@ public class HttpObserver {
         return new Observer<BaseResponse<T>>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                if (!NetWorkUtils.isNetConnected(MyApplication.getAppContext())) {
+                    callBack.onFailed(null, Config.Tips.CONNECT_ERROR, -1);
+                    onComplete();
+                }
             }
 
             @Override
@@ -46,7 +52,7 @@ public class HttpObserver {
             @Override
             public void onError(Throwable e) {
                 TLog.e(e);
-                callBack.onFailed(null, e.getMessage(), -1);
+                callBack.onFailed(null, Config.Tips.CONNECT_ERROR, -1);
             }
 
             @Override

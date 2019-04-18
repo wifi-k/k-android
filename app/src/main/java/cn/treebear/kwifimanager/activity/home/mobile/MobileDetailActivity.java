@@ -1,5 +1,6 @@
 package cn.treebear.kwifimanager.activity.home.mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -176,10 +177,14 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
 
                 @Override
                 public void onRightClick(String s) {
-                    mobilePhoneBean.setNote(s);
-                    mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
-                            mobilePhoneBean.getMac(), s, mobilePhoneBean.getIsBlock(),
-                            swbOnlineChildren.isChecked() ? 1 : 0, swbOnlineAlarm.isChecked() ? 1 : 0);
+                    if (Check.hasContent(s)) {
+                        mobilePhoneBean.setNote(s);
+                        mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode(),
+                                mobilePhoneBean.getMac(), s, mobilePhoneBean.getIsBlock(),
+                                swbOnlineChildren.isChecked() ? 1 : 0, swbOnlineAlarm.isChecked() ? 1 : 0);
+                    } else {
+                        ToastUtils.showShort(R.string.device_name_cannot_empty);
+                    }
                 }
             });
         }
@@ -194,11 +199,24 @@ public class MobileDetailActivity extends BaseActivity<AllMobileListContract.Pre
     }
 
     @Override
+    protected void onTitleLeftClick() {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Keys.MOBILE, mobilePhoneBean);
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        super.onTitleLeftClick();
+    }
+
+    @Override
     public void onModifyMobileInfoResponse(BaseResponse response) {
         if (response != null && response.getCode() == 0) {
             dismiss(modifyNameDialog);
             ToastUtils.showShort(R.string.set_option_success);
             mobilePhoneBean.setName(Check.hasContent(mobilePhoneBean.getNote()) ? mobilePhoneBean.getNote() : mobilePhoneBean.getName());
+            mobilePhoneBean.setIsBlock(swbBlacklisting.isChecked() ? 1 : 0);
+            mobilePhoneBean.setIsRecord(swbOnlineChildren.isChecked() ? 1 : 0);
+            mobilePhoneBean.setIsOnline(swbOnlineAlarm.isChecked() ? 1 : 0);
             tvDeviceName.setText(mobilePhoneBean.getName());
         } else {
             ToastUtils.showShort(R.string.modify_failed);

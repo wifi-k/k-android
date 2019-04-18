@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.constant.PermissionConstants;
@@ -58,7 +57,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     @BindView(R2.id.tv_share_gallery)
     TextView tvShareGallery;
     @BindView(R2.id.rl_tab_wrapper)
-    RelativeLayout rlTabWrapper;
+    LinearLayout rlTabWrapper;
     @BindView(R2.id.iv_backup)
     ImageView ivBackup;
     LinearLayout llPicWrapper;
@@ -179,6 +178,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
                 }
                 if (percent != y[3]) {
                     tvTitle.setTranslationX(y[1] * percent);
+                    tvTitle.setAlpha(1 + percent);
                     rlTabWrapper.setAlpha(0 - percent);
                     rlTabWrapper.setEnabled(0 - percent >= 0.5f);
                     y[3] = percent;

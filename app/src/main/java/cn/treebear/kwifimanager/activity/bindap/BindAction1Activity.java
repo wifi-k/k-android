@@ -136,7 +136,11 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
         hideLoading();
         if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
             tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，前往配置网络", NetWorkUtils.getRealSSIDWhenWifi(this)));
-            btnConfirm.setText(R.string.option_network);
+            if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
+                btnConfirm.setText(R.string.option_network);
+            } else {
+                btnConfirm.setText(R.string.bind_now);
+            }
         }
     }
 
@@ -158,57 +162,32 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     public void onBtnBottomClicked() {
         TLog.w("OkHttp", WiFiHttpClient.getWifiDeviceInfo().getId());
         if (Check.hasContent((String) SharedPreferencesUtil.getParam(SharedPreferencesUtil.NODE_ID, ""))) {
-//            MyApplication.getAppContext().getUser().setNodeSize(1);
             if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
-                ToastUtils.showShort(R.string.bind_success);
-                hideLoading();
+//                if (NetWorkUtils.isNetConnected(this)) {
+//                    showLoading(getString(R.string.bind_ing));
+//                    mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
+//                } else {
                 startActivity(ChooseNetworkStyleActivity.class);
                 finish();
+//                }
             } else {
                 showLoading(getString(R.string.bind_ing));
                 mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
             }
         } else {
-            if (MyApplication.getAppContext().getUser().getNodeSize() == 0) {
+            if (WiFiHttpClient.getNeedLogin()) {
                 notXiaoKDialog();
+            } else {
+                ToastUtils.showShort("正在尝试与设备握手，请稍后再试");
             }
         }
-//        if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
-//            showLoading();
-//            mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
-//        } else {
-//            if (NetWorkUtils.isWifiConnected(this)) {
-//                WiFiHttpClient.tryToSignInWifi(new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
-//                    @Override
-//                    public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
-//                        showLoading();
-//                        mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
-//                    }
-//
-//                    @Override
-//                    public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
-//
-//                    }
-//                });
-//                String wifiSSID = NetWorkUtils.getSSIDWhenWifi(this);
-//                if (Check.hasContent(wifiSSID)) {
-//                    if (wifiSSID.contains(Config.Text.AP_NAME_START)) {
-//                        mPresenter.bindNode(WiFiHttpClient.getWifiDeviceInfo().getId());
-//                    } else {
-//                        ToastUtils.showShort(R.string.connect_xiaok_tips1);
-//                    }
-//                }
-//            } else {
-//                notXiaoKDialog();
-//            }
-//        }
     }
 
     @Override
     public void onLoadData(Object resultData) {
         hideLoading();
-        MyApplication.getAppContext().getUser().setNodeSize(1);
         if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
+            MyApplication.getAppContext().getUser().setNodeSize(1);
             startActivity(ChooseNetworkStyleActivity.class);
         } else {
             ToastUtils.showShort(R.string.bind_success);

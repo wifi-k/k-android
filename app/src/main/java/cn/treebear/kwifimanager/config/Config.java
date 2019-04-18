@@ -180,6 +180,7 @@ public final class Config {
         String VERIFY_CODE_ERROR = "验证码有误 请重新输入";
         String VERIFY_SMS_SEND = "验证码发送成功";
         String SIGN_IN_SUCCESS = "登陆成功";
+        String CONNECT_ERROR = "网络异常，请稍后再试";
     }
 
     public interface RequestType {

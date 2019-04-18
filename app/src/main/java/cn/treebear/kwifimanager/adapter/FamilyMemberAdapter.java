@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.FamilyMemberBean;
 import cn.treebear.kwifimanager.config.GlideApp;
+import cn.treebear.kwifimanager.util.Check;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FamilyMemberAdapter extends BaseQuickAdapter<FamilyMemberBean, BaseViewHolder> {
@@ -29,5 +30,9 @@ public class FamilyMemberAdapter extends BaseQuickAdapter<FamilyMemberBean, Base
                 .addOnClickListener(R.id.iv_member_delete)
                 .setGone(R.id.iv_member_admin, item.getRole() == 0)
                 .setGone(R.id.iv_member_delete, item.getRole() != 0);
+
+        if (!Check.hasContent(item.getUserName()) && Check.maxThen(item.getUserMobile(), 4)) {
+            helper.setText(R.id.tv_member_nickname, "用户" + (item.getUserMobile().substring(item.getUserMobile().length() - 4)));
+        }
     }
 }

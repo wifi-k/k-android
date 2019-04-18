@@ -295,7 +295,7 @@
     <string name="wifi_restart_failed">WiFi重启失败</string>
     <string name="reset_device_success">恢复出厂设置成功</string>
     <string name="gallery_lab">照片库</string>
-    <string name="newer_picture">最新照片</string>
+    <string name="newer_picture">全部照片</string>
     <string name="intelligence_gallery">智能照片</string>
     <string name="share_gallery">共享照片</string>
     <string name="upload_ing">上传中…</string>
@@ -359,7 +359,7 @@
     <string name="tips_has_no_device">请绑定设备进行设置</string>
     <string name="has_no_week_report">暂无周报</string>
     <string name="tips_has_no_children">开启儿童上网关爱查看周报</string>
-    <string name="ban_time_plan_name">禁用时间方案1</string>
+    <string name="ban_time_plan_name">上网时间方案1</string>
     <string name="unbind_success">解绑成功</string>
     <string name="unbind_failed">解绑失败</string>
     <string name="bind_ing">绑定中...</string>
@@ -380,5 +380,7 @@
     <string name="click_input_code">点击输入家庭码</string>
     <string name="join_family_share_gallery">加入亲友分享的共享相册</string>
     <string name="click_gallery_into_gallery">点击相册，进入到相册板块</string>
+    <string name="device_name_cannot_empty">设备名称不能为空</string>
+    <string name="request_failed_retry">请求失败，请稍后再试</string>
 
 </resources>

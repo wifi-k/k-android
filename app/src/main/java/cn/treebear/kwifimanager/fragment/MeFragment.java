@@ -58,9 +58,9 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
     @Override
     public void onResume() {
         super.onResume();
-        if (MyApplication.getAppContext().isNeedUpdateUserInfo()) {
+//        if (MyApplication.getAppContext().isNeedUpdateUserInfo()) {
             mPresenter.getUserInfo();
-        }
+//        }
     }
 
     @SuppressLint("SetTextI18n")

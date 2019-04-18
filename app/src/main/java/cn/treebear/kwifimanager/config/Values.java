@@ -57,6 +57,8 @@ public interface Values {
      * 获取控制app
      */
     int REQUEST_BAN_APP = 0x0004;
+
+    int REQUEST_MODIFY_NAME = 0x0005;
     /**
      * 频率 -- 所有
      */

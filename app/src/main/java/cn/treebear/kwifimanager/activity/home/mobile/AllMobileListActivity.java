@@ -1,14 +1,14 @@
 package cn.treebear.kwifimanager.activity.home.mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,8 +23,11 @@ import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
+import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 
 /**
@@ -78,13 +81,12 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
                     break;
             }
         });
-        mobilePhoneAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Keys.MOBILE, mobilePhoneList.get(position));
-                startActivity(MobileDetailActivity.class, bundle);
-            }
+        mobilePhoneAdapter.setOnItemClickListener((adapter, view, position) -> {
+            currentModifyPosition = position;
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Keys.MOBILE, mobilePhoneList.get(position));
+            TLog.w(mobilePhoneList.get(position));
+            startActivityForResult(MobileDetailActivity.class, bundle, Values.REQUEST_EDIT_DEVICE);
         });
         refreshLayout.setOnRefreshListener(this::refresh);
         mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo, Config.Numbers.PAGE_SIZE), rvDeviceList);
@@ -108,10 +110,14 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
 
                 @Override
                 public void onRightClick(String s) {
-                    MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
-                    mPresenter.setNodeMobileInfo(currentNode.getNodeId(), bean.getMac(), bean.getNote(), bean.getIsBlock(), bean.getIsRecord(), 1);
-                    bean.setName(s);
-                    bean.setNote(s);
+                    if (Check.hasContent(s)) {
+                        MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
+                        bean.setName(s);
+                        bean.setNote(s);
+                        mPresenter.setNodeMobileInfo(currentNode.getNodeId(), bean.getMac(), bean.getNote(), bean.getIsBlock(), bean.getIsRecord(), 1);
+                    } else {
+                        ToastUtils.showShort(R.string.device_name_cannot_empty);
+                    }
                 }
             });
         }
@@ -163,6 +169,23 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
             mobilePhoneAdapter.notifyDataSetChanged();
         } else {
             ToastUtils.showShort(R.string.modify_failed);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && resultCode == RESULT_OK) {
+            if (requestCode == Values.REQUEST_EDIT_DEVICE) {
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    MobileListBean.MobileBean mobile = (MobileListBean.MobileBean) extras.getSerializable(Keys.MOBILE);
+                    if (mobile != null) {
+                        mobilePhoneList.set(currentModifyPosition, mobile);
+                        mobilePhoneAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
         }
     }
 }

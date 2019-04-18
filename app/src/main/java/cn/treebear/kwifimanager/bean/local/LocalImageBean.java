@@ -11,6 +11,8 @@ public class LocalImageBean {
 
     private boolean select;
 
+    private boolean hasBackup;
+
     public LocalImageBean() {
     }
 
@@ -31,6 +33,14 @@ public class LocalImageBean {
         this.thumbPath = thumbPath;
         this.date = dateAdded;
         this.filepath = filepath;
+    }
+
+    public boolean hasBackup() {
+        return hasBackup;
+    }
+
+    public void setHasBackup(boolean hasBackup) {
+        this.hasBackup = hasBackup;
     }
 
     public String getDate() {

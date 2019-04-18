@@ -147,8 +147,9 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
 
     @Override
     public void modifyNodeNameResponse(int resultCode, String msg) {
+        dismiss(tInputDialog);
+        hideLoading();
         if (resultCode == 0) {
-            dismiss(tInputDialog);
             ToastUtils.showShort(R.string.modify_success);
             deviceAdapter.notifyDataSetChanged();
         }
@@ -156,9 +157,10 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
 
     @Override
     public void unbindNodeResponse(int resultCode, String msg) {
+        dismiss(tMessageDialog);
+        hideLoading();
         if (resultCode == ApiCode.SUCC) {
             needRefresh = true;
-            dismiss(tMessageDialog);
             nodeList.remove(currentModifyPosition);
             MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
             deviceAdapter.notifyDataSetChanged();
@@ -208,6 +210,8 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
 
                 @Override
                 public void onRightClick(String s) {
+                    dismiss(tInputDialog);
+                    showLoading(R.string.upload_ing);
                     mPresenter.modifyNodeName(nodeList.get(currentModifyPosition).getNodeId(), s);
                     nodeList.get(currentModifyPosition).setName(s);
                 }

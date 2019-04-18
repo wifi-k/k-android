@@ -11,7 +11,7 @@
         android:id="@+id/ll_pic_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="24dp">
 
         <ImageView
             android:id="@+id/iv_newer_pic"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_gallery_all" />
 
         <ImageView
             android:id="@+id/iv_smart_pic"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_gallery_ai" />
 
         <ImageView
             android:id="@+id/iv_share_pic"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_gallery_share" />
 
     </LinearLayout>
 

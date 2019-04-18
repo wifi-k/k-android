@@ -14,10 +14,6 @@ import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nanchen.compresshelper.CompressHelper;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-
-import org.json.JSONObject;
 
 import java.io.File;
 
@@ -30,6 +26,7 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.account.SetPasswordActivity;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.QiNiuUserBean;
 import cn.treebear.kwifimanager.bean.SUserCover;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
@@ -80,7 +77,15 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     protected void initView() {
         setTitleBack(R.string.personal_info);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_MODIFY_USER_MOBILE, this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showLoading();
         mPresenter.getUserInfo();
+//        tvNickName.setText(MyApplication.getAppContext().getUser().getName());
     }
 
     @OnClick(R2.id.civ_header_pic)
@@ -90,7 +95,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
 
     @OnClick(R2.id.tv_nick_name)
     public void onTvNickNameClicked() {
-        startActivity(ModifyNickNameActivity.class);
+        startActivityForResult(ModifyNickNameActivity.class, null, Values.REQUEST_MODIFY_NAME);
     }
 
     @OnClick(R2.id.tv_mobile_number)
@@ -106,6 +111,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
 
     @Override
     public void onLoadData(SUserCover resultData) {
+        hideLoading();
         if (resultData.getUser() != null) {
             userInfo = resultData.getUser();
             userInfo.setToken(MyApplication.getAppContext().getUser().getToken());
@@ -175,7 +181,6 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
                         ToastUtils.showShort(R.string.refuse_gallery_permission_error);
                     }
                 }).request();
-
     }
 
     /**
@@ -205,24 +210,17 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
+        if (resultCode != RESULT_OK || data == null) {
             return;
         }
         switch (requestCode) {
             case Values.REQUEST_SYSTEM_CAMERA:
-//                Bundle bundle = data.getExtras();
-//                if (bundle != null) {
-//                    Bitmap bmp = (Bitmap) bundle.get("data");
-//                    picPath = FileUtils.saveAsJpgToSdCard(bmp);
                 TLog.i("result -->>> " + picPath);
                 civHeaderPic.setImageBitmap(BitmapUtils.readBitmapAutoSize(picPath, 512, 512));
-//                }
+                dealImage();
                 break;
             case Values.REQUEST_SYSTEM_GALLERY:
                 try {
-                    if (data == null) {
-                        return;
-                    }
                     Uri selectedImage = data.getData();
                     if (selectedImage == null) {
                         return;
@@ -239,6 +237,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
                         cursor.close();
                         Bitmap bitmap = BitmapFactory.decodeFile(picPath);
                         civHeaderPic.setImageBitmap(bitmap);
+                        dealImage();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -247,7 +246,10 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
             default:
                 break;
         }
-        TLog.i(picPath);
+
+    }
+
+    private void dealImage() {
         PermissionUtils.permission(PermissionConstants.STORAGE)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
@@ -283,7 +285,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     @Override
     public void onModifyUserInfo() {
         hideLoading();
-        MyApplication.getAppContext().setNeedUpdateUserInfo(false);
+        MyApplication.getAppContext().setNeedUpdateUserInfo(true);
         civHeaderPic.setImageBitmap(BitmapUtils.readBitmapAutoSize(picPath, 720, 960));
         ToastUtils.showShort(R.string.user_info_update_success);
     }
@@ -306,18 +308,20 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
                     .setDestinationDirectoryPath(FileUtils.getPublicDiskSafe())
                     .build()
                     .compressToFile(file);
-            ImageUploadManager.getInstance().put(newFile, newFile.getName(), mQiNiuToken, new UpCompletionHandler() {
-                @Override
-                public void complete(String key, ResponseInfo info, JSONObject response) {
-                    if (!info.isOK()) {
-                        hideLoading();
-                        ToastUtils.showShort(R.string.upload_error);
-                    } else {
-                        mPresenter.modifyUserInfo(null, newFile.getName());
-                    }
+            ImageUploadManager.getInstance().put(newFile, newFile.getName(), mQiNiuToken, (key, info, response) -> {
+                if (!info.isOK()) {
+                    hideLoading();
+                    ToastUtils.showShort(R.string.upload_error);
+                } else {
+                    mPresenter.modifyUserInfo(null, newFile.getName());
                 }
             }, null);
         }
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        super.onLoadFail(resultData, resultMsg, resultCode);
     }
 
     @Override

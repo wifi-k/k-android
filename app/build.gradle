@@ -13,8 +13,8 @@ android {
         applicationId "cn.treebear.kwifimanager"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 102
-        versionName "V1.0.2"
+        versionCode 104
+        versionName "V1.0.4"
         multiDexEnabled true
         buildConfigField "String", "APP_NAME", '"小K管家"'
         buildConfigField "String", "UMENG_APPKEY", '"5c9c305a3fc1958d800010fc"'

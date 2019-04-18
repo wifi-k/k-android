@@ -47,6 +47,7 @@ public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSec
     protected void convert(BaseViewHolder helper, LocalImageSection item) {
         ImageView image = helper.getView(R.id.gallery_image);
         CheckBox cbCheck = helper.getView(R.id.cb_image_checked);
+        ImageView ivBackupStatus = helper.getView(R.id.iv_backup_status);
         ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
         layoutParams.height = (DensityUtil.getScreenWidth() - 4) / 3;
         image.setLayoutParams(layoutParams);
@@ -56,6 +57,7 @@ public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSec
                 .error(R.mipmap.ic_launcher)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(image);
+        ivBackupStatus.setVisibility(item.t.hasBackup() ? View.GONE : View.VISIBLE);
         cbCheck.setVisibility(model == GalleryHelper.IMAGE_MODEL_SELECT ? View.VISIBLE : View.GONE);
         cbCheck.setEnabled(model == GalleryHelper.IMAGE_MODEL_SELECT);
         cbCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {

@@ -43,17 +43,6 @@ public class MobileListBean implements Serializable {
 
     public static class MobileBean implements Serializable, Parcelable {
 
-        public static final Creator<MobileBean> CREATOR = new Creator<MobileBean>() {
-            @Override
-            public MobileBean createFromParcel(Parcel source) {
-                return new MobileBean(source);
-            }
-
-            @Override
-            public MobileBean[] newArray(int size) {
-                return new MobileBean[size];
-            }
-        };
         /**
          * id : 5
          * mac : 68:f7:28:77:f4:51
@@ -77,8 +66,8 @@ public class MobileListBean implements Serializable {
         private int id;
         private String mac;
         private String name;
-        private int onTime;
-        private int offTime;
+        private long onTime;
+        private long offTime;
         private int status;
         private String note;
         private String nodeId;
@@ -91,29 +80,6 @@ public class MobileListBean implements Serializable {
         private String localIp;
         private int isRecord;
         private int isOnline;
-
-        public MobileBean() {
-        }
-
-        protected MobileBean(Parcel in) {
-            this.id = in.readInt();
-            this.mac = in.readString();
-            this.name = in.readString();
-            this.onTime = in.readInt();
-            this.offTime = in.readInt();
-            this.status = in.readInt();
-            this.note = in.readString();
-            this.nodeId = in.readString();
-            this.createTime = in.readLong();
-            this.updateTime = in.readLong();
-            this.isDelete = in.readInt();
-            this.isBlock = in.readInt();
-            this.macVendor = in.readString();
-            this.macIcon = in.readString();
-            this.localIp = in.readString();
-            this.isRecord = in.readInt();
-            this.isOnline = in.readInt();
-        }
 
         public int getId() {
             return id;
@@ -139,7 +105,7 @@ public class MobileListBean implements Serializable {
             this.name = name;
         }
 
-        public int getOnTime() {
+        public long getOnTime() {
             return onTime;
         }
 
@@ -147,7 +113,7 @@ public class MobileListBean implements Serializable {
             this.onTime = onTime;
         }
 
-        public int getOffTime() {
+        public long getOffTime() {
             return offTime;
         }
 
@@ -274,6 +240,7 @@ public class MobileListBean implements Serializable {
                     '}';
         }
 
+
         @Override
         public int describeContents() {
             return 0;
@@ -284,8 +251,8 @@ public class MobileListBean implements Serializable {
             dest.writeInt(this.id);
             dest.writeString(this.mac);
             dest.writeString(this.name);
-            dest.writeInt(this.onTime);
-            dest.writeInt(this.offTime);
+            dest.writeLong(this.onTime);
+            dest.writeLong(this.offTime);
             dest.writeInt(this.status);
             dest.writeString(this.note);
             dest.writeString(this.nodeId);
@@ -299,5 +266,40 @@ public class MobileListBean implements Serializable {
             dest.writeInt(this.isRecord);
             dest.writeInt(this.isOnline);
         }
+
+        public MobileBean() {
+        }
+
+        protected MobileBean(Parcel in) {
+            this.id = in.readInt();
+            this.mac = in.readString();
+            this.name = in.readString();
+            this.onTime = in.readLong();
+            this.offTime = in.readLong();
+            this.status = in.readInt();
+            this.note = in.readString();
+            this.nodeId = in.readString();
+            this.createTime = in.readLong();
+            this.updateTime = in.readLong();
+            this.isDelete = in.readInt();
+            this.isBlock = in.readInt();
+            this.macVendor = in.readString();
+            this.macIcon = in.readString();
+            this.localIp = in.readString();
+            this.isRecord = in.readInt();
+            this.isOnline = in.readInt();
+        }
+
+        public static final Creator<MobileBean> CREATOR = new Creator<MobileBean>() {
+            @Override
+            public MobileBean createFromParcel(Parcel source) {
+                return new MobileBean(source);
+            }
+
+            @Override
+            public MobileBean[] newArray(int size) {
+                return new MobileBean[size];
+            }
+        };
     }
 }

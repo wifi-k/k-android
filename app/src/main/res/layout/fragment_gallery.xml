@@ -27,42 +27,60 @@
             android:gravity="center"
             android:text="@string/gallery_lab"
             android:textColor="@color/text_28354C"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:alpha="0"
+            android:visibility="visible" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rl_tab_wrapper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0"
+            android:alpha="1"
+            android:orientation="horizontal"
             android:visibility="visible">
 
             <TextView
-                android:id="@+id/tv_ai_gallery"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_all_gallery"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="@string/intelligence_gallery" />
+                android:layout_weight="1"
+                android:layout_marginStart="19dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:text="@string/newer_picture"
+                android:textColor="@color/text_28354C"
+                android:textSize="20sp" />
+
 
             <TextView
-                android:id="@+id/tv_all_gallery"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_ai_gallery"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:layout_toStartOf="@+id/tv_ai_gallery"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="@string/newer_picture" />
+                android:text="@string/intelligence_gallery"
+                android:textColor="@color/text_28354C"
+                android:textSize="15sp" />
+
 
             <TextView
                 android:id="@+id/tv_share_gallery"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@+id/tv_ai_gallery"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="@string/share_gallery" />
+                android:text="@string/share_gallery"
+                android:textColor="@color/text_28354C"
+                android:textSize="15sp" />
 
-        </RelativeLayout>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_backup"

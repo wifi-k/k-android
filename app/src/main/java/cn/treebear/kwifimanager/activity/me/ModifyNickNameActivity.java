@@ -4,6 +4,8 @@ import android.text.Editable;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -62,6 +64,15 @@ public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.
     @Override
     protected void onTitleRightClick() {
         mPresenter.modifyUserInfo(etNickName.getText().toString(), null);
+    }
+
+    @Override
+    public void onLoadData(SUserCover resultData) {
+        super.onLoadData(resultData);
+        ToastUtils.showShort(R.string.modify_success);
+        MyApplication.getAppContext().setNeedUpdateUserInfo(true);
+        MyApplication.getAppContext().getUser().setName(etNickName.getText().toString());
+        finish();
     }
 
     @Override

@@ -527,7 +527,15 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
                 startActivity(SignInActivity.class);
                 ActivityStackUtils.finishAll(Config.Tags.ALL);
                 break;
+            case -1:
+                ToastUtils.showShort(Config.Tips.CONNECT_ERROR);
+                break;
             default:
+                if (Check.hasContent(resultMsg)) {
+                    ToastUtils.showShort(resultMsg);
+                } else {
+                    ToastUtils.showShort(R.string.request_failed_retry);
+                }
                 break;
         }
     }

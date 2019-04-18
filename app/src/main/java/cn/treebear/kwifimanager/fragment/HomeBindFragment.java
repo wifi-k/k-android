@@ -251,17 +251,21 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
                 @Override
                 public void onRightClick(String s) {
-                    MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
-                    mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode()
-                            , bean.getMac(), s, bean.getIsBlock());
-                    bean.setName(s);
-                    bean.setNote(s);
+                    if (Check.hasContent(s)) {
+                        MobileListBean.MobileBean bean = mobilePhoneList.get(currentModifyPosition);
+                        mPresenter.setNodeMobileInfo(MyApplication.getAppContext().getCurrentSelectNode()
+                                , bean.getMac(), s, bean.getIsBlock());
+                        bean.setName(s);
+                        bean.setNote(s);
+                    } else {
+                        ToastUtils.showShort(R.string.device_name_cannot_empty);
+                    }
                 }
-            });
-        }
+        });
+    }
         modifyNameDialog.clearInputText();
         modifyNameDialog.show();
-    }
+}
 
     @OnClick(R2.id.tv_ap_name)
     public void onTvApNameClicked() {
