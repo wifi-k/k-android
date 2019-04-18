@@ -16,11 +16,6 @@ import cn.treebear.kwifimanager.bean.Daybean;
  */
 
 public interface ConstConfig {
-    ArrayList<Integer> HOME_GUIDE_IMAGE_RESID = new ArrayList<Integer>() {{
-        add(0, R.drawable.guide_home_1);
-        add(1, R.drawable.guide_home_2);
-        add(2, R.drawable.guide_home_3);
-    }};
     ArrayList<String> EMPTY_NOTICE = new ArrayList<String>() {{
         add("暂无消息");
         if (BuildConfig.DEBUG) {

@@ -23,6 +23,14 @@ public class FullImageActivity extends BaseActivity {
     RecyclerViewPager recyclerView;
     @BindView(R2.id.tv_title_text)
     TextView tvTitle;
+    @BindView(R2.id.iv_share_pic)
+    TextView ivSharePic;
+    @BindView(R2.id.iv_delete_pic)
+    TextView ivDeletePic;
+    @BindView(R2.id.iv_backup_pic)
+    TextView ivBackupPic;
+    @BindView(R2.id.iv_download_pic)
+    TextView ivDownloadPic;
     private int imagePosition;
     private FullImageAdapter adapter;
 
@@ -73,4 +81,9 @@ public class FullImageActivity extends BaseActivity {
     @OnClick(R2.id.iv_backup_pic)
     public void onIvBackupPicClicked() {
     }
+
+    @OnClick(R2.id.iv_download_pic)
+    public void onIvDownloadPicClicked() {
+    }
+
 }

@@ -382,5 +382,9 @@
     <string name="click_gallery_into_gallery">点击相册，进入到相册板块</string>
     <string name="device_name_cannot_empty">设备名称不能为空</string>
     <string name="request_failed_retry">请求失败，请稍后再试</string>
+    <string name="share">分享</string>
+    <string name="delete">删除</string>
+    <string name="backup">备份</string>
+    <string name="please_select_unless_one_pic">请选择至少一张图片</string>
 
 </resources>

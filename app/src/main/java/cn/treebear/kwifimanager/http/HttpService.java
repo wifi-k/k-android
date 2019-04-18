@@ -188,15 +188,15 @@ public interface HttpService {
     Observable<BaseResponse<Object>> setNodeInfo(@Body RequestBody body);
 
     /**
-     * 节点加入共享计划 /user/node/share/join
+     * 节点加入共享计划 /user/node/gallery_share_white/join
      *
      * @param body * nodeId*	str
      */
-    @POST("user/node/share/join")
+    @POST("user/node/gallery_share_white/join")
     Observable<BaseResponse<Object>> joinShare(@Body RequestBody body);
 
     /**
-     * 离开共享计划 /user/node/share/quit
+     * 离开共享计划 /user/node/gallery_share_white/quit
      * 说明
      * 节点完成当前任务后离开
      * 提前预约3天离开
@@ -204,7 +204,7 @@ public interface HttpService {
      *
      * @param body * nodeId*	str
      */
-    @POST("user/node/share/quit")
+    @POST("user/node/gallery_share_white/quit")
     Observable<BaseResponse<Object>> quiteShare(@Body RequestBody body);
 
     /**

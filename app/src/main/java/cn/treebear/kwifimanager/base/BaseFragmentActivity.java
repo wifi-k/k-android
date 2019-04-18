@@ -612,6 +612,18 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         }
     }
 
+    protected void hideFragment(@IdRes int wrapperId, Fragment fragment, boolean hideWrapper) {
+        if (hideWrapper) {
+            findViewById(wrapperId).setVisibility(View.GONE);
+            return;
+        }
+        if (fragmentLists.containsKey(wrapperId) && getFragments(wrapperId).contains(fragment)) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.hide(fragment);
+            fragmentTransaction.commit();
+        }
+    }
+
     /**
      * 添加fragments
      */

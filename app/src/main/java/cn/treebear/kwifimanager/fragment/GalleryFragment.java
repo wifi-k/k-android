@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
+import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.activity.gallery.FullImageActivity;
 import cn.treebear.kwifimanager.activity.gallery.GalleryBackupActivity;
 import cn.treebear.kwifimanager.adapter.GalleryDisplayAdapter;
@@ -115,6 +116,15 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
                     startActivity(FullImageActivity.class, bundle);
                 }
             }
+        });
+        galleryAdapter.setOnItemLongClickListener((adapter, view, position) -> {
+            if (!GalleryHelper.getSections().get(position).isHeader) {
+                GalleryHelper.appendCheckImage(GalleryHelper.getSections().get(position).t, true);
+                if (mContext instanceof MainActivity) {
+                    ((MainActivity) mContext).showSelectGalleryFragment();
+                }
+            }
+            return true;
         });
     }
 

@@ -18,10 +18,11 @@ import cn.treebear.kwifimanager.bean.local.LocalImageSection;
 import cn.treebear.kwifimanager.config.GalleryHelper;
 import cn.treebear.kwifimanager.config.GlideApp;
 import cn.treebear.kwifimanager.util.DensityUtil;
+import cn.treebear.kwifimanager.util.callback.GallerySelectChangedListener;
 
 public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSection, BaseViewHolder> {
     private int model = GalleryHelper.IMAGE_MODEL_DISPLAY;
-    private ArrayList<LocalImageBean> selectedBeans = new ArrayList<>();
+    private GallerySelectChangedListener mListener;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -47,6 +48,8 @@ public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSec
     protected void convert(BaseViewHolder helper, LocalImageSection item) {
         ImageView image = helper.getView(R.id.gallery_image);
         CheckBox cbCheck = helper.getView(R.id.cb_image_checked);
+        // 解决cb状态重置问题
+        cbCheck.setOnCheckedChangeListener(null);
         ImageView ivBackupStatus = helper.getView(R.id.iv_backup_status);
         ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
         layoutParams.height = (DensityUtil.getScreenWidth() - 4) / 3;
@@ -60,28 +63,33 @@ public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSec
         ivBackupStatus.setVisibility(item.t.hasBackup() ? View.GONE : View.VISIBLE);
         cbCheck.setVisibility(model == GalleryHelper.IMAGE_MODEL_SELECT ? View.VISIBLE : View.GONE);
         cbCheck.setEnabled(model == GalleryHelper.IMAGE_MODEL_SELECT);
+        cbCheck.setChecked(item.t.isSelect());
         cbCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (model != GalleryHelper.IMAGE_MODEL_SELECT) {
                 return;
             }
             item.t.setSelect(isChecked);
             if (isChecked) {
-                selectedBeans.add(item.t);
+                GalleryHelper.appendCheckImage(item.t, false);
             } else {
-                selectedBeans.remove(item.t);
+                GalleryHelper.removeCheckImage(item.t);
+            }
+            if (mListener != null) {
+                mListener.onSelectChange(GalleryHelper.getCheckImageList(), item.t);
             }
         });
     }
 
     public ArrayList<LocalImageBean> getCheckResult() {
-        return selectedBeans;
+        return GalleryHelper.getCheckImageList();
+    }
+
+    public void setOnGallerySelectChangedListener(GallerySelectChangedListener listener) {
+        mListener = listener;
     }
 
     public void clearCheckStatus() {
-        for (LocalImageBean bean : selectedBeans) {
-            bean.setSelect(false);
-        }
-        selectedBeans.clear();
+        GalleryHelper.clearCheck();
         notifyDataSetChanged();
     }
 }

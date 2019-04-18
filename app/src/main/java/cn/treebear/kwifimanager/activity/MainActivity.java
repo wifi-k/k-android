@@ -1,5 +1,6 @@
 package cn.treebear.kwifimanager.activity;
 
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -21,6 +22,7 @@ import cn.treebear.kwifimanager.fragment.GuideFragment;
 import cn.treebear.kwifimanager.fragment.HomeBindFragment;
 import cn.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import cn.treebear.kwifimanager.fragment.MeFragment;
+import cn.treebear.kwifimanager.fragment.SelectPictureFragment;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
@@ -55,6 +57,7 @@ public class MainActivity extends BaseFragmentActivity {
         }
     };
     private GuideFragment guideFragment;
+    private SelectPictureFragment selectPictureFragment;
 
     @Override
     public int layoutId() {
@@ -112,6 +115,25 @@ public class MainActivity extends BaseFragmentActivity {
         }
     }
 
+    public void showSelectGalleryFragment() {
+        if (selectPictureFragment == null) {
+            selectPictureFragment = new SelectPictureFragment();
+            addFragments(R.id.full_screen_fragment_wrapper, selectPictureFragment);
+        } else {
+            findViewById(R.id.full_screen_fragment_wrapper).setVisibility(View.VISIBLE);
+            updateFragment(R.id.full_screen_fragment_wrapper, 0);
+        }
+        TLog.w(String.valueOf(R.id.full_screen_fragment_wrapper) + "----------------" + String.valueOf(R.id.fragment_wrapper));
+        selectPictureFragment.updateStatus();
+    }
+
+    public void hideSelectGalleryFragment() {
+        if (selectPictureFragment != null) {
+            selectPictureFragment.clearStatus();
+            hideFragment(R.id.full_screen_fragment_wrapper, selectPictureFragment, true);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -122,6 +144,11 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     public void onBackPressed() {
+        if (findViewById(R.id.full_screen_fragment_wrapper).getVisibility() == View.VISIBLE) {
+            hideGuideFragment();
+            hideSelectGalleryFragment();
+            return;
+        }
         if (System.currentTimeMillis() - lastPressBackMills > 3000) {
             lastPressBackMills = System.currentTimeMillis();
             ToastUtils.showShort(R.string.double_click_for_exit);

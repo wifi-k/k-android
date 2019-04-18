@@ -2,6 +2,7 @@ package cn.treebear.kwifimanager.config;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.util.ArrayMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,8 +21,10 @@ public class GalleryHelper {
 
     public static final int IMAGE_MODEL_DISPLAY = 0;
     public static final int IMAGE_MODEL_SELECT = 1;
+
     private static ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
     private static ArrayList<LocalImageSection> sections = new ArrayList<>();
+    private static ArrayList<LocalImageBean> checkImages = new ArrayList<>();
 
     private GalleryHelper() {
     }
@@ -33,6 +36,29 @@ public class GalleryHelper {
     public static ArrayList<LocalImageSection> getSections() {
         return sections;
     }
+
+    public static ArrayList<LocalImageBean> getCheckImageList() {
+        return checkImages;
+    }
+
+    public static void appendCheckImage(LocalImageBean bean, boolean clear) {
+        if (clear) {
+            getCheckImageList().clear();
+        }
+        if (getCheckImageList().contains(bean)) {
+            return;
+        }
+        getCheckImageList().add(bean);
+    }
+
+    public static void removeCheckImage(LocalImageBean bean) {
+        getCheckImageList().remove(bean);
+    }
+
+    public static void clearCheck() {
+        getCheckImageList().clear();
+    }
+
 
     /**
      * 创建资源游标
@@ -76,6 +102,11 @@ public class GalleryHelper {
                 }
                 String filepath = cursor.getString(pathIndex);
                 LocalImageBean imageBean = new LocalImageBean(thumbPath, date, DateTimeUtils.formatYMD4Gallery(date), filepath);
+                for (LocalImageBean image : checkImages) {
+                    if (image.getFilepath().equals(imageBean.getFilepath())) {
+                        imageBean.setSelect(true);
+                    }
+                }
                 imageBeans.add(imageBean);
             } while (cursor.moveToNext());
             image2Section();

@@ -21,7 +21,7 @@
     <LinearLayout
         android:id="@+id/bottom_toolbar"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,37 +29,71 @@
         app:layout_constraintStart_toStartOf="parent">
         <View
             android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_weight="1"
             android:layout_height="match_parent"/>
-        <ImageView
+        <TextView
             android:id="@+id/iv_share_pic"
-            android:src="@drawable/share"
+            android:drawableTop="@mipmap/gallery_share_white"
+            android:text="@string/share"
+            android:textColor="@android:color/white"
+            android:drawablePadding="8dp"
+            android:textSize="10sp"
             android:layout_width="36dp"
             android:padding="8dp"
-            android:layout_height="36dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content" />
         <View
             android:layout_width="0dp"
-            android:layout_weight="11"
+            android:layout_weight="2"
             android:layout_height="match_parent"/>
-        <ImageView
+        <TextView
             android:id="@+id/iv_delete_pic"
-            android:src="@drawable/delete"
+            android:drawableTop="@mipmap/gallery_delete_white"
+            android:text="@string/delete"
+            android:textColor="@android:color/white"
+            android:drawablePadding="8dp"
+            android:textSize="10sp"
             android:layout_width="36dp"
             android:padding="8dp"
-            android:layout_height="36dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content" />
         <View
             android:layout_width="0dp"
-            android:layout_weight="11"
+            android:layout_weight="2"
             android:layout_height="match_parent"/>
-        <ImageView
+        <TextView
             android:id="@+id/iv_backup_pic"
-            android:src="@drawable/backup"
+            android:drawableTop="@mipmap/gallery_backup_white"
+            android:text="@string/backup"
+            android:textColor="@android:color/white"
+            android:drawablePadding="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="10sp"
             android:layout_width="36dp"
             android:padding="8dp"
-            android:layout_height="36dp" />
+            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content" />
         <View
             android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_weight="2"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/iv_download_pic"
+            android:drawableTop="@mipmap/gallery_download_white"
+            android:text="@string/download"
+            android:textColor="@android:color/white"
+            android:drawablePadding="8dp"
+            android:textSize="10sp"
+            android:layout_marginTop="8dp"
+            android:layout_width="36dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"/>
     </LinearLayout>
 
