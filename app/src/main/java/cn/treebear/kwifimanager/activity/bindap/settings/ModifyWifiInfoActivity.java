@@ -129,8 +129,13 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
 
                 @Override
                 public void onClickRight(android.view.View view) {
+                    String passwd = etWifiPassword.getText().toString();
+                    if (Check.hasContent(etWifiPassword) && !Check.maxThen(passwd,7) || Check.maxThen(passwd, 20)){
+                        ToastUtils.showShort(R.string.input_wifi_passowrd_please);
+                        return;
+                    }
                     mPresenter.modifyWifiInfo(NetWorkUtils.getSSIDWhenWifi(MyApplication.getAppContext()),
-                            etWifiName.getText().toString(), etWifiPassword.getText().toString());
+                            etWifiName.getText().toString(), passwd);
                     dismiss(tMessageDialog);
                     showLoading();
                 }

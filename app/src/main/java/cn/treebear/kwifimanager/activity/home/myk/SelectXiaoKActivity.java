@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
@@ -95,6 +96,12 @@ public class SelectXiaoKActivity extends BaseActivity<SelectXiaoKContract.Presen
         nodeBeans.addAll(searchSelectNode(resultData.getPage()));
         adapter.notifyDataSetChanged();
         emptyView.setVisibility(nodeBeans.size() == 0 ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        refreshLayout.setRefreshing(false);
+        super.onLoadFail(resultData, resultMsg, resultCode);
     }
 
     @Override

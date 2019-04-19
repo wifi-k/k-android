@@ -2,15 +2,16 @@ package cn.treebear.kwifimanager.activity.toolkit;
 
 import android.view.View;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -18,6 +19,7 @@ import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.GuardJoinDeviceAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.server.contract.NodeMobileContract;
@@ -92,7 +94,7 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
             } else {
                 adapter.loadMoreComplete();
             }
-            adapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
+            adapter.setEnableLoadMore(resultData.getTotal() > guardDeviceList.size());
             guardDeviceList.addAll(resultData.getPage());
 //            emptyViewWrapper.setVisibility(guardDeviceList.size() == 0 ? View.VISIBLE : View.GONE);
             emptyViewWrapper.setVisibility(View.GONE);
@@ -109,5 +111,11 @@ public class GuardDeviceJoinActivity extends BaseActivity<NodeMobileContract.Pre
     public void setNodeMobileFail() {
         ToastUtils.showShort(R.string.option_failed);
         refresh();
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        refreshLayout.setRefreshing(false);
+        super.onLoadFail(resultData, resultMsg, resultCode);
     }
 }

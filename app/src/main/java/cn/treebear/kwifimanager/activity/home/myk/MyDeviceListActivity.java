@@ -4,14 +4,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
@@ -159,14 +160,22 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     public void unbindNodeResponse(int resultCode, String msg) {
         dismiss(tMessageDialog);
         hideLoading();
-        if (resultCode == ApiCode.SUCC) {
-            needRefresh = true;
-            nodeList.remove(currentModifyPosition);
-            MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
-            deviceAdapter.notifyDataSetChanged();
-            ToastUtils.showShort(R.string.unbind_success);
-        } else {
-            ToastUtils.showShort(R.string.unbind_failed);
+        switch (resultCode) {
+            case ApiCode.SUCC:
+                needRefresh = true;
+                nodeList.remove(currentModifyPosition);
+                MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
+                deviceAdapter.notifyDataSetChanged();
+                ToastUtils.showShort(R.string.unbind_success);
+                break;
+            case ApiCode.USR_INVALID:
+                ToastUtils.showShort(R.string.normal_member_cannot_unbind);
+                break;
+            default:
+                super.onLoadFail(null, msg, resultCode);
+                break;
+
+
         }
     }
 

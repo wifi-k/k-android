@@ -4,18 +4,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.ChildrenCarefulAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.ChildrenListBean;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
@@ -84,5 +86,11 @@ public class ChildrenListActivity extends BaseActivity<ChildrenListContract.Pres
         adapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
         adapter.notifyDataSetChanged();
         tvEmptyView.setVisibility(childrenBeans.size() == 0 ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        refreshLayout.setRefreshing(false);
+        super.onLoadFail(resultData, resultMsg, resultCode);
     }
 }

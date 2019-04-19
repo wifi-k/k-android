@@ -129,6 +129,7 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
 
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        refreshLayout.setRefreshing(false);
         super.onLoadFail(resultData, resultMsg, resultCode);
     }
 

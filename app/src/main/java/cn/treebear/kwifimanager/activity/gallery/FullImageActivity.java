@@ -3,10 +3,12 @@ package cn.treebear.kwifimanager.activity.gallery;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
+
+import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
@@ -16,9 +18,14 @@ import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.config.GalleryHelper;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
+import cn.treebear.kwifimanager.util.UMShareUtils;
+import cn.treebear.kwifimanager.util.UserInfoUtil;
+import cn.treebear.kwifimanager.widget.pop.ShareGalleryPop;
 
 public class FullImageActivity extends BaseActivity {
 
+    @BindView(R2.id.root_view)
+    ConstraintLayout rootView;
     @BindView(R2.id.recycler_view)
     RecyclerViewPager recyclerView;
     @BindView(R2.id.tv_title_text)
@@ -33,6 +40,7 @@ public class FullImageActivity extends BaseActivity {
     TextView ivDownloadPic;
     private int imagePosition;
     private FullImageAdapter adapter;
+    private ShareGalleryPop shareGalleryPop;
 
     @Override
     public int layoutId() {
@@ -65,6 +73,7 @@ public class FullImageActivity extends BaseActivity {
             if (i1 >= GalleryHelper.getImageBeans().size()) {
                 return;
             }
+            imagePosition = i1;
 //            tvTitle.setText(GalleryHelper.getImageBeans().get(i1).getDate());
             tvTitle.setText(DateTimeUtils.formatYMDHm4Gallery(GalleryHelper.getImageBeans().get(i1).getDateAdded()));
         });
@@ -72,6 +81,33 @@ public class FullImageActivity extends BaseActivity {
 
     @OnClick(R2.id.iv_share_pic)
     public void onIvSharePicClicked() {
+        if (shareGalleryPop == null) {
+            shareGalleryPop = new ShareGalleryPop(this);
+            shareGalleryPop.setListener(new ShareGalleryPop.DoClickListener() {
+                @Override
+                public void onSelectAlbum(int position) {
+                }
+
+                @Override
+                public void onClickWechat() {
+                    dismiss(shareGalleryPop);
+                    UMShareUtils.shareWxImage(FullImageActivity.this, "小K云管家", String.format("%s分享了照片", UserInfoUtil.getUserInfo().getName()),
+                            GalleryHelper.getImageBeans().get(imagePosition).getFilepath(), null);
+                }
+
+                @Override
+                public void onCancel() {
+                    dismiss(shareGalleryPop);
+                }
+
+                @Override
+                public void onDismiss() {
+                    backgroundAlpha(1f);
+                }
+            });
+        }
+        shareGalleryPop.show(rootView);
+        backgroundAlpha(0.8f);
     }
 
     @OnClick(R2.id.iv_delete_pic)

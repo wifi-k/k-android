@@ -158,6 +158,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
 
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        refreshLayout.setRefreshing(false);
         super.onLoadFail(resultData, resultMsg, resultCode);
         ToastUtils.showShort(R.string.online_device_get_failed);
     }

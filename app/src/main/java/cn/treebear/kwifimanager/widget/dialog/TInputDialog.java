@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.base.BaseTextWatcher;
 import cn.treebear.kwifimanager.util.DensityUtil;

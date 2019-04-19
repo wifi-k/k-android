@@ -12,7 +12,12 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+
 import cn.treebear.kwifimanager.R;
+import cn.treebear.kwifimanager.adapter.ShareAlbumAdapter;
+import cn.treebear.kwifimanager.bean.local.AlbumBean;
 import cn.treebear.kwifimanager.widget.Dismissable;
 
 public class ShareGalleryPop implements Dismissable {
@@ -24,9 +29,10 @@ public class ShareGalleryPop implements Dismissable {
     private RecyclerView recyclerView;
     private TextView tvShareWeixin;
     private TextView tvCancel;
+    private ArrayList<AlbumBean> shareAlbums = new ArrayList<>();
     private DoClickListener mListener = new DoClickListener() {
         @Override
-        public void onSelect(int position) {
+        public void onSelectAlbum(int position) {
 
         }
 
@@ -45,9 +51,17 @@ public class ShareGalleryPop implements Dismissable {
 
         }
     };
+    private ShareAlbumAdapter shareAlbumAdapter;
 
     public ShareGalleryPop(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public void setShareAlbums(ArrayList<AlbumBean> albums) {
+        shareAlbums.clear();
+        shareAlbums.addAll(albums);
+        shareAlbumAdapter.notifyDataSetChanged();
+        shareGalleryWrapper.setVisibility(shareAlbums.size() == 0 ? View.GONE : View.VISIBLE);
     }
 
     public void setListener(DoClickListener listener) {
@@ -60,6 +74,7 @@ public class ShareGalleryPop implements Dismissable {
         if (popupWindow == null) {
             initPopupWindow();
         }
+        shareGalleryWrapper.setVisibility(shareAlbums.size() == 0 ? View.GONE : View.VISIBLE);
         popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
     }
 
@@ -90,19 +105,22 @@ public class ShareGalleryPop implements Dismissable {
         tvShareWeixin = mContentView.findViewById(R.id.tv_share_weixin);
         tvCancel = mContentView.findViewById(R.id.tv_cancel);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 5));
-        // TODO: 2019/4/10 设置相册数据
-        // TODO: 2019/4/10 设置数据选择监听
+        shareAlbumAdapter = new ShareAlbumAdapter(shareAlbums);
+        recyclerView.setAdapter(shareAlbumAdapter);
+        shareAlbumAdapter.setOnItemClickListener((adapter, view, position) -> mListener.onSelectAlbum(position));
         tvCancel.setOnClickListener(v -> mListener.onCancel());
         tvShareWeixin.setOnClickListener(v -> mListener.onClickWechat());
     }
 
     @Override
     public void dismiss() {
-
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+        }
     }
 
     public interface DoClickListener {
-        void onSelect(int position);
+        void onSelectAlbum(int position);
 
         void onClickWechat();
 

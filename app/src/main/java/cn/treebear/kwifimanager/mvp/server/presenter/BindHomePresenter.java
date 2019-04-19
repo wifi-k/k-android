@@ -5,6 +5,7 @@ import android.util.ArrayMap;
 import cn.treebear.kwifimanager.base.BasePresenter;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.ChildrenListBean;
+import cn.treebear.kwifimanager.bean.FamilyMemberCover;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
@@ -19,6 +20,20 @@ public class BindHomePresenter extends BasePresenter<BindHomeContract.View, Bind
     @Override
     public void setModel() {
         mModel = new BindHomeModel();
+    }
+
+    @Override
+    public void getFamilyMembers(String nodeId) {
+        ArrayMap<String, Object> map = map();
+        map.put(Keys.NODE_ID, nodeId);
+        mModel.getFamilyMembers(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<FamilyMemberCover>>() {
+            @Override
+            public void onSuccess(BaseResponse<FamilyMemberCover> resultData) {
+                if (Check.hasContent(resultData, mView)) {
+                    mView.onLoadFamilyMembers(resultData);
+                }
+            }
+        });
     }
 
     @Override

@@ -7,16 +7,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -39,6 +40,8 @@ import cn.treebear.kwifimanager.adapter.MobilePhoneAdapter;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.ChildrenListBean;
+import cn.treebear.kwifimanager.bean.FamilyMemberBean;
+import cn.treebear.kwifimanager.bean.FamilyMemberCover;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
@@ -46,10 +49,12 @@ import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
+import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.BindHomePresenter;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.UMShareUtils;
+import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.marquee.MarqueeTextView;
 
@@ -121,6 +126,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     private ArrayList<MessageInfoBean.PageBean> messageList = new ArrayList<>();
     private List<ChildrenListBean.ChildrenBean> childrenList = new ArrayList<>();
     private ChildrenCarefulAdapter childrenCarefulAdapter;
+    private int mRole = 1;
 
     public HomeBindFragment() {
 
@@ -261,11 +267,11 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
                         ToastUtils.showShort(R.string.device_name_cannot_empty);
                     }
                 }
-        });
-    }
+            });
+        }
         modifyNameDialog.clearInputText();
         modifyNameDialog.show();
-}
+    }
 
     @OnClick(R2.id.tv_ap_name)
     public void onTvApNameClicked() {
@@ -356,6 +362,28 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
                     break;
             }
         }
+    }
+
+    @Override
+    public void onLoadFamilyMembers(BaseResponse<FamilyMemberCover> response) {
+        if (response != null && response.getCode() == ApiCode.SUCC) {
+            FamilyMemberCover data = response.getData();
+            mRole = getRole(data.getPage());
+            tvUserRole.setText(mRole == 0 ? R.string.admin : R.string.user);
+        } else {
+            if (response != null) {
+                super.onLoadFail(response, response.getMsg(), response.getCode());
+            }
+        }
+    }
+
+    private int getRole(List<FamilyMemberBean> page) {
+        for (FamilyMemberBean bean : page) {
+            if (bean.getUserId() == UserInfoUtil.getUserInfo().getId()) {
+                return bean.getRole();
+            }
+        }
+        return 1;
     }
 
     @Override

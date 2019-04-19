@@ -191,7 +191,7 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
         tvSignNext.setEnabled(true);
         hideLoading();
         switch (resultCode) {
-            case ApiCode.DB_NOT_FOUND_RECORD:
+            case ApiCode.INVALID_PARAM:
                 showNoSignDialog();
                 break;
             default:

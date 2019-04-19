@@ -4,16 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.TextSettingAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.ItemBean;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
@@ -56,10 +58,15 @@ public class SeniorSettingItemActivity extends BaseActivity {
     }
 
     @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        swipeRefreshLayout.setRefreshing(false);
+        super.onLoadFail(resultData, resultMsg, resultCode);
+    }
+
+    @Override
     protected void initView() {
         setTitleBack(titleText, getString(R.string.save));
         settingAdapter = new TextSettingAdapter(itemData);
-        swipeRefreshLayout.setRefreshing(false);
         rvSettingItem.setLayoutManager(new LinearLayoutManager(this));
         rvSettingItem.setAdapter(settingAdapter);
         settingAdapter.setEnableLoadMore(false);

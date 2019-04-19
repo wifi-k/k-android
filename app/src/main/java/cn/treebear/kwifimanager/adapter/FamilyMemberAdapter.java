@@ -1,12 +1,13 @@
 package cn.treebear.kwifimanager.adapter;
 
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.FamilyMemberBean;
 import cn.treebear.kwifimanager.config.GlideApp;
@@ -14,8 +15,15 @@ import cn.treebear.kwifimanager.util.Check;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FamilyMemberAdapter extends BaseQuickAdapter<FamilyMemberBean, BaseViewHolder> {
-    public FamilyMemberAdapter(@Nullable List<FamilyMemberBean> data) {
+    private boolean isAdmin = false;
+
+    public FamilyMemberAdapter(@Nullable List<FamilyMemberBean> data, int role) {
         super(R.layout.layout_item_family_member, data);
+        isAdmin = role == 0;
+    }
+
+    public void setRole(int role) {
+        isAdmin = role == 0;
     }
 
     @Override
@@ -29,7 +37,7 @@ public class FamilyMemberAdapter extends BaseQuickAdapter<FamilyMemberBean, Base
                         R.mipmap.ic_member_admin_yes : R.mipmap.ic_member_admin_no)
                 .addOnClickListener(R.id.iv_member_delete)
                 .setGone(R.id.iv_member_admin, item.getRole() == 0)
-                .setGone(R.id.iv_member_delete, item.getRole() != 0);
+                .setGone(R.id.iv_member_delete, isAdmin);
 
         if (!Check.hasContent(item.getUserName()) && Check.maxThen(item.getUserMobile(), 4)) {
             helper.setText(R.id.tv_member_nickname, "用户" + (item.getUserMobile().substring(item.getUserMobile().length() - 4)));

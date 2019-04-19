@@ -16,26 +16,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
+        android:id="@+id/rl_title_wraper"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="60dp"
+        android:background="@drawable/bg_gallery_title_shadow">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
+            android:alpha="1"
             android:gravity="center"
             android:text="@string/gallery_lab"
             android:textColor="@color/text_28354C"
             android:textSize="18sp"
-            android:alpha="0"
             android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/rl_tab_wrapper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="1"
+            android:alpha="0"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -43,8 +45,8 @@
                 android:id="@+id/tv_all_gallery"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_marginStart="19dp"
+                android:layout_weight="1"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_vertical"
                 android:text="@string/newer_picture"
@@ -84,11 +86,13 @@
 
         <ImageView
             android:id="@+id/iv_backup"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp"
             android:src="@mipmap/gallery_upload" />
 
     </RelativeLayout>

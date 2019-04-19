@@ -8,6 +8,9 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.PermissionUtils;
@@ -17,8 +20,6 @@ import com.nanchen.compresshelper.CompressHelper;
 
 import java.io.File;
 
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -217,7 +218,6 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
             case Values.REQUEST_SYSTEM_CAMERA:
                 TLog.i("result -->>> " + picPath);
                 civHeaderPic.setImageBitmap(BitmapUtils.readBitmapAutoSize(picPath, 512, 512));
-                dealImage();
                 break;
             case Values.REQUEST_SYSTEM_GALLERY:
                 try {
@@ -237,7 +237,7 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
                         cursor.close();
                         Bitmap bitmap = BitmapFactory.decodeFile(picPath);
                         civHeaderPic.setImageBitmap(bitmap);
-                        dealImage();
+                        TLog.i("result -->>> " + picPath);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -246,10 +246,11 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
             default:
                 break;
         }
-
+        dealImage();
     }
 
     private void dealImage() {
+        TLog.i("dealImage -->>> " + picPath);
         PermissionUtils.permission(PermissionConstants.STORAGE)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
@@ -266,11 +267,13 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
 
     private void preUploadImage() {
         showLoading(R.string.upload_ing);
-        if (!Check.hasContent(mQiNiuToken = CacheDiskUtils.getInstance(
-                MyApplication.getAppContext().getUser().getMobile())
-                .getString(Keys.QI_NIU_TOKEN, ""))
-        ) {
+        if (!Check.hasContent(mQiNiuToken = CacheDiskUtils.getInstance(MyApplication.getAppContext().getUser().getMobile())
+                .getString(Keys.QI_NIU_TOKEN, ""))) {
+            TLog.i("dealImage2 -->>> " + picPath);
             mPresenter.getQiNiuToken();
+        } else {
+            TLog.i("dealImage3 -->>> " + picPath);
+            uploadImage();
         }
     }
 
@@ -291,14 +294,10 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     }
 
     private void uploadImage() {
+        TLog.i(picPath);
         if (Check.hasContent(picPath)) {
             File file = new File(picPath);
-            String name;
-            if (file.getName().contains(".")) {
-                name = file.getName().split(".")[0];
-            } else {
-                name = file.getName();
-            }
+            String name = file.getName();
             File newFile = new CompressHelper.Builder(this)
                     .setMaxWidth(720)  // 默认最大宽度为720
                     .setMaxHeight(960) // 默认最大高度为960

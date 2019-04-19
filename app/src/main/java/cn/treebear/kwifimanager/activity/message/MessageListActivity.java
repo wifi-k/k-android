@@ -4,17 +4,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.adapter.MessageAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
+import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.mvp.server.contract.MessageConstract;
@@ -83,4 +85,9 @@ public class MessageListActivity extends BaseActivity<MessageConstract.Presenter
         tvEmptyView.setVisibility(messageList.size() == 0 ? View.VISIBLE : View.GONE);
     }
 
+    @Override
+    public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        swipeRefreshLayout.setRefreshing(false);
+        super.onLoadFail(resultData, resultMsg, resultCode);
+    }
 }

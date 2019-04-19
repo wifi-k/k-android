@@ -3,11 +3,15 @@ package cn.treebear.kwifimanager.activity.toolkit;
 import android.util.ArrayMap;
 import android.widget.TextView;
 
+import androidx.gridlayout.widget.GridLayout;
+
+import com.blankj.utilcode.constant.PermissionConstants;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import androidx.gridlayout.widget.GridLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -65,7 +69,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
     private TipsDialog restartTipsDialog;
     private TipsDialog resetTipsDialog;
     private WiFiSettingProxyModel proxyModel;
-    private List<NodeWifiListBean.WifiBean> wifiList;
+    private List<NodeWifiListBean.WifiBean> wifiList = new ArrayList<>();
 
     @Override
     public int layoutId() {
@@ -82,11 +86,27 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         setTitleBack(R.string.wifi_toolkit);
         proxyModel = new WiFiSettingProxyModel();
         glSeniorSettingWrapper.setColumnCount(DensityUtil.getScreenWidth() < 728 ? 3 : 4);
-        showLoading();
-        mPresenter.getNodeSsid(MyApplication.getAppContext().getCurrentSelectNode());
-        if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
-            tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(this));
-        }
+//        showLoading();
+//        mPresenter.getNodeSsid(MyApplication.getAppContext().getCurrentSelectNode());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PermissionUtils.permission(PermissionConstants.LOCATION)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                        if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+                            tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(WifiToolkitActivity.this));
+                        }
+                    }
+
+                    @Override
+                    public void onDenied() {
+                        ToastUtils.showLong(R.string.refuse_loaction_permission);
+                    }
+                }).request();
     }
 
     @OnClick(R2.id.tv_setting_wifi_name)
@@ -152,7 +172,8 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         if (resultData == null) {
             return;
         }
-        wifiList = resultData.getPage();
+        wifiList.clear();
+        wifiList.addAll(resultData.getPage());
         if (Check.hasContent(wifiList)) {
             NodeWifiListBean.WifiBean wifiBean = wifiList.get(0);
             tvWifiSSID.setText(wifiBean.getSsid());
@@ -176,7 +197,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
                     dismiss(nameModifyDialog);
                     showLoading(R.string.option_ing);
                     if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
-                        modifyNameLocal(s, "");
+                        modifyNameLocal(s, null);
                     } else {
                         mPresenter.modifySsid(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, s);
                     }
@@ -190,12 +211,14 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
     private void modifyNameLocal(String name, String passwd) {
         dismiss(nameModifyDialog, passwordModifyDialog);
         ArrayMap<String, Object> params = new ArrayMap<>();
-        params.put(Keys.SSID0, NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()));
         params.put(Keys.SSID, name);
-        if (Check.hasContent(passwd)) {
+//        if (Check.hasContent(wifiList)) {
+        params.put(Keys.SSID0, name);
+//        }
+//        if (passwd != null) {
 //            params.put(Keys.PASSWD_WIFI, SecurityUtils.md5(passwd));
-            params.put(Keys.PASSWD_WIFI, passwd);
-        }
+        params.put(Keys.PASSWD_WIFI, passwd);
+//        }
         proxyModel.modifyWifiInfo(RequestBodyUtils.convert(params), new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override
             public void onSuccess(BaseResponse<Object> resultData) {
@@ -206,14 +229,16 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
             @Override
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
+                hideLoading();
+                ToastUtils.showShort(R.string.option_failed_retry);
                 // 若token过期则重新登录
                 WiFiHttpClient.dealWithResultCode(resultCode);
                 // 若配置失败，则通过联网配置
-                if (Check.hasContent(passwd)) {
-                    mPresenter.modifyPasswd(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, passwd);
-                } else {
-                    mPresenter.modifySsid(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, name);
-                }
+//                if (Check.hasContent(passwd)) {
+//                    mPresenter.modifyPasswd(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, passwd);
+//                } else {
+//                    mPresenter.modifySsid(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, name);
+//                }
             }
         });
     }
@@ -231,10 +256,14 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
                 @Override
                 public void onRightClick(String s) {
+                    if (Check.hasContent(s) && !Check.maxThen(s, 7) || Check.maxThen(s, 20)) {
+                        ToastUtils.showShort(R.string.input_wifi_passowrd_please);
+                        return;
+                    }
                     dismiss(nameModifyDialog, passwordModifyDialog);
                     showLoading(R.string.option_ing);
                     if (NetWorkUtils.isXiaoKSignIn()) {
-                        modifyNameLocal(NetWorkUtils.getRealSSIDWhenWifi(MyApplication.getAppContext()), s);
+                        modifyNameLocal("", s);
                     } else {
                         mPresenter.modifyPasswd(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, s);
                     }

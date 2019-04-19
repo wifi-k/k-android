@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -12,9 +16,6 @@ import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -64,8 +65,10 @@ public class HealthyModelActivity extends BaseActivity<HealthyModelContract.Pres
         setTitleBack(R.string.healthy_model, R.string.save);
         mPresenter.getHealthyModelInfo(MyApplication.getAppContext().getCurrentSelectNode());
         sbHealthy.setOnCheckedChangeListener((view, isChecked) -> {
-            recyclerView.setEnabled(isChecked);
-            tvAddTimer.setEnabled(isChecked);
+            if (recyclerView!=null) {
+                recyclerView.setEnabled(isChecked);
+                tvAddTimer.setEnabled(isChecked);
+            }
         });
         healthyModelAdapter = new HealthyModelAdapter(timeLimitList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

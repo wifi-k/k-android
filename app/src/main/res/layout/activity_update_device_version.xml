@@ -118,7 +118,7 @@
         android:background="@drawable/strock_d8_r26"
         android:gravity="center"
         android:text="@string/update_now"
-        android:textColor="#6C6C6C"
+        android:textColor="@color/text_4a5a78"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

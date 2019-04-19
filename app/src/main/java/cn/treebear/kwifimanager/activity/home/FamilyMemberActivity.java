@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -27,6 +28,7 @@ import cn.treebear.kwifimanager.mvp.server.presenter.FamilyMemberPresenter;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.util.UMShareUtils;
+import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
 
@@ -48,6 +50,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
     private TMessageDialog tMessageDialog;
     private String nodeId;
     private String tempName = "";
+    private int role = 1;
 
     @Override
     public int layoutId() {
@@ -75,7 +78,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
         tvAddFamilyMember.setText(R.string._add_family_member);
         mPresenter.getFamilyMembers(nodeId);
         rvFamilyList.setLayoutManager(new LinearLayoutManager(this));
-        familyMemberAdapter = new FamilyMemberAdapter(familyMemberList);
+        familyMemberAdapter = new FamilyMemberAdapter(familyMemberList, role);
         //开启动画（默认为渐显效果）
         familyMemberAdapter.openLoadAnimation();
         rvFamilyList.setAdapter(familyMemberAdapter);
@@ -105,7 +108,6 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
     public void onAddFamilyMemberClicked() {
         UMShareUtils.shareWxLink(this, "邀请家庭成员", "快来加入我的小K家庭吧，家庭码：balabala~", "https://www.baidu.com", R.mipmap.ic_launcher, null);
     }
-
 
     /**
      * 修改名称弹窗
@@ -150,6 +152,8 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
                         @Override
                         public void onClickRight(View view) {
+                            dismiss(tMessageDialog);
+                            showLoading(R.string.upload_ing);
                             mPresenter.deleteMember(nodeId, familyMemberList.get(currentModifyPosition).getUserId());
                         }
                     });
@@ -162,7 +166,17 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
         refreshLayout.setRefreshing(false);
         familyMemberList.clear();
         familyMemberList.addAll(resultData.getPage());
+        familyMemberAdapter.setRole(getRole());
         familyMemberAdapter.notifyDataSetChanged();
+    }
+
+    private int getRole() {
+        for (FamilyMemberBean bean : familyMemberList) {
+            if (bean.getUserId() == UserInfoUtil.getUserInfo().getId()) {
+                return bean.getRole();
+            }
+        }
+        return 1;
     }
 
     @Override
@@ -174,6 +188,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @Override
     public void deleteMemberResponse(BaseResponse response) {
+        hideLoading();
         ToastUtils.showShort(R.string.delete_success);
         familyMemberList.remove(currentModifyPosition);
         familyMemberAdapter.notifyDataSetChanged();
@@ -181,6 +196,7 @@ public class FamilyMemberActivity extends BaseActivity<FamilyMemberContract.Pres
 
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
+        refreshLayout.setRefreshing(false);
         super.onLoadFail(resultData, resultMsg, resultCode);
     }
 
