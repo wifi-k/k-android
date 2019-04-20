@@ -2,6 +2,8 @@ package cn.treebear.kwifimanager.activity.me;
 
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.BuildConfig;
@@ -28,10 +30,11 @@ public class UpdateAppActivity extends BaseActivity {
     protected void initView() {
         setTitleBack(R.string.version_update);
         tvCurrentVersion.setText(BuildConfig.VERSION_NAME);
+        tvNewerVersion.setText(BuildConfig.VERSION_NAME);
     }
 
     @OnClick(R2.id.tv_uodate_now)
     public void onViewClicked() {
-        // TODO: 2019/3/14 更新
+        ToastUtils.showShort("已是最新版本");
     }
 }

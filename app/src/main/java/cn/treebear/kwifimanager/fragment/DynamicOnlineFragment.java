@@ -82,7 +82,7 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
             case Config.WifiResponseCode.CONNECT_FAIL:
                 if (++count > 4) {
                     hideLoading();
-                    ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                    ToastUtils.showShort(R.string.wifi_info_update_failed);
                     return;
                 }
                 // 延时2秒再次查询
@@ -96,12 +96,14 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
                 hideLoading();
                 ToastUtils.showShort(R.string.dynamic_ip_set_fail);
                 break;
+            case 2:
+                WiFiHttpClient.dealWithResultCode(resultCode);
+                break;
             default:
                 hideLoading();
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
         }
-        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     private void updateWifiInfoShow() {

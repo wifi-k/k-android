@@ -52,7 +52,6 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
      * password 明文/密码状态
      */
     private boolean password1Visible = false;
-    private boolean isModifyPassword;
     private boolean password2Visible = false;
 
     @Override

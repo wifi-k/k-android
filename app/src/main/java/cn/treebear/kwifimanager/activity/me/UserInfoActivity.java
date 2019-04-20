@@ -106,7 +106,6 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
 
     @OnClick(R2.id.tv_modify_password)
     public void onTvModifyPasswordClicked() {
-        // TODO: 2019/3/14 修改界面以兼容修改和重置
         startActivity(SetPasswordActivity.class);
     }
 

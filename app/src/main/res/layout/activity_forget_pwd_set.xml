@@ -1,141 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.account.ForgetPwdSetActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/set_new_account_password"
-        android:textColor="@color/text_deep_black_33"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/et_password_again"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@null"
-        android:hint="@string/input_password_again"
-        android:inputType="textPassword"
-        android:maxLength="25"
-        android:paddingBottom="15dp"
-        android:singleLine="true"
-        android:textColorHint="@color/text_hint_cf"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
-        app:layout_constraintStart_toStartOf="@+id/line_phone"
-        app:layout_constraintTop_toBottomOf="@+id/line_phone" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/set_new_account_password"
+            android:textColor="@color/text_deep_black_33"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
 
-    <TextView
-        android:id="@+id/line_password"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/line_f2"
-        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/et_sign_up_password"
-        app:layout_constraintTop_toBottomOf="@+id/et_password_again" />
+        <EditText
+            android:id="@+id/et_password_again"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@null"
+            android:hint="@string/input_password_again"
+            android:inputType="textPassword"
+            android:maxLength="25"
+            android:paddingBottom="15dp"
+            android:singleLine="true"
+            android:textColorHint="@color/text_hint_cf"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
+            app:layout_constraintStart_toStartOf="@+id/line_phone"
+            app:layout_constraintTop_toBottomOf="@+id/line_phone" />
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/common_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/line_password"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/line_f2"
+            app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/et_sign_up_password"
+            app:layout_constraintTop_toBottomOf="@+id/et_password_again" />
 
-    <EditText
-        android:id="@+id/et_sign_up_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="36dp"
-        android:background="@null"
-        android:hint="@string/input_password_please"
-        android:inputType="textPassword"
-        android:maxLength="25"
-        android:paddingBottom="15dp"
-        android:singleLine="true"
-        android:textColorHint="@color/text_hint_cf"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:ignore="TextFields" />
+        <include
+            android:id="@+id/include"
+            layout="@layout/common_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/line_phone"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/line_f2"
-        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
-        app:layout_constraintStart_toStartOf="@+id/et_sign_up_password"
-        app:layout_constraintTop_toBottomOf="@+id/et_sign_up_password" />
+        <EditText
+            android:id="@+id/et_sign_up_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="36dp"
+            android:background="@null"
+            android:hint="@string/input_password_please"
+            android:inputType="textPassword"
+            android:maxLength="25"
+            android:paddingBottom="15dp"
+            android:singleLine="true"
+            android:textColorHint="@color/text_hint_cf"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:ignore="TextFields" />
 
-    <ImageView
-        android:id="@+id/iv_password_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:padding="8dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
-        app:layout_constraintTop_toTopOf="@+id/et_sign_up_password"
-        app:srcCompat="@mipmap/ic_edit_eye_close_main" />
+        <TextView
+            android:id="@+id/line_phone"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/line_f2"
+            app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
+            app:layout_constraintStart_toStartOf="@+id/et_sign_up_password"
+            app:layout_constraintTop_toBottomOf="@+id/et_sign_up_password" />
 
-    <Button
-        android:id="@+id/btn_confirm"
-        style="@style/confirm_button"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="36dp"
-        android:enabled="false"
-        android:text="@string/confirm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line_password" />
+        <ImageView
+            android:id="@+id/iv_password_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:padding="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/et_sign_up_password"
+            app:layout_constraintTop_toTopOf="@+id/et_sign_up_password"
+            app:srcCompat="@mipmap/ic_edit_eye_close_main" />
 
-    <ImageView
-        android:id="@+id/iv_password1_clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/iv_password_state"
-        app:layout_constraintTop_toTopOf="@+id/et_sign_up_password"
-        app:srcCompat="@mipmap/ic_edit_close" />
+        <Button
+            android:id="@+id/btn_confirm"
+            style="@style/confirm_button"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="36dp"
+            android:enabled="false"
+            android:text="@string/confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_password" />
 
-    <ImageView
-        android:id="@+id/iv_password2_eye"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:visibility="gone"
-        app:srcCompat="@mipmap/ic_edit_eye_close_main"
-        tools:layout_editor_absoluteX="375dp"
-        tools:layout_editor_absoluteY="184dp" />
+        <ImageView
+            android:id="@+id/iv_password1_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/iv_password_state"
+            app:layout_constraintTop_toTopOf="@+id/et_sign_up_password"
+            app:srcCompat="@mipmap/ic_edit_close" />
 
-    <ImageView
-        android:id="@+id/iv_password2_clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/iv_password2_eye"
-        app:layout_constraintTop_toTopOf="@+id/et_password_again"
-        app:srcCompat="@mipmap/ic_edit_close" />
+        <ImageView
+            android:id="@+id/iv_password2_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/line_password"
+            app:layout_constraintEnd_toEndOf="@+id/et_password_again"
+            app:layout_constraintTop_toTopOf="@+id/et_password_again"
+            app:srcCompat="@mipmap/ic_edit_eye_close_main" />
 
+        <ImageView
+            android:id="@+id/iv_password2_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/iv_password2_eye"
+            app:layout_constraintTop_toTopOf="@+id/et_password_again"
+            app:srcCompat="@mipmap/ic_edit_close" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

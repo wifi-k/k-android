@@ -3,6 +3,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <View
@@ -26,10 +27,17 @@
 
         <TextView
             android:id="@+id/tv_title_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:maxLength="20"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:singleLine="true"
+            android:gravity="center"
+            android:ellipsize="marquee"
+            tools:text="111111111111111111111111111111111111111"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:textColor="@color/text_28354C"
             android:textSize="18sp" />
 

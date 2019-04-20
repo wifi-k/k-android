@@ -50,7 +50,7 @@ public class SettingsActivity extends BaseActivity<SignOutContract.Presenter, Ba
 
     @OnClick(R2.id.tv_about_us)
     public void onTvAboutUsClick() {
-        // TODO: 2019/3/14 跳转关于我们
+        openWebsite("https://www.treebear.net", true, "", false);
     }
 
     @OnClick(R2.id.tv_sign_out)

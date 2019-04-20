@@ -13,6 +13,7 @@ import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.mvp.wifi.contract.DialUpContract;
 import cn.treebear.kwifimanager.mvp.wifi.presenter.DialUpPresenter;
@@ -94,6 +95,13 @@ public class PPPOEFragment extends BaseFragment<DialUpContract.Presenter, WifiDe
                         mPresenter.queryNetStatus();
                     }
                 }, 2000);
+                break;
+            case ApiCode.CUSTOM_ERROR:
+                hideLoading();
+                ToastUtils.showShort(R.string.dynamic_ip_set_fail);
+                break;
+            case 2:
+                WiFiHttpClient.dealWithResultCode(resultCode);
                 break;
             default:
                 hideLoading();

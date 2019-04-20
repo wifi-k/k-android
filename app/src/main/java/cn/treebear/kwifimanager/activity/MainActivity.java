@@ -24,7 +24,6 @@ import cn.treebear.kwifimanager.fragment.HomeBindFragment;
 import cn.treebear.kwifimanager.fragment.HomeUnbindFragment;
 import cn.treebear.kwifimanager.fragment.MeFragment;
 import cn.treebear.kwifimanager.fragment.SelectPictureFragment;
-import cn.treebear.kwifimanager.http.WiFiHttpClient;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
@@ -44,6 +43,7 @@ public class MainActivity extends BaseFragmentActivity {
     HomeBindFragment homeBindFragment;
     HomeUnbindFragment homeUnbindFragment;
     long lastPressBackMills = 0;
+    int currentFragmentIndex = 0;
     private ArrayList<Fragment> fragments = new ArrayList<Fragment>() {
         {
             homeBindFragment = new HomeBindFragment();
@@ -81,6 +81,7 @@ public class MainActivity extends BaseFragmentActivity {
         }
         bottomBar.setOnItemSelectedListener((bottomBarItem, i, i1) -> {
             updateFragment(R.id.vp_fragments, i1);
+            currentFragmentIndex = i1;
             switch (i1) {
                 case 0:
                     if (MyApplication.getAppContext().hasBoundNode()) {
@@ -140,8 +141,7 @@ public class MainActivity extends BaseFragmentActivity {
     protected void onResume() {
         super.onResume();
         updateHomeFragment();
-        TLog.i(MyApplication.getAppContext().getUser().toString());
-        TLog.i(WiFiHttpClient.getWifiDeviceInfo());
+        updateStatusBar();
     }
 
     @Override
@@ -178,6 +178,26 @@ public class MainActivity extends BaseFragmentActivity {
                 replaceFragment(R.id.vp_fragments, 0, homeUnbindFragment);
             }
             statusTransparentFontWhite();
+        }
+    }
+
+    private void updateStatusBar(){
+        switch (currentFragmentIndex) {
+            case 0:
+                if (MyApplication.getAppContext().hasBoundNode()) {
+                    statusWhiteFontBlack();
+                } else {
+                    statusTransparentFontWhite();
+                }
+                break;
+            case 1:
+                statusWhiteFontBlack();
+                break;
+            case 2:
+                statusTransparentFontWhite();
+                break;
+            default:
+                break;
         }
     }
 
