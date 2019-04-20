@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
-
-import java.util.ArrayList;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.blankj.utilcode.util.ToastUtils;
+
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
@@ -51,10 +52,18 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
     private TInputDialog modifyNameDialog;
     private int pageNo = 1;
     private NodeInfoDetail.NodeBean currentNode;
+    private int total;
 
     @Override
     public int layoutId() {
         return R.layout.activity_all_device_list;
+    }
+
+    @Override
+    public void initParams(Bundle params) {
+        if (params != null) {
+            total = params.getInt(Keys.TOTAL, 0);
+        }
     }
 
     @Override
@@ -66,7 +75,7 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
     protected void initView() {
         setTitleBack(R.string.conn_device);
         currentNode = MyApplication.getAppContext().getCurrentNode();
-        tvOnlineDeviceCount.setText(String.valueOf(currentNode.getDisk()));
+        tvOnlineDeviceCount.setText(String.valueOf(total));
         tvDownloadSpeed.setText(String.valueOf(currentNode.getDownstream()));
         tvUploadSpeed.setText(String.valueOf(currentNode.getUpstream()));
         refresh();
@@ -139,13 +148,13 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
         if (pageNo == 1) {
             mobilePhoneList.clear();
         }
-        if (resultData.getPage().size() < Config.Numbers.PAGE_SIZE) {
-            mobilePhoneAdapter.loadMoreEnd(true);
-        }
-        mobilePhoneAdapter.setEnableLoadMore(resultData.getPage().size() >= Config.Numbers.PAGE_SIZE);
         mobilePhoneList.addAll(resultData.getPage());
+        if (resultData.getTotal() <= mobilePhoneList.size()) {
+            mobilePhoneAdapter.loadMoreEnd(true);
+            tvOnlineDeviceCount.setText(String.valueOf(getOnlineCount(mobilePhoneList)));
+        }
+        mobilePhoneAdapter.setEnableLoadMore(resultData.getTotal() > mobilePhoneList.size());
         mobilePhoneAdapter.notifyDataSetChanged();
-        tvOnlineDeviceCount.setText(String.valueOf(getOnlineCount(mobilePhoneList)));
     }
 
     private int getOnlineCount(ArrayList<MobileListBean.MobileBean> mobilePhoneList) {

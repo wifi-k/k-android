@@ -37,6 +37,7 @@ public interface Keys {
     String WIFI = "wifi";
     String MAC = "mac";
     String NOTE = "note";
+    String STATUS = "status";
     String BLOCK = "isBlock";
     String ID = "id";
     String START_TIME = "st";
@@ -50,6 +51,7 @@ public interface Keys {
      */
     String TITLE = "title";
     String CONFIRM_BUTTON_TEXT = "confirm_button_text";
+    String TOTAL = "TOTAL";
 
     String DEVICE_INFO = "device_info";
     /**

@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -196,6 +197,7 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
         super.onLoadFail(resultData, resultMsg, resultCode);
+        refreshLayout.setRefreshing(false);
         TLog.i(resultMsg);
         ToastUtils.showShort(R.string.get_option_failed);
     }

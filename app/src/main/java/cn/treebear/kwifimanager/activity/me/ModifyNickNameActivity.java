@@ -70,7 +70,6 @@ public class ModifyNickNameActivity extends BaseActivity<ModifyUserInfoContract.
     public void onLoadData(SUserCover resultData) {
         super.onLoadData(resultData);
         ToastUtils.showShort(R.string.modify_success);
-        MyApplication.getAppContext().setNeedUpdateUserInfo(true);
         MyApplication.getAppContext().getUser().setName(etNickName.getText().toString());
         finish();
     }

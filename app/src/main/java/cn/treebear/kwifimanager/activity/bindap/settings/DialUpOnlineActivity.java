@@ -161,6 +161,9 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
 //                startActivity(ModifyWifiInfoActivity.class);
 //                ToastUtils.showShort(R.string.connect_success);
                 break;
+            case 2:
+                WiFiHttpClient.dealWithResultCode(resultCode);
+                break;
             default:
                 hideLoading();
                 ToastUtils.showShort(R.string.connect_fail);
@@ -168,7 +171,6 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
 //                btnDialUpConfirm.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
                 break;
         }
-        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     @Override

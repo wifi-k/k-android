@@ -58,6 +58,7 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
     protected void initView() {
         setTitleBack(R.string.setting);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
+        rgOnlineType.check(R.id.rb_online_type_dial);
         rgOnlineType.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.rb_online_type_dial:
@@ -156,12 +157,14 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
                 hideLoading();
                 ToastUtils.showShort(R.string.dynamic_ip_set_fail);
                 break;
+            case 2:
+                WiFiHttpClient.dealWithResultCode(resultCode);
+                break;
             default:
                 hideLoading();
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
         }
-        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     @Override

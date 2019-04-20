@@ -68,15 +68,19 @@
         android:layout_marginEnd="18dp"
         android:drawableEnd="@mipmap/ic_line_arrow_right_black"
         android:drawablePadding="8dp"
-        android:paddingStart="20dp"
         android:paddingTop="5dp"
         android:drawableTint="@color/text_7383a2"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxEms="8"
+        android:singleLine="true"
         android:paddingBottom="5dp"
         android:textColor="@color/text_7383a2"
         app:layout_constraintBottom_toBottomOf="@+id/textView46"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView46"
-        tools:text="KiKi" />
+        tools:text="KiKi11111111111111111111111111111111111"
+        tools:targetApi="m" />
 
     <TextView
         android:id="@+id/textView50"
@@ -97,7 +101,6 @@
         android:layout_marginEnd="18dp"
         android:drawableEnd="@mipmap/ic_line_arrow_right_black"
         android:drawablePadding="8dp"
-        android:paddingStart="20dp"
         android:drawableTint="@color/text_7383a2"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
@@ -105,7 +108,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView50"
-        tools:text="13797470000" />
+        tools:text="13797470000"
+        tools:targetApi="m" />
 
     <TextView
         android:id="@+id/tv_modify_password"
@@ -121,6 +125,7 @@
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView50" />
+        app:layout_constraintTop_toBottomOf="@+id/textView50"
+        tools:targetApi="m" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

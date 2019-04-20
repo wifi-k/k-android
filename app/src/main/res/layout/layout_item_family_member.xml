@@ -18,11 +18,15 @@
 
         <TextView
             android:id="@+id/tv_member_nickname"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:textColor="#28354C"
             android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_member_admin"
             app:layout_constraintStart_toEndOf="@+id/iv_member_header"
             app:layout_constraintTop_toTopOf="@+id/iv_member_header"
             tools:text="昵称：我是大熊" />

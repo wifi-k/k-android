@@ -92,7 +92,6 @@ public class MeFragment extends BaseFragment<GetUserInfoContract.Presenter, SUse
         userInfo.setToken(MyApplication.getAppContext().getUser().getToken());
         MyApplication.getAppContext().savedUser(userInfo);
         updateUserInfo();
-        MyApplication.getAppContext().setNeedUpdateUserInfo(false);
     }
 
     @OnClick(R2.id.iv_settings)

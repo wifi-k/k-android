@@ -2,6 +2,7 @@ package cn.treebear.kwifimanager.adapter;
 
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -65,4 +66,15 @@ public class GuardJoinDeviceAdapter extends BaseQuickAdapter<MobileListBean.Mobi
         public abstract void onCheckedChanged(SwitchButton view, boolean isCheck, MobileListBean.MobileBean item);
     }
 
+    @Override
+    public void onViewDetachedFromWindow(@NonNull BaseViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+//        try {
+//            SwitchButton sb = holder.getView(R.id.sw_guard_device);
+//            sb.setOnCheckedChangeListener(null);
+//            sb.setChecked(false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
 }

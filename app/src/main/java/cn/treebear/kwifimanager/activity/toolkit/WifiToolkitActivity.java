@@ -256,7 +256,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
                 @Override
                 public void onRightClick(String s) {
-                    if (Check.hasContent(s) && !Check.maxThen(s, 7) || Check.maxThen(s, 20)) {
+                    if (Check.hasContent(s) && (!Check.maxThen(s, 7) || Check.maxThen(s, 20))) {
                         ToastUtils.showShort(R.string.input_wifi_passowrd_please);
                         return;
                     }

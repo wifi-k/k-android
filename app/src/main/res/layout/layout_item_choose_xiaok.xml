@@ -14,9 +14,12 @@
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/text_28354C"
         android:textSize="17sp"
+        android:maxEms="8"
+        android:lines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="小k云管家-84594" />
+        tools:text="小k云管家-845941111111111111111111111111111" />
 
     <TextView
         android:id="@+id/textView24"

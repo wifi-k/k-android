@@ -288,7 +288,6 @@ public class UserInfoActivity extends BaseActivity<ModifyUserInfoContract.Presen
     @Override
     public void onModifyUserInfo() {
         hideLoading();
-        MyApplication.getAppContext().setNeedUpdateUserInfo(true);
         civHeaderPic.setImageBitmap(BitmapUtils.readBitmapAutoSize(picPath, 720, 960));
         ToastUtils.showShort(R.string.user_info_update_success);
     }

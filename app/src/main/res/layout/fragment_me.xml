@@ -34,9 +34,13 @@
             android:fontFamily="sans-serif-medium"
             android:textColor="@android:color/white"
             android:textSize="22sp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxEms="8"
+            android:singleLine="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_settings"
-            tools:text="雪城琴懈" />
+            tools:text="雪城琴懈1111111111111" />
 
         <TextView
             android:id="@+id/tv_user_mobile"

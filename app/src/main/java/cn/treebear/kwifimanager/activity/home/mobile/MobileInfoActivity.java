@@ -42,10 +42,12 @@ public class MobileInfoActivity extends BaseActivity {
     protected void initView() {
         setTitleBack(R.string.device_info);
         String macVendor = mobilePhoneBean.getMacVendor();
-        Integer stringRes = ConstConfig.PHONE_BRAND.get(macVendor.toLowerCase());
         try {
+            Integer stringRes = ConstConfig.PHONE_BRAND.get(macVendor.toLowerCase());
             if (stringRes != null && stringRes != 0) {
                 tvPhoneBrand.setText(stringRes);
+            }else {
+                tvPhoneBrand.setText(macVendor);
             }
         } catch (Exception e) {
             tvPhoneBrand.setText(macVendor);

@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +53,7 @@ import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.BindHomePresenter;
 import cn.treebear.kwifimanager.util.Check;
+import cn.treebear.kwifimanager.util.FileSizeUtil;
 import cn.treebear.kwifimanager.util.UMShareUtils;
 import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
@@ -69,6 +70,8 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @BindView(R2.id.tv_title_text)
     TextView tvTitleText;
+    @BindView(R2.id.scrollView)
+    NestedScrollView scrollView;
     @BindView(R2.id.tv_back_home)
     TextView tvBackHome;
     @BindView(R2.id.tv_ap_name)
@@ -126,10 +129,10 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     private ArrayList<MessageInfoBean.PageBean> messageList = new ArrayList<>();
     private List<ChildrenListBean.ChildrenBean> childrenList = new ArrayList<>();
     private ChildrenCarefulAdapter childrenCarefulAdapter;
-    private int mRole = 1;
+    private int mOnlineTotal;
+    private int mScrollY = 0;
 
     public HomeBindFragment() {
-
     }
 
     @Override
@@ -157,6 +160,16 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 //       公告 及 其他
         updateOtherData();
         mRootView.findViewById(R.id.constraintLayout).requestFocus();
+        listenScroll();
+    }
+
+    private void listenScroll() {
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                mScrollY = scrollY;
+            }
+        });
     }
 
     @Override
@@ -174,7 +187,11 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @Override
     public void onLoadData(NodeInfoDetail resultData) {
-        if (resultData.getPage() != null && resultData.getPage().size() > 0) {
+        if (resultData.getPage() == null) {
+            return;
+        }
+        MyApplication.getAppContext().getUser().setNodeSize(resultData.getTotal());
+        if (resultData.getPage().size() > 0) {
             nodeBean = searchSelectNode(resultData.getPage());
             if (nodeBean == null) {
                 MyApplication.getAppContext().setCurrentNode(new NodeInfoDetail.NodeBean());
@@ -188,6 +205,13 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
             tvUserState.setText(nodeBean.getStatus() == 1 ? R.string.online : R.string.offline);
             mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
             mPresenter.getChildrenList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
+            if (MyApplication.getAppContext().getRole() == -1) {
+                mPresenter.getFamilyMembers(MyApplication.getAppContext().getCurrentSelectNode());
+            }
+        } else {
+            if (mContext instanceof MainActivity) {
+                ((MainActivity) mContext).updateHomeFragment();
+            }
         }
     }
 
@@ -196,8 +220,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         tvUserRole.setText(userInfo.getRole() == 0 ? getString(R.string.admin) : getString(R.string.member));
         tvRootName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length() - 4));
         tvUserState.setText(R.string.online);
-        tvApName.setText("xiaok123-4567");
-        tvHasNoBackup.setText("您有10张新的照片未备份，是否现在备份?");
+        tvApName.setText(R.string.xiaok_xxxx);
     }
 
     private List<String> convertMessage(ArrayList<MessageInfoBean.PageBean> messageList) {
@@ -212,16 +235,9 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         rvChildrenDevice.setLayoutManager(new LinearLayoutManager(mContext));
         childrenCarefulAdapter = new ChildrenCarefulAdapter(childrenList);
         rvChildrenDevice.setAdapter(childrenCarefulAdapter);
-        childrenCarefulAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.tv_look_week_report:
-                        startActivity(WeekReportActivity.class);
-                        break;
-                    default:
-                        break;
-                }
+        childrenCarefulAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.tv_look_week_report) {
+                startActivity(WeekReportActivity.class);
             }
         });
         tvLookMoreKid.setVisibility(childrenList.size() >= 3 ? View.VISIBLE : View.GONE);
@@ -282,10 +298,12 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R2.id.tv_root_name)
     public void onTvRootNameClicked() {
-        if (nodeBean != null) {
+        if (nodeBean != null && MyApplication.getAppContext().getRole() != -1) {
             Bundle bundle = new Bundle();
             bundle.putString(Keys.NODE_ID, nodeBean.getNodeId());
             startActivity(FamilyMemberActivity.class, bundle);
+        } else {
+            ToastUtils.showShort(R.string.device_info_has_no_complete_retry);
         }
     }
 
@@ -337,8 +355,11 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R2.id.tv_look_more)
     public void onTvLookMoreClicked() {
-        startActivity(AllMobileListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Keys.TOTAL, mOnlineTotal);
+        startActivity(AllMobileListActivity.class, bundle);
     }
+
 
     @Override
     public void onDestroy() {
@@ -350,16 +371,12 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            switch (requestCode) {
-                case Values.REQUEST_SELECT_NODE:
-                    int position = data.getIntExtra(Keys.POSITION, 0);
-                    String name = data.getStringExtra(Keys.NAME);
-                    String nodeId = data.getStringExtra(Keys.NODE_ID);
-                    tvApName.setText(name);
-                    MyApplication.getAppContext().setSelectNode(nodeId);
-                    break;
-                default:
-                    break;
+            if (requestCode == Values.REQUEST_SELECT_NODE) {
+                int position = data.getIntExtra(Keys.POSITION, 0);
+                String name = data.getStringExtra(Keys.NAME);
+                String nodeId = data.getStringExtra(Keys.NODE_ID);
+                tvApName.setText(name);
+                MyApplication.getAppContext().setSelectNode(nodeId);
             }
         }
     }
@@ -368,8 +385,8 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     public void onLoadFamilyMembers(BaseResponse<FamilyMemberCover> response) {
         if (response != null && response.getCode() == ApiCode.SUCC) {
             FamilyMemberCover data = response.getData();
-            mRole = getRole(data.getPage());
-            tvUserRole.setText(mRole == 0 ? R.string.admin : R.string.user);
+            MyApplication.getAppContext().setRole(getRole(data.getPage()));
+            tvUserRole.setText(MyApplication.getAppContext().getRole() == 0 ? R.string.admin : R.string.user);
         } else {
             if (response != null) {
                 super.onLoadFail(response, response.getMsg(), response.getCode());
@@ -406,10 +423,14 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     @Override
     public void onMobileListResponse(MobileListBean data) {
         mobilePhoneList.clear();
+        mOnlineTotal = data.getTotal();
+        rvDeviceList.clearFocus();
         if (nodeBean != null) {
-            tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%s/下行网速%s”", getOnlineNumber(data.getPage()), nodeBean.getUpstream(), nodeBean.getDownstream()));
+            tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%s/S/下行网速%s/S”", data.getTotal(),
+                    FileSizeUtil.formatFileSize(nodeBean.getUpstream()),
+                    FileSizeUtil.formatFileSize(nodeBean.getDownstream())));
         } else {
-            tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%skb/s/下行网速%skb/s”", getOnlineNumber(data.getPage()), 0, 0));
+            tvNetworkSpeed.setText(String.format("“当前在线%s台/上行网速%skb/s/下行网速%skb/s”", data.getTotal(), 0, 0));
         }
         if (data.getPage().size() > 3) {
             mobilePhoneList.addAll(data.getPage().subList(0, 3));
@@ -418,17 +439,8 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         }
         mobilePhoneAdapter.notifyDataSetChanged();
         tvLookMore.setVisibility(mobilePhoneList.size() >= 3 ? View.VISIBLE : View.GONE);
-
         noDeviceWrapper.setVisibility(mobilePhoneList.size() == 0 ? View.VISIBLE : View.GONE);
         clDeviceWrapper.setVisibility(mobilePhoneList.size() == 0 ? View.GONE : View.VISIBLE);
-    }
-
-    private int getOnlineNumber(List<MobileListBean.MobileBean> page) {
-        int count = 0;
-        for (MobileListBean.MobileBean bean : page) {
-            count += bean.getStatus() == 1 ? 1 : 0;
-        }
-        return count;
     }
 
     @Override

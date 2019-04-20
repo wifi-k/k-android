@@ -53,6 +53,9 @@ public class ModifyTimeActivity extends BaseActivity {
             tvEndTime.setText(timeLimit.getEndTime());
         } else {
             setTitleBack(R.string.increase, R.string.save);
+            timeLimit = new HealthyModelBean.WifiBean.TimerBean();
+            timeLimit.setStartTime("00:00");
+            timeLimit.setEndTime("23:59");
         }
     }
 
@@ -68,16 +71,15 @@ public class ModifyTimeActivity extends BaseActivity {
 
     @Override
     protected void onTitleRightClick() {
-        Intent intent = new Intent();
-        intent.putExtra(Keys.POSITION, position);
-        intent.putExtra(Keys.IT_START_TIME, tvStartTime.getText().toString());
-        intent.putExtra(Keys.IT_END_TIME, tvEndTime.getText().toString());
-        setResult(RESULT_OK, intent);
-        finish();
+        rebackData();
     }
 
     @OnClick(R2.id.btn_confirm)
     public void onBtnConfirmClicked() {
+        rebackData();
+    }
+
+    private void rebackData() {
         Intent intent = new Intent();
         intent.putExtra(Keys.POSITION, position);
         intent.putExtra(Keys.IT_START_TIME, tvStartTime.getText().toString());
@@ -104,6 +106,9 @@ public class ModifyTimeActivity extends BaseActivity {
                 public void onSelected(String time, String hour, String minute) {
                     hasModify = true;
                     tvStartTime.setText(time);
+                    if (timeLimit != null) {
+                        timeLimit.setStartTime(time);
+                    }
                     dismiss(startTimePop);
                 }
 
@@ -138,6 +143,9 @@ public class ModifyTimeActivity extends BaseActivity {
                 public void onSelected(String time, String hour, String minute) {
                     hasModify = true;
                     tvEndTime.setText(time);
+                    if (timeLimit != null) {
+                        timeLimit.setEndTime(time);
+                    }
                     dismiss(endTimePop);
                 }
 

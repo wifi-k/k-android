@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,6 +82,8 @@
                 android:layout_marginEnd="8dp"
                 android:background="@mipmap/bg_home_bind"
                 android:paddingTop="4dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -116,10 +119,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:drawablePadding="4dp"
+                    android:maxEms="8"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textColor="@android:color/white"
                     app:layout_constraintStart_toStartOf="@+id/tv_back_home"
                     app:layout_constraintTop_toBottomOf="@+id/tv_back_home"
-                    tools:text="xiaok123-8898" />
+                    tools:text="xiaok123-88982222222222222222222222" />
 
                 <TextView
                     android:id="@+id/tv_user_state"
@@ -171,6 +177,8 @@
                     android:drawablePadding="5dp"
                     android:text="@string/iam_bear"
                     android:textColor="@color/text_white_a5"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textView8"

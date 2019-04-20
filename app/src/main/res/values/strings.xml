@@ -147,6 +147,8 @@
     <string name="ban_time_tips">您可以根据不同设备，创建不同的上网时间控制</string>
     <string name="online_start_time">上网开始时间</string>
     <string name="online_end_time">上网结束时间</string>
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
     <string name="confirm_din">确定</string>
     <string name="edit">编辑</string>
     <string name="choose_time">选择时间</string>
@@ -388,5 +390,8 @@
     <string name="backup">备份</string>
     <string name="please_select_unless_one_pic">请选择至少一张图片</string>
     <string name="normal_member_cannot_unbind">家庭成员无解绑权限</string>
+    <string name="end_time_must_later_than_start_time">结束时间应迟于开始时间</string>
+    <string name="start_time_must_before_end_time">开始时间应早于结束时间</string>
+    <string name="device_info_has_no_complete_retry">设备信息未完全加载，请稍后再试</string>
 
 </resources>

@@ -7,13 +7,17 @@
 
     <TextView
         android:id="@+id/tv_device_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="22dp"
+        android:layout_marginEnd="100dp"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
+        android:singleLine="true"
         android:textColor="@color/text_28354C"
         android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="小k云管家-84594" />

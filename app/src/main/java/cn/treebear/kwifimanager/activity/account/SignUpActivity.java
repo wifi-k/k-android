@@ -279,7 +279,6 @@ public class SignUpActivity extends BaseActivity<SignUpVerifyContract.Presenter,
     public void onSignUpOk(ServerUserInfo bean) {
         MyApplication.getAppContext().savedUser(bean);
         dispose(mCountDisposable);
-        MyApplication.getAppContext().setNeedUpdateUserInfo(true);
         startActivity(SetPasswordActivity.class);
         finish();
     }

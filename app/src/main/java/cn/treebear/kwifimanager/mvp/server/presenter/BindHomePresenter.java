@@ -81,6 +81,7 @@ public class BindHomePresenter extends BasePresenter<BindHomeContract.View, Bind
         map.put(Keys.NODE_ID, nodeId);
         map.put(Keys.MAC, mac);
         map.put(Keys.NOTE, note);
+        map.put(Keys.STATUS, 1);
         map.put(Keys.BLOCK, block);
         mModel.setMobileInfo(convertRequestBody(map), new IModel.AsyncCallBack<BaseResponse<Object>>() {
             @Override

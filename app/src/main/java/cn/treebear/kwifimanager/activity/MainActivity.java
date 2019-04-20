@@ -3,12 +3,13 @@ package cn.treebear.kwifimanager.activity;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.fragment.app.Fragment;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.chaychan.library.BottomBarLayout;
 
 import java.util.ArrayList;
 
-import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
@@ -125,6 +126,7 @@ public class MainActivity extends BaseFragmentActivity {
         }
         TLog.w(String.valueOf(R.id.full_screen_fragment_wrapper) + "----------------" + String.valueOf(R.id.fragment_wrapper));
         selectPictureFragment.updateStatus();
+        statusWhiteFontBlack();
     }
 
     public void hideSelectGalleryFragment() {
@@ -164,8 +166,8 @@ public class MainActivity extends BaseFragmentActivity {
             if (getCurrentFragment(R.id.vp_fragments) instanceof HomeUnbindFragment) {
                 // 切换为已绑定界面
                 replaceFragment(R.id.vp_fragments, 0, homeBindFragment);
-                statusWhiteFontBlack();
             }
+            statusWhiteFontBlack();
         } else {
             // 若未认证 且当前为绑定界面
             if (getCurrentFragment(R.id.vp_fragments) instanceof HomeBindFragment) {
@@ -174,8 +176,8 @@ public class MainActivity extends BaseFragmentActivity {
                 }
                 // 切换为未绑定界面
                 replaceFragment(R.id.vp_fragments, 0, homeUnbindFragment);
-                statusTransparentFontWhite();
             }
+            statusTransparentFontWhite();
         }
     }
 

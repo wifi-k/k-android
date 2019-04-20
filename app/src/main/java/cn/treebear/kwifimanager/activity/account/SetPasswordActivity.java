@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.MainActivity;
@@ -183,7 +182,6 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
     @Override
     public void onLoadData(Object resultData) {
         ToastUtils.showShort(R.string.set_password_success);
-        MyApplication.getAppContext().setNeedUpdateUserInfo(true);
         startActivity(MainActivity.class);
         ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
         ActivityStackUtils.finishAll(Config.Tags.TAG_LAUNCH_ROOT);

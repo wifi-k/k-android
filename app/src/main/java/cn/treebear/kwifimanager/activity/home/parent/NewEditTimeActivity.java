@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
@@ -73,8 +74,8 @@ public class NewEditTimeActivity extends BaseActivity {
     @Override
     protected void initView() {
         setTitleBack(R.string.edit_time, R.string.save);
-        tvStartTime.setText(Check.hasContent(startTime) ? startTime : getString(R.string.default_start_time));
-        tvEndTime.setText(Check.hasContent(endTime) ? endTime : getString(R.string.default_end_time));
+        tvStartTime.setText(Check.hasContent(startTime) ? startTime : (startTime = getString(R.string.default_start_time)));
+        tvEndTime.setText(Check.hasContent(endTime) ? endTime : (endTime = getString(R.string.default_end_time)));
         adapter = new SelectDaysAdapter(days);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 7));
         recyclerView.setAdapter(adapter);
@@ -138,10 +139,14 @@ public class NewEditTimeActivity extends BaseActivity {
 
                 @Override
                 public void onSelected(String time, String hour, String minute) {
-                    hasModify = true;
-                    startTime = time;
-                    tvStartTime.setText(time);
                     dismiss(startTimePop);
+                    if (timeMax(hour,minute,endTime)){
+                        ToastUtils.showShort(R.string.start_time_must_before_end_time);
+                    }else {
+                        hasModify = true;
+                        startTime = time;
+                        tvStartTime.setText(time);
+                    }
                 }
 
                 @Override
@@ -172,10 +177,14 @@ public class NewEditTimeActivity extends BaseActivity {
 
                 @Override
                 public void onSelected(String time, String hour, String minute) {
-                    hasModify = true;
-                    endTime = time;
-                    tvEndTime.setText(time);
                     dismiss(endTimePop);
+                    if (timeMax(hour, minute, startTime)) {
+                        hasModify = true;
+                        endTime = time;
+                        tvEndTime.setText(time);
+                    } else {
+                        ToastUtils.showShort(R.string.end_time_must_later_than_start_time);
+                    }
                 }
 
                 @Override
@@ -227,5 +236,17 @@ public class NewEditTimeActivity extends BaseActivity {
     protected void onDestroy() {
         dismiss(endTimePop, startTimePop, unsavedDialog);
         super.onDestroy();
+    }
+
+    private boolean timeMax(String hour, String minute, String time) {
+        int h1 = Integer.valueOf(hour);
+        int m1 = Integer.valueOf(minute);
+        int h2 = 0, m2 = 0;
+        if (time != null && time.contains(":")) {
+            String[] split = time.split(":");
+            h2 = Integer.valueOf(split[0]);
+            m2 = Integer.valueOf(split[1]);
+        }
+        return h1 > h2 || (h1 == h2 && m1 > m2);
     }
 }

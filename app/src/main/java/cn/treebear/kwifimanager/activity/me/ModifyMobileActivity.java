@@ -8,7 +8,6 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.account.SignInActivity;
@@ -136,7 +135,6 @@ public class ModifyMobileActivity extends BaseActivity<ModifyUserMobileContract.
         TLog.w("OkHttp - clearUserInfo");
         UserInfoUtil.clearUserInfo();
         ToastUtils.showShort(R.string.modify_success_reload);
-        MyApplication.getAppContext().setNeedUpdateUserInfo(true);
         startActivity(SignInActivity.class);
         ActivityStackUtils.finishAll(Config.Tags.TAG_MODIFY_USER_MOBILE);
     }

@@ -2,9 +2,13 @@ package cn.treebear.kwifimanager;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
+
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
@@ -13,8 +17,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.inapp.InAppMessageManager;
 import com.umeng.socialize.PlatformConfig;
 
-import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
+import cn.treebear.kwifimanager.activity.account.LaunchAccountActivity;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.http.HttpClient;
@@ -35,7 +38,6 @@ public class MyApplication extends MultiDexApplication {
 
     public static long time = 0;
     private static MyApplication mContext;
-    private boolean needUpdateUserInfo = true;
     private boolean needUpdateNodeInfo = true;
 
     private String currentSelectNode;
@@ -49,6 +51,10 @@ public class MyApplication extends MultiDexApplication {
      * 友盟推送客户端
      */
     private PushAgent mPushAgent;
+    /**
+     * 用户角色
+     */
+    private int role = -1;
 
     private String devToken = "";
 
@@ -117,16 +123,23 @@ public class MyApplication extends MultiDexApplication {
     private void dealUncaughtException() {
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             //开发期间打印报错日志
-            TLog.e(e);
-//            if (BuildConfig.DEBUG) {
-//                TLog.e(e);
-//            } else {
-//                Intent intent = new Intent(mContext, LaunchAccountActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                mContext.startActivity(intent);
-//                android.os.Process.killProcess(android.os.Process.myPid());
-//            }
+            if (BuildConfig.DEBUG) {
+                TLog.e(e);
+            } else {
+                Intent intent = new Intent(mContext, LaunchAccountActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
         });
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public void savedUser(ServerUserInfo user) {
@@ -142,14 +155,6 @@ public class MyApplication extends MultiDexApplication {
             user = new ServerUserInfo();
         }
         return user;
-    }
-
-    public boolean isNeedUpdateUserInfo() {
-        return needUpdateUserInfo;
-    }
-
-    public void setNeedUpdateUserInfo(boolean need) {
-        needUpdateUserInfo = need;
     }
 
     public String getCurrentSelectNode() {

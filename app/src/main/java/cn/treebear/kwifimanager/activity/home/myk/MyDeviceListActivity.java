@@ -73,7 +73,11 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
                     showModifyInputDialog();
                     break;
                 case R.id.tv_unbind_device:
-                    showUnbindDeviceDialog();
+                    if (MyApplication.getAppContext().getRole() == 0) {
+                        showUnbindDeviceDialog();
+                    } else {
+                        ToastUtils.showShort(R.string.normal_member_cannot_unbind);
+                    }
                     break;
                 case R.id.tv_update_version:
                     Bundle bundle = new Bundle();
@@ -234,9 +238,7 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
 
     @Override
     protected void onTitleLeftClick() {
-        if (nodeList.size() == 0) {
-            MyApplication.getAppContext().getUser().setNodeSize(0);
-        }
+        MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
         super.onTitleLeftClick();
     }
 

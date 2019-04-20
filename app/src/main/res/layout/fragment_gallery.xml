@@ -65,7 +65,6 @@
                 android:textColor="@color/text_28354C"
                 android:textSize="15sp" />
 
-
             <TextView
                 android:id="@+id/tv_share_gallery"
                 android:layout_width="0dp"

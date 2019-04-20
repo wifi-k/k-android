@@ -9,12 +9,13 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.StringRes;
+
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.contrarywind.view.WheelView;
 
 import java.util.ArrayList;
 
-import androidx.annotation.StringRes;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.util.DensityUtil;
@@ -140,9 +141,9 @@ public class TimePickerPop implements Dismissable {
         wheelMinute.setDividerColor(Config.Colors.COLOR_C0);
         wheelHour.setDividerType(WheelView.DividerType.FILL);
         wheelMinute.setDividerType(WheelView.DividerType.FILL);
-        wheelHour.setAdapter(new ArrayWheelAdapter<String>(hours));
+        wheelHour.setAdapter(new ArrayWheelAdapter<>(hours));
         wheelHour.setCurrentItem(hourPosition);
-        wheelMinute.setAdapter(new ArrayWheelAdapter<String>(minutes));
+        wheelMinute.setAdapter(new ArrayWheelAdapter<>(minutes));
         wheelMinute.setCurrentItem(minutePosition);
         wheelHour.setOnItemSelectedListener(index -> {
             mCurrentHour = String.format("%s", hours.get(index));

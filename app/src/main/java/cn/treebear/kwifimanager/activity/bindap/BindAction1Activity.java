@@ -74,6 +74,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     protected void initView() {
 //        setTitleBack(bindType == 1 ? R.string.append_xiaok : R.string.setting, R.string.skip_set_network);
         setTitleBack(bindType == 1 ? R.string.append_xiaok : R.string.setting);
+        btnConfirm.setText(bindType == 1 ? R.string.bind_now : R.string.option_network);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
     }
@@ -135,7 +136,8 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     private void change2Bind() {
         hideLoading();
         if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
-            tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，前往配置网络", NetWorkUtils.getRealSSIDWhenWifi(this)));
+            String bindText = bindType == 1 ? "请立即绑定小K" : "前往配置网络";
+            tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，%s", NetWorkUtils.getRealSSIDWhenWifi(this), bindText));
             if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
                 btnConfirm.setText(R.string.option_network);
             } else {
