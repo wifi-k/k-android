@@ -1,11 +1,18 @@
 package cn.treebear.kwifimanager.util;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
+
+import androidx.annotation.Size;
+import androidx.core.content.FileProvider;
+
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.io.Closeable;
 import java.io.File;
@@ -13,8 +20,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import androidx.annotation.Size;
-import androidx.core.content.FileProvider;
 import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.config.Config;
@@ -471,6 +476,42 @@ public class FileUtils {
     public interface Tails {
         String JPEG = ".jpg";
         String APK = ".apk";
+    }
 
+//    public static void main(String[] args) {
+//        System.out.println(deleteFileOrDir(new File("E:\\test\\")));
+//    }
+
+    public static boolean deleteImage(Context context, String path) {
+        int delete = context.getApplicationContext()
+                .getContentResolver()
+                .delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        MediaStore.Images.Media.DATA + "=?",
+                        new String[]{path});
+        TLog.i(delete + " ----------" + deleteFileOrDir(path));
+        return  delete > 0;
+    }
+
+    public static boolean deleteFileOrDir(String path) {
+        return deleteFileOrDir(new File(path));
+    }
+
+    public static boolean deleteFileOrDir(File file) {
+        if (file != null && file.exists()) {
+            if (file.isDirectory()) {
+                File[] files = file.listFiles();
+                if (files != null && files.length > 0) {
+                    for (File file1 : files) {
+                        deleteFileOrDir(file1);
+                    }
+                    return file.delete();
+                } else {
+                    return file.delete();
+                }
+            } else {
+                return file.delete();
+            }
+        }
+        return false;
     }
 }

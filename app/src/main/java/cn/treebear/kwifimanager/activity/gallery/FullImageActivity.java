@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import butterknife.BindView;
@@ -18,8 +19,11 @@ import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.config.GalleryHelper;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
+import cn.treebear.kwifimanager.util.FileUtils;
 import cn.treebear.kwifimanager.util.UMShareUtils;
 import cn.treebear.kwifimanager.util.UserInfoUtil;
+import cn.treebear.kwifimanager.widget.dialog.MultiDeleteDialog;
+import cn.treebear.kwifimanager.widget.dialog.MultiDeleteListener;
 import cn.treebear.kwifimanager.widget.pop.ShareGalleryPop;
 
 public class FullImageActivity extends BaseActivity {
@@ -41,6 +45,8 @@ public class FullImageActivity extends BaseActivity {
     private int imagePosition;
     private FullImageAdapter adapter;
     private ShareGalleryPop shareGalleryPop;
+    private MultiDeleteDialog deleteDialog;
+    private LinearLayoutManager manager;
 
     @Override
     public int layoutId() {
@@ -58,7 +64,7 @@ public class FullImageActivity extends BaseActivity {
     protected void initView() {
         statusTransparentFontWhite();
         setTitle(R.mipmap.ic_line_arrow_left_white, GalleryHelper.getImageBeans().get(imagePosition).getDate(), "", 0, false);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         new LinearSnapHelper().attachToRecyclerView(recyclerView);
         recyclerView.setLayoutManager(manager);
@@ -81,6 +87,23 @@ public class FullImageActivity extends BaseActivity {
 
     @OnClick(R2.id.iv_share_pic)
     public void onIvSharePicClicked() {
+        showShareDialog();
+    }
+
+    @OnClick(R2.id.iv_delete_pic)
+    public void onIvDeletePicClicked() {
+        showDeleteDialog();
+    }
+
+    @OnClick(R2.id.iv_backup_pic)
+    public void onIvBackupPicClicked() {
+    }
+
+    @OnClick(R2.id.iv_download_pic)
+    public void onIvDownloadPicClicked() {
+    }
+
+    private void showShareDialog() {
         if (shareGalleryPop == null) {
             shareGalleryPop = new ShareGalleryPop(this);
             shareGalleryPop.setListener(new ShareGalleryPop.DoClickListener() {
@@ -110,16 +133,57 @@ public class FullImageActivity extends BaseActivity {
         backgroundAlpha(0.8f);
     }
 
-    @OnClick(R2.id.iv_delete_pic)
-    public void onIvDeletePicClicked() {
+    private void showDeleteDialog() {
+        if (deleteDialog == null) {
+            deleteDialog = new MultiDeleteDialog(this);
+            deleteDialog.setMultiDeleteListener(new MultiDeleteListener() {
+                @Override
+                public void onClickCancel() {
+                    dismiss(deleteDialog);
+                }
+
+                @Override
+                public void onClickConfirm(boolean first, boolean second) {
+                    dismiss(deleteDialog);
+                    if (first) {
+                        deleteFromPhone();
+                    }
+                    if (second) {
+                        deleteFromDesk();
+                    }
+                }
+            });
+        }
+        deleteDialog.clearCheck();
+        deleteDialog.show();
     }
 
-    @OnClick(R2.id.iv_backup_pic)
-    public void onIvBackupPicClicked() {
+    private void deleteFromDesk() {
+
     }
 
-    @OnClick(R2.id.iv_download_pic)
-    public void onIvDownloadPicClicked() {
+    private void deleteFromPhone() {
+        boolean deleteImage = FileUtils.deleteImage(this, GalleryHelper.getImageBeans().get(imagePosition).getFilepath());
+//        boolean deleteThumb = FileUtils.deleteImage(this, GalleryHelper.getImageBeans().get(imagePosition).getThumbPath());
+        ToastUtils.showShort(deleteImage ? R.string.delete_success : R.string.delete_failed_retry);
+        if (deleteImage) {
+            if (manager != null) {
+                if (GalleryHelper.getImageBeans().size() > imagePosition + 1) {
+                    manager.scrollToPosition(imagePosition += 1);
+                } else {
+                    if (imagePosition - 1 >= 0) {
+                        manager.scrollToPosition(imagePosition -= 1);
+                    } else {
+                        finish();
+                    }
+                }
+            }
+        }
     }
 
+    @Override
+    protected void onDestroy() {
+        dismiss(deleteDialog, shareGalleryPop);
+        super.onDestroy();
+    }
 }

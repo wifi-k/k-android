@@ -406,5 +406,8 @@
     <string name="no_permission_obtain">无权限获取</string>
     <string name="no_file_permission_click_obtain">无存储权限，点击获取相册图片</string>
     <string name="current_no_picture">暂无图片</string>
+    <string name="delete_picture_title">"确认要将选中的照片删除吗?\n删除后照片将无法恢复"</string>
+    <string name="delete_from_phone">从此手机删除</string>
+    <string name="delete_from_desk">从硬盘中删除</string>
 
 </resources>
