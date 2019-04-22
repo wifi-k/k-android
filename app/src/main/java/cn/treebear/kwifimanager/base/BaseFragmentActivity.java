@@ -14,12 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.gyf.barlibrary.ImmersionBar;
-import com.umeng.message.PushAgent;
-
-import java.util.ArrayList;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -30,15 +24,26 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.barlibrary.ImmersionBar;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.message.PushAgent;
+
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.activity.WebsiteActivity;
+import cn.treebear.kwifimanager.activity.account.SignInActivity;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.IView;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.Dismissable;
 import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import io.reactivex.disposables.Disposable;
@@ -74,6 +79,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
      * fragment管理器
      */
     private FragmentManager fragmentManager;
+    protected RxPermissions rxPermissions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
         initImmersionBar();
         statusWhiteFontBlack();
         unbinder = ButterKnife.bind(this);
+        rxPermissions = new RxPermissions(this);
         PushAgent.getInstance(this).onAppStart();
         ActivityStackUtils.pressActivity(Config.Tags.ALL, this);
         fragmentManager = getSupportFragmentManager();
@@ -478,7 +485,25 @@ public abstract class BaseFragmentActivity<P extends IPresenter, DATA> extends F
     @Override
     public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         hideLoading();
-        ToastUtils.showShort(resultMsg);
+        switch (resultCode) {
+            case ApiCode.TOKEN_EXPIRED:
+            case ApiCode.TOKEN_INVALID:
+                ToastUtils.showShort(R.string.sign_in_info_overdue_reload);
+                UserInfoUtil.clearUserInfo();
+                startActivity(SignInActivity.class);
+                ActivityStackUtils.finishAll(Config.Tags.ALL);
+                break;
+            case -1:
+                ToastUtils.showShort(Config.Tips.CONNECT_ERROR);
+                break;
+            default:
+                if (Check.hasContent(resultMsg)) {
+                    ToastUtils.showShort(resultMsg);
+                } else {
+                    ToastUtils.showShort(R.string.request_failed_retry);
+                }
+                break;
+        }
     }
 
     /**

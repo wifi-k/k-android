@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -17,12 +24,6 @@ import com.karumi.dividers.Layer;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
@@ -35,6 +36,8 @@ import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.bean.local.LocalImageSection;
 import cn.treebear.kwifimanager.config.GalleryHelper;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.test.BeanTest;
+import cn.treebear.kwifimanager.widget.pop.ShareGalleryPop;
 
 public class SelectPictureFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     @BindView(R.id.recycler_view)
@@ -45,6 +48,7 @@ public class SelectPictureFragment extends BaseFragment implements LoaderManager
     private ArrayList<LocalImageSection> sections = new ArrayList<>();
     private GalleryDisplayAdapter galleryAdapter;
     private LoaderManager loaderManager;
+    private ShareGalleryPop shareGalleryPop;
 
     @Override
     public int layoutId() {
@@ -84,6 +88,7 @@ public class SelectPictureFragment extends BaseFragment implements LoaderManager
                 int realImageIndex = GalleryHelper.getRealImageIndex(position);
                 if (realImageIndex != -1) {
                     bundle.clear();
+                    BeanTest.testUpload(GalleryHelper.getSections().get(position).t.getFilepath());
                     bundle.putInt(Keys.POSITION, realImageIndex);
                     startActivity(FullImageActivity.class, bundle);
                 }
@@ -106,7 +111,37 @@ public class SelectPictureFragment extends BaseFragment implements LoaderManager
             ToastUtils.showShort(R.string.please_select_unless_one_pic);
             return;
         }
-        // TODO: 2019/4/18 goto share
+        showSharePop();
+    }
+
+    private void showSharePop() {
+        if (shareGalleryPop == null) {
+            shareGalleryPop = new ShareGalleryPop(mContext);
+            shareGalleryPop.setListener(new ShareGalleryPop.DoClickListener() {
+                @Override
+                public void onSelectAlbum(int position) {
+                }
+
+                @Override
+                public void onClickWechat() {
+                    dismiss(shareGalleryPop);
+//                    UMShareUtils.shareWxImage(mContext, "小K云管家", String.format("%s分享了照片", UserInfoUtil.getUserInfo().getName()),
+//                            GalleryHelper.getImageBeans().get(imagePosition).getFilepath(), null);
+                }
+
+                @Override
+                public void onCancel() {
+                    dismiss(shareGalleryPop);
+                }
+
+                @Override
+                public void onDismiss() {
+                    backgroundAlpha(1f);
+                }
+            });
+        }
+        shareGalleryPop.show(mRootView);
+        backgroundAlpha(0.8f);
     }
 
     @OnClick(R2.id.tv_delete_pic)

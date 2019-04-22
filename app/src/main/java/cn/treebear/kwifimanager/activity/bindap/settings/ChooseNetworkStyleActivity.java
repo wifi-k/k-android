@@ -158,7 +158,8 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
                 ToastUtils.showShort(R.string.dynamic_ip_set_fail);
                 break;
             case 2:
-                WiFiHttpClient.dealWithResultCode(resultCode);
+                hideLoading();
+                WiFiHttpClient.dealWithResultCode(resultCode,null);
                 break;
             default:
                 hideLoading();

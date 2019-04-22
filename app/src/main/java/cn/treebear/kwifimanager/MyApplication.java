@@ -38,7 +38,6 @@ public class MyApplication extends MultiDexApplication {
 
     public static long time = 0;
     private static MyApplication mContext;
-    private boolean needUpdateNodeInfo = true;
 
     private String currentSelectNode;
 
@@ -47,10 +46,6 @@ public class MyApplication extends MultiDexApplication {
      * 若不保存用户信息情况下，仅单次记录用户信息
      */
     private ServerUserInfo user;
-    /**
-     * 友盟推送客户端
-     */
-    private PushAgent mPushAgent;
     /**
      * 用户角色
      */
@@ -90,9 +85,11 @@ public class MyApplication extends MultiDexApplication {
         PlatformConfig.setWeixin(BuildConfig.WX_APPKEY, BuildConfig.WX_APP_SECRET);
         // 选用AUTO页面采集模式
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
-
-        //获取消息推送代理示例
-        mPushAgent = PushAgent.getInstance(this);
+        /*
+         *         //获取消息推送代理示例
+         * 友盟推送客户端
+         */
+        PushAgent mPushAgent = PushAgent.getInstance(this);
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {
             @Override
@@ -165,10 +162,6 @@ public class MyApplication extends MultiDexApplication {
         currentSelectNode = node;
     }
 
-    public PushAgent getPushAgent() {
-        return mPushAgent;
-    }
-
     /**
      * @return 当前用户是否已认证
      */
@@ -182,14 +175,6 @@ public class MyApplication extends MultiDexApplication {
 
     public void setCurrentNode(NodeInfoDetail.NodeBean currentNode) {
         this.currentNode = currentNode;
-    }
-
-    public boolean isNeedUpdateNodeInfo() {
-        return needUpdateNodeInfo;
-    }
-
-    public void setNeedUpdateNodeInfo(boolean needUpdateNodeInfo) {
-        this.needUpdateNodeInfo = needUpdateNodeInfo;
     }
 
     public String getDevToken() {

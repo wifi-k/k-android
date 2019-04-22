@@ -21,7 +21,8 @@ import cn.treebear.kwifimanager.util.DensityUtil;
 import cn.treebear.kwifimanager.util.callback.GallerySelectChangedListener;
 
 public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSection, BaseViewHolder> {
-    private int model = GalleryHelper.IMAGE_MODEL_DISPLAY;
+    private int mColumn;
+    private int model;
     private GallerySelectChangedListener mListener;
 
     /**
@@ -31,13 +32,19 @@ public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSec
      * @param data A new list is created out of this one to avoid mutable list
      */
     public GalleryDisplayAdapter(List<LocalImageSection> data) {
-        super(R.layout.item_gallery_image, R.layout.item_gallery_date, data);
+        this(data, 3, GalleryHelper.IMAGE_MODEL_DISPLAY);
     }
 
     public GalleryDisplayAdapter(List<LocalImageSection> data, @GalleryHelper.AdapterModel int adapterModel) {
+        this(data, 3, adapterModel);
+    }
+
+    public GalleryDisplayAdapter(List<LocalImageSection> data, int column, @GalleryHelper.AdapterModel int adapterModel) {
         super(R.layout.item_gallery_image, R.layout.item_gallery_date, data);
+        mColumn = column;
         model = adapterModel;
     }
+
 
     @Override
     protected void convertHead(BaseViewHolder helper, LocalImageSection item) {
@@ -52,7 +59,7 @@ public class GalleryDisplayAdapter extends BaseSectionQuickAdapter<LocalImageSec
         cbCheck.setOnCheckedChangeListener(null);
         ImageView ivBackupStatus = helper.getView(R.id.iv_backup_status);
         ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
-        layoutParams.height = (DensityUtil.getScreenWidth() - 4) / 3;
+        layoutParams.height = (DensityUtil.getScreenWidth() + 1 - mColumn) / mColumn;
         image.setLayoutParams(layoutParams);
         GlideApp.with(helper.itemView)
                 .load(item.t.getThumbPath())

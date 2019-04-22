@@ -27,7 +27,6 @@ import cn.treebear.kwifimanager.fragment.SelectPictureFragment;
 import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
 import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
-import cn.treebear.kwifimanager.util.TLog;
 
 /**
  * @author Tinlone
@@ -125,7 +124,6 @@ public class MainActivity extends BaseFragmentActivity {
             findViewById(R.id.full_screen_fragment_wrapper).setVisibility(View.VISIBLE);
             updateFragment(R.id.full_screen_fragment_wrapper, 0);
         }
-        TLog.w(String.valueOf(R.id.full_screen_fragment_wrapper) + "----------------" + String.valueOf(R.id.fragment_wrapper));
         selectPictureFragment.updateStatus();
         statusWhiteFontBlack();
     }

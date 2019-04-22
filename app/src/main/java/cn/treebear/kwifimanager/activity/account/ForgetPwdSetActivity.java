@@ -136,6 +136,7 @@ public class ForgetPwdSetActivity extends BaseActivity<ForgetPasswordContract.Pr
     @Override
     public void onLoadFail(BaseResponse data, String resultMsg, int resultCode) {
         super.onLoadFail(data, resultMsg, resultCode);
+        btnConfirm.setEnabled(true);
         ToastUtils.showShort(R.string.message_error_check_retry);
     }
 

@@ -84,6 +84,8 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // util集合
     implementation 'com.blankj:utilcode:1.23.5'
+    //权限
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     // 沉浸式状态栏
     implementation 'com.gyf.immersionbar:immersionbar:2.3.2-beta01'
     // 底部导航栏

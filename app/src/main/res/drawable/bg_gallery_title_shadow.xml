@@ -60,14 +60,14 @@
                 android:top="0px" />
         </shape>
     </item>
-    <!--<item>-->
-        <!--<shape android:shape="rectangle">-->
-            <!--<solid android:color="#FFFFFF" />-->
-            <!--<padding-->
-                <!--android:bottom="20px"-->
-                <!--android:left="0px"-->
-                <!--android:right="0px"-->
-                <!--android:top="0px" />-->
-        <!--</shape>-->
-    <!--</item>-->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+            <padding
+                android:bottom="20px"
+                android:left="0px"
+                android:right="0px"
+                android:top="0px" />
+        </shape>
+    </item>
 </layer-list>

@@ -130,6 +130,10 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presen
 //                ToastUtils.showShort(R.string.connect_success);
                 bindNode();
                 break;
+            case 2:
+                hideLoading();
+                WiFiHttpClient.dealWithResultCode(resultCode, null);
+                break;
             default:
                 hideLoading();
                 ToastUtils.showShort(R.string.connect_fail);
@@ -138,7 +142,6 @@ public class StaticIpOnlineActivity extends BaseActivity<StaticIpContract.Presen
 //                btnNext.postDelayed(() -> mPresenter.queryNetStatus(), 1000);
                 break;
         }
-        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     /**

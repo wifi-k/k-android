@@ -183,7 +183,8 @@ public class ModifyWifiInfoActivity extends BaseActivity<ModifyWifiInfoContract.
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
 //        super.onLoadFail(resultData, resultMsg, resultCode);
-        WiFiHttpClient.dealWithResultCode(resultCode);
+        hideLoading();
+        WiFiHttpClient.dealWithResultCode(resultCode,null);
     }
 
     private boolean checkInput() {

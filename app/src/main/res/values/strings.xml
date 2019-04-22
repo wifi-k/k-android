@@ -17,6 +17,7 @@
     <string name="info" translatable="false">相册</string>
     <string name="mine" translatable="false">我的</string>
 
+    <!--登录系统-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">登录</string>
     <string name="mobile_not_sign_up">该手机号未注册，请立即注册</string>
@@ -44,6 +45,8 @@
     <string name="find_password_success">找回密码成功</string>
     <string name="password_not_equal">两次密码不一致</string>
     <string name="verify_code_input_error">验证码输入有误</string>
+
+    <!--首页-->
     <string name="bind_k_wifi_manager">绑定小k云管家</string>
     <string name="join_family_code">加入家庭码</string>
     <string name="join_family_tips">输入家庭码，立即加入某个家庭</string>
@@ -66,6 +69,7 @@
     <string name="network_speed_now">“当前在线%s台/上行网速%s/下行网速%s”</string>
     <string name="look_all">查看全部</string>
     <string name="title_take_care_children">儿童上网关爱</string>
+    <!--绑定-->
     <string name="bind_now">立即绑定</string>
     <string name="option_network">配置网络</string>
     <string name="online_wifi_bind_xiaok">请连接wifi名称“xiaok-****”的设备\n并配置网络</string>
@@ -85,9 +89,9 @@
     <string name="goto_online_setting">前往连接小K</string>
     <string name="connect_xiaok_tips1">请在后续流程中保持小K连接状态</string>
     <string name="bind_success">绑定设备成功</string>
-
     <string name="has_wifi_connected">您已连接WiFi</string>
     <string name="has_xiaok_connected">您已连接xiaok-WiFi</string>
+    <!--配置网络-->
     <string name="ip_address_">IP地址：</string>
     <string name="ip_address">IP地址</string>
     <string name="ip_hint">192.168.0.0</string>
@@ -105,12 +109,9 @@
     <string name="input_wifi_name">请输入Wi-Fi名称</string>
     <string name="input_wifi_pwd">请输入Wi-Fi密码</string>
     <string name="complete">完成</string>
-
     <string name="switch_xiaok">切换小K</string>
-
     <string name="modify_failed">修改失败</string>
     <string name="set_option_success">配置成功</string>
-
     <string name="input_wifi_name_please">请输入合法的WiFi名称</string>
     <string name="input_wifi_passowrd_please">请设置8–20位的WiFi密码</string>
 
@@ -307,7 +308,7 @@
     <string name="this_node_has_bound">该设备已被其他账户绑定</string>
     <string name="bind_fail_please_retry">绑定失败，请稍后重试</string>
     <string name="modify_success">修改成功</string>
-    <string name="no_higher_version">无可用升级版本</string>
+    <string name="no_higher_version">已是最新版本</string>
     <string name="update_ing">正在更新</string>
     <string name="option_failed">配置失败</string>
     <string name="option_failed_retry">配置失败,请稍后重试</string>
@@ -340,6 +341,8 @@
     <string name="get_option_failed">获取配置失败</string>
     <string name="increase_new_time_control">+ 新增上网时间控制</string>
     <string name="has_option">已设置</string>
+    <string name="must_choose_mare_than_one_device">请至少选择一个控制的设备</string>
+    <string name="choose_control_time_panel">请选择需要管理的时间段</string>
 
     <!--手机品牌-->
     <string name="other">其他</string>
@@ -375,7 +378,7 @@
     <string name="notice">通知</string>
     <string name="has_bound_retry">该设备已被绑定，请检查后再试</string>
     <string name="connect_ing">正在连接...</string>
-    <string name="only_in_wifi_allow">仅在XiaoK-WiFi连接下可用</string>
+    <string name="only_in_wifi_allow">仅在当前选择设备WiFi环境下可用</string>
     <string name="click_bind_now">点击立即绑定</string>
     <string name="tips_guide_view_1">"若您已经购买了小K管家\n请立即绑定小K管家\n进入到添加新小k管家页面"</string>
     <string name="tips_guide_view_2">"若您的家庭已经拥有小K管家\n请立即输入家庭码\n加入某个家庭"</string>
@@ -396,5 +399,10 @@
     <string name="device_info_has_no_complete_retry">设备信息未完全加载，请稍后再试</string>
     <string name="hasnot_obtain">暂未获取</string>
     <string name="refuse_file_permission_cannot_manage_gallery">您拒绝了存储权限，无法查看和管理相册文件</string>
+    <string name="please_connect_k_wifi">请连接小K-WiFi</string>
+    <string name="not_current_k_wifi">非当前选择设备WiFi</string>
+    <string name="password_error_retry">密码错误，请检查后重试</string>
+    <string name="has_no_network">无网络连接</string>
+    <string name="no_permission_obtain">无权限获取</string>
 
 </resources>

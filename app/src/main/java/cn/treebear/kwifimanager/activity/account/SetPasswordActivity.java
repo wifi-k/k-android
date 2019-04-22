@@ -169,6 +169,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
     @OnClick(R2.id.btn_confirm)
     public void onBtnConfirmClicked() {
         if (Check.equals(etSignUpPassword, etPasswordAgain)) {
+            btnConfirm.setEnabled(false);
             mPresenter.setPassword(etSignUpPassword.getText().toString());
         } else {
             ToastUtils.showShort(R.string.password_not_equal);
@@ -189,6 +190,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordContract.Presen
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
         super.onLoadFail(resultData, resultMsg, resultCode);
+        btnConfirm.setEnabled(true);
         ToastUtils.showShort(R.string.message_error_check_retry);
     }
 

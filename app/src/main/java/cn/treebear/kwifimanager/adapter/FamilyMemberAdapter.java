@@ -37,7 +37,7 @@ public class FamilyMemberAdapter extends BaseQuickAdapter<FamilyMemberBean, Base
                         R.mipmap.ic_member_admin_yes : R.mipmap.ic_member_admin_no)
                 .addOnClickListener(R.id.iv_member_delete)
                 .setGone(R.id.iv_member_admin, item.getRole() == 0)
-                .setGone(R.id.iv_member_delete, isAdmin);
+                .setGone(R.id.iv_member_delete, isAdmin && item.getRole() != 0);
 
         if (!Check.hasContent(item.getUserName()) && Check.maxThen(item.getUserMobile(), 4)) {
             helper.setText(R.id.tv_member_nickname, "用户" + (item.getUserMobile().substring(item.getUserMobile().length() - 4)));

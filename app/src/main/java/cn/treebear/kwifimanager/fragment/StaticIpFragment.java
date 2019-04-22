@@ -99,14 +99,14 @@ public class StaticIpFragment extends BaseFragment<StaticIpContract.Presenter, W
                 ToastUtils.showShort(R.string.dynamic_ip_set_fail);
                 break;
             case 2:
-                WiFiHttpClient.dealWithResultCode(resultCode);
+                hideLoading();
+                WiFiHttpClient.dealWithResultCode(resultCode,null);
                 break;
             default:
                 hideLoading();
                 ToastUtils.showShort(R.string.connect_fail);
                 break;
         }
-        WiFiHttpClient.dealWithResultCode(resultCode);
     }
 
     /**

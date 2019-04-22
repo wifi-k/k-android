@@ -1,5 +1,6 @@
 package cn.treebear.kwifimanager.test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -10,6 +11,9 @@ import cn.treebear.kwifimanager.bean.BanAppPlanBean;
 import cn.treebear.kwifimanager.bean.Daybean;
 import cn.treebear.kwifimanager.bean.MobilePhoneBean;
 import cn.treebear.kwifimanager.bean.TimeLimitBean;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * 测试数据类
@@ -57,6 +61,15 @@ public class BeanTest {
             }};
         }
         return appBeans;
+    }
+
+    public static void testUpload(String filePath) {
+        File file = new File(filePath);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), file))
+                .build();
     }
 
     /**

@@ -99,6 +99,8 @@ public class WiFiHttpClient {
      */
     public static void xiaokOffline() {
         needLogin = true;
+        wifiDeviceInfo = null;
+        wifiDeviceInfo = new WifiDeviceInfo();
         getInstance().apiToken = "";
         getInstance().retrofit = null;
         getInstance().initRetrofit();
@@ -161,15 +163,15 @@ public class WiFiHttpClient {
                     callBack.onFailed(data, resultMsg, resultCode);
                 }
                 needLogin = true;
-                dealWithResultCode(resultCode);
+                dealWithResultCode(resultCode,null);
             }
         });
     }
 
-    public static void dealWithResultCode(int code) {
+    public static void dealWithResultCode(int code,IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>> callBack) {
         if (code == 2) {
             xiaokOffline();
-            getInstance().tryToSignInWifi(null);
+            getInstance().tryToSignInWifi(callBack);
         }
     }
 

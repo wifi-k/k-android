@@ -188,14 +188,16 @@ public class SignInActivity extends BaseActivity<PwdSignInContract.Presenter, Se
 
     @Override
     public void onLoadFail(BaseResponse data, String resultMsg, int resultCode) {
+        super.onLoadFail(data, resultMsg, resultCode);
         tvSignNext.setEnabled(true);
-        hideLoading();
         switch (resultCode) {
-            case ApiCode.INVALID_PARAM:
+            case ApiCode.DB_NOT_FOUND_RECORD:
                 showNoSignDialog();
                 break;
+            case ApiCode.USR_INVALID:
+                ToastUtils.showShort(R.string.password_error_retry);
+                break;
             default:
-                ToastUtils.showShort(R.string.message_error_check_retry);
                 break;
         }
     }

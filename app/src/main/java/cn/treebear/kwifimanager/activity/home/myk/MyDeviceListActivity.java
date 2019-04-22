@@ -48,7 +48,6 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     private int currentModifyPosition;
     private TMessageDialog tMessageDialog;
     private int pageNo = 1;
-    private boolean needRefresh = false;
 
     @Override
     public int layoutId() {
@@ -88,7 +87,6 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
                     break;
             }
         });
-        mPresenter.getNodeList(pageNo = 1);
         refreshLayout.setOnRefreshListener(this::refresh);
         deviceAdapter.setOnLoadMoreListener(() -> mPresenter.getNodeList(++pageNo), rvDeviceList);
     }
@@ -101,15 +99,12 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     @Override
     protected void onResume() {
         super.onResume();
-        if (needRefresh) {
-            refresh();
-        }
+        refresh();
     }
 
     @Override
     public void onLoadData(NodeInfoDetail resultData) {
         refreshLayout.setRefreshing(false);
-        needRefresh = false;
         deviceAdapter.loadMoreComplete();
         if (resultData == null) {
             return;
@@ -137,7 +132,6 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     @Override
     public void onLoadFail(BaseResponse resultData, String resultMsg, int resultCode) {
         super.onLoadFail(resultData, resultMsg, resultCode);
-        needRefresh = true;
         refreshLayout.setRefreshing(false);
         deviceAdapter.loadMoreComplete();
     }
@@ -145,7 +139,6 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
     @Override
     protected void onTitleRightClick() {
         Bundle bundle = new Bundle();
-        needRefresh = true;
         bundle.putInt(Keys.TYPE, Values.TYPE_APPEND_NODE);
         startActivity(BindAction1Activity.class, bundle);
     }
@@ -166,10 +159,10 @@ public class MyDeviceListActivity extends BaseActivity<MyNodeContract.Presenter,
         hideLoading();
         switch (resultCode) {
             case ApiCode.SUCC:
-                needRefresh = true;
                 nodeList.remove(currentModifyPosition);
                 MyApplication.getAppContext().getUser().setNodeSize(nodeList.size());
                 deviceAdapter.notifyDataSetChanged();
+                refresh();
                 ToastUtils.showShort(R.string.unbind_success);
                 break;
             case ApiCode.USR_INVALID:

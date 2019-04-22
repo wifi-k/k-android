@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.MyApplication;
@@ -106,10 +107,10 @@ public class TimeControlPlanActivity extends BaseActivity<TimeControlContract.Pr
                         needModifyPlan.getSt(), needModifyPlan.getEt(), needModifyPlan.getWt(),
                         needModifyPlan.getsMac());
             } else {
-                ToastUtils.showShort("请选择需要管理的设备");
+                ToastUtils.showShort(R.string.must_choose_mare_than_one_device);
             }
         } else {
-            ToastUtils.showShort("请选择需要管理的时间段");
+            ToastUtils.showShort(R.string.choose_control_time_panel);
         }
     }
 

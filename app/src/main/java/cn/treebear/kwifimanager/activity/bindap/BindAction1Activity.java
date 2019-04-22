@@ -110,6 +110,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
                     @Override
                     public void onDenied() {
                         ToastUtils.showLong(R.string.refuse_loaction_permission);
+                        finish();
                     }
                 }).request();
     }

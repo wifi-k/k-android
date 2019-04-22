@@ -1,8 +1,11 @@
 package cn.treebear.kwifimanager.activity.toolkit;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.util.ArrayMap;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
 import androidx.gridlayout.widget.GridLayout;
 
 import com.blankj.utilcode.constant.PermissionConstants;
@@ -34,6 +37,7 @@ import cn.treebear.kwifimanager.util.RequestBodyUtils;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.dialog.TipsDialog;
+import io.reactivex.disposables.Disposable;
 
 /**
  * @author Administrator
@@ -70,6 +74,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
     private TipsDialog resetTipsDialog;
     private WiFiSettingProxyModel proxyModel;
     private List<NodeWifiListBean.WifiBean> wifiList = new ArrayList<>();
+    private Disposable permissionDisposable;
 
     @Override
     public int layoutId() {
@@ -86,24 +91,48 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         setTitleBack(R.string.wifi_toolkit);
         proxyModel = new WiFiSettingProxyModel();
         glSeniorSettingWrapper.setColumnCount(DensityUtil.getScreenWidth() < 728 ? 3 : 4);
-//        showLoading();
-//        mPresenter.getNodeSsid(MyApplication.getAppContext().getCurrentSelectNode());
+        mPresenter.getNodeSsid(MyApplication.getAppContext().getCurrentSelectNode());
+        if (NetWorkUtils.isWifiConnected(this)) {
+            whenWiFi();
+        } else {
+            if (NetWorkUtils.isNetConnected(this)) {
+                tvWifiSSID.setText(R.string.please_connect_k_wifi);
+            } else {
+                tvWifiSSID.setText(R.string.has_no_network);
+            }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        TLog.w("onResume()");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+                tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(WifiToolkitActivity.this));
+            } else {
+                tvWifiSSID.setText(R.string.not_current_k_wifi);
+            }
+        } else {
+            tvWifiSSID.setText(R.string.no_permission_obtain);
+        }
+    }
+
+    private void whenWiFi() {
         PermissionUtils.permission(PermissionConstants.LOCATION)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
                     public void onGranted() {
                         if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
                             tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(WifiToolkitActivity.this));
+                        } else {
+                            tvWifiSSID.setText(R.string.not_current_k_wifi);
                         }
                     }
 
                     @Override
                     public void onDenied() {
+                        tvWifiSSID.setText(R.string.no_permission_obtain);
                         ToastUtils.showLong(R.string.refuse_loaction_permission);
                     }
                 }).request();
@@ -169,16 +198,16 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
     @Override
     public void onLoadData(NodeWifiListBean resultData) {
         hideLoading();
-        if (resultData == null) {
-            return;
-        }
-        wifiList.clear();
-        wifiList.addAll(resultData.getPage());
-        if (Check.hasContent(wifiList)) {
-            NodeWifiListBean.WifiBean wifiBean = wifiList.get(0);
-            tvWifiSSID.setText(wifiBean.getSsid());
-            tvHasNoPassword.setText(Check.hasContent(wifiBean.getPasswd()) ? R.string.has_set_password : R.string.no_password_easy_gay);
-        }
+//        if (resultData == null) {
+//            return;
+//        }
+//        wifiList.clear();
+//        wifiList.addAll(resultData.getPage());
+//        if (Check.hasContent(wifiList)) {
+//            NodeWifiListBean.WifiBean wifiBean = wifiList.get(0);
+//            tvWifiSSID.setText(wifiBean.getSsid());
+//            tvHasNoPassword.setText(Check.hasContent(wifiBean.getPasswd()) ? R.string.has_set_password : R.string.no_password_easy_gay);
+//        }
     }
 
     private void showNameInputDialog() {
@@ -225,6 +254,9 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
                 hideLoading();
                 tvWifiSSID.setText(name);
                 ToastUtils.showShort(R.string.option_success_restart);
+                if (Check.hasContent(passwd)) {
+                    tvHasNoPassword.setText(R.string.has_set_password);
+                }
             }
 
             @Override
@@ -232,7 +264,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
                 hideLoading();
                 ToastUtils.showShort(R.string.option_failed_retry);
                 // 若token过期则重新登录
-                WiFiHttpClient.dealWithResultCode(resultCode);
+                WiFiHttpClient.dealWithResultCode(resultCode, null);
                 // 若配置失败，则通过联网配置
 //                if (Check.hasContent(passwd)) {
 //                    mPresenter.modifyPasswd(WiFiHttpClient.getWifiDeviceInfo().getId(), Values.FREQ_ALL, passwd);
@@ -313,7 +345,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                 dismiss(restartTipsDialog);
                 ToastUtils.showShort(R.string.wifi_restart_failed);
-                WiFiHttpClient.dealWithResultCode(resultCode);
+                WiFiHttpClient.dealWithResultCode(resultCode, null);
             }
         });
     }
@@ -330,7 +362,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
             public void onFailed(BaseResponse response, String resultMsg, int resultCode) {
                 dismiss(resetTipsDialog);
                 ToastUtils.showShort("恢复出厂设置失败");
-                WiFiHttpClient.dealWithResultCode(resultCode);
+                WiFiHttpClient.dealWithResultCode(resultCode, null);
             }
         });
     }
@@ -377,6 +409,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
     @Override
     protected void onDestroy() {
         dismiss(nameModifyDialog, passwordModifyDialog, resetTipsDialog, restartTipsDialog);
+        dispose(permissionDisposable);
         super.onDestroy();
     }
 }

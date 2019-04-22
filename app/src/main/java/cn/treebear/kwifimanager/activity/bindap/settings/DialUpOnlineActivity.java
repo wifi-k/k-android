@@ -162,7 +162,18 @@ public class DialUpOnlineActivity extends BaseActivity<DialUpContract.Presenter,
 //                ToastUtils.showShort(R.string.connect_success);
                 break;
             case 2:
-                WiFiHttpClient.dealWithResultCode(resultCode);
+                WiFiHttpClient.dealWithResultCode(resultCode, new IModel.AsyncCallBack<BaseResponse<WifiDeviceInfo>>() {
+                    @Override
+                    public void onSuccess(BaseResponse<WifiDeviceInfo> resultData) {
+                        mPresenter.dialUpSet(etNetAccount.getText().toString(), etNetPassowrd.getText().toString());
+                    }
+
+                    @Override
+                    public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
+                        ToastUtils.showShort(R.string.option_failed_retry);
+                        hideLoading();
+                    }
+                });
                 break;
             default:
                 hideLoading();

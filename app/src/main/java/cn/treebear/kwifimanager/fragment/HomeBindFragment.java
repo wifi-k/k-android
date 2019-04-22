@@ -46,6 +46,7 @@ import cn.treebear.kwifimanager.bean.MessageInfoBean;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.bean.NodeInfoDetail;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
+import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.config.Values;
@@ -130,7 +131,6 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     private List<ChildrenListBean.ChildrenBean> childrenList = new ArrayList<>();
     private ChildrenCarefulAdapter childrenCarefulAdapter;
     private int mOnlineTotal;
-    private int mScrollY = 0;
 
     public HomeBindFragment() {
     }
@@ -146,11 +146,6 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     }
 
     @Override
-    protected void initData() {
-
-    }
-
-    @Override
     protected void initView() {
         setTitle(R.string.app_name);
 //      设备列表适配器配置
@@ -160,24 +155,12 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 //       公告 及 其他
         updateOtherData();
         mRootView.findViewById(R.id.constraintLayout).requestFocus();
-        listenScroll();
-    }
-
-    private void listenScroll() {
-        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                mScrollY = scrollY;
-            }
-        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (MyApplication.getAppContext().isNeedUpdateNodeInfo()) {
-            mPresenter.getNodeList();
-        }
+        mPresenter.getNodeList();
         if (Check.hasContent(MyApplication.getAppContext().getCurrentSelectNode())) {
             mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
             mPresenter.getChildrenList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
@@ -205,9 +188,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
             tvUserState.setText(nodeBean.getStatus() == 1 ? R.string.online : R.string.offline);
             mPresenter.getMobileList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
             mPresenter.getChildrenList(MyApplication.getAppContext().getCurrentSelectNode(), 1);
-            if (MyApplication.getAppContext().getRole() == -1) {
-                mPresenter.getFamilyMembers(MyApplication.getAppContext().getCurrentSelectNode());
-            }
+            mPresenter.getFamilyMembers(MyApplication.getAppContext().getCurrentSelectNode());
         } else {
             if (mContext instanceof MainActivity) {
                 ((MainActivity) mContext).updateHomeFragment();
@@ -310,7 +291,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     @OnClick(R2.id.tv_invite_member)
     public void onTvInviteMemberClicked() {
         UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", String.format("快来加入我的小K家庭吧，家庭码：%s", nodeBean.getInviteCode()),
-                "https://www.treebear.cn", R.mipmap.ic_launcher, null);
+                String.format(Config.Urls.SHARE_FAMILY_CODE_BASE + "?inviteCode=%s", nodeBean.getInviteCode()), R.mipmap.ic_launcher, null);
     }
 
     @OnClick(R2.id.tv_my_k)
@@ -341,7 +322,6 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         } else {
             startActivity(ChildrenListActivity.class);
         }
-//        startActivity(WeekReportActivity.class);
     }
 
     @OnClick(R2.id.tv_wifi_settings)
@@ -418,6 +398,9 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     public void onMessageListError(BaseResponse error) {
         marqueeNotice.initMarqueeTextView(ConstConfig.EMPTY_NOTICE, (view, position) -> {
         });
+        if (error != null) {
+            super.onLoadFail(error, error.getMsg(), error.getCode());
+        }
     }
 
     @Override

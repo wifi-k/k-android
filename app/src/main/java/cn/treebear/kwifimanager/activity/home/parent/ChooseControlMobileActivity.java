@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.blankj.utilcode.util.ToastUtils;
 import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.R;
@@ -24,6 +26,7 @@ import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.mvp.server.contract.AllMobileListContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.AllMobileListPresenter;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
 
 /**
@@ -92,13 +95,17 @@ public class ChooseControlMobileActivity extends BaseActivity<AllMobileListContr
 
     @Override
     protected void onTitleRightClick() {
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList(Keys.PARENT_CONTROL_DEVICE, macs);
-        intent.putExtras(bundle);
-        setResult(RESULT_OK, intent);
-        hideLoading();
-        finish();
+        if (Check.hasContent(macs)) {
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList(Keys.PARENT_CONTROL_DEVICE, macs);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
+            hideLoading();
+            finish();
+        } else {
+            ToastUtils.showShort(R.string.must_choose_mare_than_one_device);
+        }
     }
 
     @Override

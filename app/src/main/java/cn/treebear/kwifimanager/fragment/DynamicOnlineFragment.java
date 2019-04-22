@@ -97,7 +97,8 @@ public class DynamicOnlineFragment extends BaseFragment<DynamicIpContract.Presen
                 ToastUtils.showShort(R.string.dynamic_ip_set_fail);
                 break;
             case 2:
-                WiFiHttpClient.dealWithResultCode(resultCode);
+                hideLoading();
+                WiFiHttpClient.dealWithResultCode(resultCode,null);
                 break;
             default:
                 hideLoading();

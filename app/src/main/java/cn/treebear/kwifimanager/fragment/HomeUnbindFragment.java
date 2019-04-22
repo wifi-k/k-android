@@ -99,6 +99,7 @@ public class HomeUnbindFragment extends BaseFragment<UnbindHomeContract.Presente
                 }
             });
         }
+        inputDialog.clearInputText();
         inputDialog.show();
     }
 

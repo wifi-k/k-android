@@ -10,9 +10,10 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
 
@@ -109,7 +110,7 @@ public class NetWorkUtils {
      * 小K 已登录
      */
     public static boolean isXiaoKSignIn() {
-        return Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId());
+        return Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId()) && Check.hasContent(WiFiHttpClient.getApiToken());
     }
 
     /**

@@ -25,6 +25,10 @@ public final class Config {
         String ROUTER_BASE_URL = "http://192.168.18.254:4000/api/";
         String USER_PROTOCOL = "http://www.baidu.com/";
         String PRIVATE_PROTOCOL = "http://www.baidu.com/";
+        /**
+         * 分享家庭码URL
+         */
+        String SHARE_FAMILY_CODE_BASE = "http://test.user.famwifi.com/h5/inviteCode.html";
     }
 
     /**

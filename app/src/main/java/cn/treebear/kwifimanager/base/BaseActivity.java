@@ -14,13 +14,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.gyf.barlibrary.ImmersionBar;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.message.PushAgent;
-import com.umeng.message.inapp.IUmengInAppMsgCloseCallback;
-import com.umeng.message.inapp.InAppMessageManager;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -28,6 +21,15 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.barlibrary.ImmersionBar;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
+import com.umeng.message.inapp.IUmengInAppMsgCloseCallback;
+import com.umeng.message.inapp.InAppMessageManager;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.treebear.kwifimanager.R;
@@ -67,6 +69,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
      */
     private long lastClick = 0L;
     private Unbinder unbinder;
+    protected RxPermissions rxPermissions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +77,7 @@ public abstract class BaseActivity<P extends IPresenter, DATA> extends AppCompat
         setContentView(layoutId());
         initImmersionBar();
         statusWhiteFontBlack();
+        rxPermissions = new RxPermissions(this);
         unbinder = ButterKnife.bind(this);
         PushAgent.getInstance(this).onAppStart();
         pressThis(inAll());

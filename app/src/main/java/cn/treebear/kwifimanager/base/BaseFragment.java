@@ -8,12 +8,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.blankj.utilcode.util.ToastUtils;
-import com.umeng.analytics.MobclickAgent;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -21,14 +19,23 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+
+import com.blankj.utilcode.util.ToastUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.analytics.MobclickAgent;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.activity.WebsiteActivity;
+import cn.treebear.kwifimanager.activity.account.SignInActivity;
 import cn.treebear.kwifimanager.config.Config;
+import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.IView;
+import cn.treebear.kwifimanager.util.ActivityStackUtils;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.TLog;
+import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.Dismissable;
 import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 
@@ -55,6 +62,7 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
     private long lastClick = 0L;
     private Unbinder unbinder;
     private boolean useButterKnife = true;
+    protected RxPermissions rxPermissions;
 
     @Override
     public void onAttach(Context context) {
@@ -71,6 +79,7 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
         if (useButterKnife()) {
             unbinder = ButterKnife.bind(this, mRootView);
         }
+        rxPermissions = new RxPermissions(this);
         mPresenter = getPresenter();
         if (mPresenter != null) {
             mPresenter.attachView(this);
@@ -355,7 +364,25 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
     @Override
     public void onLoadFail(BaseResponse response, String resultMsg, int resultCode) {
         hideLoading();
-        ToastUtils.showShort(resultMsg);
+        switch (resultCode) {
+            case ApiCode.TOKEN_EXPIRED:
+            case ApiCode.TOKEN_INVALID:
+                ToastUtils.showShort(R.string.sign_in_info_overdue_reload);
+                UserInfoUtil.clearUserInfo();
+                startActivity(SignInActivity.class);
+                ActivityStackUtils.finishAll(Config.Tags.ALL);
+                break;
+            case -1:
+                ToastUtils.showShort(Config.Tips.CONNECT_ERROR);
+                break;
+            default:
+                if (Check.hasContent(resultMsg)) {
+                    ToastUtils.showShort(resultMsg);
+                } else {
+                    ToastUtils.showShort(R.string.request_failed_retry);
+                }
+                break;
+        }
     }
 
     public void showLoading() {
@@ -377,6 +404,18 @@ public abstract class BaseFragment<P extends IPresenter, DATA> extends Fragment 
     protected boolean noDoubleClick() {
         return System.currentTimeMillis() - lastClick >= Config.Numbers.CLICK_LIMIT;
     }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        if (mContext instanceof BaseActivity) {
+            WindowManager.LayoutParams lp = ((BaseActivity) mContext).getWindow().getAttributes();
+            lp.alpha = bgAlpha;
+            ((BaseActivity) mContext).getWindow().setAttributes(lp);
+        }
+    }
+
 
     protected void dismiss(@Size(min = 1) Dismissable... dialogs) {
         for (Dismissable dialog : dialogs) {
