@@ -92,29 +92,29 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         proxyModel = new WiFiSettingProxyModel();
         glSeniorSettingWrapper.setColumnCount(DensityUtil.getScreenWidth() < 728 ? 3 : 4);
         mPresenter.getNodeSsid(MyApplication.getAppContext().getCurrentSelectNode());
-        if (NetWorkUtils.isWifiConnected(this)) {
-            whenWiFi();
-        } else {
-            if (NetWorkUtils.isNetConnected(this)) {
-                tvWifiSSID.setText(R.string.please_connect_k_wifi);
-            } else {
-                tvWifiSSID.setText(R.string.has_no_network);
-            }
-        }
+        whenWiFi();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         TLog.w("onResume()");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
-                tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(WifiToolkitActivity.this));
+        if (NetWorkUtils.isWifiConnected(this)) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+                    tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(WifiToolkitActivity.this));
+                } else {
+                    tvWifiSSID.setText(R.string.not_current_k_wifi);
+                }
             } else {
-                tvWifiSSID.setText(R.string.not_current_k_wifi);
+                tvWifiSSID.setText(R.string.no_permission_obtain);
             }
         } else {
-            tvWifiSSID.setText(R.string.no_permission_obtain);
+            if (NetWorkUtils.isNetConnected(this)) {
+                tvWifiSSID.setText(R.string.please_connect_k_wifi);
+            } else {
+                tvWifiSSID.setText(R.string.has_no_network);
+            }
         }
     }
 

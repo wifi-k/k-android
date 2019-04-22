@@ -98,11 +98,26 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="-16dp" />
+        android:layout_height="0dp"
+        android:layout_marginTop="-16dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textColor="@color/text_7383a2"
+            android:text="@string/no_file_permission_click_obtain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
 
 
 </LinearLayout>

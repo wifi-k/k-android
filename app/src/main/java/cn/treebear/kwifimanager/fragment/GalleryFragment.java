@@ -1,5 +1,6 @@
 package cn.treebear.kwifimanager.fragment;
 
+import android.Manifest;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -40,6 +41,7 @@ import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.bean.local.LocalImageSection;
 import cn.treebear.kwifimanager.config.GalleryHelper;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.DensityUtil;
 
 /**
@@ -62,6 +64,8 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     LinearLayout rlTabWrapper;
     @BindView(R2.id.iv_backup)
     ImageView ivBackup;
+    @BindView(R2.id.tv_tips)
+    TextView tvTips;
     LinearLayout llPicWrapper;
     LinearLayout llTextWrapper;
     private ArrayList<LocalImageBean> imageBeans = new ArrayList<>();
@@ -77,6 +81,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     private TextView tvSharePic;
     private TextView tvHasNotBackup;
     private TextView tvToBackup;
+    private View backupWrapper;
 
     @Override
     public int layoutId() {
@@ -85,15 +90,31 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
 
     @Override
     protected void initView() {
-        setAdapter();
         loaderManager = LoaderManager.getInstance(this);
+        setAdapter();
         listenScroll();
+        PermissionUtils.permission(PermissionConstants.STORAGE)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                    }
+
+                    @Override
+                    public void onDenied() {
+                        ToastUtils.showShort(R.string.refuse_file_permission_cannot_manage_gallery);
+                    }
+                }).request();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        scanImages();
+        if (PermissionUtils.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            scanImages();
+        } else {
+            tvTips.setText(R.string.no_file_permission_click_obtain);
+            tvTips.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setAdapter() {
@@ -139,25 +160,15 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
         ivSharePic = header.findViewById(R.id.iv_share_pic);
         tvSharePic = header.findViewById(R.id.tv_share_pic);
         tvHasNotBackup = header.findViewById(R.id.tv_has_no_backup);
+        backupWrapper = header.findViewById(R.id.ll_has_no_backup_wrapper);
     }
 
     private void scanImages() {
-        PermissionUtils.permission(PermissionConstants.STORAGE)
-                .callback(new PermissionUtils.SimpleCallback() {
-                    @Override
-                    public void onGranted() {
-                        if (loaderManager.getLoader(0) == null) {
-                            loaderManager.initLoader(0, null, GalleryFragment.this);
-                        } else {
-                            loaderManager.restartLoader(0, null, GalleryFragment.this);
-                        }
-                    }
-
-                    @Override
-                    public void onDenied() {
-                        ToastUtils.showShort(R.string.refuse_file_permission_cannot_manage_gallery);
-                    }
-                }).request();
+        if (loaderManager.getLoader(0) == null) {
+            loaderManager.initLoader(0, null, GalleryFragment.this);
+        } else {
+            loaderManager.restartLoader(0, null, GalleryFragment.this);
+        }
     }
 
     private void listenScroll() {
@@ -203,6 +214,22 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
         startActivity(GalleryBackupActivity.class);
     }
 
+    @OnClick(R2.id.tv_tips)
+    public void onTvTipsClick(){
+        PermissionUtils.permission(PermissionConstants.STORAGE)
+                .callback(new PermissionUtils.SimpleCallback() {
+                    @Override
+                    public void onGranted() {
+                        scanImages();
+                    }
+
+                    @Override
+                    public void onDenied() {
+                        ToastUtils.showShort(R.string.refuse_file_permission_cannot_manage_gallery);
+                    }
+                }).request();
+    }
+
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
@@ -218,6 +245,12 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
         sections.addAll(GalleryHelper.getSections());
         tvHasNotBackup.setText(String.format("检测到您有%s张未备份的照片，是否备份？", imageBeans.size()));
         galleryAdapter.notifyDataSetChanged();
+        if (!Check.hasContent(GalleryHelper.getImageBeans())) {
+            tvTips.setText(R.string.current_no_picture);
+            tvTips.setVisibility(View.VISIBLE);
+        } else {
+            tvTips.setVisibility(View.GONE);
+        }
     }
 
     @Override
