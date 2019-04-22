@@ -120,6 +120,6 @@ dependencies {
     implementation 'com.github.rubensousa:gravitysnaphelper-compat:2.0'
     // 相册单页预览使用
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
-    // guide view
-    implementation 'com.github.huburt-Hu:NewbieGuide:v2.4.0'
+    // 轮子Wheel
+    implementation 'com.contrarywind:wheelview:4.0.9'
 }

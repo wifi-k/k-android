@@ -394,5 +394,7 @@
     <string name="end_time_must_later_than_start_time">结束时间应迟于开始时间</string>
     <string name="start_time_must_before_end_time">开始时间应早于结束时间</string>
     <string name="device_info_has_no_complete_retry">设备信息未完全加载，请稍后再试</string>
+    <string name="hasnot_obtain">暂未获取</string>
+    <string name="refuse_file_permission_cannot_manage_gallery">您拒绝了存储权限，无法查看和管理相册文件</string>
 
 </resources>

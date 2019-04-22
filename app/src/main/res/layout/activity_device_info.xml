@@ -57,11 +57,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
+        android:text="@string/other"
         android:textColor="@color/text_83"
         app:layout_constraintBottom_toBottomOf="@+id/textView44"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView44"
-        tools:text="苹果" />
+        app:layout_constraintTop_toTopOf="@+id/textView44" />
 
     <TextView
         android:id="@+id/textView47"
@@ -84,7 +84,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView47"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView47"
-        tools:text="2C:F0:A2:BE:A6:A1" />
+        android:text="@string/hasnot_obtain" />
 
     <TextView
         android:id="@+id/textView49"
@@ -107,5 +107,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView49"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView49"
-        tools:text="192.168.31.134" />
+        android:text="@string/hasnot_obtain" />
 </androidx.constraintlayout.widget.ConstraintLayout>

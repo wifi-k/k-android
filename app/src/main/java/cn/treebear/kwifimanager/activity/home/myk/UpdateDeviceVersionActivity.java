@@ -17,7 +17,6 @@ import cn.treebear.kwifimanager.config.Keys;
 import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.FirmwareUpgradeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.FirmwareUpgradePresenter;
-import cn.treebear.kwifimanager.util.Check;
 
 /**
  * @author Administrator
@@ -59,8 +58,9 @@ public class UpdateDeviceVersionActivity extends BaseActivity<FirmwareUpgradeCon
         if (deviceInfo != null) {
             tvDeviceName.setText(deviceInfo.getName());
             tvDeviceCurrentVersion.setText(deviceInfo.getFirmware());
-            tvNewerVersion.setText(Check.hasContent(deviceInfo.getFirmwareUpgrade()) ?
-                    deviceInfo.getFirmwareUpgrade() : deviceInfo.getFirmware());
+//            tvNewerVersion.setText(Check.hasContent(deviceInfo.getFirmwareUpgrade()) ?
+//                    deviceInfo.getFirmwareUpgrade() : deviceInfo.getFirmware());
+            tvNewerVersion.setText(deviceInfo.getFirmwareUpgrade());
             tvDeviceSerial.setText(deviceInfo.getNodeId());
             tvOnline.setText(deviceInfo.getStatus() == 1 ? R.string.online : R.string.offline);
             tvOnline.setTextColor(deviceInfo.getStatus() == 0 ? Color.WHITE : Config.Colors.DEVICE_K_OFFLINE);

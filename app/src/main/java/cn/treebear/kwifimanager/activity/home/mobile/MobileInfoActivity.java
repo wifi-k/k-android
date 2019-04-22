@@ -10,6 +10,7 @@ import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.MobileListBean;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
+import cn.treebear.kwifimanager.util.Check;
 
 /**
  * @author Administrator
@@ -41,16 +42,21 @@ public class MobileInfoActivity extends BaseActivity {
     @Override
     protected void initView() {
         setTitleBack(R.string.device_info);
+        if (mobilePhoneBean == null) {
+            return;
+        }
         String macVendor = mobilePhoneBean.getMacVendor();
-        try {
-            Integer stringRes = ConstConfig.PHONE_BRAND.get(macVendor.toLowerCase());
-            if (stringRes != null && stringRes != 0) {
-                tvPhoneBrand.setText(stringRes);
-            }else {
+        if (Check.hasContent(macVendor)) {
+            try {
+                Integer stringRes = ConstConfig.PHONE_BRAND.get(macVendor.toLowerCase());
+                if (stringRes != null && stringRes != 0) {
+                    tvPhoneBrand.setText(stringRes);
+                } else {
+                    tvPhoneBrand.setText(macVendor);
+                }
+            } catch (Exception e) {
                 tvPhoneBrand.setText(macVendor);
             }
-        } catch (Exception e) {
-            tvPhoneBrand.setText(macVendor);
         }
         tvMacAddress.setText(mobilePhoneBean.getMac());
         tvIpAddress.setText(mobilePhoneBean.getLocalIp());

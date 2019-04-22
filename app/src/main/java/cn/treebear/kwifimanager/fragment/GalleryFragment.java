@@ -10,6 +10,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -20,12 +27,6 @@ import com.karumi.dividers.Layer;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
@@ -92,7 +93,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     @Override
     public void onResume() {
         super.onResume();
-        scanImags();
+        scanImages();
     }
 
     private void setAdapter() {
@@ -140,7 +141,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
         tvHasNotBackup = header.findViewById(R.id.tv_has_no_backup);
     }
 
-    private void scanImags() {
+    private void scanImages() {
         PermissionUtils.permission(PermissionConstants.STORAGE)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
@@ -154,7 +155,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
 
                     @Override
                     public void onDenied() {
-                        ToastUtils.showShort("您拒绝了存储权限，无法管理相册文件");
+                        ToastUtils.showShort(R.string.refuse_file_permission_cannot_manage_gallery);
                     }
                 }).request();
     }
