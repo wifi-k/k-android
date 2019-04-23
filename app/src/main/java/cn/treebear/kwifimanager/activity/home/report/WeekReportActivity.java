@@ -192,7 +192,7 @@ public class WeekReportActivity extends BaseActivity {
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
-            // add the data sets
+            // ic_title_add the data sets
             // create a data object with the data sets
             LineData data = new LineData(dataSets);
 

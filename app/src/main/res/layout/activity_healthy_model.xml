@@ -78,7 +78,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:paddingBottom="10dp"
-        android:layout_marginBottom="@dimen/add_bottom_magin"
+        android:layout_marginBottom="@dimen/add_bottom_margin"
         android:background="@mipmap/bg_big_buttom"
         android:gravity="center"
         android:textSize="18sp"

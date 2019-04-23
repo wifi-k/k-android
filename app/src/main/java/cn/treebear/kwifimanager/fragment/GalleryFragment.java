@@ -35,6 +35,7 @@ import cn.treebear.kwifimanager.R2;
 import cn.treebear.kwifimanager.activity.MainActivity;
 import cn.treebear.kwifimanager.activity.gallery.FullImageActivity;
 import cn.treebear.kwifimanager.activity.gallery.GalleryBackupActivity;
+import cn.treebear.kwifimanager.activity.gallery.ShareGalleryActivity;
 import cn.treebear.kwifimanager.adapter.GalleryDisplayAdapter;
 import cn.treebear.kwifimanager.base.BaseFragment;
 import cn.treebear.kwifimanager.bean.local.LocalImageBean;
@@ -161,6 +162,8 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
         tvSharePic = header.findViewById(R.id.tv_share_pic);
         tvHasNotBackup = header.findViewById(R.id.tv_has_no_backup);
         backupWrapper = header.findViewById(R.id.ll_has_no_backup_wrapper);
+        ivSharePic.setOnClickListener(v -> startActivity(ShareGalleryActivity.class));
+        tvSharePic.setOnClickListener(v -> startActivity(ShareGalleryActivity.class));
     }
 
     private void scanImages() {
@@ -173,13 +176,10 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
 
     private void listenScroll() {
         float[] y = {0, 0, 0, 0};
-        header.post(new Runnable() {
-            @Override
-            public void run() {
-                y[0] = 0;
-                y[1] = (DensityUtil.getScreenWidth() - DensityUtil.dip2px(74)) / 2f;
-                y[2] = DensityUtil.dip2px(93);
-            }
+        header.post(() -> {
+            y[0] = 0;
+            y[1] = (DensityUtil.getScreenWidth() - DensityUtil.dip2px(74)) / 2f;
+            y[2] = DensityUtil.dip2px(93);
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -215,7 +215,7 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
     }
 
     @OnClick(R2.id.tv_tips)
-    public void onTvTipsClick(){
+    public void onTvTipsClick() {
         PermissionUtils.permission(PermissionConstants.STORAGE)
                 .callback(new PermissionUtils.SimpleCallback() {
                     @Override
@@ -228,6 +228,21 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
                         ToastUtils.showShort(R.string.refuse_file_permission_cannot_manage_gallery);
                     }
                 }).request();
+    }
+
+    @OnClick(R2.id.tv_ai_gallery)
+    public void onClickAIGallery() {
+
+    }
+
+    @OnClick(R2.id.tv_all_gallery)
+    public void onClickAllGallery() {
+
+    }
+
+    @OnClick(R2.id.tv_share_gallery)
+    public void onClickShareGallery() {
+        startActivity(ShareGalleryActivity.class);
     }
 
     @NonNull

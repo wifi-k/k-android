@@ -32,7 +32,6 @@ import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.CountObserver;
 import cn.treebear.kwifimanager.util.CountUtil;
 import cn.treebear.kwifimanager.util.NetWorkUtils;
-import cn.treebear.kwifimanager.util.SharedPreferencesUtil;
 import cn.treebear.kwifimanager.util.TLog;
 import cn.treebear.kwifimanager.widget.dialog.LoadingProgressDialog;
 import cn.treebear.kwifimanager.widget.dialog.TMessageDialog;
@@ -139,6 +138,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
         if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
             String bindText = bindType == 1 ? "请立即绑定小K" : "前往配置网络";
             tvMidInfo.setText(String.format("您已连接wifi名称为“%s”的设备，%s", NetWorkUtils.getRealSSIDWhenWifi(this), bindText));
+            btnConfirm.setEnabled(true);
             if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
                 btnConfirm.setText(R.string.option_network);
             } else {
@@ -164,7 +164,7 @@ public class BindAction1Activity extends BaseActivity<BindNodeConstract.Presente
     @OnClick(R2.id.btn_bottom)
     public void onBtnBottomClicked() {
         TLog.w("OkHttp", WiFiHttpClient.getWifiDeviceInfo().getId());
-        if (Check.hasContent((String) SharedPreferencesUtil.getParam(SharedPreferencesUtil.NODE_ID, ""))) {
+        if (Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())) {
             if (bindType == Values.TYPE_FIRST_INCREASE_NODE) {
 //                if (NetWorkUtils.isNetConnected(this)) {
 //                    showLoading(getString(R.string.bind_ing));

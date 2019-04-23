@@ -115,7 +115,7 @@
             android:background="@drawable/line_h24_r14_main"
             android:gravity="center"
             android:text="@string/confirm_din"
-            android:textColor="#22DB96"
+            android:textColor="@color/colorAccent"
             android:textSize="12sp" />
     </LinearLayout>
 

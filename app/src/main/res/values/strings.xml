@@ -409,5 +409,9 @@
     <string name="delete_picture_title">"确认要将选中的照片删除吗?\n删除后照片将无法恢复"</string>
     <string name="delete_from_phone">从此手机删除</string>
     <string name="delete_from_desk">从硬盘中删除</string>
+    <string name="has_not_family_share_gallery_to_build">"您还没有家庭共享相册\n快来创建一个家庭共享相册吧"</string>
+    <string name="create_share_gallery">新建共享相册</string>
+    <string name="input_gallery_name">请输入相册名称</string>
+    <string name="add_picture">添加照片</string>
 
 </resources>

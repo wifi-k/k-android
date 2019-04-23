@@ -8,14 +8,15 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.karumi.dividers.DividerBuilder;
-import com.karumi.dividers.DividerItemDecoration;
-import com.karumi.dividers.Layer;
-
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.karumi.dividers.DividerBuilder;
+import com.karumi.dividers.DividerItemDecoration;
+import com.karumi.dividers.Layer;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.treebear.kwifimanager.R;
@@ -54,7 +55,7 @@ public class GalleryBackupActivity extends BaseActivity {
     protected void initView() {
         setTitleBack(R.string.pic_backup);
         setAdapter();
-        tvBackupTip.setText(Html.fromHtml("正在自动备份照片，剩余<font color='#22DB96'>53</font>张"));
+        tvBackupTip.setText(Html.fromHtml("正在自动备份照片，剩余<font color='#4ED6ED'>53</font>张"));
         tvUploadSpeed.setText(String.format("%sB/s", 80));
     }
 

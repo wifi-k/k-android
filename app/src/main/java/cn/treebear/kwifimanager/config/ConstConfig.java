@@ -1,11 +1,12 @@
 package cn.treebear.kwifimanager.config;
 
 
+import androidx.annotation.IntDef;
+import androidx.collection.ArrayMap;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import androidx.annotation.IntDef;
-import androidx.collection.ArrayMap;
 import cn.treebear.kwifimanager.BuildConfig;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.bean.Daybean;
@@ -76,6 +77,15 @@ public interface ConstConfig {
             Calendar.FRIDAY, Calendar.MONDAY, Calendar.THURSDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.SATURDAY, Calendar.SUNDAY
     })
     @interface DayCode {
+    }
+
+    int FAMILY_GALLERY_TYPE_1 = 1;
+    int FAMILY_GALLERY_TYPE_3 = 3;
+    int FAMILY_GALLERY_TYPE_5 = 5;
+    @IntDef({
+            FAMILY_GALLERY_TYPE_1,FAMILY_GALLERY_TYPE_3,FAMILY_GALLERY_TYPE_5
+    })
+    @interface FamilyGalleryType {
     }
 
 

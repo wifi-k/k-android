@@ -179,7 +179,7 @@ public class TimeControlListActivity extends BaseActivity<TimeControlContract.Pr
 //                    ArrayList<String> m = new ArrayList<>();
 //                    JSONArray jsonArray = new JSONArray(mac);
 //                    for (int i = 0; i < jsonArray.length(); i++) {
-//                        m.add(String.valueOf(jsonArray.get(i)));
+//                        m.ic_title_add(String.valueOf(jsonArray.get(i)));
 //                    }
 //                        TLog.i(m);
 //                        control.setsMac(m);

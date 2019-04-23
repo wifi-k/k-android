@@ -78,7 +78,6 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
         tvOnlineDeviceCount.setText(String.valueOf(total));
         tvDownloadSpeed.setText(String.valueOf(currentNode.getDownstream()));
         tvUploadSpeed.setText(String.valueOf(currentNode.getUpstream()));
-        refresh();
         mobilePhoneAdapter = new MobilePhoneAdapter(mobilePhoneList, 6);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceList.setAdapter(mobilePhoneAdapter);
@@ -99,6 +98,12 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
         });
         refreshLayout.setOnRefreshListener(this::refresh);
         mobilePhoneAdapter.setOnLoadMoreListener(() -> mPresenter.getMobileList(currentNode.getNodeId(), ++pageNo, Config.Numbers.PAGE_SIZE), rvDeviceList);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
     }
 
     private void refresh() {
@@ -185,17 +190,17 @@ public class AllMobileListActivity extends BaseActivity<AllMobileListContract.Pr
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && resultCode == RESULT_OK) {
-            if (requestCode == Values.REQUEST_EDIT_DEVICE) {
-                Bundle extras = data.getExtras();
-                if (extras != null) {
-                    MobileListBean.MobileBean mobile = (MobileListBean.MobileBean) extras.getSerializable(Keys.MOBILE);
-                    if (mobile != null) {
-                        mobilePhoneList.set(currentModifyPosition, mobile);
-                        mobilePhoneAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        }
+//        if (data != null && resultCode == RESULT_OK) {
+//            if (requestCode == Values.REQUEST_EDIT_DEVICE) {
+//                Bundle extras = data.getExtras();
+//                if (extras != null) {
+//                    MobileListBean.MobileBean mobile = (MobileListBean.MobileBean) extras.getSerializable(Keys.MOBILE);
+//                    if (mobile != null) {
+//                        mobilePhoneList.set(currentModifyPosition, mobile);
+//                        mobilePhoneAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//            }
+//        }
     }
 }

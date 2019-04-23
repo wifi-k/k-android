@@ -14,7 +14,11 @@ public interface CodeSignInContract {
 
         void onSignInOk(ServerUserInfo bean);
 
+        void onSingInFail(BaseResponse response);
+
         void onUserInfoLoaded(SUserCover bean);
+
+        void onUserInfoLoadFailed(BaseResponse response);
     }
 
     interface Presenter extends IPresenter<View> {

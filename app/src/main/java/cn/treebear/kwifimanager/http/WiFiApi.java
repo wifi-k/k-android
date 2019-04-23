@@ -3,9 +3,16 @@ package cn.treebear.kwifimanager.http;
 import cn.treebear.kwifimanager.base.BaseResponse;
 import cn.treebear.kwifimanager.bean.WifiDeviceInfo;
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Query;
+import retrofit2.http.Streaming;
 
 /**
  * @author Administrator
@@ -75,4 +82,33 @@ public interface WiFiApi {
      */
     @POST("node/reset")
     Observable<BaseResponse<Object>> reset();
+
+    /**
+     * 文件上传
+     *
+     * @param userId 用户Id
+     * @param file   文件分片
+     * @return 成功回调
+     */
+    @Multipart
+    @POST("node/file/upload")
+    Observable<BaseResponse<Object>> nodeFileUpload(@Header("Api-User") long userId, @Part MultipartBody.Part file);
+
+    /**
+     * 下载文件
+     *
+     * @return 流
+     */
+    @Streaming
+    @POST("node/file/get")
+    Observable<ResponseBody> getNodeFile(@Header("Api-User") long userId, @Query("uri") String path);
+
+    /**
+     *
+     * @param userId
+     * @param path
+     * @return
+     */
+    @POST("node/file/del")
+    Observable<BaseResponse<Object>> nodeFileDelete(@Header("Api-User") long userId, @Query("uri") String path);
 }

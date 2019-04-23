@@ -58,7 +58,6 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
     protected void initView() {
         setTitleBack(R.string.setting);
         ActivityStackUtils.pressActivity(Config.Tags.TAG_FIRST_BIND_WIFI, this);
-        rgOnlineType.check(R.id.rb_online_type_dial);
         rgOnlineType.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.rb_online_type_dial:
@@ -81,6 +80,11 @@ public class ChooseNetworkStyleActivity extends BaseActivity<DynamicIpContract.P
                     break;
             }
         });
+        rgOnlineType.check(R.id.rb_online_type_dynamic);
+        onlineType = Values.ONLINE_TYPE_DYNAMIC_IP;
+        rbOnlineTypeDial.setBackgroundColor(Color.WHITE);
+        rbOnlineTypeStatic.setBackgroundColor(Color.WHITE);
+        rbOnlineTypeDynamic.setBackgroundColor(Config.Colors.LINE);
     }
 
     @OnClick(R2.id.btn_online_type_next)

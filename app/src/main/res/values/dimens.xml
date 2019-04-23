@@ -3,5 +3,5 @@
     <dimen name="status_bar_height">22dp</dimen>
     <dimen name="normal_btn_height">54dp</dimen>
     <dimen name="btn_login_radius">27dp</dimen>
-    <dimen name="add_bottom_magin">24dp</dimen>
+    <dimen name="add_bottom_margin">24dp</dimen>
 </resources>

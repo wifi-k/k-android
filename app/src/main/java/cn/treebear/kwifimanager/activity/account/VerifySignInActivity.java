@@ -111,15 +111,7 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
     @Override
     public void onLoadFail(BaseResponse data, String resultMsg, int resultCode) {
         tvSignNext.setEnabled(true);
-        hideLoading();
-        switch (resultCode) {
-            case ApiCode.DB_NOT_FOUND_RECORD:
-                showNoSignDialog();
-                break;
-            default:
-                ToastUtils.showShort(R.string.message_error_check_retry);
-                break;
-        }
+        super.onLoadFail(data, resultMsg, resultCode);
     }
 
     private void showNoSignDialog() {
@@ -254,6 +246,25 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
     }
 
     @Override
+    public void onSingInFail(BaseResponse response) {
+        if (response != null) {
+            tvSignNext.setEnabled(true);
+            switch (response.getCode()) {
+                case ApiCode.DB_NOT_FOUND_RECORD:
+                    showNoSignDialog();
+                    break;
+                case ApiCode.USR_INVALID:
+                    ToastUtils.showShort(R.string.request_failed_retry);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            ToastUtils.showShort(R.string.request_failed_retry);
+        }
+    }
+
+    @Override
     public void onUserInfoLoaded(SUserCover bean) {
         if (bean != null) {
             ServerUserInfo user = bean.getUser();
@@ -267,6 +278,20 @@ public class VerifySignInActivity extends BaseActivity<CodeSignInContract.Presen
             startActivity(MainActivity.class);
             ActivityStackUtils.finishAll(Config.Tags.TAG_SIGN_ACCOUNT);
             ActivityStackUtils.finishAll(Config.Tags.TAG_LAUNCH_ROOT);
+        }
+    }
+
+    @Override
+    public void onUserInfoLoadFailed(BaseResponse response) {
+        if (response == null) {
+            ToastUtils.showShort(R.string.request_failed_retry);
+            return;
+        }
+        super.onLoadFail(response, response.getMsg(), response.getCode());
+        if (Check.hasContent(response.getMsg())) {
+            ToastUtils.showShort(response.getMsg());
+        } else {
+            ToastUtils.showShort(R.string.request_failed_retry);
         }
     }
 

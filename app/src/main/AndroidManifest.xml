@@ -30,6 +30,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
+        <activity android:name=".activity.gallery.FamilyGalleryDetailActivity"></activity>
+        <activity android:name=".activity.gallery.ShareGalleryActivity" />
         <activity
             android:name=".activity.gallery.GalleryBackupActivity"
             android:screenOrientation="portrait" />

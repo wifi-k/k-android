@@ -199,7 +199,13 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     private void updateOtherData() {
         ServerUserInfo userInfo = MyApplication.getAppContext().getUser();
         tvUserRole.setText(userInfo.getRole() == 0 ? getString(R.string.admin) : getString(R.string.member));
-        tvRootName.setText(Check.hasContent(userInfo.getName()) ? userInfo.getName() : "用户" + userInfo.getMobile().substring(userInfo.getMobile().length() - 4));
+        if (Check.hasContent(userInfo.getName())) {
+            tvRootName.setText(userInfo.getName());
+        } else if (Check.maxThen(userInfo.getMobile(), 4)) {
+            tvRootName.setText(String.format("%s%s", getString(R.string.user), userInfo.getMobile().substring(userInfo.getMobile().length() - 4)));
+        }else {
+            tvRootName.setText(R.string.user);
+        }
         tvUserState.setText(R.string.online);
         tvApName.setText(R.string.xiaok_xxxx);
     }
@@ -290,8 +296,11 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R2.id.tv_invite_member)
     public void onTvInviteMemberClicked() {
-        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", String.format("快来加入我的小K家庭吧，家庭码：%s", nodeBean.getInviteCode()),
-                String.format(Config.Urls.SHARE_FAMILY_CODE_BASE + "?inviteCode=%s", nodeBean.getInviteCode()), R.mipmap.ic_launcher, null);
+        UMShareUtils.shareWxLink(getActivity(), "邀请家庭成员", String.format("快来加入我的小K家庭吧，家庭码：%s",
+                MyApplication.getAppContext().getCurrentNode().getInviteCode()),
+                String.format(Config.Urls.SHARE_FAMILY_CODE_BASE + "?inviteCode=%s",
+                        MyApplication.getAppContext().getCurrentNode().getInviteCode()),
+                R.mipmap.ic_launcher, null);
     }
 
     @OnClick(R2.id.tv_my_k)
@@ -464,10 +473,12 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         for (NodeInfoDetail.NodeBean bean : page) {
             if (bean.getIsSelect() == 1) {
                 MyApplication.getAppContext().setCurrentNode(bean);
+                nodeBean = bean;
                 return bean;
             }
         }
         MyApplication.getAppContext().setCurrentNode(page.get(0));
+        nodeBean = page.get(0);
         return page.get(0);
     }
 }

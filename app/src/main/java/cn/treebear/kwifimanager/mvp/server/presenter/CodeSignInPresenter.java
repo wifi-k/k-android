@@ -48,8 +48,15 @@ public class CodeSignInPresenter extends BasePresenter<CodeSignInContract.View, 
         mModel.signInByVerifyCode(convertRequestBody(map), new BaseAsyncCallback<BaseResponse<ServerUserInfo>>() {
             @Override
             public void onSuccess(BaseResponse<ServerUserInfo> resultData) {
-                if (Check.hasContent(resultData, mView)) {
+                if (mView != null) {
                     mView.onSignInOk(resultData.getData());
+                }
+            }
+
+            @Override
+            public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
+                if (mView != null) {
+                    mView.onSingInFail(resultData);
                 }
             }
         });
@@ -62,6 +69,13 @@ public class CodeSignInPresenter extends BasePresenter<CodeSignInContract.View, 
             public void onSuccess(BaseResponse<SUserCover> resultData) {
                 if (Check.hasContent(resultData, mView)) {
                     mView.onUserInfoLoaded(resultData.getData());
+                }
+            }
+
+            @Override
+            public void onFailed(BaseResponse resultData, String resultMsg, int resultCode) {
+                if (mView != null) {
+                    mView.onUserInfoLoadFailed(resultData);
                 }
             }
         });

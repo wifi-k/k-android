@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.home.parent.BanAppListActivity">
+    tools:context=".activity.gallery.ShareGalleryActivity">
 
     <include
-        android:id="@+id/include12"
+        android:id="@+id/include42"
         layout="@layout/common_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,49 +15,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_tips"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="@string/ban_app_tips"
-        android:textColor="#83889A"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include12" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_add_ban_app_plan"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tips">
+        app:layout_constraintTop_toBottomOf="@+id/include42">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_ban_app"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/tv_add_ban_app_plan"
+        android:id="@+id/tv_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="@dimen/add_bottom_margin"
-        android:background="@mipmap/bg_big_buttom"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:drawableTop="@mipmap/no_share_album"
+        android:drawablePadding="30dp"
         android:gravity="center"
-        android:paddingBottom="10dp"
-        android:text="@string/add_new_ban_app"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:text="@string/has_not_family_share_gallery_to_build"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
