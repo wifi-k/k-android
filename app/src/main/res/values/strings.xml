@@ -413,5 +413,7 @@
     <string name="create_share_gallery">新建共享相册</string>
     <string name="input_gallery_name">请输入相册名称</string>
     <string name="add_picture">添加照片</string>
+    <string name="add">添加</string>
+    <string name="remove">移除</string>
 
 </resources>
