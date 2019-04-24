@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
+import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.http.WiFiHttpClient;
 
@@ -117,7 +118,10 @@ public class NetWorkUtils {
      * 是否当前连接nodeId为 @param nodeId 的设备
      */
     public static boolean isCurrentXiaoK(String nodeId) {
+        TLog.i("MyApplication.getAppContext().getCurrentSelectNode() = " + MyApplication.getAppContext().getCurrentSelectNode());
+        TLog.i("WiFiHttpClient.getWifiDeviceInfo().getId() = " + WiFiHttpClient.getWifiDeviceInfo().getId());
         return isXiaoKSignIn() && Check.hasContent(nodeId)
+                && Check.hasContent(WiFiHttpClient.getWifiDeviceInfo().getId())
                 && WiFiHttpClient.getWifiDeviceInfo().getId().equals(nodeId);
     }
 

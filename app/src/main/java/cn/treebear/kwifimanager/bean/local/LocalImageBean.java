@@ -1,6 +1,8 @@
 package cn.treebear.kwifimanager.bean.local;
 
 public class LocalImageBean {
+    private long _id;
+
     private String thumbPath;
 
     private long dateAdded;
@@ -33,6 +35,14 @@ public class LocalImageBean {
         this.thumbPath = thumbPath;
         this.date = dateAdded;
         this.filepath = filepath;
+    }
+
+    public long get_id() {
+        return _id;
+    }
+
+    public void set_id(long _id) {
+        this._id = _id;
     }
 
     public boolean hasBackup() {

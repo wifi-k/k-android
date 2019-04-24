@@ -2,20 +2,21 @@ package cn.treebear.kwifimanager.config;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
-import android.util.ArrayMap;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 import cn.treebear.kwifimanager.MyApplication;
 import cn.treebear.kwifimanager.bean.local.LocalImageBean;
 import cn.treebear.kwifimanager.bean.local.LocalImageSection;
 import cn.treebear.kwifimanager.util.Check;
 import cn.treebear.kwifimanager.util.DateTimeUtils;
+import cn.treebear.kwifimanager.util.TLog;
 
 public class GalleryHelper {
 
@@ -66,20 +67,24 @@ public class GalleryHelper {
      * @return CursorLoader
      */
     public static Loader<Cursor> onCreateLoader() {
+        imageBeans.clear();
+        sections.clear();
+
         String[] STORE_IMAGES = {
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.DATE_ADDED,
-                MediaStore.Images.Thumbnails.DATA
+                MediaStore.Images.Thumbnails.DATA,
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DATE_MODIFIED,
+                MediaStore.Images.Media.DATE_TAKEN
         };
-        imageBeans.clear();
-        sections.clear();
         return new CursorLoader(
                 MyApplication.getAppContext(),
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 STORE_IMAGES,
                 null,
                 null,
-                MediaStore.Images.Media.DATE_ADDED + " DESC");
+                MediaStore.Images.Media.DATE_TAKEN + " DESC");
     }
 
     /**
@@ -94,14 +99,22 @@ public class GalleryHelper {
             int thumbPathIndex = cursor.getColumnIndex(MediaStore.Images.Thumbnails.DATA);
             int timeIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED);
             int pathIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+            int idIndex = cursor.getColumnIndex(MediaStore.Images.Media._ID);
+
+            int mdfIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED);
+            int takeIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN);
             do {
                 String thumbPath = cursor.getString(thumbPathIndex);
-                long date = cursor.getLong(timeIndex);
+                long date = cursor.getLong(takeIndex);
                 if (date < DateTimeUtils.YEAR) {
                     date *= 1000;
                 }
                 String filepath = cursor.getString(pathIndex);
+                TLog.i("GalleryHelper", "id:%s, date_taken:%s, date_modified:%s, data:%s",
+                        cursor.getLong(idIndex), cursor.getString(takeIndex), cursor.getString(mdfIndex), filepath);
+
                 LocalImageBean imageBean = new LocalImageBean(thumbPath, date, DateTimeUtils.formatYMD4Gallery(date), filepath);
+                imageBean.set_id(cursor.getLong(idIndex));
                 for (LocalImageBean image : checkImages) {
                     if (image.getFilepath().equals(imageBean.getFilepath())) {
                         imageBean.setSelect(true);

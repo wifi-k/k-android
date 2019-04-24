@@ -101,6 +101,7 @@ public class WiFiHttpClient {
         needLogin = true;
         wifiDeviceInfo = null;
         wifiDeviceInfo = new WifiDeviceInfo();
+        SharedPreferencesUtil.setParam(SharedPreferencesUtil.NODE_ID, "");
         getInstance().apiToken = "";
         getInstance().retrofit = null;
         getInstance().initRetrofit();

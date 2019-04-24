@@ -199,8 +199,8 @@ public class GalleryFragment extends BaseFragment implements LoaderManager.Loade
                     percent = -1;
                 }
                 if (percent != y[3]) {
-                    tvTitle.setTranslationX(y[1] * percent);
-                    tvTitle.setAlpha(1 + percent);
+//                    tvTitle.setTranslationX(y[1] * percent);
+//                    tvTitle.setAlpha(1 + percent);
                     rlTabWrapper.setAlpha(0 - percent);
                     rlTabWrapper.setEnabled(0 - percent >= 0.5f);
                     y[3] = percent;

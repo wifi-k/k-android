@@ -100,6 +100,7 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
         super.onResume();
         TLog.w("onResume()");
         if (NetWorkUtils.isWifiConnected(this)) {
+//            WiFiHttpClient.getInstance().tryToSignInWifi(null);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
                     tvWifiSSID.setText(NetWorkUtils.getRealSSIDWhenWifi(WifiToolkitActivity.this));
@@ -140,12 +141,20 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
 
     @OnClick(R2.id.tv_setting_wifi_name)
     public void onTvSettingWifiNameClicked() {
-        showNameInputDialog();
+        if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+            showNameInputDialog();
+        } else {
+            ToastUtils.showShort(R.string.only_in_wifi_allow);
+        }
     }
 
     @OnClick(R2.id.tv_setting_wifi_password)
     public void onTvSettingWifiPasswordClicked() {
-        showPasswordInputDialog();
+        if (NetWorkUtils.isCurrentXiaoK(MyApplication.getAppContext().getCurrentSelectNode())) {
+            showPasswordInputDialog();
+        } else {
+            ToastUtils.showShort(R.string.only_in_wifi_allow);
+        }
     }
 
     @OnClick(R2.id.tv_guard_join_net)
@@ -198,16 +207,16 @@ public class WifiToolkitActivity extends BaseActivity<NodeOptionSetContract.Pres
     @Override
     public void onLoadData(NodeWifiListBean resultData) {
         hideLoading();
-//        if (resultData == null) {
-//            return;
-//        }
-//        wifiList.clear();
-//        wifiList.addAll(resultData.getPage());
-//        if (Check.hasContent(wifiList)) {
-//            NodeWifiListBean.WifiBean wifiBean = wifiList.get(0);
-//            tvWifiSSID.setText(wifiBean.getSsid());
-//            tvHasNoPassword.setText(Check.hasContent(wifiBean.getPasswd()) ? R.string.has_set_password : R.string.no_password_easy_gay);
-//        }
+        if (resultData == null) {
+            return;
+        }
+        wifiList.clear();
+        wifiList.addAll(resultData.getPage());
+        if (Check.hasContent(wifiList)) {
+            NodeWifiListBean.WifiBean wifiBean = wifiList.get(0);
+            tvWifiSSID.setText(wifiBean.getSsid());
+            tvHasNoPassword.setText(Check.hasContent(wifiBean.getPasswd()) ? R.string.has_set_password : R.string.no_password_easy_gay);
+        }
     }
 
     private void showNameInputDialog() {

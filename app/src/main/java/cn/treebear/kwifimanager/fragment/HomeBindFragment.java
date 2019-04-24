@@ -49,7 +49,6 @@ import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.config.Config;
 import cn.treebear.kwifimanager.config.ConstConfig;
 import cn.treebear.kwifimanager.config.Keys;
-import cn.treebear.kwifimanager.config.Values;
 import cn.treebear.kwifimanager.http.ApiCode;
 import cn.treebear.kwifimanager.mvp.server.contract.BindHomeContract;
 import cn.treebear.kwifimanager.mvp.server.presenter.BindHomePresenter;
@@ -59,8 +58,6 @@ import cn.treebear.kwifimanager.util.UMShareUtils;
 import cn.treebear.kwifimanager.util.UserInfoUtil;
 import cn.treebear.kwifimanager.widget.dialog.TInputDialog;
 import cn.treebear.kwifimanager.widget.marquee.MarqueeTextView;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link BaseFragment} subclass.
@@ -203,7 +200,7 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
             tvRootName.setText(userInfo.getName());
         } else if (Check.maxThen(userInfo.getMobile(), 4)) {
             tvRootName.setText(String.format("%s%s", getString(R.string.user), userInfo.getMobile().substring(userInfo.getMobile().length() - 4)));
-        }else {
+        } else {
             tvRootName.setText(R.string.user);
         }
         tvUserState.setText(R.string.online);
@@ -278,9 +275,10 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
 
     @OnClick(R2.id.tv_ap_name)
     public void onTvApNameClicked() {
-        Bundle bundle = new Bundle();
-        bundle.putInt(Keys.POSITION, 0);
-        startActivityForResult(SelectXiaoKActivity.class, bundle, Values.REQUEST_SELECT_NODE);
+//        Bundle bundle = new Bundle();
+//        bundle.putInt(Keys.POSITION, 0);
+        startActivity(SelectXiaoKActivity.class);
+//        startActivityForResult(SelectXiaoKActivity.class, bundle, Values.REQUEST_SELECT_NODE);
     }
 
     @OnClick(R2.id.tv_root_name)
@@ -359,15 +357,15 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
-            if (requestCode == Values.REQUEST_SELECT_NODE) {
-                int position = data.getIntExtra(Keys.POSITION, 0);
-                String name = data.getStringExtra(Keys.NAME);
-                String nodeId = data.getStringExtra(Keys.NODE_ID);
-                tvApName.setText(name);
-                MyApplication.getAppContext().setSelectNode(nodeId);
-            }
-        }
+//        if (resultCode == RESULT_OK && data != null) {
+//            if (requestCode == Values.REQUEST_SELECT_NODE) {
+//                int position = data.getIntExtra(Keys.POSITION, 0);
+//                String name = data.getStringExtra(Keys.NAME);
+//                String nodeId = data.getStringExtra(Keys.NODE_ID);
+//                tvApName.setText(name);
+//                MyApplication.getAppContext().setSelectNode(nodeId);
+//            }
+//        }
     }
 
     @Override
@@ -473,12 +471,10 @@ public class HomeBindFragment extends BaseFragment<BindHomeContract.Presenter, N
         for (NodeInfoDetail.NodeBean bean : page) {
             if (bean.getIsSelect() == 1) {
                 MyApplication.getAppContext().setCurrentNode(bean);
-                nodeBean = bean;
                 return bean;
             }
         }
         MyApplication.getAppContext().setCurrentNode(page.get(0));
-        nodeBean = page.get(0);
         return page.get(0);
     }
 }

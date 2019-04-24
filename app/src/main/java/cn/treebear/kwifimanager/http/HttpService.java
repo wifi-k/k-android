@@ -13,6 +13,12 @@ import cn.treebear.kwifimanager.bean.QiNiuUserBean;
 import cn.treebear.kwifimanager.bean.SUserCover;
 import cn.treebear.kwifimanager.bean.ServerUserInfo;
 import cn.treebear.kwifimanager.bean.TimeControlbean;
+import cn.treebear.kwifimanager.bean.file.AliOSSToken;
+import cn.treebear.kwifimanager.bean.file.FileListCover;
+import cn.treebear.kwifimanager.bean.file.NodeFileResponse;
+import cn.treebear.kwifimanager.bean.file.ShareDirFileListCover;
+import cn.treebear.kwifimanager.bean.file.ShareDirListCover;
+import cn.treebear.kwifimanager.bean.file.ShareMemberCover;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -370,4 +376,181 @@ public interface HttpService {
     @POST("user/node/device/week/list")
     Observable<BaseResponse<ChildrenListBean>> getChildrenList(@Body RequestBody body);
 
+//    相册----------------------------------------------
+
+    /**
+     * 获取OSS临时凭证 /user/ali/oss/get
+     */
+    @POST("user/ali/oss/get")
+    Observable<BaseResponse<AliOSSToken>> getAliOssToken();
+
+    /**
+     * 获取节点文件 /user/node/file/list
+     * 字段	类型	说明
+     * nodeId*	str
+     * userId	long	0-共享，默认不传即当前用户
+     * type*	str	文件类型 document picture video music
+     * sortSourceTime	str	初始文件时间排序,asc or desc,默认desc时间由近到远, 如拍照时间
+     * pageNo	int
+     * pageSize	int
+     */
+    @POST("user/node/file/list")
+    Observable<BaseResponse<FileListCover>> getNodeFileList(@Body RequestBody body);
+
+    /**
+     * 删除节点文件 /user/node/file/del
+     * 说明
+     * 云端发送指令ins-6 op-3通知节点
+     * 字段	类型	说明
+     * uriList*	list	删除文件的uri列表
+     */
+    @POST("user/node/file/del")
+    Observable<BaseResponse<Object>> deleteNodeFiles(@Body RequestBody body);
+
+    /**
+     * 保存文件到节点 /user/node/file/upload
+     * 说明
+     * App上传文件到OSS
+     * 云端发送指令ins-6 op-1通知节点下载
+     * 字段	类型	说明
+     * storeType*	int	1-oss
+     * path*	str	文件路径, nodeId/userId/type/file
+     * sourceTime*	long	文件原始时间
+     * sourceId*	str	文件唯一ID
+     */
+    @POST("user/node/file/upload")
+    Observable<BaseResponse<Object>> uploadFile(@Body RequestBody body);
+
+    /**
+     * 请求获取节点文件 /user/node/file/get
+     * 说明
+     * App通过云端从节点获取文件流程
+     * App发起请求
+     * 云端查缓存，找到返回url
+     * 云端没找到,发送指令ins-6 op-1到节点,返回wait表示等待多少毫秒再请求, 交互这里有个加载进度信息
+     * 节点上传到OSS, 通知云端
+     * App等待wait时间再请求获取url
+     * 字段	类型	说明
+     * uri*	str	xiaok://nodeId:userId/path
+     */
+    @POST("user/node/file/get")
+    Observable<BaseResponse<NodeFileResponse>> getNodeFile(@Body RequestBody body);
+
+    /**
+     * 新建共享目录 /user/share/dir/add
+     * 字段	类型	说明
+     * nodeId*	str
+     * name*	str	名称
+     */
+    @POST("user/share/dir/add")
+    Observable<BaseResponse<Object>> addShareDir(@Body RequestBody body);
+
+    /**
+     * 删除共享目录 /user/share/dir/del
+     * 字段	类型	说明
+     * nodeId*	str
+     * name*	str	名称
+     */
+    @POST("user/share/dir/del")
+    Observable<BaseResponse<Object>> deleteShareDir(@Body RequestBody body);
+
+    /**
+     * 重命名共享目录 /user/share/dir/rename
+     * 字段	类型	说明
+     * nodeId*	str
+     * name*	str	名称
+     * rename*	str	新名称
+     */
+    @POST("user/share/dir/rename")
+    Observable<BaseResponse<Object>> renameShareDir(@Body RequestBody body);
+
+    /**
+     * 共享目录列表 /user/share/dir/list
+     * 字段	类型	说明
+     * nodeId*	str
+     * pageNo	int
+     * <p>
+     * pageSize	int
+     */
+    @POST("user/share/dir/list")
+    Observable<BaseResponse<ShareDirListCover>> getShareDirList(@Body RequestBody body);
+
+    /**
+     * 添加共享目录分享人 /user/share/dir/user/add
+     * 字段	类型	说明
+     * nodeId*	str
+     * dir*	str	共享目录名称
+     * userId*	long	分享用户ID
+     */
+    @POST("user/share/dir/user/add")
+    Observable<BaseResponse<Object>> addShareDirUser(@Body RequestBody body);
+
+    /**
+     * 删除共享目录分享人 /user/share/dir/user/del
+     * 字段	类型	说明
+     * nodeId*	str
+     * dir*	str	共享目录名称
+     * userId*	long	分享用户ID
+     */
+    @POST("user/share/dir/user/del")
+    Observable<BaseResponse<Object>> removeShareDirUser(@Body RequestBody body);
+
+    /**
+     * 共享目录分享人列表 /user/share/dir/user/list
+     * 说明
+     * 分享人最多100个
+     * 字段	类型	说明
+     * nodeId*	str
+     * dir*	str	共享目录名称
+     */
+    @POST("user/share/dir/user/list")
+    Observable<BaseResponse<ShareMemberCover>> getShareDirMember(@Body RequestBody body);
+
+    /**
+     * 添加文件到共享目录 /user/share/dir/file/add
+     * 说明
+     * 每次上传有一个shareId，表示一个上传的批次
+     * 字段	类型	说明
+     * nodeId*	str
+     * dir*	str	共享目录名称
+     * type*	str	文件类型
+     * file*	list	[{“thumbnail”:”“},{}]
+     */
+    @POST("user/share/dir/file/add")
+    Observable<BaseResponse<Object>> addFileToShareDir(@Body RequestBody body);
+
+    /**
+     * 获取共享目录文件 /user/share/dir/file/list
+     * 字段	类型	说明
+     * nodeId*	str
+     * dir*	str	共享目录名称
+     * type	str	文件类型,不传时显示所有
+     * pageNo	int
+     * pageSize	int
+     */
+    @POST("user/share/dir/file/list")
+    Observable<BaseResponse<ShareDirFileListCover>> getFileFromShareDir(@Body RequestBody body);
+
+    /**
+     * 删除共享目录的文件 /user/share/dir/file/del
+     * 字段	类型	说明
+     * nodeId*	str
+     * dir*	str	共享目录名称
+     * shareId*	str	文件ID
+     */
+    @POST("user/share/dir/file/del")
+    Observable<BaseResponse<Object>> deleteFileFromShareDir(@Body RequestBody body);
+
+    /**
+     * 新建节点目录 /user/node/dir/mkdir 没用到
+     * 说明
+     * 如创建共享相册,userId=0,type=”picture”
+     * 字段	类型	说明
+     * nodeId*	str
+     * userId	int	0-共享，默认不传即当前用户
+     * type*	str	类型
+     * name	str	目录名称
+     */
+    @POST("user/node/dir/mkdir")
+    Observable<BaseResponse<Object>> increaseNodeDir(@Body RequestBody body);
 }

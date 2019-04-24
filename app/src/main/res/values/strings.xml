@@ -415,5 +415,6 @@
     <string name="add_picture">添加照片</string>
     <string name="add">添加</string>
     <string name="remove">移除</string>
+    <string name="no_picture_goto_add">没有照片，快去添加照片吧</string>
 
 </resources>
