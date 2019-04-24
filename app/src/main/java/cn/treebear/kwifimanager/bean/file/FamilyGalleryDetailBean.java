@@ -1,8 +1,9 @@
-package cn.treebear.kwifimanager.bean.local;
+package cn.treebear.kwifimanager.bean.file;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class LocalFamilyGalleryDetailBean {
+public class FamilyGalleryDetailBean {
 
     /**
      * shareId : id
@@ -14,7 +15,7 @@ public class LocalFamilyGalleryDetailBean {
     private String shareId;
     private long createTime;
     private UserBean user;
-    private List<FilesBean> files;
+    private ArrayList<FilesBean> files;
 
     public String getShareId() {
         return shareId;
@@ -40,11 +41,11 @@ public class LocalFamilyGalleryDetailBean {
         this.user = user;
     }
 
-    public List<FilesBean> getFiles() {
+    public ArrayList<FilesBean> getFiles() {
         return files;
     }
 
-    public void setFiles(List<FilesBean> files) {
+    public void setFiles(ArrayList<FilesBean> files) {
         this.files = files;
     }
 
@@ -84,19 +85,4 @@ public class LocalFamilyGalleryDetailBean {
         }
     }
 
-    public static class FilesBean {
-        /**
-         * thumbnail :
-         */
-
-        private String thumbnail;
-
-        public String getThumbnail() {
-            return thumbnail;
-        }
-
-        public void setThumbnail(String thumbnail) {
-            this.thumbnail = thumbnail;
-        }
-    }
 }

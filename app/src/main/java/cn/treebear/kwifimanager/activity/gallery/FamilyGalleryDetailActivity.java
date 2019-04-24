@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import cn.treebear.kwifimanager.R;
 import cn.treebear.kwifimanager.R2;
-import cn.treebear.kwifimanager.adapter.FamilyGalleryAdapter;
+import cn.treebear.kwifimanager.adapter.FamilyGalleryDetailAdapter;
 import cn.treebear.kwifimanager.adapter.VerticalGalleryMemberAdapter;
 import cn.treebear.kwifimanager.base.BaseActivity;
 import cn.treebear.kwifimanager.bean.FamilyMemberBean;
-import cn.treebear.kwifimanager.bean.local.LocalFamilyGalleryBean;
+import cn.treebear.kwifimanager.bean.file.FamilyGallerySection;
 import cn.treebear.kwifimanager.config.Keys;
 
 public class FamilyGalleryDetailActivity extends BaseActivity {
@@ -36,6 +36,9 @@ public class FamilyGalleryDetailActivity extends BaseActivity {
     private ArrayList<FamilyMemberBean> selectMember = new ArrayList<>();
     private VerticalGalleryMemberAdapter memberAdapter;
     private LinearLayout llMemberFooter;
+    private ArrayList<FamilyGallerySection> familyGallerySections = new ArrayList<>();
+    private FamilyGalleryDetailAdapter galleryDetailAdapter;
+
 
     @Override
     public int layoutId() {
@@ -57,6 +60,8 @@ public class FamilyGalleryDetailActivity extends BaseActivity {
 
     private void initAdapter() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        galleryDetailAdapter = new FamilyGalleryDetailAdapter(familyGallerySections);
+        recyclerView.setAdapter(galleryDetailAdapter);
     }
 
     private void initHeaderView() {

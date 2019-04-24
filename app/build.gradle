@@ -126,4 +126,6 @@ dependencies {
     implementation 'com.contrarywind:wheelview:4.0.9'
     // FloatingActionButton
     implementation 'com.github.clans:fab:1.6.4'
+    // 分割线
+    implementation('com.ray:divider:0.0.1', {exclude group: 'com.android.support'})
 }
